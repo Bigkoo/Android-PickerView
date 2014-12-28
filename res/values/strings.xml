@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="cancel">取消</string>
+    <string name="pwSubmit">确定</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="hours">时</string>
+    <string name="minutes">分</string>
+    <string name="seconds">秒</string>
+</resources>

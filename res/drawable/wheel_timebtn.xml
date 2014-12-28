@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:color="@color/wheel_timebtn_pre" />
+    <item android:color="@color/wheel_timebtn_nor" />
+</selector>
