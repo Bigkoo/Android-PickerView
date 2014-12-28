@@ -43,9 +43,12 @@ public class WheelOptions {
 		this.mOptions1Items=options1Items;
 		this.mOptions2Items=options2Items;
 		this.mOptions3Items=options3Items;
+		int len = ArrayWheelAdapter.DEFAULT_LENGTH;
+		if(this.mOptions3Items==null)len = 8;
+		if(this.mOptions2Items==null)len = 12;
 		// 选项1
 		wv_option1 = (WheelView) view.findViewById(R.id.options1);
-		wv_option1.setAdapter(new ArrayWheelAdapter(mOptions1Items));// 设置显示数据
+		wv_option1.setAdapter(new ArrayWheelAdapter(mOptions1Items,len));// 设置显示数据
 		wv_option1.setCurrentItem(0);// 初始化时显示的数据
 		// 选项2
 		wv_option2 = (WheelView) view.findViewById(R.id.options2);

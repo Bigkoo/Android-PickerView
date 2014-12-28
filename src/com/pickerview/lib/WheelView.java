@@ -79,12 +79,12 @@ public class WheelView extends View {
 	private final int ITEM_OFFSET = TEXT_SIZE / 5;
 
 	/** Additional width for items layout */
-	private static final int ADDITIONAL_ITEMS_SPACE = 10;
+	private static final int ADDITIONAL_ITEMS_SPACE = 2;
 
 	/** Label offset ,   dip */
 	private static int LABEL_OFFSET_DIP = 20;
 	/** Label offset */
-	private static int LABEL_OFFSET = 60;
+	private static int LABEL_OFFSET = 30;
 
 	/** Left and right padding value */
 	private static final int PADDING = 10;
@@ -651,7 +651,7 @@ public class WheelView extends View {
 	private void createLayouts(int widthItems, int widthLabel) {
 		if (itemsLayout == null || itemsLayout.getWidth() > widthItems) {
 			itemsLayout = new StaticLayout(buildText(isScrollingPerformed), itemsPaint, widthItems,
-					widthLabel > 0 ? Layout.Alignment.ALIGN_OPPOSITE
+					widthLabel > 0 ? Layout.Alignment.ALIGN_CENTER
 							: Layout.Alignment.ALIGN_CENTER, 1, ADDITIONAL_ITEM_HEIGHT, false);
 		} else {
 			itemsLayout.increaseWidthTo(widthItems);
@@ -660,7 +660,7 @@ public class WheelView extends View {
 		if (!isScrollingPerformed && (valueLayout == null || valueLayout.getWidth() > widthItems)) {
 			String text = getAdapter() != null ? getAdapter().getItem(currentItem) : null;
 			valueLayout = new StaticLayout(text != null ? text : "", valuePaint, widthItems,
-					widthLabel > 0 ? Layout.Alignment.ALIGN_OPPOSITE
+					widthLabel > 0 ? Layout.Alignment.ALIGN_CENTER
 							: Layout.Alignment.ALIGN_CENTER, 1, ADDITIONAL_ITEM_HEIGHT, false);
 		} else if (isScrollingPerformed) {
 			valueLayout = null;
