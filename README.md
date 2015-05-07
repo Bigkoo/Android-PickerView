@@ -7,7 +7,7 @@ PickerView
 
 ## Demo 图片
 ![](https://github.com/saiwu-bigkoo/PickerView/blob/master/preview/pickerdemo.gif)
-
+- [demo代码请看戳这里](https://github.com/saiwu-bigkoo/Android-PickerView/blob/master/preview/MainActivity.java)
 ## Thanks
 
 - WheelView
