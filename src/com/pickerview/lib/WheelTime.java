@@ -13,7 +13,7 @@ import android.view.View;
 
 
 public class WheelTime {
-	public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+	public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	private View view;
 	private WheelView wv_year;
 	private WheelView wv_month;
