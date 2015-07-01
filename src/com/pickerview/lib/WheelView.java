@@ -743,7 +743,7 @@ public class WheelView extends View {
 
 	/**
 	 * Draws value and label layout
-	 * 
+	 * 选中的item
 	 * @param canvas
 	 *            the canvas for drawing
 	 */
@@ -754,6 +754,7 @@ public class WheelView extends View {
 		Rect bounds = new Rect();
 		itemsLayout.getLineBounds(visibleItems / 2, bounds);
 
+		canvas.scale(1.2f, 1.2f);
 		// draw label
 		if (labelLayout != null) {
 			canvas.save();
@@ -773,7 +774,7 @@ public class WheelView extends View {
 
 	/**
 	 * Draws items
-	 * 
+	 * 非选中的item
 	 * @param canvas
 	 *            the canvas for drawing
 	 */
