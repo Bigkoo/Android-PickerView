@@ -754,7 +754,7 @@ public class WheelView extends View {
 		Rect bounds = new Rect();
 		itemsLayout.getLineBounds(visibleItems / 2, bounds);
 
-		canvas.scale(1.2f, 1.2f);
+//		canvas.scale(1.2f, 1.2f);
 		// draw label
 		if (labelLayout != null) {
 			canvas.save();
