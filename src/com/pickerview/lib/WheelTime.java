@@ -122,18 +122,28 @@ public class WheelTime {
 			public void onChanged(WheelView wheel, int oldValue, int newValue) {
 				int year_num = newValue + START_YEAR;
 				// 判断大小月及是否闰年,用来确定"日"的数据
+				int maxItem = 30;
 				if (list_big
 						.contains(String.valueOf(wv_month.getCurrentItem() + 1))) {
 					wv_day.setAdapter(new NumericWheelAdapter(1, 31));
+					maxItem = 31;
 				} else if (list_little.contains(String.valueOf(wv_month
 						.getCurrentItem() + 1))) {
 					wv_day.setAdapter(new NumericWheelAdapter(1, 30));
+					maxItem = 30;
 				} else {
 					if ((year_num % 4 == 0 && year_num % 100 != 0)
-							|| year_num % 400 == 0)
+							|| year_num % 400 == 0){
 						wv_day.setAdapter(new NumericWheelAdapter(1, 29));
-					else
+						maxItem = 29;
+					}
+					else{
 						wv_day.setAdapter(new NumericWheelAdapter(1, 28));
+						maxItem = 28;
+					}
+				}
+				if (wv_day.getCurrentItem() > maxItem - 1){
+					wv_day.setCurrentItem(maxItem - 1);
 				}
 			}
 		};
@@ -142,19 +152,30 @@ public class WheelTime {
 			@Override
 			public void onChanged(WheelView wheel, int oldValue, int newValue) {
 				int month_num = newValue + 1;
+				int maxItem = 30;
 				// 判断大小月及是否闰年,用来确定"日"的数据
 				if (list_big.contains(String.valueOf(month_num))) {
 					wv_day.setAdapter(new NumericWheelAdapter(1, 31));
+					maxItem = 31;
 				} else if (list_little.contains(String.valueOf(month_num))) {
 					wv_day.setAdapter(new NumericWheelAdapter(1, 30));
+					maxItem = 30;
 				} else {
 					if (((wv_year.getCurrentItem() + START_YEAR) % 4 == 0 && (wv_year
 							.getCurrentItem() + START_YEAR) % 100 != 0)
-							|| (wv_year.getCurrentItem() + START_YEAR) % 400 == 0)
+							|| (wv_year.getCurrentItem() + START_YEAR) % 400 == 0){
 						wv_day.setAdapter(new NumericWheelAdapter(1, 29));
-					else
+						maxItem = 29;
+					}
+					else{
 						wv_day.setAdapter(new NumericWheelAdapter(1, 28));
+						maxItem = 28;
+					}
 				}
+				if (wv_day.getCurrentItem() > maxItem - 1){
+					wv_day.setCurrentItem(maxItem - 1);
+				}
+
 			}
 		};
 		wv_year.addChangingListener(wheelListener_year);
