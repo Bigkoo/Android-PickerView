@@ -1,7 +1,23 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 时间选择器popwidnow 显示消失动画 -->
     <style name="timepopwindow_anim_style">
-        <item name="android:windowEnterAnimation">@anim/timepicker_anim_enter_bottom</item> <!-- 指定显示的动画xml -->
-        <item name="android:windowExitAnimation">@anim/timepicker_anim_exit_bottom</item> <!-- 指定消失的动画xml -->
+        <item name="android:windowEnterAnimation">@anim/timepicker_anim_enter_bottom</item>
+        <!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/timepicker_anim_exit_bottom</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+
+    <style name="timepopwindow_btn_style">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@drawable/wheel_timebtn</item>
+    </style>
+
+    <style name="timepopwindow_btn_text_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@drawable/wheel_timebtn</item>
     </style>
 </resources>
