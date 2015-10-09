@@ -24,7 +24,7 @@ import android.widget.PopupWindow;
  */
 public class TimePopupWindow extends PopupWindow implements OnClickListener {
 	public enum Type {
-		ALL, YEAR_MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN
+		ALL, YEAR_MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN , YEAR_MONTH
 	}// 四种选择模式，年月日时分，年月日，时分，月日时分
 
 	private View rootView; // 总的布局

@@ -33,7 +33,8 @@ public class MainActivity extends Activity {
         tvTime=(TextView) findViewById(R.id.tvTime);
         tvOptions=(TextView) findViewById(R.id.tvOptions);
         //时间选择器
-        pwTime = new TimePopupWindow(this, Type.ALL);
+        pwTime = new TimePopupWindow(this, Type.YEAR_MONTH);
+        pwTime.setTime(new Date());
         //时间选择后回调
         pwTime.setOnTimeSelectListener(new OnTimeSelectListener() {
 

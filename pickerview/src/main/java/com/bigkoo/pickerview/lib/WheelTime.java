@@ -106,7 +106,8 @@ public class WheelTime {
 		wv_day.setLabel(context.getString(R.string.pickerview_day));
 		wv_day.setCurrentItem(day - 1);
 
-		wv_hours = (WheelView)view.findViewById(R.id.hour);
+
+        wv_hours = (WheelView)view.findViewById(R.id.hour);
 		wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
 		wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字
 		wv_hours.setCurrentItem(h);
@@ -202,6 +203,11 @@ public class WheelTime {
 			textSize = (screenheight / 100) * 3;
 			wv_year.setVisibility(View.GONE);
 			break;
+        case YEAR_MONTH:
+            textSize = (screenheight / 100) * 4;
+            wv_day.setVisibility(View.GONE);
+            wv_hours.setVisibility(View.GONE);
+            wv_mins.setVisibility(View.GONE);
 		}
 			
 		wv_day.TEXT_SIZE = textSize;
