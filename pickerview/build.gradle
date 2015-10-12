@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = "1.0.2"
+version = "1.0.3"
 
 android {
     compileSdkVersion 21
@@ -24,7 +24,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
 }
 
 def siteUrl = 'https://github.com/saiwu-bigkoo/Android-PickerView'                        // #CONFIG# // project homepage
