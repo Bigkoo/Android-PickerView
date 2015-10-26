@@ -1,4 +1,4 @@
-package com.bigkoo.pickerviewdemo;
+package com.xuhuan.pickerviewdemo;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
