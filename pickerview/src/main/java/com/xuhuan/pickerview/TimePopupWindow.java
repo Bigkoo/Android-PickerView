@@ -88,7 +88,7 @@ public class TimePopupWindow extends PopupWindow implements OnClickListener {
         button.setText(title);
         button.setTextAppearance(context, R.style.timepopwindow_btn_text_style);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0,
-                LinearLayout.LayoutParams.MATCH_PARENT,1);
+                LinearLayout.LayoutParams.MATCH_PARENT, 1);
         button.setLayoutParams(params);
         button.setGravity(Gravity.CENTER);
         button.setTag(index);
@@ -111,8 +111,8 @@ public class TimePopupWindow extends PopupWindow implements OnClickListener {
      * @param END_YEAR
      */
     public void setRange(int START_YEAR, int END_YEAR) {
-        WheelTime.setSTART_YEAR(START_YEAR);
-        WheelTime.setEND_YEAR(END_YEAR);
+        wheelTime.setSTART_YEAR(START_YEAR);
+        wheelTime.setEND_YEAR(END_YEAR);
     }
 
     /**

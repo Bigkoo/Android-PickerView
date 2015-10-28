@@ -10,7 +10,7 @@ https://github.com/saiwu-bigkoo/PickerView
 选项需求。顺带加上了弹窗顶部的灰色横线。   
 为了发布到jcenter上区别于原来的控件，整体包名已经修改成了  
 com.xuhuan   
-版本号也重置成 1.0.1.
+版本号也重置成 1.0.2.
 
 
 仿iOS的PickerView控件，有时间选择和选项选择并支持一二三级联动效果   
@@ -19,13 +19,18 @@ com.xuhuan
 
 ####使用gradle 依赖:
 ```java
-   compile 'com.xuhuan:pickerview:1.0.1'
+   compile 'com.xuhuan:pickerview:1.0.2'
 ```
 
 ## Demo 图片（招行信用卡的“掌上生活”里面条件选择器他们用的就是我这个库，大家可以当实际项目参考）
 ![](https://github.com/saiwu-bigkoo/PickerView/blob/master/preview/pickerdemo.gif)
 ![](https://github.com/saiwu-bigkoo/Android-PickerView/blob/master/preview/pickerdemo_zhangshangshenghuo.gif)
 - [demo代码请看戳这里](https://github.com/saiwu-bigkoo/Android-PickerView/blob/master/app/src/main/java/com/xuhuan/pickerviewdemo/MainActivity.java)
+
+
+##更新日志
+###1.0.2（2015-10-28）
+允许多个TimePopupWindow设置不同的时间范围。
 
 
 ## Thanks

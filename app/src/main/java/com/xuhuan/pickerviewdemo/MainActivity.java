@@ -23,8 +23,9 @@ public class MainActivity extends Activity {
     private ArrayList<String> options1Items = new ArrayList<String>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
-    private TextView tvTime, tvOptions;
+    private TextView tvTime, tv2Time, tvOptions;
     TimePopupWindow pwTime;
+    TimePopupWindow pw2Time;
     OptionsPopupWindow pwOptions;
 
     @Override
@@ -32,9 +33,11 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tvTime = (TextView) findViewById(R.id.tvTime);
+        tv2Time = (TextView) findViewById(R.id.tv2Time);
         tvOptions = (TextView) findViewById(R.id.tvOptions);
         //时间选择器
         pwTime = new TimePopupWindow(this, Type.YEAR_MONTH);
+        pwTime.setRange(1980, 1990);
         pwTime.setTime(new Date());
         //时间选择后回调
         pwTime.setOnTimeSelectListener(new OnTimeSelectListener() {
@@ -55,6 +58,23 @@ public class MainActivity extends Activity {
         //注意：扩展按钮点击的时候不会触发 onTimeSelect 事件！！！
         pwTime.addButton(this, "扩展按钮1", 1);
         pwTime.addButton(this, "扩展按钮2", 2);
+        //时间选择器
+        pw2Time = new TimePopupWindow(this, Type.YEAR_MONTH);
+        pw2Time.setRange(2000, 2010);
+        pw2Time.setTime(new Date());
+        //时间选择后回调
+        pw2Time.setOnTimeSelectListener(new OnTimeSelectListener() {
+
+            @Override
+            public void onTimeSelect(Date date) {
+                tv2Time.setText(getTime(date));
+            }
+
+            @Override
+            public void onButtonClick(int index) {
+                Log.v("onButtonClick", index + "");
+            }
+        });
         //弹出时间选择器
         tvTime.setOnClickListener(new OnClickListener() {
 
@@ -63,6 +83,16 @@ public class MainActivity extends Activity {
                 pwTime.showAtLocation(tvTime, Gravity.BOTTOM, 0, 0, new Date());
             }
         });
+
+        //弹出时间选择器
+        tv2Time.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                pw2Time.showAtLocation(tv2Time, Gravity.BOTTOM, 0, 0, new Date());
+            }
+        });
+
 
         //选项选择器
         pwOptions = new OptionsPopupWindow(this);
