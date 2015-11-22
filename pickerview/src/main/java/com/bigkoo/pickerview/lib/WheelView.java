@@ -14,6 +14,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.bigkoo.pickerview.R;
+import com.bigkoo.pickerview.adapter.WheelAdapter;
+import com.bigkoo.pickerview.listener.OnItemSelectedListener;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

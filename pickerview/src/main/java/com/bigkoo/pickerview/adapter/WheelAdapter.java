@@ -1,4 +1,4 @@
-package com.bigkoo.pickerview.lib;
+package com.bigkoo.pickerview.adapter;
 
 public interface WheelAdapter<T> {
 	/**

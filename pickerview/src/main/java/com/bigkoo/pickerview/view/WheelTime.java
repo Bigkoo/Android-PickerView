@@ -1,4 +1,4 @@
-package com.bigkoo.pickerview.lib;
+package com.bigkoo.pickerview.view;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -6,7 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.bigkoo.pickerview.R;
-import com.bigkoo.pickerview.TimePopupWindow.Type;
+import com.bigkoo.pickerview.TimePickerView.Type;
+import com.bigkoo.pickerview.adapter.NumericWheelAdapter;
+import com.bigkoo.pickerview.lib.WheelView;
+import com.bigkoo.pickerview.listener.OnItemSelectedListener;
 
 import android.content.Context;
 import android.view.View;

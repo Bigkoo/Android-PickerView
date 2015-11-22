@@ -6,16 +6,12 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.OptionsPopupWindow;
-import com.bigkoo.pickerview.TimePopupWindow;
-import com.bigkoo.pickerview.TimePopupWindow.OnTimeSelectListener;
-import com.bigkoo.pickerview.TimePopupWindow.Type;
+import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerviewdemo.bean.ProvinceBean;
 
 
@@ -25,8 +21,8 @@ public class MainActivity extends Activity {
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
     private TextView tvTime, tvOptions;
-    TimePopupWindow pwTime;
-    OptionsPopupWindow pwOptions;
+    TimePickerView pvTime;
+    OptionsPickerView pvOptions;
     View vMasker;
 
     @Override
@@ -37,10 +33,11 @@ public class MainActivity extends Activity {
         tvTime=(TextView) findViewById(R.id.tvTime);
         tvOptions=(TextView) findViewById(R.id.tvOptions);
         //时间选择器
-        pwTime = new TimePopupWindow(this, Type.ALL);
-        pwTime.setTime(new Date());
+        pvTime = new TimePickerView(this, TimePickerView.Type.ALL);
+        pvTime.setTime(new Date());
+        pvTime.setCancelable(true);
         //时间选择后回调
-        pwTime.setOnTimeSelectListener(new OnTimeSelectListener() {
+        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
 
             @Override
             public void onTimeSelect(Date date) {
@@ -52,12 +49,12 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                pwTime.showAtLocation(tvTime, Gravity.BOTTOM, 0, 0,new Date());
+                pvTime.show();
             }
         });
 
         //选项选择器
-        pwOptions = new OptionsPopupWindow(this);
+        pvOptions = new OptionsPickerView(this);
 
         //选项1
         options1Items.add(new ProvinceBean(0,"广东","广东省，以岭南东道、广南东路得名","其他数据"));
@@ -108,7 +105,7 @@ public class MainActivity extends Activity {
         options3Items_01.add(options3Items_01_05);
 
         ArrayList<String> options3Items_02_01=new ArrayList<String>();
-        options3Items_02_01.add("长沙1");
+        options3Items_02_01.add("长沙长沙长沙长沙长沙长沙长沙长沙长沙1111111111");
         options3Items_02_01.add("长沙2");
         options3Items_02_01.add("长沙3");
         options3Items_02_01.add("长沙4");
@@ -133,15 +130,15 @@ public class MainActivity extends Activity {
         options3Items.add(options3Items_02);
 
         //三级联动效果
-        pwOptions.setPicker(options1Items, options2Items, options3Items, true);
+        pvOptions.setPicker(options1Items, options2Items, options3Items, true);
         //设置选择的三级单位
 //        pwOptions.setLabels("省", "市", "区");
-        pwOptions.setTitle("选择城市");
-        pwOptions.setCyclic(false, true, true);
+        pvOptions.setTitle("选择城市");
+        pvOptions.setCyclic(false, true, true);
         //设置默认选中的三级项目
-        pwOptions.setSelectOptions(0, 1, 0);
+        pvOptions.setSelectOptions(0, 1, 0);
         //监听确定选择按钮
-        pwOptions.setOnoptionsSelectListener(new OptionsPopupWindow.OnOptionsSelectListener() {
+        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
 
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
@@ -158,14 +155,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                vMasker.setVisibility(View.VISIBLE);
-                pwOptions.showAtLocation(tvTime, Gravity.BOTTOM, 0, 0);
-            }
-        });
-        pwOptions.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                vMasker.setVisibility(View.GONE);
+                pvOptions.show();
             }
         });
     }

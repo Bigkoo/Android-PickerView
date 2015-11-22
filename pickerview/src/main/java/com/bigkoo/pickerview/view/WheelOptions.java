@@ -1,9 +1,12 @@
-package com.bigkoo.pickerview.lib;
+package com.bigkoo.pickerview.view;
 
 import java.util.ArrayList;
 import android.view.View;
 
 import com.bigkoo.pickerview.R;
+import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
+import com.bigkoo.pickerview.lib.WheelView;
+import com.bigkoo.pickerview.listener.OnItemSelectedListener;
 
 public class WheelOptions<T> {
 	private View view;
