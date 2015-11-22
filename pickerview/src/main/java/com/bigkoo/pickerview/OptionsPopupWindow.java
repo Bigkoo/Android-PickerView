@@ -2,7 +2,6 @@ package com.bigkoo.pickerview;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
@@ -10,18 +9,22 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
-import com.bigkoo.pickerview.lib.ScreenInfo;
 import com.bigkoo.pickerview.lib.WheelOptions;
+
+import org.w3c.dom.Text;
+
 /**
  * 选项选择器，可支持一二三级联动选择
  * @author Sai
  *
  */
-public class OptionsPopupWindow extends PopupWindow implements OnClickListener {
+public class OptionsPopupWindow<T> extends PopupWindow implements OnClickListener {
 	private View rootView; // 总的布局
 	WheelOptions wheelOptions;
 	private View btnSubmit, btnCancel;
+	private TextView tvTitle;
 	private OnOptionsSelectListener optionsSelectListener;
 	private static final String TAG_SUBMIT = "submit";
 	private static final String TAG_CANCEL = "cancel";
@@ -43,28 +46,27 @@ public class OptionsPopupWindow extends PopupWindow implements OnClickListener {
 		btnCancel.setTag(TAG_CANCEL);
 		btnSubmit.setOnClickListener(this);
 		btnCancel.setOnClickListener(this);
+		//顶部标题
+		tvTitle = (TextView) rootView.findViewById(R.id.tvTitle);
 		// ----转轮
 		final View optionspicker = rootView.findViewById(R.id.optionspicker);
-		ScreenInfo screenInfo = new ScreenInfo((Activity) context);
 		wheelOptions = new WheelOptions(optionspicker);
-
-		wheelOptions.screenheight = screenInfo.getHeight();
 
 		setContentView(rootView);
 	}
 
-	public void setPicker(ArrayList<String> optionsItems) {
+	public void setPicker(ArrayList<T> optionsItems) {
 		wheelOptions.setPicker(optionsItems, null, null, false);
 	}
 
-	public void setPicker(ArrayList<String> options1Items,
-			ArrayList<ArrayList<String>> options2Items, boolean linkage) {
+	public void setPicker(ArrayList<T> options1Items,
+			ArrayList<ArrayList<T>> options2Items, boolean linkage) {
 		wheelOptions.setPicker(options1Items, options2Items, null, linkage);
 	}
 
-	public void setPicker(ArrayList<String> options1Items,
-			ArrayList<ArrayList<String>> options2Items,
-			ArrayList<ArrayList<ArrayList<String>>> options3Items,
+	public void setPicker(ArrayList<T> options1Items,
+			ArrayList<ArrayList<T>> options2Items,
+			ArrayList<ArrayList<ArrayList<T>>> options3Items,
 			boolean linkage) {
 		wheelOptions.setPicker(options1Items, options2Items, options3Items,
 				linkage);
@@ -124,8 +126,12 @@ public class OptionsPopupWindow extends PopupWindow implements OnClickListener {
 	public void setCyclic(boolean cyclic){
 		wheelOptions.setCyclic(cyclic);
 	}
+	public void setCyclic(boolean cyclic1,boolean cyclic2,boolean cyclic3) {
+		wheelOptions.setCyclic(cyclic1,cyclic2,cyclic3);
+	}
 
-	@Override
+
+		@Override
 	public void onClick(View v) 
 	{
 		String tag=(String) v.getTag();
@@ -153,5 +159,9 @@ public class OptionsPopupWindow extends PopupWindow implements OnClickListener {
 	public void setOnoptionsSelectListener(
 			OnOptionsSelectListener optionsSelectListener) {
 		this.optionsSelectListener = optionsSelectListener;
+	}
+
+	public void setTitle(String title){
+		tvTitle.setText(title);
 	}
 }

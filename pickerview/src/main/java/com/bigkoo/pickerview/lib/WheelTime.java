@@ -20,8 +20,7 @@ public class WheelTime {
 	private WheelView wv_day;
 	private WheelView wv_hours;
 	private WheelView wv_mins;
-	public int screenheight;
-	
+
 	private Type type;
 	private static int START_YEAR = 1990, END_YEAR = 2100;
 
@@ -111,17 +110,17 @@ public class WheelTime {
 		wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
 		wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字
 		wv_hours.setCurrentItem(h);
-		
+
 		wv_mins = (WheelView)view.findViewById(R.id.min);
 		wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
 		wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
 		wv_mins.setCurrentItem(m);
-		
+
 		// 添加"年"监听
-		OnWheelChangedListener wheelListener_year = new OnWheelChangedListener() {
+		OnItemSelectedListener wheelListener_year = new OnItemSelectedListener() {
 			@Override
-			public void onChanged(WheelView wheel, int oldValue, int newValue) {
-				int year_num = newValue + START_YEAR;
+			public void onItemSelected(int index) {
+				int year_num = index + START_YEAR;
 				// 判断大小月及是否闰年,用来确定"日"的数据
 				int maxItem = 30;
 				if (list_big
@@ -149,10 +148,10 @@ public class WheelTime {
 			}
 		};
 		// 添加"月"监听
-		OnWheelChangedListener wheelListener_month = new OnWheelChangedListener() {
+		OnItemSelectedListener wheelListener_month = new OnItemSelectedListener() {
 			@Override
-			public void onChanged(WheelView wheel, int oldValue, int newValue) {
-				int month_num = newValue + 1;
+			public void onItemSelected(int index) {
+				int month_num = index + 1;
 				int maxItem = 30;
 				// 判断大小月及是否闰年,用来确定"日"的数据
 				if (list_big.contains(String.valueOf(month_num))) {
@@ -179,42 +178,41 @@ public class WheelTime {
 
 			}
 		};
-		wv_year.addChangingListener(wheelListener_year);
-		wv_month.addChangingListener(wheelListener_month);
+		wv_year.setOnItemSelectedListener(wheelListener_year);
+		wv_month.setOnItemSelectedListener(wheelListener_month);
 
 		// 根据屏幕密度来指定选择器字体的大小(不同屏幕可能不同)
-		int textSize = 0;
+		int textSize = 6;
 		switch(type){
 		case ALL:
-			textSize = (screenheight / 100) * 3;
+			textSize = textSize * 3;
 			break;
 		case YEAR_MONTH_DAY:
-			textSize = (screenheight / 100) * 4;
+			textSize = textSize * 4;
 			wv_hours.setVisibility(View.GONE);
 			wv_mins.setVisibility(View.GONE);
 			break;
 		case HOURS_MINS:
-			textSize = (screenheight / 100) * 4;
+			textSize = textSize * 4;
 			wv_year.setVisibility(View.GONE);
 			wv_month.setVisibility(View.GONE);
 			wv_day.setVisibility(View.GONE);
 			break;
 		case MONTH_DAY_HOUR_MIN:
-			textSize = (screenheight / 100) * 3;
+			textSize = textSize * 3;
 			wv_year.setVisibility(View.GONE);
 			break;
         case YEAR_MONTH:
-            textSize = (screenheight / 100) * 4;
+            textSize = textSize * 4;
             wv_day.setVisibility(View.GONE);
             wv_hours.setVisibility(View.GONE);
             wv_mins.setVisibility(View.GONE);
 		}
-			
-		wv_day.TEXT_SIZE = textSize;
-		wv_month.TEXT_SIZE = textSize;
-		wv_year.TEXT_SIZE = textSize;
-		wv_hours.TEXT_SIZE = textSize;
-		wv_mins.TEXT_SIZE = textSize;
+		wv_day.setTextSize(textSize);
+		wv_month.setTextSize(textSize);
+		wv_year.setTextSize(textSize);
+		wv_hours.setTextSize(textSize);
+		wv_mins.setTextSize(textSize);
 
 	}
 

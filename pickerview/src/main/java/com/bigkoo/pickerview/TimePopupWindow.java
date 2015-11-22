@@ -4,10 +4,8 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.bigkoo.pickerview.lib.ScreenInfo;
 import com.bigkoo.pickerview.lib.WheelTime;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
@@ -15,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 /**
  * 时间选择器
@@ -30,6 +29,7 @@ public class TimePopupWindow extends PopupWindow implements OnClickListener {
 	private View rootView; // 总的布局
 	WheelTime wheelTime;
 	private View btnSubmit, btnCancel;
+	private TextView tvTitle;
 	private static final String TAG_SUBMIT = "submit";
 	private static final String TAG_CANCEL = "cancel";
 	private OnTimeSelectListener timeSelectListener;
@@ -51,12 +51,11 @@ public class TimePopupWindow extends PopupWindow implements OnClickListener {
 		btnCancel.setTag(TAG_CANCEL);
 		btnSubmit.setOnClickListener(this);
 		btnCancel.setOnClickListener(this);
+		//顶部标题
+		tvTitle = (TextView) rootView.findViewById(R.id.tvTitle);
 		// ----时间转轮
 		final View timepickerview = rootView.findViewById(R.id.timepicker);
-		ScreenInfo screenInfo = new ScreenInfo((Activity) context);
 		wheelTime = new WheelTime(timepickerview, type);
-
-		wheelTime.screenheight = screenInfo.getHeight();
 
 		//默认选中当前时间
 		Calendar calendar = Calendar.getInstance();
@@ -162,4 +161,7 @@ public class TimePopupWindow extends PopupWindow implements OnClickListener {
 		this.timeSelectListener = timeSelectListener;
 	}
 
+	public void setTitle(String title){
+		tvTitle.setText(title);
+	}
 }

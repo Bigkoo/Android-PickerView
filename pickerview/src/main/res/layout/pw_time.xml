@@ -2,53 +2,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@android:color/white"
-        android:gravity="center_vertical"
-         >
-
-        <Button
-            android:id="@+id/btnCancel"
-            android:background="@android:color/transparent"
-            android:layout_width="60dp"
-            android:layout_height="34dp"
-            android:gravity="center"
-            android:text="@string/pickerview_cancel"
-            android:textColor="@drawable/wheel_timebtn" />
-
-        <Button
-            android:id="@+id/btnSubmit"
-            android:background="@android:color/transparent"
-            android:layout_width="60dp"
-            android:layout_height="34dp"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="@string/pickerview_submit"
-            android:textColor="@drawable/wheel_timebtn" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#D8D3D3" />
-
-    <RelativeLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
     <include
-        android:id="@+id/timepicker"
-        layout="@layout/include_timepicker" />
-    <View 
-        android:layout_alignTop="@id/timepicker"
-        android:layout_alignBottom="@id/timepicker"
-        android:background="@drawable/bg_above_timepicker"
+        layout="@layout/include_pickerview_topbar"
         android:layout_width="match_parent"
+        android:layout_height="@dimen/pickerview_topbar_height"/>
+
+    <LinearLayout
+        android:id="@+id/timepicker"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        />
-    </RelativeLayout>
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+
+        <com.bigkoo.pickerview.lib.WheelView
+            android:id="@+id/year"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.bigkoo.pickerview.lib.WheelView
+            android:id="@+id/month"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1" />
+
+        <com.bigkoo.pickerview.lib.WheelView
+            android:id="@+id/day"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1" />
+
+        <com.bigkoo.pickerview.lib.WheelView
+            android:id="@+id/hour"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1" />
+
+        <com.bigkoo.pickerview.lib.WheelView
+            android:id="@+id/min"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1" />
+    </LinearLayout>
+
 
 </LinearLayout>
