@@ -5,11 +5,11 @@ PickerView (2.x系列)
 ——TimePopupWindow  时间选择器，支持年月日时分，年月日，年月，时分等格式   
 ——OptionsPopupWindow  选项选择器，支持一，二，三级选项选择，并且可以设置是否联动    
 
-2.x是全新的3D效果，比1.x版本更加贴近iOS的效果，从外观细节上也得到了改善。api兼容1.x版本，只需要把依赖的版本号升级即可，不用改任何代码即可完成升级。
+2.x是全新的3D效果，比1.x版本更加贴近iOS的效果，从外观细节上也得到了改善。api兼容1.x版本，只需要把依赖的版本号升级即可，几乎不用修改代码即可完成升级。
 
 ####使用gradle 依赖:
 ```java
-   compile 'com.bigkoo:pickerview:2.0.0'
+   compile 'com.bigkoo:pickerview:2.0.1'
 ```
 
 ## Demo 图片
@@ -20,10 +20,13 @@ PickerView (2.x系列)
 
 >## 更新说明
 
->v2.0.0
+>v2.0.0 不需修改任何代码就可以兼容1.x
  - 外观大整改  <br />
  - 支持反射获取getPickerViewText()来获取要展示数据，以前只能传String的对象，现在可以传任意对象只要有getPickerViewText()函数即可显示对应的字符串，如果没有getPickerViewText()函数则使用对象toString作为显示  <br />
  - 加入setTitle  <br />
+>v2.0.1
+ - 去掉popupWindow，改用View，类名也对应修改为TimePickerView和 OptionsPickerView <br />
+ - 加入遮罩效果  <br />
 
 
 
