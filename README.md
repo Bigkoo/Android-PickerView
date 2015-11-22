@@ -24,6 +24,7 @@ PickerView (2.x系列)
  - 外观大整改  <br />
  - 支持反射获取getPickerViewText()来获取要展示数据，以前只能传String的对象，现在可以传任意对象只要有getPickerViewText()函数即可显示对应的字符串，如果没有getPickerViewText()函数则使用对象toString作为显示  <br />
  - 加入setTitle  <br />
+ 
 >v2.0.1
  - 去掉popupWindow，改用View，类名也对应修改为TimePickerView和 OptionsPickerView <br />
  - 加入遮罩效果  <br />
