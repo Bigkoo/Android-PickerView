@@ -18,6 +18,16 @@ PickerView (2.x系列)
 - [demo代码请看戳这里](https://github.com/saiwu-bigkoo/Android-PickerView/blob/master/app/src/main/java/com/bigkoo/pickerviewdemo/MainActivity.java)
 
 
+>## 更新说明
+
+>v2.0.0
+ - 外观大整改  <br />
+ - 支持反射获取getPickerViewText()来获取要展示数据，以前只能传String的对象，现在可以传任意对象只要有getPickerViewText()函数即可显示对应的字符串，如果没有getPickerViewText()函数则使用对象toString作为显示  <br />
+ - 加入setTitle  <br />
+
+
+
+
 -－－－－－－－－－－－－－－－－－－－－华丽丽的分割线－－－－－－－－－－－－－－－－－－－－－－－－－－
 
 PickerView1.x (我已经把1.0.3版本分到v1.x的分支去了，停止维护1.x的分支)
