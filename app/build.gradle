@@ -22,6 +22,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':pickerview')
-    //    compile 'com.bigkoo:pickerview:1.0.3'
+    //    compile 'com.bigkoo:pickerview:2.0.0'
     compile 'com.android.support:appcompat-v7:23.1.0'
 }
