@@ -25,7 +25,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 3d滚轮控件
+ * 3d滚轮控件,
  */
 public class WheelView extends View {
 
@@ -168,13 +168,19 @@ public class WheelView extends View {
 
         measureTextWidthHeight();
 
+        //最大Text的高度乘间距倍数得到 可见文字实际的总高度，半圆的周长
         halfCircumference = (int) (maxTextHeight * lineSpacingMultiplier * (itemsVisible - 1)) ;
+        //整个圆的周长除以PI得到直径，这个直径用作控件的总高度
         measuredHeight = (int) ((halfCircumference * 2) / Math.PI);
+        //求出半径
         radius = (int) (halfCircumference / Math.PI);
+        //控件宽度，这里支持weight
         measuredWidth = MeasureSpec.getSize(widthMeasureSpec);
+        //计算两条横线和控件中间点的Y位置
         firstLineY = (int) ((measuredHeight - lineSpacingMultiplier * maxTextHeight) / 2.0F);
         secondLineY = (int) ((measuredHeight + lineSpacingMultiplier * maxTextHeight) / 2.0F);
         centerY = (int) ((measuredHeight + maxTextHeight) / 2.0F - CENTERCONTENTOFFSET);
+        //初始化显示的item的position，根据是否loop
         if (initPosition == -1) {
             if (isLoop) {
                 initPosition = (adapter.getItemsCount() + 1) / 2;
@@ -186,6 +192,9 @@ public class WheelView extends View {
         preCurrentIndex = initPosition;
     }
 
+    /**
+     * 计算最大len的Text的宽高度
+     */
     private void measureTextWidthHeight() {
         Rect rect = new Rect();
         for (int i = 0; i < adapter.getItemsCount(); i++) {
@@ -280,78 +289,92 @@ public class WheelView extends View {
             return;
         }
 
-        Object as[] = new Object[itemsVisible];
+        //可见的item数组
+        Object visibles[] = new Object[itemsVisible];
+        //更加滚动的Y值高度除去每行Item的高度，得到滚动了多少个item，即change数
         change = (int) (totalScrollY / (lineSpacingMultiplier * maxTextHeight));
         try {
+            //滚动中实际的预选中的item(即经过了中间位置的item) ＝ 滑动前的位置 ＋ 滑动相对位置
             preCurrentIndex = initPosition + change % adapter.getItemsCount();
         }catch (ArithmeticException e){
             System.out.println("出错了！adapter.getItemsCount() == 0，联动数据不匹配");
         }
-        if (!isLoop) {
+        if (!isLoop) {//不循环的情况
             if (preCurrentIndex < 0) {
                 preCurrentIndex = 0;
             }
             if (preCurrentIndex > adapter.getItemsCount() - 1) {
                 preCurrentIndex = adapter.getItemsCount() - 1;
             }
-        } else {
-            if (preCurrentIndex < 0) {
+        } else {//循环
+            if (preCurrentIndex < 0) {//举个例子：如果总数是5，preCurrentIndex ＝ －1，那么preCurrentIndex按循环来说，其实是0的上面，也就是4的位置
                 preCurrentIndex = adapter.getItemsCount() + preCurrentIndex;
             }
-            if (preCurrentIndex > adapter.getItemsCount() - 1) {
+            if (preCurrentIndex > adapter.getItemsCount() - 1) {//同理上面,自己脑补一下
                 preCurrentIndex = preCurrentIndex - adapter.getItemsCount();
             }
         }
 
-        //change的另外一个变量，跟滚动流畅度有关
-        int j2 = (int) (totalScrollY % (lineSpacingMultiplier * maxTextHeight));
-        // 设置as数组中每个元素的值
-        int k1 = 0;
-        while (k1 < itemsVisible) {
-            int l1 = preCurrentIndex - (itemsVisible / 2 - k1);
+        //跟滚动流畅度有关，总滑动距离与每个item高度取余，即并不是一格格的滚动，每个item不一定滚到对应Rect里的，这个item对应格子的偏移值
+        int itemHeightOffset = (int) (totalScrollY % (lineSpacingMultiplier * maxTextHeight));
+        // 设置数组中每个元素的值
+        int counter = 0;
+        while (counter < itemsVisible) {
+            int index = preCurrentIndex - (itemsVisible / 2 - counter);//索引值，即当前在控件中间的item看作数据源的中间，计算出相对源数据源的index值
+            //判断是否循环，如果是循环数据源也使用相对循环的position获取对应的item值，如果不是循环则超出数据源范围使用""空白字符串填充，在界面上形成空白无数据的item项
             if (isLoop) {
-                if (l1 < 0) {
-                    l1 = l1 + adapter.getItemsCount();
+                if (index < 0) {
+                    index = index + adapter.getItemsCount();
+                    if(index < 0){
+                        index = 0;
+                    }
                 }
-                if (l1 > adapter.getItemsCount() - 1) {
-                    l1 = l1 - adapter.getItemsCount();
+                if (index > adapter.getItemsCount() - 1) {
+                    index = index - adapter.getItemsCount();
+                    if (index > adapter.getItemsCount() - 1){
+                        index = adapter.getItemsCount() - 1;
+                    }
                 }
-                as[k1] = adapter.getItem(l1);
-            } else if (l1 < 0) {
-                as[k1] = "";
-            } else if (l1 > adapter.getItemsCount() - 1) {
-                as[k1] = "";
+                visibles[counter] = adapter.getItem(index);
+            } else if (index < 0) {
+                visibles[counter] = "";
+            } else if (index > adapter.getItemsCount() - 1) {
+                visibles[counter] = "";
             } else {
-                as[k1] = adapter.getItem(l1);
+                visibles[counter] = adapter.getItem(index);
             }
-            k1++;
+            counter++;
+
         }
+
+        //中间两条横线
         canvas.drawLine(0.0F, firstLineY, measuredWidth, firstLineY, paintIndicator);
         canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintIndicator);
+        //单位的Label
         if(label != null) {
             int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText,label);
             //靠右并留出空隙
             canvas.drawText(label, drawRightContentStart - CENTERCONTENTOFFSET, centerY, paintCenterText);
         }
-        int j1 = 0;
-        while (j1 < itemsVisible) {
+        counter = 0;
+        while (counter < itemsVisible) {
             canvas.save();
             // L(弧长)=α（弧度）* r(半径) （弧度制）
             // 求弧度--> (L * π ) / (π * r)   (弧长X派/半圆周长)
             float itemHeight = maxTextHeight * lineSpacingMultiplier;
-            double radian = ((itemHeight * j1 - j2) * Math.PI) / halfCircumference;
+            double radian = ((itemHeight * counter - itemHeightOffset) * Math.PI) / halfCircumference;
             // 弧度转换成角度(把半圆以Y轴为轴心向右转90度，使其处于第一象限及第四象限
             float angle = (float) (90D - (radian / Math.PI) * 180D);
             if (angle >= 90F || angle <= -90F) {
                 canvas.restore();
             } else {
-                String contentText = getContentText(as[j1]);
+                String contentText = getContentText(visibles[counter]);
 
                 //计算开始绘制的位置
                 measuredCenterContentStart(contentText);
                 measuredOutContentStart(contentText);
                 int translateY = (int) (radius - Math.cos(radian) * radius - (Math.sin(radian) * maxTextHeight) / 2D);
-                //根据Math.sin(radian)来更改文字高度拉长和缩放，形成弧形3d视觉差
+                //根据Math.sin(radian)来更改canvas坐标系原点，然后缩放画布，使得文字高度进行缩放，形成弧形3d视觉差
                 canvas.translate(0.0F, translateY);
                 canvas.scale(1.0F, (float) Math.sin(radian));
                 if (translateY <= firstLineY && maxTextHeight + translateY >= firstLineY) {
@@ -382,10 +405,10 @@ public class WheelView extends View {
                     // 中间条目
                     canvas.clipRect(0, 0, measuredWidth, (int) (itemHeight));
                     canvas.drawText(contentText, drawCenterContentStart, maxTextHeight - CENTERCONTENTOFFSET, paintCenterText);
-                    //根据滚动多少个item和初始显示的item位置，计算出中间的item是第几个
-                    int middleCount = (int) Math.round((change + initPosition) % (adapter.getItemsCount() * 1.0));
-                    selectedItem = middleCount >= 0 ? middleCount : adapter.getItemsCount() + middleCount;
-                    selectedItem = adapter.indexOf(as[j1]);
+                    int preSelectedItem = adapter.indexOf(visibles[counter]);
+                    if(preSelectedItem != -1){
+                        selectedItem = preSelectedItem;
+                    }
                 } else {
                     // 其他条目
                     canvas.save();
@@ -396,7 +419,7 @@ public class WheelView extends View {
                 }
                 canvas.restore();
             }
-            j1++;
+            counter++;
         }
     }
 

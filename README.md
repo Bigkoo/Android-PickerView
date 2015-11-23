@@ -9,7 +9,7 @@ PickerView (2.x系列)
 
 ####使用gradle 依赖:
 ```java
-   compile 'com.bigkoo:pickerview:2.0.1'
+   compile 'com.bigkoo:pickerview:2.0.2’
 ```
 
 ## Demo 图片
@@ -28,6 +28,10 @@ PickerView (2.x系列)
 >v2.0.1
  - 去掉popupWindow，改用View，类名也对应修改为TimePickerView和 OptionsPickerView <br />
  - 加入遮罩效果  <br />
+
+>v2.0.2
+ - 修复不循环模式下点击空白item处出现数组越界问题 <br />
+ - 修复循环模式下只有一条数据的时候只显示三条而不是填充满高度问题  <br />
 
 
 

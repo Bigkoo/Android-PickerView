@@ -31,6 +31,19 @@ final class SmoothScrollTimerTask extends TimerTask {
             }
         }
         if (Math.abs(realTotalOffset) <= 0) {
+
+            //这里如果不是循环模式，则点击空白位置需要回滚，不然就会出现选到－1 item的 情况
+            if (!loopView.isLoop) {
+                float itemHeight = loopView.lineSpacingMultiplier * loopView.maxTextHeight;
+                if (loopView.totalScrollY <= (int) ((float) (-loopView.initPosition) * itemHeight)) {
+                    loopView.totalScrollY = (int) ((float) (-loopView.initPosition) * itemHeight);
+                    loopView.handler.sendEmptyMessage(MessageHandler.WHAT_INVALIDATE_LOOP_VIEW);
+                } else if (loopView.totalScrollY >= (int) ((float) (loopView.getItemsCount() - 1 - loopView.initPosition) * itemHeight)) {
+                    loopView.totalScrollY = (int) ((float) (loopView.getItemsCount() - 1 - loopView.initPosition) * itemHeight);
+                    loopView.handler.sendEmptyMessage(MessageHandler.WHAT_INVALIDATE_LOOP_VIEW);
+                }
+            }
+
             loopView.cancelFuture();
             loopView.handler.sendEmptyMessage(MessageHandler.WHAT_ITEM_SELECTED);
         } else {
