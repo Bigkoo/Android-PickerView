@@ -9,7 +9,7 @@ PickerView (2.x系列)
 
 ####使用gradle 依赖:
 ```java
-   compile 'com.bigkoo:pickerview:2.0.2’
+   compile 'com.bigkoo:pickerview:2.0.2'
 ```
 
 ## Demo 图片
