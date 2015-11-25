@@ -9,7 +9,7 @@ PickerView (2.x系列)
 
 ####使用gradle 依赖:
 ```java
-   compile 'com.bigkoo:pickerview:2.0.2'
+   compile 'com.bigkoo:pickerview:2.0.3'
 ```
 
 ## Demo 图片
@@ -33,6 +33,8 @@ PickerView (2.x系列)
  - 修复不循环模式下点击空白item处出现数组越界问题 <br />
  - 修复循环模式下只有一条数据的时候只显示三条而不是填充满高度问题  <br />
 
+>v2.0.3
+ - 修复时间选择的时候部分数字选不到直接跳到下一个数字的问题 <br />
 
 
 
