@@ -532,6 +532,7 @@ public class WheelView extends View {
                 break;
         }
         invalidate();
+
         return true;
     }
 

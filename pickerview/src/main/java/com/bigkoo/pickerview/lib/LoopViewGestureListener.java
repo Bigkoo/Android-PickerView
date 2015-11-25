@@ -2,8 +2,6 @@ package com.bigkoo.pickerview.lib;
 
 import android.view.MotionEvent;
 
-import com.bigkoo.pickerview.lib.WheelView;
-
 final class LoopViewGestureListener extends android.view.GestureDetector.SimpleOnGestureListener {
 
     final WheelView loopView;

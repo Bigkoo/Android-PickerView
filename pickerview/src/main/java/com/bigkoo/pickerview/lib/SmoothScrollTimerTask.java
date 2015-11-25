@@ -30,7 +30,8 @@ final class SmoothScrollTimerTask extends TimerTask {
                 realOffset = 1;
             }
         }
-        if (Math.abs(realTotalOffset) <= 0) {
+
+        if (Math.abs(realTotalOffset) <= 1) {
 
             //这里如果不是循环模式，则点击空白位置需要回滚，不然就会出现选到－1 item的 情况
             if (!loopView.isLoop) {
@@ -46,6 +47,7 @@ final class SmoothScrollTimerTask extends TimerTask {
 
             loopView.cancelFuture();
             loopView.handler.sendEmptyMessage(MessageHandler.WHAT_ITEM_SELECTED);
+
         } else {
             loopView.totalScrollY = loopView.totalScrollY + realOffset;
             loopView.handler.sendEmptyMessage(MessageHandler.WHAT_INVALIDATE_LOOP_VIEW);
