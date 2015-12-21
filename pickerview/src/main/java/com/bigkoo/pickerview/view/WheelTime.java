@@ -25,31 +25,12 @@ public class WheelTime {
 	private WheelView wv_mins;
 
 	private Type type;
-	private static int START_YEAR = 1990, END_YEAR = 2100;
+	public static final int DEFULT_START_YEAR = 1990;
+	public static final int DEFULT_END_YEAR = 2100;
+	private int startYear = DEFULT_START_YEAR;
+	private int endYear = DEFULT_END_YEAR;
 
-	public View getView() {
-		return view;
-	}
 
-	public void setView(View view) {
-		this.view = view;
-	}
-
-	public static int getSTART_YEAR() {
-		return START_YEAR;
-	}
-
-	public static void setSTART_YEAR(int sTART_YEAR) {
-		START_YEAR = sTART_YEAR;
-	}
-
-	public static int getEND_YEAR() {
-		return END_YEAR;
-	}
-
-	public static void setEND_YEAR(int eND_YEAR) {
-		END_YEAR = eND_YEAR;
-	}
 
 	public WheelTime(View view) {
 		super();
@@ -81,9 +62,9 @@ public class WheelTime {
 		Context context = view.getContext();
 		// 年
 		wv_year = (WheelView) view.findViewById(R.id.year);
-		wv_year.setAdapter(new NumericWheelAdapter(START_YEAR, END_YEAR));// 设置"年"的显示数据
+		wv_year.setAdapter(new NumericWheelAdapter(startYear, endYear));// 设置"年"的显示数据
 		wv_year.setLabel(context.getString(R.string.pickerview_year));// 添加文字
-		wv_year.setCurrentItem(year - START_YEAR);// 初始化时显示的数据
+		wv_year.setCurrentItem(year - startYear);// 初始化时显示的数据
 
 		// 月
 		wv_month = (WheelView) view.findViewById(R.id.month);
@@ -123,7 +104,7 @@ public class WheelTime {
 		OnItemSelectedListener wheelListener_year = new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(int index) {
-				int year_num = index + START_YEAR;
+				int year_num = index + startYear;
 				// 判断大小月及是否闰年,用来确定"日"的数据
 				int maxItem = 30;
 				if (list_big
@@ -164,9 +145,9 @@ public class WheelTime {
 					wv_day.setAdapter(new NumericWheelAdapter(1, 30));
 					maxItem = 30;
 				} else {
-					if (((wv_year.getCurrentItem() + START_YEAR) % 4 == 0 && (wv_year
-							.getCurrentItem() + START_YEAR) % 100 != 0)
-							|| (wv_year.getCurrentItem() + START_YEAR) % 400 == 0){
+					if (((wv_year.getCurrentItem() + startYear) % 4 == 0 && (wv_year
+							.getCurrentItem() + startYear) % 100 != 0)
+							|| (wv_year.getCurrentItem() + startYear) % 400 == 0){
 						wv_day.setAdapter(new NumericWheelAdapter(1, 29));
 						maxItem = 29;
 					}
@@ -232,11 +213,35 @@ public class WheelTime {
 	}
 	public String getTime() {
 		StringBuffer sb = new StringBuffer();
-			sb.append((wv_year.getCurrentItem() + START_YEAR)).append("-")
+			sb.append((wv_year.getCurrentItem() + startYear)).append("-")
 			.append((wv_month.getCurrentItem() + 1)).append("-")
 			.append((wv_day.getCurrentItem() + 1)).append(" ")
 			.append(wv_hours.getCurrentItem()).append(":")
 			.append(wv_mins.getCurrentItem());
 		return sb.toString();
+	}
+
+	public View getView() {
+		return view;
+	}
+
+	public void setView(View view) {
+		this.view = view;
+	}
+
+	public int getStartYear() {
+		return startYear;
+	}
+
+	public void setStartYear(int startYear) {
+		this.startYear = startYear;
+	}
+
+	public int getEndYear() {
+		return endYear;
+	}
+
+	public void setEndYear(int endYear) {
+		this.endYear = endYear;
 	}
 }

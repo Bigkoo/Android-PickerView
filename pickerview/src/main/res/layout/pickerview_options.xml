@@ -20,7 +20,8 @@
             android:id="@+id/options1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            />
 
         <com.bigkoo.pickerview.lib.WheelView
             android:id="@+id/options2"

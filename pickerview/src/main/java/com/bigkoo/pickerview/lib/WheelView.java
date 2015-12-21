@@ -25,7 +25,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 3d滚轮控件,
+ * 3d滚轮控件
  */
 public class WheelView extends View {
 
@@ -54,20 +54,20 @@ public class WheelView extends View {
     int maxTextWidth;
     int maxTextHeight;
 
-    int colorGray;
-    int colorBlack;
-    int colorLightGray;
+    int textColorOut;
+    int textColorCenter;
+    int dividerColor;
 
     // 条目间距倍数
     static final float lineSpacingMultiplier = 1.4F;
     boolean isLoop;
 
     // 第一条线Y坐标值
-    int firstLineY;
+    float firstLineY;
     //第二条线Y坐标
-    int secondLineY;
+    float secondLineY;
     //中间Y坐标
-    int centerY;
+    float centerY;
 
     //滚动总高度y值
     int totalScrollY;
@@ -91,7 +91,7 @@ public class WheelView extends View {
     int radius;
 
     private int mOffset = 0;
-    private float previousY;
+    private float previousY = 0;
     long startTime = 0;
 
     // 修改这个值可以改变滑行速度
@@ -111,9 +111,16 @@ public class WheelView extends View {
 
     public WheelView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        textColorOut = getResources().getColor(R.color.pickerview_wheelview_textcolor_out);
+        textColorCenter = getResources().getColor(R.color.pickerview_wheelview_textcolor_center);
+        dividerColor = getResources().getColor(R.color.pickerview_wheelview_textcolor_divider);
+
         if(attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.wheelview,0,0);
             mGravity = a.getInt(R.styleable.wheelview_gravity, Gravity.CENTER);
+            textColorOut = a.getColor(R.styleable.wheelview_textColorOut,textColorOut);
+            textColorCenter = a.getColor(R.styleable.wheelview_textColorCenter,textColorCenter);
+            dividerColor = a.getColor(R.styleable.wheelview_dividerColor,dividerColor);
         }
         initLoopView(context);
     }
@@ -126,9 +133,6 @@ public class WheelView extends View {
 
         isLoop = true;
         textSize = 0;
-        colorGray = 0xffafafaf;
-        colorBlack = 0xff313131;
-        colorLightGray = 0xffc5c5c5;
 
         totalScrollY = 0;
         initPosition = -1;
@@ -140,20 +144,20 @@ public class WheelView extends View {
 
     private void initPaints() {
         paintOuterText = new Paint();
-        paintOuterText.setColor(colorGray);
+        paintOuterText.setColor(textColorOut);
         paintOuterText.setAntiAlias(true);
         paintOuterText.setTypeface(Typeface.MONOSPACE);
         paintOuterText.setTextSize(textSize);
 
         paintCenterText = new Paint();
-        paintCenterText.setColor(colorBlack);
+        paintCenterText.setColor(textColorCenter);
         paintCenterText.setAntiAlias(true);
         paintCenterText.setTextScaleX(1.1F);
         paintCenterText.setTypeface(Typeface.MONOSPACE);
         paintCenterText.setTextSize(textSize);
 
         paintIndicator = new Paint();
-        paintIndicator.setColor(colorLightGray);
+        paintIndicator.setColor(dividerColor);
         paintIndicator.setAntiAlias(true);
 
         if (android.os.Build.VERSION.SDK_INT >= 11) {
@@ -177,9 +181,9 @@ public class WheelView extends View {
         //控件宽度，这里支持weight
         measuredWidth = MeasureSpec.getSize(widthMeasureSpec);
         //计算两条横线和控件中间点的Y位置
-        firstLineY = (int) ((measuredHeight - lineSpacingMultiplier * maxTextHeight) / 2.0F);
-        secondLineY = (int) ((measuredHeight + lineSpacingMultiplier * maxTextHeight) / 2.0F);
-        centerY = (int) ((measuredHeight + maxTextHeight) / 2.0F - CENTERCONTENTOFFSET);
+        firstLineY = (measuredHeight - lineSpacingMultiplier * maxTextHeight) / 2.0F;
+        secondLineY = (measuredHeight + lineSpacingMultiplier * maxTextHeight) / 2.0F;
+        centerY = (measuredHeight + maxTextHeight) / 2.0F - CENTERCONTENTOFFSET;
         //初始化显示的item的position，根据是否loop
         if (initPosition == -1) {
             if (isLoop) {
@@ -288,10 +292,9 @@ public class WheelView extends View {
         if (adapter == null) {
             return;
         }
-
         //可见的item数组
         Object visibles[] = new Object[itemsVisible];
-        //更加滚动的Y值高度除去每行Item的高度，得到滚动了多少个item，即change数
+        //滚动的Y值高度除去每行Item的高度，得到滚动了多少个item，即change数
         change = (int) (totalScrollY / (lineSpacingMultiplier * maxTextHeight));
         try {
             //滚动中实际的预选中的item(即经过了中间位置的item) ＝ 滑动前的位置 ＋ 滑动相对位置
@@ -321,6 +324,7 @@ public class WheelView extends View {
         int counter = 0;
         while (counter < itemsVisible) {
             int index = preCurrentIndex - (itemsVisible / 2 - counter);//索引值，即当前在控件中间的item看作数据源的中间，计算出相对源数据源的index值
+
             //判断是否循环，如果是循环数据源也使用相对循环的position获取对应的item值，如果不是循环则超出数据源范围使用""空白字符串填充，在界面上形成空白无数据的item项
             if (isLoop) {
                 if (index < 0) {
@@ -365,6 +369,7 @@ public class WheelView extends View {
             double radian = ((itemHeight * counter - itemHeightOffset) * Math.PI) / halfCircumference;
             // 弧度转换成角度(把半圆以Y轴为轴心向右转90度，使其处于第一象限及第四象限
             float angle = (float) (90D - (radian / Math.PI) * 180D);
+            // 九十度以上的不绘制
             if (angle >= 90F || angle <= -90F) {
                 canvas.restore();
             } else {
@@ -373,7 +378,7 @@ public class WheelView extends View {
                 //计算开始绘制的位置
                 measuredCenterContentStart(contentText);
                 measuredOutContentStart(contentText);
-                int translateY = (int) (radius - Math.cos(radian) * radius - (Math.sin(radian) * maxTextHeight) / 2D);
+                float translateY = (float) (radius - Math.cos(radian) * radius - (Math.sin(radian) * maxTextHeight) / 2D);
                 //根据Math.sin(radian)来更改canvas坐标系原点，然后缩放画布，使得文字高度进行缩放，形成弧形3d视觉差
                 canvas.translate(0.0F, translateY);
                 canvas.scale(1.0F, (float) Math.sin(radian));
@@ -484,7 +489,6 @@ public class WheelView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         boolean eventConsumed = gestureDetector.onTouchEvent(event);
         float itemHeight = lineSpacingMultiplier * maxTextHeight;
-
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 startTime = System.currentTimeMillis();
@@ -495,12 +499,17 @@ public class WheelView extends View {
             case MotionEvent.ACTION_MOVE:
                 float dy = previousY - event.getRawY();
                 previousY = event.getRawY();
-
                 totalScrollY = (int) (totalScrollY + dy);
 
                 // 边界处理。
                 if (!isLoop) {
                     float top = -initPosition * itemHeight;
+
+                    if(totalScrollY - itemHeight*0.3 < top){
+                        top = totalScrollY - dy;
+                    }
+
+
                     float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
 
                     if (totalScrollY < top) {

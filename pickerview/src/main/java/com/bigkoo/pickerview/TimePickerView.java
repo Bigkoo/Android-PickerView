@@ -59,12 +59,12 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     /**
      * 设置可以选择的时间范围
      *
-     * @param START_YEAR
-     * @param END_YEAR
+     * @param startYear
+     * @param endYear
      */
-    public void setRange(int START_YEAR, int END_YEAR) {
-        WheelTime.setSTART_YEAR(START_YEAR);
-        WheelTime.setEND_YEAR(END_YEAR);
+    public void setRange(int startYear, int endYear) {
+        wheelTime.setStartYear(startYear);
+        wheelTime.setEndYear(endYear);
     }
 
     /**
