@@ -42,6 +42,10 @@ final class InertiaTimerTask extends TimerTask {
             if(loopView.totalScrollY - itemHeight*0.3 < top){
                 top = loopView.totalScrollY + i;
             }
+            else if(loopView.totalScrollY + itemHeight*0.3 > bottom){
+                bottom = loopView.totalScrollY + i;
+            }
+
             if (loopView.totalScrollY <= top){
                 a = 40F;
                 loopView.totalScrollY = (int)top;
