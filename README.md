@@ -9,7 +9,7 @@ PickerView (2.x系列)
 
 ####使用gradle 依赖:
 ```java
-   compile 'com.bigkoo:pickerview:2.0.4'
+   compile 'com.bigkoo:pickerview:2.0.5'
 ```
 
 ## Demo 图片
@@ -37,8 +37,11 @@ PickerView (2.x系列)
  - 修复时间选择的时候部分数字选不到直接跳到下一个数字的问题 <br />
 
 >v2.0.4
- - 修复不循环模式下超出范围问题 <br />
+ - 修复不循环模式下顶部超出范围问题 <br />
  - wheel view文字颜色通过xml配置 <br />
+
+>v2.0.5
+ - 修复不循环模式下底部超出范围问题 <br />
 
 -－－－－－－－－－－－－－－－－－－－－华丽丽的分割线－－－－－－－－－－－－－－－－－－－－－－－－－－
 
