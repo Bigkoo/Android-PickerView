@@ -53,6 +53,7 @@ public class WheelView extends View {
     int textSize;
     int maxTextWidth;
     int maxTextHeight;
+    float itemHeight;//每行高度
 
     int textColorOut;
     int textColorCenter;
@@ -173,7 +174,7 @@ public class WheelView extends View {
         measureTextWidthHeight();
 
         //最大Text的高度乘间距倍数得到 可见文字实际的总高度，半圆的周长
-        halfCircumference = (int) (maxTextHeight * lineSpacingMultiplier * (itemsVisible - 1)) ;
+        halfCircumference = (int) (itemHeight * (itemsVisible - 1)) ;
         //整个圆的周长除以PI得到直径，这个直径用作控件的总高度
         measuredHeight = (int) ((halfCircumference * 2) / Math.PI);
         //求出半径
@@ -181,8 +182,8 @@ public class WheelView extends View {
         //控件宽度，这里支持weight
         measuredWidth = MeasureSpec.getSize(widthMeasureSpec);
         //计算两条横线和控件中间点的Y位置
-        firstLineY = (measuredHeight - lineSpacingMultiplier * maxTextHeight) / 2.0F;
-        secondLineY = (measuredHeight + lineSpacingMultiplier * maxTextHeight) / 2.0F;
+        firstLineY = (measuredHeight - itemHeight) / 2.0F;
+        secondLineY = (measuredHeight + itemHeight) / 2.0F;
         centerY = (measuredHeight + maxTextHeight) / 2.0F - CENTERCONTENTOFFSET;
         //初始化显示的item的position，根据是否loop
         if (initPosition == -1) {
@@ -214,13 +215,12 @@ public class WheelView extends View {
                 maxTextHeight = textHeight;
             }
         }
-
+        itemHeight = lineSpacingMultiplier * maxTextHeight;
     }
 
     void smoothScroll(ACTION action) {
         cancelFuture();
         if (action== ACTION.FLING||action== ACTION.DAGGLE) {
-            float itemHeight = lineSpacingMultiplier * maxTextHeight;
             mOffset = (int) ((totalScrollY%itemHeight + itemHeight) % itemHeight);
             if ((float) mOffset > itemHeight / 2.0F) {
                 mOffset = (int) (itemHeight - (float) mOffset);
@@ -295,7 +295,7 @@ public class WheelView extends View {
         //可见的item数组
         Object visibles[] = new Object[itemsVisible];
         //滚动的Y值高度除去每行Item的高度，得到滚动了多少个item，即change数
-        change = (int) (totalScrollY / (lineSpacingMultiplier * maxTextHeight));
+        change = (int) (totalScrollY / itemHeight);
         try {
             //滚动中实际的预选中的item(即经过了中间位置的item) ＝ 滑动前的位置 ＋ 滑动相对位置
             preCurrentIndex = initPosition + change % adapter.getItemsCount();
@@ -319,7 +319,7 @@ public class WheelView extends View {
         }
 
         //跟滚动流畅度有关，总滑动距离与每个item高度取余，即并不是一格格的滚动，每个item不一定滚到对应Rect里的，这个item对应格子的偏移值
-        int itemHeightOffset = (int) (totalScrollY % (lineSpacingMultiplier * maxTextHeight));
+        int itemHeightOffset = (int) (totalScrollY % itemHeight);
         // 设置数组中每个元素的值
         int counter = 0;
         while (counter < itemsVisible) {
@@ -488,7 +488,6 @@ public class WheelView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         boolean eventConsumed = gestureDetector.onTouchEvent(event);
-        float itemHeight = lineSpacingMultiplier * maxTextHeight;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 startTime = System.currentTimeMillis();

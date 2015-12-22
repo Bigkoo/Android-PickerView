@@ -36,7 +36,7 @@ final class InertiaTimerTask extends TimerTask {
         int i = (int) ((a * 10F) / 1000F);
         loopView.totalScrollY = loopView.totalScrollY - i;
         if (!loopView.isLoop) {
-            float itemHeight = loopView.lineSpacingMultiplier * loopView.maxTextHeight;
+            float itemHeight = loopView.itemHeight;
             float top = (-loopView.initPosition) * itemHeight;
             float bottom = (loopView.getItemsCount() - 1 - loopView.initPosition) * itemHeight;
             if(loopView.totalScrollY - itemHeight*0.3 < top){
