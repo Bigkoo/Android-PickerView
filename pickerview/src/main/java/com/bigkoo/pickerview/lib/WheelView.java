@@ -277,6 +277,10 @@ public class WheelView extends View {
         invalidate();
     }
 
+    public final WheelAdapter getAdapter(){
+        return adapter;
+    }
+
     public final int getCurrentItem() {
         return selectedItem;
     }

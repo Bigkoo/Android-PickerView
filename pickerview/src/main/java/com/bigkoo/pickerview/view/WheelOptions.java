@@ -201,14 +201,27 @@ public class WheelOptions<T> {
 	}
 
 	public void setCurrentItems(int option1, int option2, int option3) {
-        if(linkage&&wv_option1.getCurrentItem() != option1){
-            wheelListener_option1.onItemSelected(option1);
-        }
-        else if(linkage&&wv_option2.getCurrentItem() != option2){
-            wheelListener_option2.onItemSelected(option2);
+        if(linkage){
+            itemSelected(option1, option2, option3);
         }
         wv_option1.setCurrentItem(option1);
         wv_option2.setCurrentItem(option2);
         wv_option3.setCurrentItem(option3);
 	}
+
+	private void itemSelected(int opt1Select, int opt2Select, int opt3Select) {
+		if (mOptions2Items != null) {
+			wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items
+					.get(opt1Select)));
+			wv_option2.setCurrentItem(opt2Select);
+		}
+		if (mOptions3Items != null) {
+			wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items
+					.get(opt1Select).get(
+							opt2Select)));
+			wv_option3.setCurrentItem(opt3Select);
+		}
+	}
+
+
 }

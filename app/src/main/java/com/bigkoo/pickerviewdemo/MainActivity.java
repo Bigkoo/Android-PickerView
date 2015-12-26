@@ -150,8 +150,8 @@ public class MainActivity extends Activity {
         pvOptions.setTitle("选择城市");
         pvOptions.setCyclic(false, true, true);
         //设置默认选中的三级项目
-        pvOptions.setSelectOptions(0, 1, 0);
         //监听确定选择按钮
+        pvOptions.setSelectOptions(1, 1, 1);
         pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
 
             @Override
