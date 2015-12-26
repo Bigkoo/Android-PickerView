@@ -9,7 +9,7 @@ PickerView (2.x系列)
 
 ####使用gradle 依赖:
 ```java
-   compile 'com.bigkoo:pickerview:2.0.6'
+   compile 'com.bigkoo:pickerview:2.0.7'
 ```
 
 ## Demo 图片
@@ -45,6 +45,9 @@ PickerView (2.x系列)
 
 >v2.0.6
  - 修复不循环模式下点击超出范围问题，修复后点击空白的地方，只能滚到最顶或最底，不会滚出数据范围。 <br />
+
+>v2.0.7
+ - 修复设置初始化position ，第三级数据不对的BUG。 <br />
 
 -－－－－－－－－－－－－－－－－－－－－华丽丽的分割线－－－－－－－－－－－－－－－－－－－－－－－－－－
 
