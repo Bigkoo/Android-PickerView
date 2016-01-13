@@ -50,7 +50,8 @@ public class WheelView extends View {
     WheelAdapter adapter;
 
     private String label;//附加单位
-    int textSize;
+    int textSize;//选项的文字大小
+    boolean customTextSize;//自定义文字大小，为true则用于使setTextSize函数无效，只能通过xml修改
     int maxTextWidth;
     int maxTextHeight;
     float itemHeight;//每行高度
@@ -115,13 +116,16 @@ public class WheelView extends View {
         textColorOut = getResources().getColor(R.color.pickerview_wheelview_textcolor_out);
         textColorCenter = getResources().getColor(R.color.pickerview_wheelview_textcolor_center);
         dividerColor = getResources().getColor(R.color.pickerview_wheelview_textcolor_divider);
-
+        //配合customTextSize使用，customTextSize为true才会发挥效果
+        textSize = getResources().getDimensionPixelSize(R.dimen.pickerview_textsize);
+        customTextSize = getResources().getBoolean(R.bool.pickerview_customTextSize);
         if(attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.wheelview,0,0);
             mGravity = a.getInt(R.styleable.wheelview_gravity, Gravity.CENTER);
-            textColorOut = a.getColor(R.styleable.wheelview_textColorOut,textColorOut);
+            textColorOut = a.getColor(R.styleable.wheelview_textColorOut, textColorOut);
             textColorCenter = a.getColor(R.styleable.wheelview_textColorCenter,textColorCenter);
             dividerColor = a.getColor(R.styleable.wheelview_dividerColor,dividerColor);
+            textSize = a.getDimensionPixelOffset(R.styleable.wheelview_textSize,textSize);
         }
         initLoopView(context);
     }
@@ -133,14 +137,12 @@ public class WheelView extends View {
         gestureDetector.setIsLongpressEnabled(false);
 
         isLoop = true;
-        textSize = 0;
 
         totalScrollY = 0;
         initPosition = -1;
 
         initPaints();
 
-        setTextSize(16F);
     }
 
     private void initPaints() {
@@ -254,7 +256,7 @@ public class WheelView extends View {
     }
 
     public final void setTextSize(float size) {
-        if (size > 0.0F) {
+        if (size > 0.0F&&!customTextSize) {
             textSize = (int) (context.getResources().getDisplayMetrics().density * size);
             paintOuterText.setTextSize(textSize);
             paintCenterText.setTextSize(textSize);
@@ -331,18 +333,7 @@ public class WheelView extends View {
 
             //判断是否循环，如果是循环数据源也使用相对循环的position获取对应的item值，如果不是循环则超出数据源范围使用""空白字符串填充，在界面上形成空白无数据的item项
             if (isLoop) {
-                if (index < 0) {
-                    index = index + adapter.getItemsCount();
-                    if(index < 0){
-                        index = 0;
-                    }
-                }
-                if (index > adapter.getItemsCount() - 1) {
-                    index = index - adapter.getItemsCount();
-                    if (index > adapter.getItemsCount() - 1){
-                        index = adapter.getItemsCount() - 1;
-                    }
-                }
+                index = getLoopMappingIndex(index);
                 visibles[counter] = adapter.getItem(index);
             } else if (index < 0) {
                 visibles[counter] = "";
@@ -351,6 +342,7 @@ public class WheelView extends View {
             } else {
                 visibles[counter] = adapter.getItem(index);
             }
+
             counter++;
 
         }
@@ -430,6 +422,19 @@ public class WheelView extends View {
             }
             counter++;
         }
+    }
+
+    //递归计算出对应的index
+    private int getLoopMappingIndex(int index){
+        if(index < 0){
+            index = index + adapter.getItemsCount();
+            index = getLoopMappingIndex(index);
+        }
+        else if (index > adapter.getItemsCount() - 1) {
+            index = index - adapter.getItemsCount();
+            index = getLoopMappingIndex(index);
+        }
+        return index;
     }
 
     /**
