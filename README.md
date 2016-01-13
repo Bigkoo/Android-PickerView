@@ -9,7 +9,7 @@ PickerView (2.x系列)
 
 ####使用gradle 依赖:
 ```java
-   compile 'com.bigkoo:pickerview:2.0.7'
+   compile 'com.bigkoo:pickerview:2.0.8'
 ```
 
 ## Demo 图片
@@ -48,6 +48,10 @@ PickerView (2.x系列)
 
 >v2.0.7
  - 修复设置初始化position ，第三级数据不对的BUG。 <br />
+ 
+>v2.0.8
+ - 修复＃41 未选中项有错乱数据问题。<br />
+ - 加入pickerview_customTextSize 和 pickerview_textsize 到 xml 中 来控制自定义文字大小<br />
 
 -－－－－－－－－－－－－－－－－－－－－华丽丽的分割线－－－－－－－－－－－－－－－－－－－－－－－－－－
 
