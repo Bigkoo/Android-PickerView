@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 23
     buildToolsVersion "20.0.0"
 
     defaultConfig {
         applicationId "com.bigkoo.pickerviewdemo"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -21,7 +21,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
     compile project(':pickerview')
-//    compile 'com.bigkoo:pickerview:1.0.3'
+    //    compile 'com.bigkoo:pickerview:2.0.8'
+    compile 'com.android.support:appcompat-v7:23.1.0'
 }

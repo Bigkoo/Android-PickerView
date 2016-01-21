@@ -1,4 +1,4 @@
-package com.bigkoo.pickerview.lib;
+package com.bigkoo.pickerview.adapter;
 
 import java.util.ArrayList;
 
@@ -35,11 +35,11 @@ public class ArrayWheelAdapter<T> implements WheelAdapter {
 	}
 
 	@Override
-	public String getItem(int index) {
+	public Object getItem(int index) {
 		if (index >= 0 && index < items.size()) {
-			return items.get(index).toString();
+			return items.get(index);
 		}
-		return null;
+		return "";
 	}
 
 	@Override
@@ -48,8 +48,8 @@ public class ArrayWheelAdapter<T> implements WheelAdapter {
 	}
 
 	@Override
-	public int getMaximumLength() {
-		return length;
+	public int indexOf(Object o){
+		return items.indexOf(o);
 	}
 
 }
