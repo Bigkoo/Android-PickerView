@@ -120,12 +120,12 @@ public class WheelView extends View {
         textSize = getResources().getDimensionPixelSize(R.dimen.pickerview_textsize);
         customTextSize = getResources().getBoolean(R.bool.pickerview_customTextSize);
         if(attrs != null) {
-            TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.wheelview,0,0);
-            mGravity = a.getInt(R.styleable.wheelview_gravity, Gravity.CENTER);
-            textColorOut = a.getColor(R.styleable.wheelview_textColorOut, textColorOut);
-            textColorCenter = a.getColor(R.styleable.wheelview_textColorCenter,textColorCenter);
-            dividerColor = a.getColor(R.styleable.wheelview_dividerColor,dividerColor);
-            textSize = a.getDimensionPixelOffset(R.styleable.wheelview_textSize,textSize);
+            TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.pickerview,0,0);
+            mGravity = a.getInt(R.styleable.pickerview_pickerview_gravity, Gravity.CENTER);
+            textColorOut = a.getColor(R.styleable.pickerview_pickerview_textColorOut, textColorOut);
+            textColorCenter = a.getColor(R.styleable.pickerview_pickerview_textColorCenter,textColorCenter);
+            dividerColor = a.getColor(R.styleable.pickerview_pickerview_dividerColor,dividerColor);
+            textSize = a.getDimensionPixelOffset(R.styleable.pickerview_pickerview_textSize,textSize);
         }
         initLoopView(context);
     }
