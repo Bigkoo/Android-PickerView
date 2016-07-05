@@ -48,9 +48,6 @@ public class WheelTime {
 		this.setPicker(year, month, day, 0, 0);
 	}
 	
-	/**
-	 * @Description: TODO 弹出日期时间选择器
-	 */
 	public void setPicker(int year ,int month ,int day,int h,int m) {
 		// 添加大小月月份并将其转换为list,方便之后的判断
 		String[] months_big = { "1", "3", "5", "7", "8", "10", "12" };
