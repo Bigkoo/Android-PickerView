@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.view.BasePickerView;
+import com.bigkoo.pickerview.view.IPickData;
 import com.bigkoo.pickerview.view.WheelOptions;
 
 import java.util.ArrayList;
@@ -13,8 +14,8 @@ import java.util.ArrayList;
 /**
  * Created by Sai on 15/11/22.
  */
-public class OptionsPickerView<T> extends BasePickerView implements View.OnClickListener {
-    WheelOptions wheelOptions;
+public class OptionsPickerView<T extends IPickData> extends BasePickerView implements View.OnClickListener {
+    WheelOptions<T> wheelOptions;
     private View btnSubmit, btnCancel;
     private TextView tvTitle;
     private OnOptionsSelectListener optionsSelectListener;
