@@ -6,15 +6,16 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.view.BasePickerView;
-import com.bigkoo.pickerview.view.IPickData;
+import com.bigkoo.pickerview.model.IPickerViewData;
 import com.bigkoo.pickerview.view.WheelOptions;
 
 import java.util.ArrayList;
 
 /**
+ * 条件选择器
  * Created by Sai on 15/11/22.
  */
-public class OptionsPickerView<T extends IPickData> extends BasePickerView implements View.OnClickListener {
+public class OptionsPickerView<T> extends BasePickerView implements View.OnClickListener {
     WheelOptions<T> wheelOptions;
     private View btnSubmit, btnCancel;
     private TextView tvTitle;
@@ -55,55 +56,55 @@ public class OptionsPickerView<T extends IPickData> extends BasePickerView imple
     }
     /**
      * 设置选中的item位置
-     * @param option1
+     * @param option1 位置
      */
     public void setSelectOptions(int option1){
         wheelOptions.setCurrentItems(option1, 0, 0);
     }
     /**
      * 设置选中的item位置
-     * @param option1
-     * @param option2
+     * @param option1 位置
+     * @param option2 位置
      */
     public void setSelectOptions(int option1, int option2){
         wheelOptions.setCurrentItems(option1, option2, 0);
     }
     /**
      * 设置选中的item位置
-     * @param option1
-     * @param option2
-     * @param option3
+     * @param option1 位置
+     * @param option2 位置
+     * @param option3 位置
      */
     public void setSelectOptions(int option1, int option2, int option3){
         wheelOptions.setCurrentItems(option1, option2, option3);
     }
     /**
      * 设置选项的单位
-     * @param label1
+     * @param label1 单位
      */
     public void setLabels(String label1){
         wheelOptions.setLabels(label1, null, null);
     }
     /**
      * 设置选项的单位
-     * @param label1
-     * @param label2
+     * @param label1 单位
+     * @param label2 单位
      */
     public void setLabels(String label1,String label2){
         wheelOptions.setLabels(label1, label2, null);
     }
     /**
      * 设置选项的单位
-     * @param label1
-     * @param label2
-     * @param label3
+     * @param label1 单位
+     * @param label2 单位
+     * @param label3 单位
      */
     public void setLabels(String label1,String label2,String label3){
         wheelOptions.setLabels(label1, label2, label3);
     }
     /**
      * 设置是否循环滚动
-     * @param cyclic
+     * @param cyclic 是否循环
      */
     public void setCyclic(boolean cyclic){
         wheelOptions.setCyclic(cyclic);
@@ -135,7 +136,7 @@ public class OptionsPickerView<T extends IPickData> extends BasePickerView imple
     }
 
     public interface OnOptionsSelectListener {
-        public void onOptionsSelect(int options1, int option2, int options3);
+        void onOptionsSelect(int options1, int option2, int options3);
     }
 
     public void setOnoptionsSelectListener(

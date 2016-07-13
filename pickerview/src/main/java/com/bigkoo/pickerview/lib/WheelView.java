@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -17,7 +16,7 @@ import android.view.View;
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.adapter.WheelAdapter;
 import com.bigkoo.pickerview.listener.OnItemSelectedListener;
-import com.bigkoo.pickerview.view.IPickData;
+import com.bigkoo.pickerview.model.IPickerViewData;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -108,7 +107,6 @@ public class WheelView extends View {
     private int drawOutContentStart = 0;//非中间文字开始绘制位置
     private static final float SCALECONTENT = 0.8F;//非中间文字则用此控制高度，压扁形成3d错觉
     private static final float CENTERCONTENTOFFSET = 6;//中间文字文字居中需要此偏移值
-    private static final String GETPICKERVIEWTEXT = "getPickerViewText";//反射的方法名
 
     public WheelView(Context context) {
         this(context, null);
@@ -252,8 +250,7 @@ public class WheelView extends View {
 
     /**
      * 设置是否循环滚动
-     *
-     * @param cyclic
+     * @param cyclic 是否循环
      */
     public final void setCyclic(boolean cyclic) {
         isLoop = cyclic;
@@ -443,29 +440,18 @@ public class WheelView extends View {
     }
 
     /**
-     * 根据传进来的对象反射出getPickerViewText()方法，来获取需要显示的值
-     *
-     * @param item
-     * @return
+     * 根据传进来的对象获取getPickerViewText()方法，来获取需要显示的值
+     * @param item 数据源的item
+     * @return 对应显示的字符串
      */
     private String getContentText(Object item) {
-        if (item instanceof String && "".equals(item)) {
+        if (item == null) {
             return "";
         }
-        if (item instanceof IPickData) {
-            return ((IPickData) item).getContent();
+        else if (item instanceof IPickerViewData) {
+            return ((IPickerViewData) item).getPickerViewText();
         }
-        String contentText = item.toString();
-        try {
-            Class<?> clz = item.getClass();
-            Method m = clz.getMethod(GETPICKERVIEWTEXT);
-            contentText = m.invoke(item, new Object[0]).toString();
-        } catch (NoSuchMethodException e) {
-        } catch (InvocationTargetException e) {
-        } catch (IllegalAccessException e) {
-        } catch (Exception e) {
-        }
-        return contentText;
+        return item.toString();
     }
 
     private void measuredCenterContentStart(String content) {
@@ -567,8 +553,7 @@ public class WheelView extends View {
 
     /**
      * 获取Item个数
-     *
-     * @return
+     * @return item个数
      */
     public int getItemsCount() {
         return adapter != null ? adapter.getItemsCount() : 0;
@@ -576,8 +561,7 @@ public class WheelView extends View {
 
     /**
      * 附加在右边的单位字符串
-     *
-     * @param label
+     * @param label 单位
      */
     public void setLabel(String label) {
         this.label = label;

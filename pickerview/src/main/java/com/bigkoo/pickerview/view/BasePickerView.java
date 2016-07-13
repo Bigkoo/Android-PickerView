@@ -30,10 +30,11 @@ public class BasePickerView {
     private ViewGroup rootView;//附加View 的 根View
 
     private OnDismissListener onDismissListener;
-    private boolean isDismissing;
+    private boolean dismissing;
 
     private Animation outAnim;
     private Animation inAnim;
+    private boolean showing;
     private int gravity = Gravity.BOTTOM;
 
     public BasePickerView(Context context){
@@ -77,19 +78,19 @@ public class BasePickerView {
         if (isShowing()) {
             return;
         }
+        showing = true;
         onAttached(rootView);
     }
     /**
      * 检测该View是不是已经添加到根视图
-     *
      * @return 如果视图已经存在该View返回true
      */
     public boolean isShowing() {
         View view = decorView.findViewById(R.id.outmost_container);
-        return view != null;
+        return (view != null&&showing);
     }
     public void dismiss() {
-        if (isDismissing) {
+        if (dismissing&&!showing) {
             return;
         }
 
@@ -107,7 +108,8 @@ public class BasePickerView {
                     public void run() {
                         //从activity根视图移除
                         decorView.removeView(rootView);
-                        isDismissing = false;
+                        showing = false;
+                        dismissing = false;
                         if (onDismissListener != null) {
                             onDismissListener.onDismiss(BasePickerView.this);
                         }
@@ -121,7 +123,7 @@ public class BasePickerView {
             }
         });
         contentContainer.startAnimation(outAnim);
-        isDismissing = true;
+        dismissing = true;
     }
     public Animation getInAnimation() {
         int res = PickerViewAnimateUtil.getAnimationResource(this.gravity, true);

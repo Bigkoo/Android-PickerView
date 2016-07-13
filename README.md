@@ -9,7 +9,7 @@ PickerView (2.x系列)
 
 ####使用gradle 依赖:
 ```java
-   compile 'com.bigkoo:pickerview:2.0.9'
+   compile 'com.bigkoo:pickerview:2.1.0'
 ```
 
 ## Demo 图片
@@ -20,9 +20,13 @@ PickerView (2.x系列)
 
 >## 更新说明
   
+>v2.1.0
+ - 去掉反射获取字符串，改为通过继承IPickerViewData。<br />
+ - 解决多个PickerView同时存在时取消不了弹窗问题。<br />
+
 >v2.0.9
  - 解决属性和其他第三方库冲突问题。<br />
- 
+
 >v2.0.8
  - 修复＃41 未选中项有错乱数据问题。<br />
  - 加入pickerview_customTextSize 和 pickerview_textsize 到 xml 中 来控制自定义文字大小<br />
