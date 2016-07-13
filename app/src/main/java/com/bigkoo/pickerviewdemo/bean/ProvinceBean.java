@@ -1,9 +1,11 @@
 package com.bigkoo.pickerviewdemo.bean;
 
+import com.bigkoo.pickerview.view.IPickData;
+
 /**
  * Created by Sai on 15/11/22.
  */
-public class ProvinceBean {
+public class ProvinceBean implements IPickData{
     private long id;
     private String name;
     private String description;
@@ -51,6 +53,11 @@ public class ProvinceBean {
     //这个用来显示在PickerView上面的字符串,PickerView会通过反射获取getPickerViewText方法显示出来。
     public String getPickerViewText() {
         //这里还可以判断文字超长截断再提供显示
+        return name;
+    }
+
+    @Override
+    public String getContent() {
         return name;
     }
 }
