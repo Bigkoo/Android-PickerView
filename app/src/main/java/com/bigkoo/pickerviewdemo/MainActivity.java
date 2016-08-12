@@ -59,6 +59,7 @@ public class MainActivity extends Activity {
                 pvTime.show();
             }
         });
+
         //选项选择器
         pvOptions = new OptionsPickerView(this);
 
