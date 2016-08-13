@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
 //        Calendar calendar = Calendar.getInstance();
 //        pvTime.setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR));//要在setTime 之前才有效果哦
         pvTime.setTime(new Date());
-        pvTime.setCyclic(false);
+        pvTime.setCyclic(true);
         pvTime.setCancelable(true);
         //时间选择后回调
         pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
