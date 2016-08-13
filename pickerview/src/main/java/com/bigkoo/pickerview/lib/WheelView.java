@@ -463,7 +463,7 @@ public class WheelView extends View {
                 drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
                 break;
             case Gravity.LEFT:
-                drawCenterContentStart = 10;
+                drawCenterContentStart = 0;
                 break;
             case Gravity.RIGHT:
                 drawCenterContentStart = measuredWidth - rect.width();
@@ -479,7 +479,7 @@ public class WheelView extends View {
                 drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
                 break;
             case Gravity.LEFT:
-                drawOutContentStart = 10;
+                drawOutContentStart = 0;
                 break;
             case Gravity.RIGHT:
                 drawOutContentStart = measuredWidth - rect.width();

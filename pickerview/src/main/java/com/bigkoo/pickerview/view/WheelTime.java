@@ -16,7 +16,7 @@ import java.util.List;
 
 
 public class WheelTime {
-    public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private View view;
     private WheelView wv_year;
     private WheelView wv_month;
