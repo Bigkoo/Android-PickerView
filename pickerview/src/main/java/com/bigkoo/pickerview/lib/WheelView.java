@@ -460,7 +460,8 @@ public class WheelView extends View {
         paintCenterText.getTextBounds(content, 0, content.length(), rect);
         switch (mGravity) {
             case Gravity.CENTER:
-                drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
+                drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
+                //drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
                 break;
             case Gravity.LEFT:
                 drawCenterContentStart = 0;
@@ -476,7 +477,8 @@ public class WheelView extends View {
         paintOuterText.getTextBounds(content, 0, content.length(), rect);
         switch (mGravity) {
             case Gravity.CENTER:
-                drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
+                drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
+                //drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
                 break;
             case Gravity.LEFT:
                 drawOutContentStart = 0;
