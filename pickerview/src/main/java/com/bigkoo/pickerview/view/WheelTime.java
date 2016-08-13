@@ -24,6 +24,7 @@ public class WheelTime {
     private WheelView wv_hours;
     private WheelView wv_mins;
     private WheelView wv_seconds;
+    private int gravity;
 
     private Type type;
     public static final int DEFULT_START_YEAR = 1990;
@@ -39,10 +40,11 @@ public class WheelTime {
         setView(view);
     }
 
-    public WheelTime(View view, Type type) {
+    public WheelTime(View view, Type type, int gravity) {
         super();
         this.view = view;
         this.type = type;
+        this.gravity = gravity;
         setView(view);
     }
 
@@ -64,13 +66,13 @@ public class WheelTime {
         wv_year.setAdapter(new NumericWheelAdapter(startYear, endYear));// 设置"年"的显示数据
         wv_year.setLabel(context.getString(R.string.pickerview_year));// 添加文字
         wv_year.setCurrentItem(year - startYear);// 初始化时显示的数据
-
+        wv_year.setGravity(gravity);
         // 月
         wv_month = (WheelView) view.findViewById(R.id.month);
         wv_month.setAdapter(new NumericWheelAdapter(1, 12));
         wv_month.setLabel(context.getString(R.string.pickerview_month));
         wv_month.setCurrentItem(month);
-
+        wv_month.setGravity(gravity);
         // 日
         wv_day = (WheelView) view.findViewById(R.id.day);
         // 判断大小月及是否闰年,用来确定"日"的数据
@@ -87,23 +89,25 @@ public class WheelTime {
         }
         wv_day.setLabel(context.getString(R.string.pickerview_day));
         wv_day.setCurrentItem(day - 1);
-
-
+        wv_day.setGravity(gravity);
+        //时
         wv_hours = (WheelView) view.findViewById(R.id.hour);
         wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
         wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字
         wv_hours.setCurrentItem(h);
-
+        wv_hours.setGravity(gravity);
+        //分
         wv_mins = (WheelView) view.findViewById(R.id.min);
         wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
         wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
         wv_mins.setCurrentItem(m);
-
+        wv_mins.setGravity(gravity);
+        //秒
         wv_seconds = (WheelView) view.findViewById(R.id.second);
         wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
         wv_seconds.setLabel(context.getString(R.string.pickerview_seconds));// 添加文字
         wv_seconds.setCurrentItem(s);
-
+        wv_seconds.setGravity(gravity);
 
         // 添加"年"监听
         OnItemSelectedListener wheelListener_year = new OnItemSelectedListener() {

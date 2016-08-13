@@ -1,6 +1,7 @@
 package com.bigkoo.pickerview;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -19,7 +20,7 @@ import java.util.Date;
 public class TimePickerView extends BasePickerView implements View.OnClickListener {
     public enum Type {
         ALL, YEAR_MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN, YEAR_MONTH
-    }// 四种选择模式，年月日时分，年月日，时分，月日时分
+    }// 四种选择模式，年月日时分秒，年月日，时分，月日时分
 
     WheelTime wheelTime;
     private View btnSubmit, btnCancel;
@@ -28,8 +29,19 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private static final String TAG_CANCEL = "cancel";
     private OnTimeSelectListener timeSelectListener;
 
+
     public TimePickerView(Context context, Type type) {
         super(context);
+        this.initTimePickerView(context, type, Gravity.CENTER);
+    }
+
+
+    public TimePickerView(Context context, Type type, int gravity) {
+        super(context);
+        this.initTimePickerView(context, type, gravity);
+    }
+
+    private void initTimePickerView(Context context, Type type, int gravity) {
 
         LayoutInflater.from(context).inflate(R.layout.pickerview_time, contentContainer);
         // -----确定和取消按钮
@@ -43,7 +55,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         // ----时间转轮
         final View timepickerview = findViewById(R.id.timepicker);
-        wheelTime = new WheelTime(timepickerview, type);
+        wheelTime = new WheelTime(timepickerview, type, gravity);
 
         //默认选中当前时间
         Calendar calendar = Calendar.getInstance();
@@ -54,10 +66,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         int second = calendar.get(Calendar.SECOND);
-
         wheelTime.setPicker(year, month, day, hours, minute, second);
-
     }
+
 
     /**
      * 设置可以选择的时间范围
