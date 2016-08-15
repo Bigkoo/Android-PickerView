@@ -40,6 +40,8 @@ public class WheelView extends View {
     private GestureDetector gestureDetector;
     OnItemSelectedListener onItemSelectedListener;
 
+    private boolean isOptions = false;
+
     // Timer mTimer;
     ScheduledExecutorService mExecutor = Executors.newSingleThreadScheduledExecutor();
     private ScheduledFuture<?> mFuture;
@@ -460,8 +462,11 @@ public class WheelView extends View {
         paintCenterText.getTextBounds(content, 0, content.length(), rect);
         switch (mGravity) {
             case Gravity.CENTER:
-                drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
-                //drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
+                if (isOptions) {
+                    drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
+                } else {
+                    drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
+                }
                 break;
             case Gravity.LEFT:
                 drawCenterContentStart = 0;
@@ -477,8 +482,11 @@ public class WheelView extends View {
         paintOuterText.getTextBounds(content, 0, content.length(), rect);
         switch (mGravity) {
             case Gravity.CENTER:
-                drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
-                //drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
+                if (isOptions) {
+                    drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
+                } else {
+                    drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
+                }
                 break;
             case Gravity.LEFT:
                 drawOutContentStart = 0;
@@ -587,5 +595,9 @@ public class WheelView extends View {
             }
         }
         return iRet;
+    }
+
+    public void setIsOptions(boolean options) {
+        isOptions = options;
     }
 }
