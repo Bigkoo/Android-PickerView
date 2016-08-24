@@ -9,7 +9,7 @@ PickerView (2.x系列)
 
 ####使用gradle 依赖:
 ```java
-   compile 'com.bigkoo:pickerview:2.1.0'
+   compile 'com.bigkoo:pickerview:2.1.1'
 ```
 
 ## Demo 图片
@@ -19,7 +19,10 @@ PickerView (2.x系列)
 
 
 >## 更新说明
-  
+
+>v2.1.1
+ - 修复dismiss时候点击背景会重复dismiss动画问题。<br />
+
 >v2.1.0
  - 去掉反射获取字符串，改为通过继承IPickerViewData。<br />
  - 解决多个PickerView同时存在时取消不了弹窗问题。<br />

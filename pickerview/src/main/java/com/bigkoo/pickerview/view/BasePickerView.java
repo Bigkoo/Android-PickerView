@@ -34,7 +34,7 @@ public class BasePickerView {
 
     private Animation outAnim;
     private Animation inAnim;
-    private boolean showing;
+    private boolean isShowing;
     private int gravity = Gravity.BOTTOM;
 
     public BasePickerView(Context context){
@@ -78,7 +78,7 @@ public class BasePickerView {
         if (isShowing()) {
             return;
         }
-        showing = true;
+        isShowing = true;
         onAttached(rootView);
     }
     /**
@@ -86,13 +86,15 @@ public class BasePickerView {
      * @return 如果视图已经存在该View返回true
      */
     public boolean isShowing() {
-        View view = decorView.findViewById(R.id.outmost_container);
-        return (view != null&&showing);
+        return rootView.getParent() != null || isShowing;
     }
+
     public void dismiss() {
-        if (dismissing&&!showing) {
+        if (dismissing) {
             return;
         }
+
+        dismissing = true;
 
         //消失动画
         outAnim.setAnimationListener(new Animation.AnimationListener() {
@@ -106,13 +108,7 @@ public class BasePickerView {
                 decorView.post(new Runnable() {
                     @Override
                     public void run() {
-                        //从activity根视图移除
-                        decorView.removeView(rootView);
-                        showing = false;
-                        dismissing = false;
-                        if (onDismissListener != null) {
-                            onDismissListener.onDismiss(BasePickerView.this);
-                        }
+                        dismissImmediately();
                     }
                 });
             }
@@ -123,7 +119,17 @@ public class BasePickerView {
             }
         });
         contentContainer.startAnimation(outAnim);
-        dismissing = true;
+    }
+
+    public void dismissImmediately() {
+        //从activity根视图移除
+        decorView.removeView(rootView);
+        isShowing = false;
+        dismissing = false;
+        if (onDismissListener != null) {
+            onDismissListener.onDismiss(BasePickerView.this);
+        }
+
     }
     public Animation getInAnimation() {
         int res = PickerViewAnimateUtil.getAnimationResource(this.gravity, true);
