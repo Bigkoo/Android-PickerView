@@ -10,6 +10,7 @@ PickerView (2.x系列)
 ####使用gradle 依赖:
 ```java
    compile 'com.bigkoo:pickerview:2.1.1'
+  //这个是支持农历的分支 compile 'com.bigkoo:pickerview:lunar.1.0'
 ```
 
 ## Demo 图片
