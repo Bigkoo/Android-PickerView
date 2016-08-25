@@ -2,6 +2,7 @@ package com.bigkoo.pickerviewdemo;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
@@ -24,9 +26,11 @@ public class MainActivity extends Activity {
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<IPickerViewData>>> options3Items = new ArrayList<>();
     private TextView tvTime, tvOptions;
+    boolean isLunar = true;
     TimePickerView pvTime;
     OptionsPickerView pvOptions;
     View vMasker;
+    Button mBtnCal ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +39,15 @@ public class MainActivity extends Activity {
         vMasker=findViewById(R.id.vMasker);
         tvTime=(TextView) findViewById(R.id.tvTime);
         tvOptions=(TextView) findViewById(R.id.tvOptions);
+        mBtnCal = (Button) findViewById(R.id.mBtnCal);
         //时间选择器
         pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
+     //   pvTime.setLunarCalendar(true);
         //控制时间范围
-//        Calendar calendar = Calendar.getInstance();
-//        pvTime.setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR));//要在setTime 之前才有效果哦
+        Calendar calendar = Calendar.getInstance();
+        pvTime.setRange(calendar.get(Calendar.YEAR) - 100, calendar.get(Calendar.YEAR));//要在setTime 之前才有效果哦
         pvTime.setTime(new Date());
-        pvTime.setCyclic(false);
+        pvTime.setCyclic(true);
         pvTime.setCancelable(true);
         //时间选择后回调
         pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
@@ -57,6 +63,21 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 pvTime.show();
+            }
+        });
+        pvTime.setLunarCalendar(true);
+
+        mBtnCal.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isLunar = !isLunar;
+                if (isLunar){
+                    mBtnCal.setText("农历");
+                    pvTime.setLunarCalendar(true);
+                }else {
+                    mBtnCal.setText("公历");
+                    pvTime.setLunarCalendar(false);
+                }
             }
         });
         //选项选择器
@@ -169,7 +190,7 @@ public class MainActivity extends Activity {
             }
         });
         //点击弹出选项选择器
-        tvOptions.setOnClickListener(new View.OnClickListener() {
+        tvOptions.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {

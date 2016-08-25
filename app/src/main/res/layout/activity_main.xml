@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    <TextView
-        android:layout_margin="50dp"
-        android:id="@+id/tvTime"
-        android:text="时间"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/mLLTime"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="50dp"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/mBtnCal"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="农历"
+            android:layout_alignParentRight="true"
+            android:background="#117eff"/>
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:text="时间"
+            android:layout_width="match_parent"
+            android:layout_toLeftOf="@id/mBtnCal"
+            android:layout_height="50dp"/>
+
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/tvOptions"
         android:layout_margin="50dp"
-        android:layout_below="@+id/tvTime"
+        android:layout_below="@+id/mLLTime"
         android:text="条件"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
