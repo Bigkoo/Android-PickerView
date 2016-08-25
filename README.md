@@ -14,7 +14,7 @@ PickerView (Lunar分支)
 ```
 
 ## Demo 图片
-![](https://github.com/saiwu-bigkoo/PickerView/blob/master/preview/pickerdemo.gif)
+![](https://github.com/saiwu-bigkoo/Android-PickerView/blob/Lunar/preview/pickerdemo_lunar.JPG)
 
 ## Thanks
 
