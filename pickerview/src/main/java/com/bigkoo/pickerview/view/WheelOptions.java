@@ -115,7 +115,13 @@ public class WheelOptions<T> {
                     index = index >= mOptions2Items.get(opt1Select).size() - 1 ?  mOptions2Items.get(opt1Select).size() - 1 : index;
 					int opt3 = wv_option3.getCurrentItem();//上一个opt3的选中位置
                     //新opt3的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
-                    opt3 = opt3 >= mOptions3Items.get(opt1Select).get(index).size() - 1 ? mOptions3Items.get(opt1Select).get(index).size() - 1 : opt3;
+                    opt3 = opt3 >=
+								   mOptions3Items.get(opt1Select).
+										   get(index).size() - 1 ?
+						   mOptions3Items
+								   .get(opt1Select)
+								   .get(index).size() - 1 :
+						   opt3;
 
 					wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items
 							.get(wv_option1.getCurrentItem()).get(

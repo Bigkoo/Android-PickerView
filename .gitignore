@@ -31,3 +31,17 @@ build
 *.ipr
 *~
 *.swp
+
+# IntelliJ IDEA
+.idea
+*.iml
+
+# Gradle
+.gradle
+build
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Mac system files
+.DS_Store
