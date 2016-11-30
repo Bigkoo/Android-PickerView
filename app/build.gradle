@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "20.0.0"
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
         applicationId "com.bigkoo.pickerviewdemo"

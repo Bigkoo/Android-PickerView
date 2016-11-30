@@ -8,14 +8,21 @@
         android:id="@+id/tvTime"
         android:text="时间"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="30dp"/>
     <TextView
         android:id="@+id/tvOptions"
-        android:layout_margin="50dp"
+        android:layout_margin="30dp"
         android:layout_below="@+id/tvTime"
         android:text="条件"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
+    <TextView
+        android:id="@+id/tvCarNum"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="30dp"
+        android:layout_below="@+id/tvOptions"
+        android:text="车牌号码"/>
 
     <View
         android:id="@+id/vMasker"
