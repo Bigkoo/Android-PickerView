@@ -33,7 +33,6 @@ public class WheelOptions<T> {
 	public WheelOptions(View view) {
 		super();
 		this.view = view;
-		setView(view);
 	}
 
 	public void setPicker(ArrayList<T> optionsItems) {
