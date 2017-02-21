@@ -3,6 +3,7 @@ package com.bigkoo.pickerview.view;
 import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -80,6 +81,7 @@ public class BasePickerView {
         }
         isShowing = true;
         onAttached(rootView);
+        rootView.requestFocus();
     }
     /**
      * 检测该View是不是已经添加到根视图
@@ -145,6 +147,30 @@ public class BasePickerView {
         this.onDismissListener = onDismissListener;
         return this;
     }
+
+    public BasePickerView setKeyBackCancelable(boolean isCancelable) {
+        rootView.setFocusable(isCancelable);
+        rootView.setFocusableInTouchMode(isCancelable);
+        if (isCancelable) {
+            rootView.setOnKeyListener(onKeyBackListener);
+        }
+        else{
+            rootView.setOnKeyListener(null);
+        }
+        return this;
+    }
+
+    private View.OnKeyListener onKeyBackListener = new View.OnKeyListener() {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_DOWN
+                    && isShowing()){
+                dismiss();
+                return true;
+            }
+            return false;
+        }
+    } ;
 
     public BasePickerView setCancelable(boolean isCancelable) {
         View view = rootView.findViewById(R.id.outmost_container);

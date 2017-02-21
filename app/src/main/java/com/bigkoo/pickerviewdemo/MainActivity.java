@@ -153,6 +153,8 @@ public class MainActivity extends Activity {
 //        pwOptions.setLabels("省", "市", "区");
         pvOptions.setTitle("选择城市");
         pvOptions.setCyclic(false, true, true);
+        //设置回退键dismiss
+        pvOptions.setKeyBackCancelable(true);
         //设置默认选中的三级项目
         //监听确定选择按钮
         pvOptions.setSelectOptions(1, 1, 1);
@@ -187,11 +189,6 @@ public class MainActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if(pvOptions.isShowing()||pvTime.isShowing()){
-                pvOptions.dismiss();
-                pvTime.dismiss();
-                return true;
-            }
             if(pvTime.isShowing()){
                 pvTime.dismiss();
                 return true;
