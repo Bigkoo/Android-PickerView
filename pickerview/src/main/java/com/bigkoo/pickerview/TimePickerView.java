@@ -47,6 +47,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
     private int Size_Submit_Cancel;//确定取消按钮大小
     private int Size_Title;//标题字体大小
+    private int Size_Content;//内容字体大小
 
     private Date date ;//当前选中时间
     private int startYear;//开始年份
@@ -72,6 +73,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.Color_Background = builder.Color_Background;
         this.Size_Submit_Cancel = builder.Size_Submit_Cancel;
         this.Size_Title = builder.Size_Title;
+        this.Size_Content = builder.Size_Content;
         this.startYear = builder.startYear;
         this.endYear = builder.endYear;
         this.date = builder.date;
@@ -101,7 +103,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         private int Size_Submit_Cancel = 17;//确定取消按钮大小
         private int Size_Title = 18;//标题字体大小
-
+        private int Size_Content = 18;//内容字体大小
         private Date date ;//当前选中时间
         private int startYear;//开始年份
         private int endYear;//结尾年份
@@ -169,7 +171,10 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             this.Size_Title = Size_Title;
             return this;
         }
-
+        public Builder setContentSize(int Size_Content){
+            this.Size_Content = Size_Content;
+            return this;
+        }
         public Builder setDate(Date date){
             this.date = date;
             return this;
@@ -236,7 +241,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         rv_top_bar.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background);
         timePickerView.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background);
 
-        wheelTime = new WheelTime(timePickerView, type, gravity);
+        wheelTime = new WheelTime(timePickerView, type, gravity,Size_Content);
 
         if (startYear!=0&&endYear!=0&&startYear<=endYear){
             setRange();

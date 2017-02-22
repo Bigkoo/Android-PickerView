@@ -36,9 +36,8 @@ public class MainActivity extends Activity {
         tvTime=(Button) findViewById(R.id.tvTime);
         tvOptions=(Button) findViewById(R.id.tvOptions);
 
-         //控制时间范围,setRange 要在setDate 之前才有效果(如果不设置范围，则使用默认，此段代码可注释)
+         //控制时间范围,setRange 要在setDate 之前才有效果(如果不设置范围，则使用默认时间，此段代码可注释)
          Calendar calendar = Calendar.getInstance();
-
 
         //时间选择器
         //sample use
@@ -59,7 +58,10 @@ public class MainActivity extends Activity {
                 .setType(TimePickerView.Type.ALL)//default all
                 .setCancelText("Cancel")
                 .setSubmitText("Sure")
-                .setOutSideCancelable(false)// default true
+               /* .setOutSideCancelable(false)// default true*/
+                .setContentSize(18)
+                .setTitleSize(20)
+                .setTitleText("Title")
                 /*.isCyclic(true)// default false */
                 /*.setBackgroundColor(0xFF000000)//夜间模式 Night mode*/
                 /*.setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//default 1990-2100 years */
@@ -169,6 +171,8 @@ public class MainActivity extends Activity {
 
         //三级联动效果
         pvOptions.setPicker(options1Items, options2Items, options3Items, true);
+        pvOptions.setTextContentSize(18);
+
         //设置选择的三级单位
 //        pwOptions.setLabels("省", "市", "区");
         pvOptions.setTitle("选择城市");
@@ -176,7 +180,7 @@ public class MainActivity extends Activity {
 
         //设置回退键dismiss
         pvOptions.setKeyBackCancelable(true);
-
+        pvOptions.setOutSideCancelable(true);
         //设置默认选中项
         pvOptions.setSelectOptions(1, 1, 1);
 

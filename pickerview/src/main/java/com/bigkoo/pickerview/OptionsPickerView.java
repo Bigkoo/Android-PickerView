@@ -45,7 +45,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
                           ArrayList<ArrayList<T>> options2Items, boolean linkage) {
         wheelOptions.setPicker(options1Items, options2Items, null, linkage);
     }
-
+    public void setTextContentSize(int textSize) {
+        wheelOptions.setTextContentSize(textSize);
+    }
     public void setPicker(ArrayList<T> options1Items,
                           ArrayList<ArrayList<T>> options2Items,
                           ArrayList<ArrayList<ArrayList<T>>> options3Items,

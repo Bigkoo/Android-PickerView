@@ -15,6 +15,7 @@ public class WheelOptions<T> {
     private WheelView wv_option2;
     private WheelView wv_option3;
 
+    private int textSize = 20;
     private ArrayList<T> mOptions1Items;
     private ArrayList<ArrayList<T>> mOptions2Items;
     private ArrayList<ArrayList<ArrayList<T>>> mOptions3Items;
@@ -34,7 +35,7 @@ public class WheelOptions<T> {
     public WheelOptions(View view) {
         super();
         this.view = view;
-        setView(view);
+
     }
 
     public void setPicker(ArrayList<T> optionsItems) {
@@ -75,13 +76,7 @@ public class WheelOptions<T> {
                     .get(0)));// 设置显示数据
         wv_option3.setCurrentItem(wv_option3.getCurrentItem());// 初始化时显示的数据
 
-        int textSize = 25;
-
-
-
-        wv_option1.setTextSize(textSize);
-        wv_option2.setTextSize(textSize);
-        wv_option3.setTextSize(textSize);
+       setTextContentSize(textSize);
 
         wv_option1.setIsOptions(true);
         wv_option2.setIsOptions(true);
@@ -140,6 +135,12 @@ public class WheelOptions<T> {
             wv_option2.setOnItemSelectedListener(wheelListener_option2);
     }
 
+    public void setTextContentSize(int textSize) {
+        wv_option1.setTextSize(textSize);
+        wv_option2.setTextSize(textSize);
+        wv_option3.setTextSize(textSize);
+    }
+
     /**
      * 设置选项的单位
      *
@@ -176,24 +177,6 @@ public class WheelOptions<T> {
         wv_option1.setCyclic(cyclic1);
         wv_option2.setCyclic(cyclic2);
         wv_option3.setCyclic(cyclic3);
-    }
-
-    /**
-     * 设置第二级是否循环滚动
-     *
-     * @param cyclic 是否循环
-     */
-    public void setOption2Cyclic(boolean cyclic) {
-        wv_option2.setCyclic(cyclic);
-    }
-
-    /**
-     * 设置第三级是否循环滚动
-     *
-     * @param cyclic 是否循环
-     */
-    public void setOption3Cyclic(boolean cyclic) {
-        wv_option3.setCyclic(cyclic);
     }
 
     /**
