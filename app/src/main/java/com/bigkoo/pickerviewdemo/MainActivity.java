@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
@@ -24,25 +24,22 @@ public class MainActivity extends Activity {
     private ArrayList<ProvinceBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<IPickerViewData>>> options3Items = new ArrayList<>();
-    private TextView tvTime, tvOptions;
+    private Button tvTime, tvOptions;
     TimePickerView pvTime;
     OptionsPickerView pvOptions;
-    View vMasker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        vMasker=findViewById(R.id.vMasker);
 
-        tvTime=(TextView) findViewById(R.id.tvTime);
-        tvOptions=(TextView) findViewById(R.id.tvOptions);
+        tvTime=(Button) findViewById(R.id.tvTime);
+        tvOptions=(Button) findViewById(R.id.tvOptions);
 
-
-        //控制时间范围
+         //控制时间范围
          Calendar calendar = Calendar.getInstance();
-        // setRange 要在setDate 之前才有效果哦
-        //
+        // setRange 要在setDate 之前才有效果
+
         //时间选择器
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
@@ -50,10 +47,15 @@ public class MainActivity extends Activity {
                 tvTime.setText(getTime(date));
             }
         })
+                .setType(TimePickerView.Type.ALL)//default all
                 .setCancelText("Cancel")
                 .setSubmitText("Sure")
-                .setBackgroundColor(0xFF000000)//夜间模式
-                .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR))
+                .setOutSideCancelable(false)// default true
+
+                /*.isCyclic(true)// default false */
+                /*.setBackgroundColor(0xFF000000)//夜间模式*/
+                .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)
+                /*.setDate(new Date())// default system*/
                 .build();
 
         //弹出时间选择器
@@ -66,13 +68,16 @@ public class MainActivity extends Activity {
                 }
             }
         });
+
+
+
         //选项选择器
         pvOptions = new OptionsPickerView(this);
 
         //选项1
         options1Items.add(new ProvinceBean(0,"广东","广东省，以岭南东道、广南东路得名","其他数据"));
         options1Items.add(new ProvinceBean(1,"湖南","湖南省地处中国中部、长江中游，因大部分区域处于洞庭湖以南而得名湖南","芒果TV"));
-        options1Items.add(new ProvinceBean(3,"广西","嗯～～",""));
+        options1Items.add(new ProvinceBean(3,"广西","嗯～",""));
 
         //选项2
         ArrayList<String> options2Items_01=new ArrayList<>();
@@ -158,6 +163,7 @@ public class MainActivity extends Activity {
 //        pwOptions.setLabels("省", "市", "区");
         pvOptions.setTitle("选择城市");
         pvOptions.setCyclic(false, true, true);
+
         //设置回退键dismiss
         pvOptions.setKeyBackCancelable(true);
         //设置默认选中的三级项目
@@ -172,7 +178,6 @@ public class MainActivity extends Activity {
                         + options2Items.get(options1).get(option2)
                         + options3Items.get(options1).get(option2).get(options3).getPickerViewText();
                 tvOptions.setText(tx);
-                vMasker.setVisibility(View.GONE);
             }
         });
         //点击弹出选项选择器
@@ -185,7 +190,7 @@ public class MainActivity extends Activity {
         });
     }
 
-    public static String getTime(Date date) {
+    public static String getTime(Date date) {//可根据需要自己截取数据显示
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(date);
     }

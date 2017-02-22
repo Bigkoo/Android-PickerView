@@ -2,6 +2,7 @@ package com.bigkoo.pickerview;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +24,10 @@ import java.util.Date;
  * Updated by XiaoSong on 2017-2-22.
  */
 public class TimePickerView extends BasePickerView implements View.OnClickListener {
+
     public enum Type {
         ALL, YEAR_MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN, YEAR_MONTH
-    }// 五种选择模式，年月日时分秒，年月日，时分，月日时分，年月
+    } // 五种选择模式，年月日时分秒，年月日，时分，月日时分，年月
 
     WheelTime wheelTime; //自定义控件
     private Button btnSubmit, btnCancel; //确定、取消按钮
@@ -50,7 +52,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private int startYear;//开始年份
     private int endYear;//结尾年份
     private boolean cyclic;//是否循环
-    private boolean Cancelable;//是否能取消
+    private boolean cancelable;//是否能取消
 
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
@@ -74,7 +76,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.endYear = builder.endYear;
         this.date = builder.date;
         this.cyclic = builder.cyclic;
-        this.Cancelable = builder.Cancelable;
+        this.cancelable = builder.cancelable;
         initView(builder.context);
     }
 
@@ -88,9 +90,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private TimePickerView.Type type = Type.ALL;//显示类型 默认全部显示
         private int gravity = Gravity.CENTER;//内容显示位置 默认居中
 
-        private String Str_Submit="确定";//确定按钮文字
-        private String Str_Cancel="取消";//取消按钮文字
-        private String Str_Title="标题";//标题文字
+        private String Str_Submit;//确定按钮文字
+        private String Str_Cancel;//取消按钮文字
+        private String Str_Title;//标题文字
 
         private int Color_Submit;//确定按钮颜色
         private int Color_Cancel;//取消按钮颜色
@@ -104,7 +106,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private int startYear;//开始年份
         private int endYear;//结尾年份
         private boolean cyclic = false;//是否循环
-        private boolean Cancelable = true;//是否能取消
+        private boolean cancelable = true;//是否能取消
 
         //Required
         public Builder(Context context, OnTimeSelectListener listener) {
@@ -179,13 +181,13 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
-        public Builder IsCyclic(boolean cyclic) {
+        public Builder isCyclic(boolean cyclic) {
             this.cyclic = cyclic;
             return this;
         }
 
-        public Builder Cancelable(boolean cancelable) {
-            this.Cancelable = cancelable;
+        public Builder setOutSideCancelable(boolean cancelable) {
+            this.cancelable = cancelable;
             return this;
         }
 
@@ -213,9 +215,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         btnCancel.setOnClickListener(this);
 
         //设置文字
-        btnSubmit.setText(Str_Submit);
-        btnCancel.setText(Str_Cancel);
-        tvTitle.setText(Str_Title);
+        btnSubmit.setText(TextUtils.isEmpty(Str_Submit)?context.getResources().getString(R.string.pickerview_submit):Str_Submit);
+        btnCancel.setText(TextUtils.isEmpty(Str_Cancel)?context.getResources().getString(R.string.pickerview_cancel):Str_Cancel);
+        tvTitle.setText(TextUtils.isEmpty(Str_Title)?"":Str_Title);//默认为空
 
         //设置文字颜色
         btnSubmit.setTextColor(Color_Submit==0?ContextCompat.getColor(context, R.color.pickerview_timebtn_nor):Color_Submit);
@@ -228,19 +230,19 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         tvTitle.setTextSize(Size_Title);
 
         // 时间转轮 自定义控件
-        LinearLayout timepickerview = (LinearLayout) findViewById(R.id.timepicker);
+        LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);
 
-        RelativeLayout rv_topbar = (RelativeLayout) findViewById(R.id.rv_topbar);
-        rv_topbar.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background);
-        timepickerview.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background);
+        RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
+        rv_top_bar.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background);
+        timePickerView.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background);
 
-        wheelTime = new WheelTime(timepickerview, type, gravity);
+        wheelTime = new WheelTime(timePickerView, type, gravity);
 
         if (startYear!=0&&endYear!=0&&startYear<=endYear){
             setRange();
         }
         setTime();
-        setCancelable(Cancelable);
+        setOutSideCancelable(cancelable);
         wheelTime.setCyclic(cyclic);
     }
 
