@@ -20,5 +20,5 @@
 
 ## Thanks
 
-- WheelView
+- [WheelView](https://github.com/venshine/WheelView)
 - [androidWheelView](https://github.com/weidongjian/androidWheelView/)
