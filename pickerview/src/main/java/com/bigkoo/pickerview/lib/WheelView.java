@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -204,7 +205,7 @@ public class WheelView extends View {
     }
 
     /**
-     * 计算最大len的Text的宽高度
+     * 计算最大length的Text的宽高度
      */
     private void measureTextWidthHeight() {
         Rect rect = new Rect();
@@ -311,7 +312,7 @@ public class WheelView extends View {
             //滚动中实际的预选中的item(即经过了中间位置的item) ＝ 滑动前的位置 ＋ 滑动相对位置
             preCurrentIndex = initPosition + change % adapter.getItemsCount();
         } catch (ArithmeticException e) {
-            System.out.println("出错了！adapter.getItemsCount() == 0，联动数据不匹配");
+            Log.e("WheelView","出错了！adapter.getItemsCount() == 0，联动数据不匹配");
         }
         if (!isLoop) {//不循环的情况
             if (preCurrentIndex < 0) {

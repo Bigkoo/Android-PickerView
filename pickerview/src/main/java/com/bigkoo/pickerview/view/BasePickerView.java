@@ -172,7 +172,7 @@ public class BasePickerView {
         }
     } ;
 
-    public BasePickerView setCancelable(boolean isCancelable) {
+    protected BasePickerView setCancelable(boolean isCancelable) {
         View view = rootView.findViewById(R.id.outmost_container);
 
         if (isCancelable) {

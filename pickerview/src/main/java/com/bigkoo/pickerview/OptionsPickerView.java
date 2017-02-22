@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.view.BasePickerView;
-import com.bigkoo.pickerview.model.IPickerViewData;
 import com.bigkoo.pickerview.view.WheelOptions;
 
 import java.util.ArrayList;
@@ -109,6 +108,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     public void setCyclic(boolean cyclic){
         wheelOptions.setCyclic(cyclic);
     }
+
     public void setCyclic(boolean cyclic1,boolean cyclic2,boolean cyclic3) {
         wheelOptions.setCyclic(cyclic1,cyclic2,cyclic3);
     }
