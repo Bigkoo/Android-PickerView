@@ -171,7 +171,7 @@ public class MainActivity extends Activity {
 
         //三级联动效果
         pvOptions.setPicker(options1Items, options2Items, options3Items, true);
-        pvOptions.setTextContentSize(18);
+        pvOptions.setTextContentSize(18);//设置内容大小
 
         //设置选择的三级单位
 //        pwOptions.setLabels("省", "市", "区");
