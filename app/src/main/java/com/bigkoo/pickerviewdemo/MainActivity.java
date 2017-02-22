@@ -36,11 +36,20 @@ public class MainActivity extends Activity {
         tvTime=(Button) findViewById(R.id.tvTime);
         tvOptions=(Button) findViewById(R.id.tvOptions);
 
-         //控制时间范围
+         //控制时间范围,setRange 要在setDate 之前才有效果(如果不设置范围，则使用默认，此段代码可注释)
          Calendar calendar = Calendar.getInstance();
-        // setRange 要在setDate 之前才有效果
+
 
         //时间选择器
+        //sample use
+        /*pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date) {
+                tvTime.setText(getTime(date));
+            }
+        }).build();*/
+
+        //DIY
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {//选中事件回调
@@ -51,10 +60,9 @@ public class MainActivity extends Activity {
                 .setCancelText("Cancel")
                 .setSubmitText("Sure")
                 .setOutSideCancelable(false)// default true
-
                 /*.isCyclic(true)// default false */
-                /*.setBackgroundColor(0xFF000000)//夜间模式*/
-                .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)
+                /*.setBackgroundColor(0xFF000000)//夜间模式 Night mode*/
+                /*.setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//default 1990-2100 years */
                 /*.setDate(new Date())// default system*/
                 .build();
 
