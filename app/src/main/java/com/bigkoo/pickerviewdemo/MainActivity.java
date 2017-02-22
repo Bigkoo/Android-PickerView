@@ -149,6 +149,8 @@ public class MainActivity extends Activity {
         options3Items_02_02.add(new PickerViewData("岳阳5"));
 
         options3Items_02.add(options3Items_02_02);
+
+
         ArrayList<IPickerViewData> options3Items_03_01=new ArrayList<>();
         options3Items_03_01.add(new PickerViewData("好山水"));
         options3Items_03.add(options3Items_03_01);
@@ -162,13 +164,15 @@ public class MainActivity extends Activity {
         //设置选择的三级单位
 //        pwOptions.setLabels("省", "市", "区");
         pvOptions.setTitle("选择城市");
-        pvOptions.setCyclic(false, true, true);
+        pvOptions.setCyclic(false, false, false);
 
         //设置回退键dismiss
         pvOptions.setKeyBackCancelable(true);
-        //设置默认选中的三级项目
-        //监听确定选择按钮
+
+        //设置默认选中项
         pvOptions.setSelectOptions(1, 1, 1);
+
+        //监听确定点击回调
         pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
 
             @Override
