@@ -3,25 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <TextView
-        android:layout_margin="50dp"
+    <Button
+        android:layout_margin="40dp"
         android:id="@+id/tvTime"
-        android:text="时间"
+        android:text="@string/picker_time"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
-    <TextView
+    <Button
         android:id="@+id/tvOptions"
-        android:layout_margin="50dp"
+        android:layout_margin="40dp"
         android:layout_below="@+id/tvTime"
-        android:text="条件"
+        android:text="@string/picker_province"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
-
-    <View
-        android:id="@+id/vMasker"
-        android:visibility="gone"
-        android:background="#e0000000"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
 
 </RelativeLayout>

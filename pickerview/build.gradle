@@ -1,18 +1,19 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
+/*apply plugin: 'com.jfrog.bintray'*/
+apply plugin: 'com.novoda.bintray-release'//添加插件
 
-version = "2.1.1"
+
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "20.0.0"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 23
-        versionCode 4
-        versionName "2.1.1"
+        targetSdkVersion 25
+        versionCode 6
+        versionName "3.0.2"
     }
     buildTypes {
         release {
@@ -25,78 +26,25 @@ android {
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-}
-
-def siteUrl = 'https://github.com/saiwu-bigkoo/Android-PickerView'                        // #CONFIG# // project homepage
-def gitUrl = 'https://github.com/saiwu-bigkoo/Android-PickerView.git'                     // #CONFIG# // project git
-group = "com.bigkoo"
-
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                name 'PickerView For Android'                                   // #CONFIG# // project title
-                url siteUrl
-                // Set your license
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'sai'                                           // #CONFIG# // your user id (you can write your nickname)
-                        name 'sai.wu'                                       // #CONFIG# // your user name
-                        email 'sai.wu@bigkoo.com'                               // #CONFIG# // your email
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
+allprojects {
+    tasks.withType(Javadoc) {//兼容中文字符
+        options{
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
         }
     }
 }
-
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
+publish {
+    userOrg = 'contrarywind'//bintray.com 用户名/组织名 user/org name
+    groupId = 'com.contrarywind'//JCenter上显示的路径 path
+    artifactId = 'Android-PickerView'//项目名称 project name
+    publishVersion = '3.0.2'//版本号 version code
+    desc = 'this is a pickerview for android'//项目描述 description
+    website = 'https://github.com/Contrarywind/Android-PickerView' //项目网址链接 link
 }
 
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    configurations = ['archives']
-    pkg {
-        repo = "maven"
-        name = "PickerView"                                                 // #CONFIG# project name in jcenter
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
-    }
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-compat:25.1.1'
 }

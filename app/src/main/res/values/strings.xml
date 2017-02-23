@@ -5,4 +5,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="picker_time">时间选择器</string>
+    <string name="picker_province">条件选择器</string>
 </resources>

@@ -11,9 +11,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
-import com.bigkoo.pickerview.utils.PickerViewAnimateUtil;
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.listener.OnDismissListener;
+import com.bigkoo.pickerview.utils.PickerViewAnimateUtil;
 
 /**
  * Created by Sai on 15/11/22.
@@ -80,6 +80,7 @@ public class BasePickerView {
         }
         isShowing = true;
         onAttached(rootView);
+        rootView.requestFocus();
     }
     /**
      * 检测该View是不是已经添加到根视图
@@ -146,7 +147,31 @@ public class BasePickerView {
         return this;
     }
 
-    public BasePickerView setCancelable(boolean isCancelable) {
+    /*public BasePickerView setKeyBackCancelable(boolean isCancelable) {
+        rootView.setFocusable(isCancelable);
+        rootView.setFocusableInTouchMode(isCancelable);
+        if (isCancelable) {
+            rootView.setOnKeyListener(onKeyBackListener);
+        }
+        else{
+            rootView.setOnKeyListener(null);
+        }
+        return this;
+    }
+
+    private View.OnKeyListener onKeyBackListener = new View.OnKeyListener() {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_DOWN
+                    && isShowing()){
+                dismiss();
+                return true;
+            }
+            return false;
+        }
+    } ;*/
+
+    protected BasePickerView setOutSideCancelable(boolean isCancelable) {
         View view = rootView.findViewById(R.id.outmost_container);
 
         if (isCancelable) {
