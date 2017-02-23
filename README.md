@@ -8,6 +8,7 @@
 ### Dependencies：
 ```java
 compile 'com.contrarywind:Android-PickerView:3.0.2'
+//这个是支持农历的分支 compile 'com.bigkoo:pickerview:lunar.1.0'
 ```
 OR
 ### Maven：
