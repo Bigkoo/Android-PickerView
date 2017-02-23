@@ -46,7 +46,10 @@ OR
  pvOptions.setPicker(options1Items, options2Items, options3Items);
  pvOptions.show(); 
 ```
+# 详细使用请参考这里
+[请戳我查看完整案例使用代码](https://github.com/Contrarywind/Android-PickerView/blob/master/app/src/main/java/com/bigkoo/pickerviewdemo/MainActivity.java)
 
+# 说明文档（还在持续更新中）
 [English Documentation](https://github.com/Bigkoo/Android-PickerView/wiki/English-Documentation)
 
 [中文说明文档（3.x版）](https://github.com/Bigkoo/Android-PickerView/wiki/%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3)
