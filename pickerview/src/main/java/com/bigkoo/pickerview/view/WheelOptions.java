@@ -15,7 +15,6 @@ public class WheelOptions<T> {
     private WheelView wv_option2;
     private WheelView wv_option3;
 
-    private int textSize = 20;
     private ArrayList<T> mOptions1Items;
     private ArrayList<ArrayList<T>> mOptions2Items;
     private ArrayList<ArrayList<ArrayList<T>>> mOptions3Items;
@@ -35,7 +34,9 @@ public class WheelOptions<T> {
     public WheelOptions(View view) {
         super();
         this.view = view;
-
+        wv_option1 = (WheelView) view.findViewById(R.id.options1);// 初始化时显示的数据
+        wv_option2 = (WheelView) view.findViewById(R.id.options2);
+        wv_option3 = (WheelView) view.findViewById(R.id.options3);
     }
 
     public void setPicker(ArrayList<T> optionsItems) {
@@ -61,23 +62,16 @@ public class WheelOptions<T> {
         if (this.mOptions2Items == null)
             len = 12;
         // 选项1
-        wv_option1 = (WheelView) view.findViewById(R.id.options1);
         wv_option1.setAdapter(new ArrayWheelAdapter(mOptions1Items, len));// 设置显示数据
         wv_option1.setCurrentItem(0);// 初始化时显示的数据
         // 选项2
-        wv_option2 = (WheelView) view.findViewById(R.id.options2);
         if (mOptions2Items != null)
             wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(0)));// 设置显示数据
         wv_option2.setCurrentItem(wv_option1.getCurrentItem());// 初始化时显示的数据
         // 选项3
-        wv_option3 = (WheelView) view.findViewById(R.id.options3);
         if (mOptions3Items != null)
-            wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(0)
-                    .get(0)));// 设置显示数据
-        wv_option3.setCurrentItem(wv_option3.getCurrentItem());// 初始化时显示的数据
-
-       setTextContentSize(textSize);
-
+            wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(0).get(0)));// 设置显示数据
+        wv_option3.setCurrentItem(wv_option3.getCurrentItem());
         wv_option1.setIsOptions(true);
         wv_option2.setIsOptions(true);
         wv_option3.setIsOptions(true);
@@ -128,7 +122,7 @@ public class WheelOptions<T> {
             }
         };
 
-//		// 添加联动监听
+		// 添加联动监听
         if (options2Items != null && linkage)
             wv_option1.setOnItemSelectedListener(wheelListener_option1);
         if (options3Items != null && linkage)

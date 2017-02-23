@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.bigkoo.pickerview.OptionsPickerView;
@@ -15,79 +14,86 @@ import com.bigkoo.pickerviewdemo.bean.ProvinceBean;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnClickListener{
 
     private ArrayList<ProvinceBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<IPickerViewData>>> options3Items = new ArrayList<>();
     private Button tvTime, tvOptions;
-    TimePickerView pvTime;
-    OptionsPickerView pvOptions;
+
+    private TimePickerView pvTime;
+    private OptionsPickerView pvOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //最好等数据加载完毕再初始化并显示，以免数据量大的时候，还未加载完毕就显示，造成APP崩溃
+        initTimePicker();
+        initOptionData();
+        initOptionPicker();
+
         tvTime=(Button) findViewById(R.id.tvTime);
         tvOptions=(Button) findViewById(R.id.tvOptions);
+        tvTime.setOnClickListener(this);
+        tvOptions.setOnClickListener(this);
+    }
 
-         //控制时间范围,setRange 要在setDate 之前才有效果(如果不设置范围，则使用默认时间，此段代码可注释)
-         Calendar calendar = Calendar.getInstance();
+    @Override
+    public void onClick(View v) {
+        if (v.getId()==R.id.tvTime && pvTime!=null){
+            pvTime.show(); //弹出时间选择器
+        }
+        else if (v.getId()==R.id.tvOptions && pvOptions!=null){
+            pvOptions.show(); //弹出时间选择器
+        }
+    }
+
+
+    private void initTimePicker() {
+
+        //控制时间范围,setRange方法 要在setDate 之前才有效果(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+         /*Calendar calendar = Calendar.getInstance();*/
 
         //时间选择器
-        //sample use
-        /*pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date) {
-                tvTime.setText(getTime(date));
-            }
-        }).build();*/
-
-        //DIY
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
-            public void onTimeSelect(Date date) {//选中事件回调
+            public void onTimeSelect(Date date,View v) {//选中事件回调
                 tvTime.setText(getTime(date));
             }
         })
-                .setType(TimePickerView.Type.ALL)//default all
+                /*.setType(TimePickerView.Type.ALL)//default all
                 .setCancelText("Cancel")
                 .setSubmitText("Sure")
-               /* .setOutSideCancelable(false)// default true*/
                 .setContentSize(18)
                 .setTitleSize(20)
                 .setTitleText("Title")
-                /*.isCyclic(true)// default false */
-                /*.setBackgroundColor(0xFF000000)//夜间模式 Night mode*/
-                /*.setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//default 1990-2100 years */
-                /*.setDate(new Date())// default system*/
+                .setOutSideCancelable(false)// default true
+                .isCyclic(true)// default false
+                .setTitleColor(Color.BLACK)
+                .setSubmitColor(Color.BLUE)
+                .setCancelColor(Color.BLUE)
+                .setBackgroundColor(0xFF000000)//夜间模式 Night mode
+                .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//default 1900-2100 years *//*
+                .setDate(new Date())// default system*/
                 .build();
+    }
 
-        //弹出时间选择器
-        tvTime.setOnClickListener(new OnClickListener() {
+    private String getTime(Date date) {//可根据需要自行截取数据显示
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(date);
+    }
 
-            @Override
-            public void onClick(View v) {
-                if (pvTime!=null){
-                    pvTime.show();
-                }
-            }
-        });
-
-
-
-        //选项选择器
-        pvOptions = new OptionsPickerView(this);
+    private void initOptionData() {
 
         //选项1
-        options1Items.add(new ProvinceBean(0,"广东","广东省，以岭南东道、广南东路得名","其他数据"));
-        options1Items.add(new ProvinceBean(1,"湖南","湖南省地处中国中部、长江中游，因大部分区域处于洞庭湖以南而得名湖南","芒果TV"));
-        options1Items.add(new ProvinceBean(3,"广西","嗯～",""));
+        options1Items.add(new ProvinceBean(0,"广东","描述部分","其他数据"));
+        options1Items.add(new ProvinceBean(1,"湖南","描述部分","其他数据"));
+        options1Items.add(new ProvinceBean(2,"广西","描述部分","其他数据"));
 
         //选项2
         ArrayList<String> options2Items_01=new ArrayList<>();
@@ -99,8 +105,11 @@ public class MainActivity extends Activity {
         ArrayList<String> options2Items_02=new ArrayList<>();
         options2Items_02.add("长沙");
         options2Items_02.add("岳阳");
+        options2Items_02.add("株洲");
+        options2Items_02.add("衡阳");
         ArrayList<String> options2Items_03=new ArrayList<>();
         options2Items_03.add("桂林");
+        options2Items_03.add("玉林");
         options2Items.add(options2Items_01);
         options2Items.add(options2Items_02);
         options2Items.add(options2Items_03);
@@ -109,23 +118,31 @@ public class MainActivity extends Activity {
         ArrayList<ArrayList<IPickerViewData>> options3Items_01 = new ArrayList<>();
         ArrayList<ArrayList<IPickerViewData>> options3Items_02 = new ArrayList<>();
         ArrayList<ArrayList<IPickerViewData>> options3Items_03 = new ArrayList<>();
+
+        //广东的地区
         ArrayList<IPickerViewData> options3Items_01_01=new ArrayList<>();
         options3Items_01_01.add(new PickerViewData("天河"));
-        options3Items_01_01.add(new PickerViewData("黄埔"));
         options3Items_01_01.add(new PickerViewData("海珠"));
         options3Items_01_01.add(new PickerViewData("越秀"));
+        options3Items_01_01.add(new PickerViewData("荔湾"));
+        options3Items_01_01.add(new PickerViewData("花都"));
+        options3Items_01_01.add(new PickerViewData("番禺"));
+        options3Items_01_01.add(new PickerViewData("萝岗"));
         options3Items_01.add(options3Items_01_01);
+
         ArrayList<IPickerViewData> options3Items_01_02=new ArrayList<>();
         options3Items_01_02.add(new PickerViewData("南海"));
         options3Items_01_02.add(new PickerViewData("高明"));
         options3Items_01_02.add(new PickerViewData("禅城"));
         options3Items_01_02.add(new PickerViewData("桂城"));
         options3Items_01.add(options3Items_01_02);
+
         ArrayList<IPickerViewData> options3Items_01_03=new ArrayList<>();
         options3Items_01_03.add(new PickerViewData("其他"));
         options3Items_01_03.add(new PickerViewData("常平"));
         options3Items_01_03.add(new PickerViewData("虎门"));
         options3Items_01.add(options3Items_01_03);
+
         ArrayList<IPickerViewData> options3Items_01_04=new ArrayList<>();
         options3Items_01_04.add(new PickerViewData("其他"));
         options3Items_01_04.add(new PickerViewData("其他"));
@@ -137,79 +154,86 @@ public class MainActivity extends Activity {
         options3Items_01_05.add(new PickerViewData("其他2"));
         options3Items_01.add(options3Items_01_05);
 
-        ArrayList<IPickerViewData> options3Items_02_01=new ArrayList<>();
 
+        //湖南的地区
+        ArrayList<IPickerViewData> options3Items_02_01=new ArrayList<>();
         options3Items_02_01.add(new PickerViewData("长沙1"));
         options3Items_02_01.add(new PickerViewData("长沙2"));
         options3Items_02_01.add(new PickerViewData("长沙3"));
-        options3Items_02_01.add(new PickerViewData("长沙4"));
-        options3Items_02_01.add(new PickerViewData("长沙5"));
-
-
-
-
         options3Items_02.add(options3Items_02_01);
-        ArrayList<IPickerViewData> options3Items_02_02=new ArrayList<>();
 
-        options3Items_02_02.add(new PickerViewData("岳阳"));
+        ArrayList<IPickerViewData> options3Items_02_02=new ArrayList<>();
         options3Items_02_02.add(new PickerViewData("岳阳1"));
         options3Items_02_02.add(new PickerViewData("岳阳2"));
         options3Items_02_02.add(new PickerViewData("岳阳3"));
-        options3Items_02_02.add(new PickerViewData("岳阳4"));
-        options3Items_02_02.add(new PickerViewData("岳阳5"));
-
         options3Items_02.add(options3Items_02_02);
 
+        ArrayList<IPickerViewData> options3Items_02_03=new ArrayList<>();
+        options3Items_02_03.add(new PickerViewData("株洲1"));
+        options3Items_02_03.add(new PickerViewData("株洲2"));
+        options3Items_02_03.add(new PickerViewData("株洲3"));
+        options3Items_02.add(options3Items_02_03);
 
+        ArrayList<IPickerViewData> options3Items_02_04=new ArrayList<>();
+        options3Items_02_04.add(new PickerViewData("衡阳1"));
+        options3Items_02_04.add(new PickerViewData("衡阳2"));
+        options3Items_02_04.add(new PickerViewData("衡阳3"));
+        options3Items_02.add(options3Items_02_04);
+
+
+        //广西的地区
         ArrayList<IPickerViewData> options3Items_03_01=new ArrayList<>();
-        options3Items_03_01.add(new PickerViewData("好山水"));
+        options3Items_03_01.add(new PickerViewData("阳朔"));
         options3Items_03.add(options3Items_03_01);
 
+        ArrayList<IPickerViewData> options3Items_03_02=new ArrayList<>();
+        options3Items_03_02.add(new PickerViewData("北流"));
+        options3Items_03.add(options3Items_03_02);
+
+        //将数据分别添加到一二三项的数组去
         options3Items.add(options3Items_01);
         options3Items.add(options3Items_02);
         options3Items.add(options3Items_03);
 
-        //三级联动效果
-        pvOptions.setPicker(options1Items, options2Items, options3Items, true);
-        pvOptions.setTextContentSize(18);//设置内容大小
+        /*--------数据源添加完毕---------*/
+    }
 
-        //设置选择的三级单位
-//        pwOptions.setLabels("省", "市", "区");
-        pvOptions.setTitle("选择城市");
-        pvOptions.setCyclic(false, false, false);
 
-        //设置回退键dismiss
-        pvOptions.setKeyBackCancelable(true);
-        pvOptions.setOutSideCancelable(true);
-        //设置默认选中项
-        pvOptions.setSelectOptions(1, 1, 1);
 
-        //监听确定点击回调
-        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-
+    private void initOptionPicker() {//条件选择器初始化
+        pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
+            public void onOptionsSelect(int options1, int option2, int options3 ,View v) {
                 //返回的分别是三个级别的选中位置
                 String tx = options1Items.get(options1).getPickerViewText()
                         + options2Items.get(options1).get(option2)
                         + options3Items.get(options1).get(option2).get(options3).getPickerViewText();
                 tvOptions.setText(tx);
             }
-        });
-        //点击弹出选项选择器
-        tvOptions.setOnClickListener(new View.OnClickListener() {
+        })
+               /* .setSubmitText("确定")
+                .setCancelText("取消")
+                .setTitleText("城市选择")
+                .setSubCalSize(18)
+                .setTitleSize(20)
+                .setTitleColor(Color.BLACK)
+                .setSubmitColor(Color.BLUE)
+                .setCancelColor(Color.BLUE)
+                .setBackgroundColor(Color.WHITE)
+                .setContentTextSize(18)
+                .setLinkage(false)
+                .setLabels("省", "市", "区")//设置选择的三级单位
+                .setCyclic(false, false, false)//循环与否
+                .setSelectOptions(1, 1, 1)  //设置默认选中项
+                .setOutSideCancelable(false)//点击外部dismiss default true*/
+                .build();
 
-            @Override
-            public void onClick(View v) {
-                pvOptions.show();
-            }
-        });
+        pvOptions.setPicker(options1Items, options2Items, options3Items);
+
     }
 
-    public static String getTime(Date date) {//可根据需要自己截取数据显示
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return format.format(date);
-    }
+
+
 
 
     @Override
@@ -226,4 +250,5 @@ public class MainActivity extends Activity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }

@@ -1,8 +1,11 @@
 package com.bigkoo.pickerview;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.view.BasePickerView;
@@ -15,104 +18,282 @@ import java.util.ArrayList;
  * Created by Sai on 15/11/22.
  */
 public class OptionsPickerView<T> extends BasePickerView implements View.OnClickListener {
+
     WheelOptions<T> wheelOptions;
-    private View btnSubmit, btnCancel;
+
+   /* private ArrayList<T> optionsItems;
+    private ArrayList<ArrayList<T>> options2Items;
+    private ArrayList<ArrayList<ArrayList<T>>> options3Items;*/
+
+    private Button btnSubmit, btnCancel; //确定、取消按钮
     private TextView tvTitle;
-    private OnOptionsSelectListener optionsSelectListener;
+
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
-    public OptionsPickerView(Context context) {
-        super(context);
+
+
+    private OnOptionsSelectListener optionsSelectListener;
+
+    private String Str_Submit;//确定按钮文字
+    private String Str_Cancel;//取消按钮文字
+    private String Str_Title;//标题文字
+
+    private int Color_Submit;//确定按钮颜色
+    private int Color_Cancel;//取消按钮颜色
+    private int Color_Title;//标题颜色
+    private int Color_Background;//背景颜色
+
+    private int Size_Submit_Cancel ;//确定取消按钮大小
+    private int Size_Title ;//标题文字大小
+    private int Size_Content ;//内容文字大小
+
+    private boolean cancelable;//是否能取消
+    private boolean linkage;//是否联动
+
+    private String label1;//单位
+    private String label2;
+    private String label3;
+
+    private boolean cyclic1;//是否循环
+    private boolean cyclic2;
+    private boolean cyclic3;
+
+    private int option1;//默认选中项
+    private int option2;
+    private int option3;
+    //构造方法
+    public OptionsPickerView(Builder builder) {
+        super(builder.context);
+        this.optionsSelectListener = builder.optionsSelectListener;
+        this.Str_Submit = builder.Str_Submit;
+        this.Str_Cancel = builder.Str_Cancel;
+        this.Str_Title = builder.Str_Title;
+
+        this.Color_Submit = builder.Color_Submit;
+        this.Color_Cancel = builder.Color_Cancel;
+        this.Color_Title = builder.Color_Title;
+        this.Color_Background = builder.Color_Background;
+
+        this.Size_Submit_Cancel = builder.Size_Submit_Cancel;
+        this.Size_Title = builder.Size_Title;
+        this.Size_Content = builder.Size_Content;
+
+        this.cyclic1 = builder.cyclic1;
+        this.cyclic2 = builder.cyclic2;
+        this.cyclic3 = builder.cyclic3;
+
+        this.cancelable = builder.cancelable;
+        this.linkage = builder.linkage;
+
+        this.label1 = builder.label1;
+        this.label2 = builder.label2;
+        this.label3 = builder.label3;
+
+        this.option1 = builder.option1;
+        this.option2 = builder.option2;
+        this.option3 = builder.option3;
+
+        initView(builder.context);
+    }
+
+
+    //建造器
+    public static class Builder {
+
+        private Context context;
+        private OnOptionsSelectListener optionsSelectListener;
+
+        private String Str_Submit;//确定按钮文字
+        private String Str_Cancel;//取消按钮文字
+        private String Str_Title;//标题文字
+
+        private int Color_Submit;//确定按钮颜色
+        private int Color_Cancel;//取消按钮颜色
+        private int Color_Title;//标题颜色
+        private int Color_Background;//背景颜色
+
+        private int Size_Submit_Cancel = 17;//确定取消按钮大小
+        private int Size_Title = 18;//标题文字大小
+        private int Size_Content = 18;//内容文字大小
+
+        private boolean cancelable = true;//是否能取消
+        private boolean linkage = true;//是否联动
+
+        private String label1;
+        private String label2;
+        private String label3;
+
+        private boolean cyclic1 = false;//是否循环，默认否
+        private boolean cyclic2 = false;
+        private boolean cyclic3 = false;
+
+        private int option1;//默认选中项
+        private int option2;
+        private int option3;
+
+        //Required
+        public Builder(Context context,OnOptionsSelectListener listener) {
+            this.context = context;
+            this.optionsSelectListener = listener;
+        }
+
+        //Option
+
+        public Builder setSubmitText(String Str_Cancel){
+            this.Str_Submit = Str_Cancel;
+            return this;
+        }
+
+        public Builder setCancelText(String Str_Cancel){
+            this.Str_Cancel = Str_Cancel;
+            return this;
+        }
+
+        public Builder setTitleText(String Str_Title){
+            this.Str_Title = Str_Title;
+            return this;
+        }
+
+        public Builder setSubmitColor(int Color_Submit){
+            this.Color_Submit = Color_Submit;
+            return this;
+        }
+
+        public Builder setCancelColor(int Color_Cancel){
+            this.Color_Cancel = Color_Cancel;
+            return this;
+        }
+
+        public Builder setBackgroundColor(int Color_Background){
+            this.Color_Background = Color_Background;
+            return this;
+        }
+
+        public Builder setTitleColor(int Color_Title){
+            this.Color_Title = Color_Title;
+            return this;
+        }
+
+        public Builder setSubCalSize(int Size_Submit_Cancel){
+            this.Size_Submit_Cancel = Size_Submit_Cancel;
+            return this;
+        }
+
+        public Builder setTitleSize(int Size_Title){
+            this.Size_Title = Size_Title;
+            return this;
+        }
+        public Builder setContentTextSize(int Size_Content){
+            this.Size_Content = Size_Content;
+            return this;
+        }
+
+
+        public Builder setOutSideCancelable(boolean cancelable) {
+            this.cancelable = cancelable;
+            return this;
+        }
+
+        public Builder setLinkage(boolean linkage) {
+            this.linkage = linkage;
+            return this;
+        }
+
+        public Builder setLabels(String label1,String label2,String label3){
+            this.label1 = label1;
+            this.label2 = label2;
+            this.label3 = label3;
+            return this;
+        }
+
+        public Builder setCyclic(boolean cyclic1,boolean cyclic2,boolean cyclic3) {
+            this.cyclic1 = cyclic1;
+            this.cyclic2 = cyclic2;
+            this.cyclic3 = cyclic3;
+            return this;
+        }
+
+        public Builder setSelectOptions(int option1){
+            this.option1 =option1;
+            return this;
+        }
+        public Builder setSelectOptions(int option1, int option2){
+            this.option1 =option1;
+            this.option2 =option2;
+            return this;
+        }
+        public Builder setSelectOptions(int option1, int option2, int option3){
+            this.option1 =option1;
+            this.option2 =option2;
+            this.option3 =option3;
+            return this;
+        }
+
+
+        public OptionsPickerView build(){
+            return new OptionsPickerView(this);
+        }
+    }
+
+
+    private void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.pickerview_options, contentContainer);
-        // -----确定和取消按钮
-        btnSubmit = findViewById(R.id.btnSubmit);
+
+        //顶部标题
+        tvTitle = (TextView) findViewById(R.id.tvTitle);
+
+        //确定和取消按钮
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        btnCancel = (Button) findViewById(R.id.btnCancel);
+
         btnSubmit.setTag(TAG_SUBMIT);
-        btnCancel = findViewById(R.id.btnCancel);
         btnCancel.setTag(TAG_CANCEL);
         btnSubmit.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
-        //顶部标题
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
+
+        //设置文字
+        btnSubmit.setText(TextUtils.isEmpty(Str_Submit)?context.getResources().getString(R.string.pickerview_submit):Str_Submit);
+        btnCancel.setText(TextUtils.isEmpty(Str_Cancel)?context.getResources().getString(R.string.pickerview_cancel):Str_Cancel);
+        tvTitle.setText(TextUtils.isEmpty(Str_Title)?"":Str_Title);//默认为空
+
+        //设置文字颜色
+        btnSubmit.setTextColor(Color_Submit==0? ContextCompat.getColor(context, R.color.pickerview_timebtn_nor):Color_Submit);
+        btnCancel.setTextColor(Color_Cancel==0?ContextCompat.getColor(context, R.color.pickerview_timebtn_nor):Color_Cancel);
+        tvTitle.setTextColor(Color_Title==0?ContextCompat.getColor(context, R.color.pickerview_topbar_title):Color_Title);
+
+        //设置文字大小
+        btnSubmit.setTextSize(Size_Submit_Cancel);
+        btnCancel.setTextSize(Size_Submit_Cancel);
+        tvTitle.setTextSize(Size_Title);
+
         // ----转轮
-        final View optionspicker = findViewById(R.id.optionspicker);
-        wheelOptions = new WheelOptions(optionspicker);
+        final View optionsPicker = findViewById(R.id.optionspicker);
+
+        wheelOptions = new WheelOptions(optionsPicker);
+        wheelOptions.setTextContentSize(Size_Content);
+        wheelOptions.setLabels(label1, label2, label3);
+        wheelOptions.setCyclic(cyclic1,cyclic2,cyclic3);
+        wheelOptions.setCurrentItems(option1, option2, option3);
+
+        setOutSideCancelable(cancelable);
+        tvTitle.setText(Str_Title);
+        /*wheelOptions.setPicker(optionsItems, options2Items, options3Items, linkage);*/
+
     }
+
     public void setPicker(ArrayList<T> optionsItems) {
         wheelOptions.setPicker(optionsItems, null, null, false);
     }
 
-    public void setPicker(ArrayList<T> options1Items,
-                          ArrayList<ArrayList<T>> options2Items, boolean linkage) {
+    public void setPicker(ArrayList<T> options1Items, ArrayList<ArrayList<T>> options2Items) {
         wheelOptions.setPicker(options1Items, options2Items, null, linkage);
     }
-    public void setTextContentSize(int textSize) {
-        wheelOptions.setTextContentSize(textSize);
-    }
+
     public void setPicker(ArrayList<T> options1Items,
                           ArrayList<ArrayList<T>> options2Items,
-                          ArrayList<ArrayList<ArrayList<T>>> options3Items,
-                          boolean linkage) {
-        wheelOptions.setPicker(options1Items, options2Items, options3Items,
-                linkage);
-    }
-    /**
-     * 设置选中的item位置
-     * @param option1 位置
-     */
-    public void setSelectOptions(int option1){
-        wheelOptions.setCurrentItems(option1, 0, 0);
-    }
-    /**
-     * 设置选中的item位置
-     * @param option1 位置
-     * @param option2 位置
-     */
-    public void setSelectOptions(int option1, int option2){
-        wheelOptions.setCurrentItems(option1, option2, 0);
-    }
-    /**
-     * 设置选中的item位置
-     * @param option1 位置
-     * @param option2 位置
-     * @param option3 位置
-     */
-    public void setSelectOptions(int option1, int option2, int option3){
-        wheelOptions.setCurrentItems(option1, option2, option3);
-    }
-    /**
-     * 设置选项的单位
-     * @param label1 单位
-     */
-    public void setLabels(String label1){
-        wheelOptions.setLabels(label1, null, null);
-    }
-    /**
-     * 设置选项的单位
-     * @param label1 单位
-     * @param label2 单位
-     */
-    public void setLabels(String label1,String label2){
-        wheelOptions.setLabels(label1, label2, null);
-    }
-    /**
-     * 设置选项的单位
-     * @param label1 单位
-     * @param label2 单位
-     * @param label3 单位
-     */
-    public void setLabels(String label1,String label2,String label3){
-        wheelOptions.setLabels(label1, label2, label3);
-    }
-    /**
-     * 设置是否循环滚动
-     * @param cyclic 是否循环
-     */
-    public void setCyclic(boolean cyclic){
-        wheelOptions.setCyclic(cyclic);
-    }
+                          ArrayList<ArrayList<ArrayList<T>>> options3Items) {
 
-    public void setCyclic(boolean cyclic1,boolean cyclic2,boolean cyclic3) {
-        wheelOptions.setCyclic(cyclic1,cyclic2,cyclic3);
+        wheelOptions.setPicker(options1Items, options2Items, options3Items, linkage);
     }
 
 
@@ -120,17 +301,13 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     public void onClick(View v)
     {
         String tag=(String) v.getTag();
-        if(tag.equals(TAG_CANCEL))
-        {
+        if(tag.equals(TAG_CANCEL)) {
             dismiss();
             return;
-        }
-        else
-        {
-            if(optionsSelectListener!=null)
-            {
+        } else {
+            if(optionsSelectListener!=null) {
                 int[] optionsCurrentItems=wheelOptions.getCurrentItems();
-                optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2]);
+                optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2],v);
             }
             dismiss();
             return;
@@ -138,15 +315,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     }
 
     public interface OnOptionsSelectListener {
-        void onOptionsSelect(int options1, int option2, int options3);
+        void onOptionsSelect(int options1, int option2, int options3, View v);
     }
 
-    public void setOnoptionsSelectListener(
-            OnOptionsSelectListener optionsSelectListener) {
-        this.optionsSelectListener = optionsSelectListener;
-    }
-
-    public void setTitle(String title){
-        tvTitle.setText(title);
-    }
 }

@@ -3,7 +3,6 @@ package com.bigkoo.pickerview.view;
 import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,9 +11,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
-import com.bigkoo.pickerview.utils.PickerViewAnimateUtil;
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.listener.OnDismissListener;
+import com.bigkoo.pickerview.utils.PickerViewAnimateUtil;
 
 /**
  * Created by Sai on 15/11/22.
@@ -148,7 +147,7 @@ public class BasePickerView {
         return this;
     }
 
-    public BasePickerView setKeyBackCancelable(boolean isCancelable) {
+    /*public BasePickerView setKeyBackCancelable(boolean isCancelable) {
         rootView.setFocusable(isCancelable);
         rootView.setFocusableInTouchMode(isCancelable);
         if (isCancelable) {
@@ -170,9 +169,9 @@ public class BasePickerView {
             }
             return false;
         }
-    } ;
+    } ;*/
 
-    public BasePickerView setOutSideCancelable(boolean isCancelable) {
+    protected BasePickerView setOutSideCancelable(boolean isCancelable) {
         View view = rootView.findViewById(R.id.outmost_container);
 
         if (isCancelable) {
