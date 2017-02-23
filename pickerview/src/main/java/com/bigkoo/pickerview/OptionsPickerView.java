@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.view.BasePickerView;
@@ -267,7 +269,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         tvTitle.setTextSize(Size_Title);
 
         // ----转轮
-        final View optionsPicker = findViewById(R.id.optionspicker);
+        final LinearLayout optionsPicker = (LinearLayout) findViewById(R.id.optionspicker);
+
+        RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
+        rv_top_bar.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.pickerview_bg_topbar):Color_Background);
+        optionsPicker.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background);
 
         wheelOptions = new WheelOptions(optionsPicker);
         wheelOptions.setTextContentSize(Size_Content);

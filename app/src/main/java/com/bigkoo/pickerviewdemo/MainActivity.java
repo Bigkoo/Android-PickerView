@@ -80,6 +80,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 .setBackgroundColor(0xFF000000)//夜间模式 Night mode
                 .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//default 1900-2100 years *//*
                 .setDate(new Date())// default system*/
+                .setLabel("年","月","日","时","分","秒")
                 .build();
     }
 

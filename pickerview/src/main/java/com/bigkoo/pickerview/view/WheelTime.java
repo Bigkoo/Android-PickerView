@@ -102,7 +102,7 @@ public class WheelTime {
         //分
         wv_mins = (WheelView) view.findViewById(R.id.min);
         wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
-        wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
+       wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
         wv_mins.setCurrentItem(m);
         wv_mins.setGravity(gravity);
         //秒
@@ -214,8 +214,23 @@ public class WheelTime {
         wv_hours.setTextSize(textSize);
         wv_mins.setTextSize(textSize);
         wv_seconds.setTextSize(textSize);
-
     }
+
+    public void setLabels(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
+        if (label_year != null)
+            wv_year.setLabel(label_year);
+        if (label_month != null)
+            wv_month.setLabel(label_month);
+        if (label_day != null)
+            wv_day.setLabel(label_day);
+        if (label_hours != null)
+            wv_hours.setLabel(label_hours);
+        if (label_mins != null)
+            wv_mins.setLabel(label_mins);
+        if (label_seconds != null)
+            wv_seconds.setLabel(label_seconds);
+    }
+
 
     /**
      * 设置是否循环滚动

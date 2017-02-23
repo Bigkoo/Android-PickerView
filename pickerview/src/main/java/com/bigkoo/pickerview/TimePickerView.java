@@ -55,6 +55,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private boolean cyclic;//是否循环
     private boolean cancelable;//是否能取消
 
+    private String label_year, label_month,  label_day,  label_hours,  label_mins, label_seconds;
+
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
 
@@ -79,6 +81,13 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.date = builder.date;
         this.cyclic = builder.cyclic;
         this.cancelable = builder.cancelable;
+        this.label_year = builder.label_year;
+        this.label_month = builder.label_month;
+        this.label_day = builder.label_day;
+        this.label_hours = builder.label_hours;
+        this.label_mins = builder.label_mins;
+        this.label_seconds = builder.label_seconds;
+
         initView(builder.context);
     }
 
@@ -110,6 +119,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private boolean cyclic = false;//是否循环
         private boolean cancelable = true;//是否能取消
 
+        private String label_year, label_month,  label_day,  label_hours,  label_mins, label_seconds;//单位
         //Required
         public Builder(Context context, OnTimeSelectListener listener) {
             this.context = context;
@@ -196,6 +206,15 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
+        public Builder setLabel(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
+            this.label_year = label_year;
+            this.label_month = label_month;
+            this.label_day = label_day;
+            this.label_hours = label_hours;
+            this.label_mins = label_mins;
+            this.label_seconds = label_seconds;
+            return this;
+        }
         public TimePickerView build(){
             return new TimePickerView(this);
         }
@@ -238,7 +257,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);
 
         RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
-        rv_top_bar.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background);
+        rv_top_bar.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.pickerview_bg_topbar):Color_Background);
         timePickerView.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background);
 
         wheelTime = new WheelTime(timePickerView, type, gravity,Size_Content);
@@ -247,6 +266,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             setRange();
         }
         setTime();
+        wheelTime.setLabels(label_year,label_month,label_day,label_hours,label_mins,label_seconds);
         setOutSideCancelable(cancelable);
         wheelTime.setCyclic(cyclic);
     }
