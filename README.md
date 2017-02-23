@@ -20,8 +20,8 @@ OR
 </dependency>
 ```
 
-Sample usage：
-
+#Sample usage：
+```java
 //TimePicker
  pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
@@ -45,7 +45,7 @@ Sample usage：
         }).build();
  pvOptions.setPicker(options1Items, options2Items, options3Items);
  pvOptions.show(); 
-
+```
 
 [English Documentation](https://github.com/Bigkoo/Android-PickerView/wiki/English-Documentation)
 
