@@ -15,6 +15,12 @@ OR
 <type>pom</type>
 </dependency>
 ```
+
+==========
+仿iOS的PickerView控件，有时间选择和选项选择并支持一二三级联动效果   
+——TimePickerView  时间选择器，支持年月日时分，年月日，年月，时分等格式   
+——OptionsPickerView  选项选择器，支持一，二，三级选项选择，并且可以设置是否联动    
+
 ## Sample usage：
 
 ```java
@@ -44,13 +50,6 @@ OR
  pvOptions.setPicker(options1Items, options2Items, options3Items);
  pvOptions.show(); 
 ```
-
-
-==========
-仿iOS的PickerView控件，有时间选择和选项选择并支持一二三级联动效果   
-——TimePickerView  时间选择器，支持年月日时分，年月日，年月，时分等格式   
-——OptionsPickerView  选项选择器，支持一，二，三级选项选择，并且可以设置是否联动    
-
 
 [English Documentation](https://github.com/Contrarywind/Android-PickerView/wiki/English-Documentation)
 
