@@ -3,7 +3,14 @@
 ## V3.0.3版本更新说明（2017-2-24）
 * 新增标题栏和滚轮的背景color区分设置
 * 修正选项选择器设置默认选中项失效的问题
+
+##历史版本请看说明文档
+
+[Wiki](https://github.com/Contrarywind/Android-PickerView/wiki)
+
 ### Dependencies：
+
+### Gradle
 ```java
 compile 'com.contrarywind:Android-PickerView:3.0.3'
 ```
