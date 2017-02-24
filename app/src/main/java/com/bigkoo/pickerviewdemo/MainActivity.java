@@ -77,7 +77,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 .setTitleColor(Color.BLACK)
                 .setSubmitColor(Color.BLUE)
                 .setCancelColor(Color.BLUE)
-                .setBackgroundColor(0xFF000000)//夜间模式 Night mode
                 .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//default 1900-2100 years *//*
                 .setDate(new Date())// default system*/
                 .setTitleBgColor(0xFF333333)//标题背景颜色 Night mode
@@ -124,7 +123,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         //广东的地区
         ArrayList<IPickerViewData> options3Items_01_01=new ArrayList<>();
-        options3Items_01_01.add(new PickerViewData("大河"));
+        options3Items_01_01.add(new PickerViewData("天河"));
         options3Items_01_01.add(new PickerViewData("海珠"));
         options3Items_01_01.add(new PickerViewData("越秀"));
         options3Items_01_01.add(new PickerViewData("荔湾"));
