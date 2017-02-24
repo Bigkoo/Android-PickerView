@@ -18,7 +18,7 @@
 compile 'com.contrarywind:Android-PickerView:3.0.3'
 ```
 OR
-### Maven：
+### Maven
 ```java
 <dependency> 
 <groupId>com.contrarywind</groupId> 
