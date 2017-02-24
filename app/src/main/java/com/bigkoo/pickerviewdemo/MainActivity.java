@@ -95,11 +95,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
         //选项1
         options1Items.add(new ProvinceBean(0,"广东","描述部分","其他数据"));
         options1Items.add(new ProvinceBean(1,"湖南","描述部分","其他数据"));
-        options1Items.add(new ProvinceBean(2,"广西","描述部分","其他数据"));
+        options1Items.add(new ProvinceBean(2,"广西维吾尔族自治区","描述部分","其他数据"));
 
         //选项2
         ArrayList<String> options2Items_01=new ArrayList<>();
-        options2Items_01.add("广州");
+        options2Items_01.add("广州望城坡区");
         options2Items_01.add("佛山");
         options2Items_01.add("东莞");
         options2Items_01.add("阳江");
