@@ -19,7 +19,7 @@ public class WheelOptions<T> {
     private ArrayList<ArrayList<T>> mOptions2Items;
     private ArrayList<ArrayList<ArrayList<T>>> mOptions3Items;
 
-    private boolean linkage = false;
+    private boolean linkage;
     private OnItemSelectedListener wheelListener_option1;
     private OnItemSelectedListener wheelListener_option2;
 
@@ -31,8 +31,9 @@ public class WheelOptions<T> {
         this.view = view;
     }
 
-    public WheelOptions(View view) {
+    public WheelOptions(View view, Boolean linkage) {
         super();
+        this.linkage = linkage;
         this.view = view;
         wv_option1 = (WheelView) view.findViewById(R.id.options1);// 初始化时显示的数据
         wv_option2 = (WheelView) view.findViewById(R.id.options2);
@@ -40,19 +41,17 @@ public class WheelOptions<T> {
     }
 
     public void setPicker(ArrayList<T> optionsItems) {
-        setPicker(optionsItems, null, null, false);
+        setPicker(optionsItems, null);
     }
 
     public void setPicker(ArrayList<T> options1Items,
-                          ArrayList<ArrayList<T>> options2Items, boolean linkage) {
-        setPicker(options1Items, options2Items, null, linkage);
+                          ArrayList<ArrayList<T>> options2Items) {
+        setPicker(options1Items, options2Items);
     }
 
     public void setPicker(ArrayList<T> options1Items,
                           ArrayList<ArrayList<T>> options2Items,
-                          ArrayList<ArrayList<ArrayList<T>>> options3Items,
-                          boolean linkage) {
-        this.linkage = linkage;
+                          ArrayList<ArrayList<ArrayList<T>>> options3Items) {
         this.mOptions1Items = options1Items;
         this.mOptions2Items = options2Items;
         this.mOptions3Items = options3Items;

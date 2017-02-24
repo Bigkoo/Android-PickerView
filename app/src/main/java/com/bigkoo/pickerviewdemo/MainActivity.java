@@ -80,6 +80,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 .setBackgroundColor(0xFF000000)//夜间模式 Night mode
                 .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//default 1900-2100 years *//*
                 .setDate(new Date())// default system*/
+                .setTitleBgColor(0xFF333333)//标题背景颜色 Night mode
+                .setBgColor(0xFF000000)//滚轮背景颜色 Night mode
                 .setLabel("年","月","日","时","分","秒")
                 .build();
     }
@@ -195,7 +197,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         options3Items.add(options3Items_01);
         options3Items.add(options3Items_02);
         options3Items.add(options3Items_03);
-
         /*--------数据源添加完毕---------*/
     }
 
@@ -212,7 +213,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 tvOptions.setText(tx);
             }
         })
-               /* .setSubmitText("确定")
+                /*.setSubmitText("确定")
                 .setCancelText("取消")
                 .setTitleText("城市选择")
                 .setSubCalSize(18)
@@ -222,11 +223,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 .setCancelColor(Color.BLUE)
                 .setBackgroundColor(Color.WHITE)
                 .setContentTextSize(18)
-                .setLinkage(false)
+                .setLinkage(false)//default true
                 .setLabels("省", "市", "区")//设置选择的三级单位
-                .setCyclic(false, false, false)//循环与否
-                .setSelectOptions(1, 1, 1)  //设置默认选中项
-                .setOutSideCancelable(false)//点击外部dismiss default true*/
+                .setCyclic(false, false, false)//循环与
+                .setSelectOptions(0,0,0)  //设置默认选中项
+                .setOutSideCancelable(false)//点击外部dismiss, default true*/
                 .build();
 
         pvOptions.setPicker(options1Items, options2Items, options3Items);
