@@ -226,8 +226,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 .setLinkage(false)//default true
                 .setLabels("省", "市", "区")//设置选择的三级单位
                 .setCyclic(false, false, false)//循环与
-                .setSelectOptions(0,0,0)  //设置默认选中项
                 .setOutSideCancelable(false)//点击外部dismiss, default true*/
+                .setSelectOptions(0,1,2)  //设置默认选中项
                 .build();
 
         pvOptions.setPicker(options1Items, options2Items, options3Items);
