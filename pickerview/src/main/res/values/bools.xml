@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- 此值为true pickerview_textsize才会有效果-->
-    <bool name="pickerview_customTextSize">false</bool>
-</resources>
