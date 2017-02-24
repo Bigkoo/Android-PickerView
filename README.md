@@ -6,7 +6,7 @@
 
 ##历史版本请看说明文档
 
-[Wiki](https://github.com/Contrarywind/Android-PickerView/wiki)
+[Wiki](https://github.com/Bigkoo/Android-PickerView/wiki)
 
 ### Dependencies：
 
@@ -69,7 +69,7 @@ OR
 ```
 
 # 详细使用请参考这里
-[请戳我查看例示代码](https://github.com/Contrarywind/Android-PickerView/blob/master/app/src/main/java/com/bigkoo/pickerviewdemo/MainActivity.java)
+[请戳我查看例示代码](https://github.com/Bigkoo/Android-PickerView/blob/master/app/src/main/java/com/bigkoo/pickerviewdemo/MainActivity.java)
 
 
 # 说明文档 Documentation（还在持续更新中）
