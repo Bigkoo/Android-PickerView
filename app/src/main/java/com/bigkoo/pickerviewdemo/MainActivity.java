@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
         options3Items_01.add(options3Items_01_01);
         ArrayList<IPickerViewData> options3Items_01_02=new ArrayList<>();
         options3Items_01_02.add(new PickerViewData("南海"));
-        options3Items_01_02.add(new PickerViewData("高明"));
+        options3Items_01_02.add(new PickerViewData("明高"));
         options3Items_01_02.add(new PickerViewData("禅城"));
         options3Items_01_02.add(new PickerViewData("桂城"));
         options3Items_01.add(options3Items_01_02);
