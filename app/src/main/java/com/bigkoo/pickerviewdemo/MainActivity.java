@@ -77,7 +77,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 .setTitleColor(Color.BLACK)
                 .setSubmitColor(Color.BLUE)
                 .setCancelColor(Color.BLUE)
-                .setBackgroundColor(0xFF000000)//夜间模式 Night mode
                 .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//default 1900-2100 years *//*
                 .setDate(new Date())// default system*/
                 .setTitleBgColor(0xFF333333)//标题背景颜色 Night mode

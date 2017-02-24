@@ -117,7 +117,7 @@ public class WheelView extends View {
     public WheelView(Context context, AttributeSet attrs) {
         super(context, attrs);
         textColorOut = ContextCompat.getColor(context,R.color.pickerview_wheelview_textcolor_out);
-        textColorCenter = ContextCompat.getColor(context,R.color.pickerview_wheelview_textcolor_out);
+        textColorCenter = ContextCompat.getColor(context,R.color.pickerview_wheelview_textcolor_center);
         dividerColor = ContextCompat.getColor(context,R.color.pickerview_wheelview_textcolor_out);
 
         textSize = getResources().getDimensionPixelSize(R.dimen.pickerview_textsize);//默认大小
