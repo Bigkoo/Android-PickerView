@@ -4,7 +4,7 @@
 * 新增标题栏和滚轮的背景color区分设置
 * 修正选项选择器设置默认选中项失效的问题
 * 修正选中项颜色问题
-
+* 调整UI，修复确定取消按钮显示偏差问题
 ## 历史版本请看说明文档
 
 [Wiki](https://github.com/Bigkoo/Android-PickerView/wiki)
