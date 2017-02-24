@@ -227,6 +227,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 .setLabels("省", "市", "区")//设置选择的三级单位
                 .setCyclic(false, false, false)//循环与
                 .setOutSideCancelable(false)//点击外部dismiss, default true*/
+                /*.setTitleBgColor(0xFF333333)//标题背景颜色 Night mode
+                .setBgColor(0xFF000000)//滚轮背景颜色 Night mode*/
                 .setSelectOptions(0,1,2)  //设置默认选中项
                 .build();
 
