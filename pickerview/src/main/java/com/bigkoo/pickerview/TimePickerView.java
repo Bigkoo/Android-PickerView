@@ -43,6 +43,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private int Color_Submit;//确定按钮颜色
     private int Color_Cancel;//取消按钮颜色
     private int Color_Title;//标题颜色
+
     private int Color_Background_Wheel;//滚轮背景颜色
     private int Color_Background_Title;//标题背景颜色
 
@@ -110,6 +111,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private int Color_Submit;//确定按钮颜色
         private int Color_Cancel;//取消按钮颜色
         private int Color_Title;//标题颜色
+
         private int Color_Background_Wheel;//滚轮背景颜色
         private int Color_Background_Title;//标题背景颜色
 

@@ -124,7 +124,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         //广东的地区
         ArrayList<IPickerViewData> options3Items_01_01=new ArrayList<>();
-        options3Items_01_01.add(new PickerViewData("天河"));
+        options3Items_01_01.add(new PickerViewData("大河"));
         options3Items_01_01.add(new PickerViewData("海珠"));
         options3Items_01_01.add(new PickerViewData("越秀"));
         options3Items_01_01.add(new PickerViewData("荔湾"));
@@ -226,8 +226,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 .setLinkage(false)//default true
                 .setLabels("省", "市", "区")//设置选择的三级单位
                 .setCyclic(false, false, false)//循环与
-                .setSelectOptions(0,0,0)  //设置默认选中项
                 .setOutSideCancelable(false)//点击外部dismiss, default true*/
+                /*.setTitleBgColor(0xFF333333)//标题背景颜色 Night mode
+                .setBgColor(0xFF000000)//滚轮背景颜色 Night mode*/
+                .setSelectOptions(0,1,2)  //设置默认选中项
                 .build();
 
         pvOptions.setPicker(options1Items, options2Items, options3Items);

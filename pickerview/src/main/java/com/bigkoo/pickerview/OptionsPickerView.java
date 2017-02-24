@@ -43,7 +43,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private int Color_Submit;//确定按钮颜色
     private int Color_Cancel;//取消按钮颜色
     private int Color_Title;//标题颜色
-    private int Color_Background;//背景颜色
+
+    private int Color_Background_Wheel;//滚轮背景颜色
+    private int Color_Background_Title;//标题背景颜色
 
     private int Size_Submit_Cancel ;//确定取消按钮大小
     private int Size_Title ;//标题文字大小
@@ -74,7 +76,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         this.Color_Submit = builder.Color_Submit;
         this.Color_Cancel = builder.Color_Cancel;
         this.Color_Title = builder.Color_Title;
-        this.Color_Background = builder.Color_Background;
+        this.Color_Background_Wheel = builder.Color_Background_Wheel;
+        this.Color_Background_Title = builder.Color_Background_Title;
 
         this.Size_Submit_Cancel = builder.Size_Submit_Cancel;
         this.Size_Title = builder.Size_Title;
@@ -112,7 +115,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private int Color_Submit;//确定按钮颜色
         private int Color_Cancel;//取消按钮颜色
         private int Color_Title;//标题颜色
-        private int Color_Background;//背景颜色
+
+        private int Color_Background_Wheel;//滚轮背景颜色
+        private int Color_Background_Title;//标题背景颜色
 
         private int Size_Submit_Cancel = 17;//确定取消按钮大小
         private int Size_Title = 18;//标题文字大小
@@ -166,8 +171,12 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             return this;
         }
 
-        public Builder setBackgroundColor(int Color_Background){
-            this.Color_Background = Color_Background;
+        public Builder setBgColor(int Color_Background_Wheel){
+            this.Color_Background_Wheel = Color_Background_Wheel;
+            return this;
+        }
+        public Builder setTitleBgColor(int Color_Background_Title){
+            this.Color_Background_Title = Color_Background_Title;
             return this;
         }
 
@@ -272,8 +281,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         final LinearLayout optionsPicker = (LinearLayout) findViewById(R.id.optionspicker);
 
         RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
-        rv_top_bar.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.pickerview_bg_topbar):Color_Background);
-        optionsPicker.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background);
+        rv_top_bar.setBackgroundColor(Color_Background_Title==0?ContextCompat.getColor(context, R.color.pickerview_bg_topbar):Color_Background_Title);
+        optionsPicker.setBackgroundColor(Color_Background_Wheel==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background_Wheel);
 
         wheelOptions = new WheelOptions(optionsPicker,linkage);
         wheelOptions.setTextContentSize(Size_Content);
