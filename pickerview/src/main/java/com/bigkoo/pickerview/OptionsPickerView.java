@@ -275,11 +275,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         rv_top_bar.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.pickerview_bg_topbar):Color_Background);
         optionsPicker.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background);
 
-        wheelOptions = new WheelOptions(optionsPicker,linkage);//传入联动设置
+        wheelOptions = new WheelOptions(optionsPicker,linkage);
         wheelOptions.setTextContentSize(Size_Content);
         wheelOptions.setLabels(label1, label2, label3);
         wheelOptions.setCyclic(cyclic1,cyclic2,cyclic3);
-        wheelOptions.setCurrentItems(option1, option2, option3);
 
         setOutSideCancelable(cancelable);
         tvTitle.setText(Str_Title);
@@ -289,10 +288,12 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     public void setPicker(ArrayList<T> optionsItems) {
         wheelOptions.setPicker(optionsItems, null, null);
+        wheelOptions.setCurrentItems(option1, option2, option3);
     }
 
     public void setPicker(ArrayList<T> options1Items, ArrayList<ArrayList<T>> options2Items) {
         wheelOptions.setPicker(options1Items, options2Items, null);
+        wheelOptions.setCurrentItems(option1, option2, option3);
     }
 
     public void setPicker(ArrayList<T> options1Items,
@@ -300,6 +301,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
                           ArrayList<ArrayList<ArrayList<T>>> options3Items) {
 
         wheelOptions.setPicker(options1Items, options2Items, options3Items);
+        wheelOptions.setCurrentItems(option1, option2, option3);
     }
 
 

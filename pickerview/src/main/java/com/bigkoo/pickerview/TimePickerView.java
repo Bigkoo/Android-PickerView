@@ -43,7 +43,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private int Color_Submit;//确定按钮颜色
     private int Color_Cancel;//取消按钮颜色
     private int Color_Title;//标题颜色
-    private int Color_Background;//背景颜色
+    private int Color_Background_Wheel;//滚轮背景颜色
+    private int Color_Background_Title;//标题背景颜色
 
     private int Size_Submit_Cancel;//确定取消按钮大小
     private int Size_Title;//标题字体大小
@@ -72,7 +73,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.Color_Submit = builder.Color_Submit;
         this.Color_Cancel = builder.Color_Cancel;
         this.Color_Title = builder.Color_Title;
-        this.Color_Background = builder.Color_Background;
+        this.Color_Background_Wheel = builder.Color_Background_Wheel;
+        this.Color_Background_Title = builder.Color_Background_Title;
         this.Size_Submit_Cancel = builder.Size_Submit_Cancel;
         this.Size_Title = builder.Size_Title;
         this.Size_Content = builder.Size_Content;
@@ -108,7 +110,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private int Color_Submit;//确定按钮颜色
         private int Color_Cancel;//取消按钮颜色
         private int Color_Title;//标题颜色
-        private int Color_Background;//背景颜色
+        private int Color_Background_Wheel;//滚轮背景颜色
+        private int Color_Background_Title;//标题背景颜色
 
         private int Size_Submit_Cancel = 17;//确定取消按钮大小
         private int Size_Title = 18;//标题字体大小
@@ -162,8 +165,12 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
-        public Builder setBackgroundColor(int Color_Background){
-            this.Color_Background = Color_Background;
+        public Builder setBgColor(int Color_Background_Wheel){
+            this.Color_Background_Wheel = Color_Background_Wheel;
+            return this;
+        }
+        public Builder setTitleBgColor(int Color_Background_Title){
+            this.Color_Background_Title = Color_Background_Title;
             return this;
         }
 
@@ -257,8 +264,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);
 
         RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
-        rv_top_bar.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.pickerview_bg_topbar):Color_Background);
-        timePickerView.setBackgroundColor(Color_Background==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background);
+        rv_top_bar.setBackgroundColor(Color_Background_Title==0?ContextCompat.getColor(context, R.color.pickerview_bg_topbar):Color_Background_Title);
+        timePickerView.setBackgroundColor(Color_Background_Wheel==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background_Wheel);
 
         wheelTime = new WheelTime(timePickerView, type, gravity,Size_Content);
 

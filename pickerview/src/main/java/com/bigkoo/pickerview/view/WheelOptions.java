@@ -41,12 +41,12 @@ public class WheelOptions<T> {
     }
 
     public void setPicker(ArrayList<T> optionsItems) {
-        setPicker(optionsItems, null, null);
+        setPicker(optionsItems, null);
     }
 
     public void setPicker(ArrayList<T> options1Items,
                           ArrayList<ArrayList<T>> options2Items) {
-        setPicker(options1Items, options2Items, null);
+        setPicker(options1Items, options2Items);
     }
 
     public void setPicker(ArrayList<T> options1Items,
