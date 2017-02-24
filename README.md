@@ -32,21 +32,6 @@ OR
 ——TimePickerView  时间选择器，支持年月日时分，年月日，年月，时分等格式   
 ——OptionsPickerView  选项选择器，支持一，二，三级选项选择，并且可以设置是否联动 
 
-### Dependencies：
-```java
-compile 'com.contrarywind:Android-PickerView:3.0.2'
-//这个是支持农历的分支 compile 'com.bigkoo:pickerview:lunar.1.0'
-```
-OR
-### Maven：
-```java
-<dependency> 
-<groupId>com.contrarywind</groupId> 
-<artifactId>Android-PickerView</artifactId>
-<version>3.0.2</version>
-<type>pom</type>
-</dependency>
-```
 
 #Sample usage：
 ```java
