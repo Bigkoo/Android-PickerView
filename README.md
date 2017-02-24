@@ -1,9 +1,11 @@
 ##（原作者已经转行了，他已把项目转交给我维护，所以我会继续更新优化，不能白白荒废了，欢迎Pull Request,提issue。有兴趣的小伙伴可以加入QQ群：387051294 讨论交流）
 
-
+## V3.0.3版本更新说明（2017-2-24）
+* 新增标题栏和滚轮的背景color区分设置
+* 修正选项选择器设置默认选中项失效的问题
 ### Dependencies：
 ```java
-compile 'com.contrarywind:Android-PickerView:3.0.2'
+compile 'com.contrarywind:Android-PickerView:3.0.3'
 ```
 OR
 ### Maven：
@@ -11,7 +13,7 @@ OR
 <dependency> 
 <groupId>com.contrarywind</groupId> 
 <artifactId>Android-PickerView</artifactId>
-<version>3.0.2</version>
+<version>3.0.3</version>
 <type>pom</type>
 </dependency>
 ```
