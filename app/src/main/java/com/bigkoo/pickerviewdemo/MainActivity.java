@@ -228,6 +228,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 .setOutSideCancelable(false)//点击外部dismiss, default true*/
                 /*.setTitleBgColor(0xFF333333)//标题背景颜色 Night mode
                 .setBgColor(0xFF000000)//滚轮背景颜色 Night mode*/
+                .setSubCalSize(18)
+                .setContentTextSize(20)
                 .setSelectOptions(0,1,2)  //设置默认选中项
                 .build();
 

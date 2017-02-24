@@ -8,18 +8,17 @@
     <Button
         android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        android:gravity="center_vertical|left"
-        android:paddingLeft="@dimen/pickerview_topbar_paddingleft"
-        android:paddingRight="@dimen/pickerview_topbar_paddingright"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/pickerview_topbar_padding"
         android:text="@string/pickerview_cancel"
         android:textColor="@drawable/selector_pickerview_btn"
         android:textSize="@dimen/pickerview_topbar_btn_textsize" />
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -31,12 +30,11 @@
     <Button
         android:id="@id/btnSubmit"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
-        android:gravity="center_vertical|left"
-        android:paddingLeft="@dimen/pickerview_topbar_paddingright"
-        android:paddingRight="@dimen/pickerview_topbar_paddingleft"
+        android:gravity="right|center_vertical"
+        android:paddingRight="@dimen/pickerview_topbar_padding"
         android:text="@string/pickerview_submit"
         android:textColor="@drawable/selector_pickerview_btn"
         android:textSize="@dimen/pickerview_topbar_btn_textsize" />
