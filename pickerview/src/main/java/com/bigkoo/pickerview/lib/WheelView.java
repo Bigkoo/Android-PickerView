@@ -108,7 +108,7 @@ public class WheelView extends View {
     private int drawCenterContentStart = 0;//中间选中文字开始绘制位置
     private int drawOutContentStart = 0;//非中间文字开始绘制位置
     private static final float SCALECONTENT = 0.8F;//非中间文字则用此控制高度，压扁形成3d错觉
-    private static final float CENTERCONTENTOFFSET = 0;//中间文字文字居中需要此偏移值
+    private static final float CENTERCONTENTOFFSET = 6;//中间的Label文字右边距 (偏移值)
 
     public WheelView(Context context) {
         this(context, null);
@@ -371,8 +371,6 @@ public class WheelView extends View {
         //中间两条横线
         canvas.drawLine(0.0F, firstLineY, measuredWidth, firstLineY, paintIndicator);
         canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintIndicator);
-        System.out.println("firstLineY:"+firstLineY);
-        System.out.println("secondLineY:"+secondLineY);
         //单位的Label
         if (label != null) {
             int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
@@ -384,7 +382,7 @@ public class WheelView extends View {
             canvas.save();
             // L(弧长)=α（弧度）* r(半径) （弧度制）
             // 求弧度--> (L * π ) / (π * r)   (弧长X派/半圆周长)
-            float itemHeight = maxTextHeight * lineSpacingMultiplier;
+           /* float itemHeight = maxTextHeight * lineSpacingMultiplier;*/
             double radian = ((itemHeight * counter - itemHeightOffset) * Math.PI) / halfCircumference;
             // 弧度转换成角度(把半圆以Y轴为轴心向右转90度，使其处于第一象限及第四象限
             float angle = (float) (90D - (radian / Math.PI) * 180D);

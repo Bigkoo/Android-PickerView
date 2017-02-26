@@ -1,7 +1,9 @@
 package com.bigkoo.pickerviewdemo;
 
-import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
-public class MainActivity extends Activity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ArrayList<ProvinceBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
@@ -75,14 +77,15 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 .setOutSideCancelable(false)// default true
                 .isCyclic(true)// default false
                 .setTitleColor(Color.BLACK)
-                .setSubmitColor(Color.BLUE)
-                .setCancelColor(Color.BLUE)
                 .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//default 1900-2100 years *//*
                 .setDate(new Date())// default system*/
-                .setDividerColor(0xFFff0000)//设置分割线的颜色
-                .setLineSpacingMultiplier(1.6f)
-                .setTitleBgColor(0xFF333333)//标题背景颜色 Night mode
-                .setBgColor(0xFF000000)//滚轮背景颜色 Night mode
+                .setDividerColor(Color.WHITE)//设置分割线的颜色
+                .setTextColorCenter(Color.LTGRAY)//设置选中项的颜色
+                .setLineSpacingMultiplier(1.6f)//设置两横线之间的间隔倍数
+                .setTitleBgColor(Color.DKGRAY)//标题背景颜色 Night mode
+                .setBgColor(Color.BLACK)//滚轮背景颜色 Night mode
+                .setSubmitColor(Color.WHITE)
+                .setCancelColor(Color.WHITE)
                 .setLabel("年","月","日","时","分","秒")
                 .build();
     }
@@ -97,11 +100,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
         //选项1
         options1Items.add(new ProvinceBean(0,"广东","描述部分","其他数据"));
         options1Items.add(new ProvinceBean(1,"湖南","描述部分","其他数据"));
-        options1Items.add(new ProvinceBean(2,"广西维吾尔族自治区","描述部分","其他数据"));
+        options1Items.add(new ProvinceBean(2,"广西","描述部分","其他数据"));
 
         //选项2
         ArrayList<String> options2Items_01=new ArrayList<>();
-        options2Items_01.add("广州望城坡区");
+        options2Items_01.add("广州");
         options2Items_01.add("佛山");
         options2Items_01.add("东莞");
         options2Items_01.add("阳江");
@@ -217,23 +220,22 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 /*.setSubmitText("确定")
                 .setCancelText("取消")
                 .setTitleText("城市选择")
-                .setSubCalSize(18)
                 .setTitleSize(20)
                 .setTitleColor(Color.BLACK)
                 .setSubmitColor(Color.BLUE)
                 .setCancelColor(Color.BLUE)
                 .setBackgroundColor(Color.WHITE)
-                .setContentTextSize(18)
                 .setLinkage(false)//default true
-                .setLabels("省", "市", "区")//设置选择的三级单位
-                .setCyclic(false, false, false)//循环与
-                .setOutSideCancelable(false)//点击外部dismiss, default true*/
-                /*.setTitleBgColor(0xFF333333)//标题背景颜色 Night mode
-                .setBgColor(0xFF000000)//滚轮背景颜色 Night mode*/
-                .setSubCalSize(18)
-                .setLineSpacingMultiplier(2.0f) //设置间距
-                .setTextColorCenter(0xFF00ff00) //设置分割线性之间的字体颜色
-                .setContentTextSize(20)
+                .setCyclic(false, false, false)//循环与否
+                .setOutSideCancelable(false)//点击外部dismiss, default true
+                .setTitleBgColor(0xFF333333)//标题背景颜色 Night mode
+                .setBgColor(0xFF000000)//滚轮背景颜色 Night mode
+                .setLabels("省", "市", "区")//设置选择的三级单位*/
+                .setSubCalSize(18)//确定取消按钮大小
+                .setLineSpacingMultiplier(1.5f) //设置两横线之间的间隔倍数（范围：1.2 - 2.0倍 文字高度）
+                .setDividerColor(ContextCompat.getColor(this,R.color.colorAccent))//设置分割线的颜色
+                .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
+                .setContentTextSize(20)//设置滚轮文字大小
                 .setSelectOptions(0,1,2)  //设置默认选中项
                 .build();
 
