@@ -1,15 +1,21 @@
 ##（原作者已经转行了，他已把项目转交给我维护，所以我会继续更新优化，不能白白荒废了，欢迎Pull Request,提issue。有兴趣的小伙伴可以加入QQ群：387051294 讨论交流）
 
-## V3.0.3版本更新说明（2017-2-24）
+
+## 说明文档 Documentation（还在持续更新中）
+### [English Documentation](https://github.com/Bigkoo/Android-PickerView/wiki/English-Documentation)
+
+### [中文说明文档（3.x版）](https://github.com/Bigkoo/Android-PickerView/wiki/%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%883.x%E7%89%88%EF%BC%89)
+
+### [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
+
+### V3.0.3版本更新说明（2017-2-24）
 * 新增标题栏和滚轮的背景color区分设置
 * 修正选项选择器设置默认选中项失效的问题
 * 修正选中项颜色问题
 * 调整UI，修复确定取消按钮显示偏差问题
 
 
-## 历史版本请看说明文档
-
-## [Wiki](https://github.com/Bigkoo/Android-PickerView/wiki)
+### 历史版本更新说明请查看Wiki
 
 ### Dependencies：
 
@@ -74,14 +80,6 @@ OR
 
 # 详细使用请参考这里
 ## [请戳我查看例示代码](https://github.com/Bigkoo/Android-PickerView/blob/master/app/src/main/java/com/bigkoo/pickerviewdemo/MainActivity.java)
-
-
-# 说明文档 Documentation（还在持续更新中）
-## [English Documentation](https://github.com/Bigkoo/Android-PickerView/wiki/English-Documentation)
-
-## [中文说明文档（3.x版）](https://github.com/Bigkoo/Android-PickerView/wiki/%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%883.x%E7%89%88%EF%BC%89)
-
-## [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
 
 
 ## 效果图（招行信用卡的“掌上生活”里面条件选择器他们用的就是我这个库，大家可以当实际项目参考）
