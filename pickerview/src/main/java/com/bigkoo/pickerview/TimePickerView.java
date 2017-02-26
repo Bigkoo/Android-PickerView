@@ -57,6 +57,12 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private boolean cyclic;//是否循环
     private boolean cancelable;//是否能取消
 
+    private int textColorOut; //分割线以外的文字颜色
+    private int textColorCenter; //分割线之间的文字颜色
+    private int dividerColor; //分割线的颜色
+    // 条目间距倍数 默认1.6
+    private float lineSpacingMultiplier = 1.6F;
+
     private String label_year, label_month,  label_day,  label_hours,  label_mins, label_seconds;
 
     private static final String TAG_SUBMIT = "submit";
@@ -90,7 +96,10 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.label_hours = builder.label_hours;
         this.label_mins = builder.label_mins;
         this.label_seconds = builder.label_seconds;
-
+        this.textColorCenter = builder.textColorCenter;
+        this.textColorOut = builder.textColorOut;
+        this.dividerColor = builder.dividerColor;
+        this.lineSpacingMultiplier = builder.lineSpacingMultiplier;
         initView(builder.context);
     }
 
@@ -123,6 +132,12 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private int endYear;//结尾年份
         private boolean cyclic = false;//是否循环
         private boolean cancelable = true;//是否能取消
+
+        private int textColorOut; //分割线以外的文字颜色
+        private int textColorCenter; //分割线之间的文字颜色
+        private int dividerColor; //分割线的颜色
+        // 条目间距倍数 默认1.6
+        private float lineSpacingMultiplier = 1.6F;
 
         private String label_year, label_month,  label_day,  label_hours,  label_mins, label_seconds;//单位
         //Required
@@ -205,6 +220,46 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
+        /**
+         * 设置间距倍数,但是只能在1.2-2.0f之间
+         *
+         * @param lineSpacingMultiplier
+         */
+        public Builder setLineSpacingMultiplier(float lineSpacingMultiplier) {
+            this.lineSpacingMultiplier = lineSpacingMultiplier;
+            return this;
+        }
+
+        /**
+         * 设置分割线的颜色
+         *
+         * @param dividerColor
+         */
+        public Builder setDividerColor(int dividerColor) {
+            this.dividerColor = dividerColor;
+            return this;
+        }
+
+        /**
+         * 设置分割线之间的文字的颜色
+         *
+         * @param textColorCenter
+         */
+        public Builder setTextColorCenter(int textColorCenter) {
+            this.textColorCenter = textColorCenter;
+            return this;
+        }
+
+        /**
+         * 设置分割线以外文字的颜色
+         *
+         * @param textColorOut
+         */
+        public Builder setTextColorOut(int textColorOut) {
+            this.textColorOut = textColorOut;
+            return this;
+        }
+
         public Builder isCyclic(boolean cyclic) {
             this.cyclic = cyclic;
             return this;
@@ -278,6 +333,10 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         wheelTime.setLabels(label_year,label_month,label_day,label_hours,label_mins,label_seconds);
         setOutSideCancelable(cancelable);
         wheelTime.setCyclic(cyclic);
+        wheelTime.setDividerColor(dividerColor);
+        wheelTime.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wheelTime.setTextColorOut(textColorOut);
+        wheelTime.setTextColorCenter(textColorCenter);
     }
 
 

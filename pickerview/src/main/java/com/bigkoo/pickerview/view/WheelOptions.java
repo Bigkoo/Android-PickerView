@@ -23,6 +23,13 @@ public class WheelOptions<T> {
     private OnItemSelectedListener wheelListener_option1;
     private OnItemSelectedListener wheelListener_option2;
 
+    //文字的颜色和分割线的颜色
+    int textColorOut;
+    int textColorCenter;
+    int dividerColor;
+    // 条目间距倍数
+    float lineSpacingMultiplier = 1.6F;
+
     public View getView() {
         return view;
     }
@@ -134,6 +141,34 @@ public class WheelOptions<T> {
         wv_option3.setTextSize(textSize);
     }
 
+    private void setTextColorOut() {
+        wv_option1.setTextColorOut(textColorOut);
+        wv_option2.setTextColorOut(textColorOut);
+        wv_option3.setTextColorOut(textColorOut);
+
+    }
+
+    private void setTextColorCenter() {
+        wv_option1.setTextColorCenter(textColorCenter);
+        wv_option2.setTextColorCenter(textColorCenter);
+        wv_option3.setTextColorCenter(textColorCenter);
+
+    }
+
+    private void setDividerColor() {
+        wv_option1.setDividerColor(dividerColor);
+        wv_option2.setDividerColor(dividerColor);
+        wv_option3.setDividerColor(dividerColor);
+
+    }
+
+    private void setLineSpacingMultiplier() {
+        wv_option1.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wv_option2.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wv_option3.setLineSpacingMultiplier(lineSpacingMultiplier);
+
+    }
+
     /**
      * 设置选项的单位
      *
@@ -207,6 +242,44 @@ public class WheelOptions<T> {
             wv_option3.setCurrentItem(opt3Select);
         }
     }
+    /**
+     * 设置间距倍数,但是只能在1.0-2.0f之间
+     *
+     * @param lineSpacingMultiplier
+     */
+    public void setLineSpacingMultiplier(float lineSpacingMultiplier) {
+        this.lineSpacingMultiplier = lineSpacingMultiplier;
+        setLineSpacingMultiplier();
+    }
 
+    /**
+     * 设置分割线的颜色
+     *
+     * @param dividerColor
+     */
+    public void setDividerColor(int dividerColor) {
+        this.dividerColor = dividerColor;
+        setDividerColor();
+    }
+
+    /**
+     * 设置分割线之间的文字的颜色
+     *
+     * @param textColorCenter
+     */
+    public void setTextColorCenter(int textColorCenter) {
+        this.textColorCenter = textColorCenter;
+        setTextColorCenter();
+    }
+
+    /**
+     * 设置分割线以外文字的颜色
+     *
+     * @param textColorOut
+     */
+    public void setTextColorOut(int textColorOut) {
+        this.textColorOut = textColorOut;
+        setTextColorOut();
+    }
 
 }

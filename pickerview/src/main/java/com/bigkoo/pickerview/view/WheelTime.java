@@ -34,6 +34,12 @@ public class WheelTime {
 
     // 根据屏幕密度来指定选择器字体的大小(不同屏幕可能不同)
     private int textSize = 18;
+    //文字的颜色和分割线的颜色
+    int textColorOut;
+    int textColorCenter;
+    int dividerColor;
+    // 条目间距倍数
+    float lineSpacingMultiplier = 1.6F;
 
     public WheelTime(View view) {
         super();
@@ -42,7 +48,7 @@ public class WheelTime {
         setView(view);
     }
 
-    public WheelTime(View view, Type type, int gravity ,int textSize) {
+    public WheelTime(View view, Type type, int gravity, int textSize) {
         super();
         this.view = view;
         this.type = type;
@@ -102,7 +108,7 @@ public class WheelTime {
         //分
         wv_mins = (WheelView) view.findViewById(R.id.min);
         wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
-       wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
+        wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
         wv_mins.setCurrentItem(m);
         wv_mins.setGravity(gravity);
         //秒
@@ -216,6 +222,42 @@ public class WheelTime {
         wv_seconds.setTextSize(textSize);
     }
 
+    private void setTextColorOut() {
+        wv_day.setTextColorOut(textColorOut);
+        wv_month.setTextColorOut(textColorOut);
+        wv_year.setTextColorOut(textColorOut);
+        wv_hours.setTextColorOut(textColorOut);
+        wv_mins.setTextColorOut(textColorOut);
+        wv_seconds.setTextColorOut(textColorOut);
+    }
+
+    private void setTextColorCenter() {
+        wv_day.setTextColorCenter(textColorCenter);
+        wv_month.setTextColorCenter(textColorCenter);
+        wv_year.setTextColorCenter(textColorCenter);
+        wv_hours.setTextColorCenter(textColorCenter);
+        wv_mins.setTextColorCenter(textColorCenter);
+        wv_seconds.setTextColorCenter(textColorCenter);
+    }
+
+    private void setDividerColor() {
+        wv_day.setDividerColor(dividerColor);
+        wv_month.setDividerColor(dividerColor);
+        wv_year.setDividerColor(dividerColor);
+        wv_hours.setDividerColor(dividerColor);
+        wv_mins.setDividerColor(dividerColor);
+        wv_seconds.setDividerColor(dividerColor);
+    }
+
+    private void setLineSpacingMultiplier() {
+        wv_day.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wv_month.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wv_year.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wv_hours.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wv_mins.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wv_seconds.setLineSpacingMultiplier(lineSpacingMultiplier);
+    }
+
     public void setLabels(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
         if (label_year != null)
             wv_year.setLabel(label_year);
@@ -279,5 +321,45 @@ public class WheelTime {
 
     public void setEndYear(int endYear) {
         this.endYear = endYear;
+    }
+
+    /**
+     * 设置间距倍数,但是只能在1.0-2.0f之间
+     *
+     * @param lineSpacingMultiplier
+     */
+    public void setLineSpacingMultiplier(float lineSpacingMultiplier) {
+        this.lineSpacingMultiplier = lineSpacingMultiplier;
+        setLineSpacingMultiplier();
+    }
+
+    /**
+     * 设置分割线的颜色
+     *
+     * @param dividerColor
+     */
+    public void setDividerColor(int dividerColor) {
+        this.dividerColor = dividerColor;
+        setDividerColor();
+    }
+
+    /**
+     * 设置分割线之间的文字的颜色
+     *
+     * @param textColorCenter
+     */
+    public void setTextColorCenter(int textColorCenter) {
+        this.textColorCenter = textColorCenter;
+        setTextColorCenter();
+    }
+
+    /**
+     * 设置分割线以外文字的颜色
+     *
+     * @param textColorOut
+     */
+    public void setTextColorOut(int textColorOut) {
+        this.textColorOut = textColorOut;
+        setTextColorOut();
     }
 }

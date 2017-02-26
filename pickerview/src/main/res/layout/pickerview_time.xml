@@ -23,6 +23,7 @@
             android:layout_weight="1" />
 
         <com.bigkoo.pickerview.lib.WheelView
+
             android:id="@+id/month"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

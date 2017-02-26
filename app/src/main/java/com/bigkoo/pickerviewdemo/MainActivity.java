@@ -79,6 +79,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 .setCancelColor(Color.BLUE)
                 .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//default 1900-2100 years *//*
                 .setDate(new Date())// default system*/
+                .setDividerColor(0xFFff0000)//设置分割线的颜色
+                .setLineSpacingMultiplier(1.6f)
                 .setTitleBgColor(0xFF333333)//标题背景颜色 Night mode
                 .setBgColor(0xFF000000)//滚轮背景颜色 Night mode
                 .setLabel("年","月","日","时","分","秒")
@@ -229,6 +231,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 /*.setTitleBgColor(0xFF333333)//标题背景颜色 Night mode
                 .setBgColor(0xFF000000)//滚轮背景颜色 Night mode*/
                 .setSubCalSize(18)
+                .setLineSpacingMultiplier(2.0f) //设置间距
+                .setTextColorCenter(0xFF00ff00) //设置分割线性之间的字体颜色
                 .setContentTextSize(20)
                 .setSelectOptions(0,1,2)  //设置默认选中项
                 .build();

@@ -51,6 +51,12 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private int Size_Title ;//标题文字大小
     private int Size_Content ;//内容文字大小
 
+    private int textColorOut; //分割线以外的文字颜色
+    private int textColorCenter; //分割线之间的文字颜色
+    private int dividerColor; //分割线的颜色
+    // 条目间距倍数 默认1.6
+    private float lineSpacingMultiplier = 1.6F;
+
     private boolean cancelable;//是否能取消
     private boolean linkage;//是否联动
 
@@ -97,7 +103,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         this.option1 = builder.option1;
         this.option2 = builder.option2;
         this.option3 = builder.option3;
-
+        this.textColorCenter = builder.textColorCenter;
+        this.textColorOut = builder.textColorOut;
+        this.dividerColor = builder.dividerColor;
+        this.lineSpacingMultiplier = builder.lineSpacingMultiplier;
         initView(builder.context);
     }
 
@@ -125,6 +134,12 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         private boolean cancelable = true;//是否能取消
         private boolean linkage = true;//是否联动
+
+        private int textColorOut; //分割线以外的文字颜色
+        private int textColorCenter; //分割线之间的文字颜色
+        private int dividerColor; //分割线的颜色
+        // 条目间距倍数 默认1.6
+        private float lineSpacingMultiplier = 1.6F;
 
         private String label1;
         private String label2;
@@ -217,6 +232,46 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             return this;
         }
 
+        /**
+         * 设置间距倍数,但是只能在1.2-2.0f之间
+         *
+         * @param lineSpacingMultiplier
+         */
+        public Builder setLineSpacingMultiplier(float lineSpacingMultiplier) {
+            this.lineSpacingMultiplier = lineSpacingMultiplier;
+            return this;
+        }
+
+        /**
+         * 设置分割线的颜色
+         *
+         * @param dividerColor
+         */
+        public Builder setDividerColor(int dividerColor) {
+            this.dividerColor = dividerColor;
+            return this;
+        }
+
+        /**
+         * 设置分割线之间的文字的颜色
+         *
+         * @param textColorCenter
+         */
+        public Builder setTextColorCenter(int textColorCenter) {
+            this.textColorCenter = textColorCenter;
+            return this;
+        }
+
+        /**
+         * 设置分割线以外文字的颜色
+         *
+         * @param textColorOut
+         */
+        public Builder setTextColorOut(int textColorOut) {
+            this.textColorOut = textColorOut;
+            return this;
+        }
+
         public Builder setCyclic(boolean cyclic1,boolean cyclic2,boolean cyclic3) {
             this.cyclic1 = cyclic1;
             this.cyclic2 = cyclic2;
@@ -292,6 +347,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         setOutSideCancelable(cancelable);
         tvTitle.setText(Str_Title);
         /*wheelOptions.setPicker(optionsItems, options2Items, options3Items, linkage);*/
+        wheelOptions.setDividerColor(dividerColor);
+        wheelOptions.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wheelOptions.setTextColorOut(textColorOut);
+        wheelOptions.setTextColorCenter(textColorCenter);
 
     }
 

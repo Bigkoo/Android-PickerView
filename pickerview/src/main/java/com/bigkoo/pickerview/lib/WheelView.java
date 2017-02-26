@@ -65,7 +65,7 @@ public class WheelView extends View {
     int dividerColor;
 
     // 条目间距倍数
-    static final float lineSpacingMultiplier = 1.4F;
+    float lineSpacingMultiplier = 1.6F;
     boolean isLoop;
 
     // 第一条线Y坐标值
@@ -128,9 +128,24 @@ public class WheelView extends View {
             textColorCenter = a.getColor(R.styleable.pickerview_pickerview_textColorCenter, textColorCenter);
             dividerColor = a.getColor(R.styleable.pickerview_pickerview_dividerColor, dividerColor);
             textSize = a.getDimensionPixelOffset(R.styleable.pickerview_pickerview_textSize, textSize);
+            lineSpacingMultiplier = a.getFloat(R.styleable.pickerview_pickerview_lineSpacingMultiplier, lineSpacingMultiplier);
             a.recycle();//回收内存
         }
+
+        judgeLineSpae();
+
         initLoopView(context);
+    }
+
+    /**
+     * 判断间距是否在1.0-2.0之间
+     */
+    private void judgeLineSpae() {
+        if (lineSpacingMultiplier < 1.2f) {
+            lineSpacingMultiplier = 1.2f;
+        } else if (lineSpacingMultiplier > 2.0f) {
+            lineSpacingMultiplier = 2.0f;
+        }
     }
 
     private void initLoopView(Context context) {
@@ -176,6 +191,7 @@ public class WheelView extends View {
         if (adapter == null) {
             return;
         }
+
         measureTextWidthHeight();
 
         //最大Text的高度乘间距倍数得到 可见文字实际的总高度，半圆的周长
@@ -189,7 +205,7 @@ public class WheelView extends View {
         //计算两条横线和控件中间点的Y位置
         firstLineY = (measuredHeight - itemHeight) / 2.0F;
         secondLineY = (measuredHeight + itemHeight) / 2.0F;
-        centerY = (measuredHeight + maxTextHeight) / 2.0F - (itemHeight-maxTextHeight)/2.0f;
+        centerY = (measuredHeight + maxTextHeight) / 2.0F - (itemHeight-maxTextHeight)/4.0f;
 
         //初始化显示的item的position，根据是否loop
         if (initPosition == -1) {
@@ -355,6 +371,8 @@ public class WheelView extends View {
         //中间两条横线
         canvas.drawLine(0.0F, firstLineY, measuredWidth, firstLineY, paintIndicator);
         canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintIndicator);
+        System.out.println("firstLineY:"+firstLineY);
+        System.out.println("secondLineY:"+secondLineY);
         //单位的Label
         if (label != null) {
             int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
@@ -409,9 +427,9 @@ public class WheelView extends View {
                     canvas.restore();
                 } else if (translateY >= firstLineY && maxTextHeight + translateY <= secondLineY) {
                     // 中间条目
-                    canvas.clipRect(0, 0, measuredWidth,   itemHeight);
+                    //canvas.clipRect(0, 0, measuredWidth,   maxTextHeight);
                     //让文字居中
-                     int i= maxTextHeight - (int) ((itemHeight - maxTextHeight) / 2.0f);
+                     float i= maxTextHeight - ((itemHeight - maxTextHeight) / 4.0f);
                     canvas.drawText(contentText, drawCenterContentStart, i, paintCenterText);
 
                     int preSelectedItem = adapter.indexOf(visibles[counter]);
@@ -626,5 +644,41 @@ public class WheelView extends View {
 
     public void setIsOptions(boolean options) {
         isOptions = options;
+    }
+
+
+    public void setTextColorOut(int textColorOut) {
+        if (textColorOut != 0) {
+            this.textColorOut = textColorOut;
+            paintOuterText.setColor(this.textColorOut);
+        }
+    }
+
+    public void setTextColorCenter(int textColorCenter) {
+        if (textColorCenter != 0) {
+
+            this.textColorCenter = textColorCenter;
+            paintCenterText.setColor(this.textColorCenter);
+        }
+    }
+
+    public void setDividerColor(int dividerColor) {
+        if (dividerColor != 0) {
+
+
+            this.dividerColor = dividerColor;
+            paintIndicator.setColor(this.dividerColor);
+
+        }
+    }
+
+    public void setLineSpacingMultiplier(float lineSpacingMultiplier) {
+        if (lineSpacingMultiplier != 0) {
+
+
+            this.lineSpacingMultiplier = lineSpacingMultiplier;
+            judgeLineSpae();
+
+        }
     }
 }
