@@ -142,8 +142,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
-        public Builder setSubmitText(String Str_Cancel){
-            this.Str_Submit = Str_Cancel;
+        public Builder setSubmitText(String Str_Submit){
+            this.Str_Submit = Str_Submit;
             return this;
         }
 
