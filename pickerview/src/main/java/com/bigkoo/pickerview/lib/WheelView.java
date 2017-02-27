@@ -514,7 +514,7 @@ public class WheelView extends View {
             case Gravity.LEFT:
                 drawCenterContentStart = 0;
                 break;
-            case Gravity.RIGHT://添加偏移量 CENTERCONTENTOFFSET
+            case Gravity.RIGHT://添加偏移量
                 drawCenterContentStart = measuredWidth - rect.width() -(int)CENTERCONTENTOFFSET;
                 break;
         }
