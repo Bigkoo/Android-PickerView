@@ -15,6 +15,8 @@
 ——TimePickerView  时间选择器，支持年月日时分，年月日，年月，时分等格式   
 ——OptionsPickerView  选项选择器，支持一，二，三级选项选择，并且可以设置是否联动 
 
+![TimePicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177272_3347.gif)
+![OptionsPicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177483_4301.gif)
 
 ## 说明文档 Documentation（还在持续更新中）
 ### [English Documentation](https://github.com/Bigkoo/Android-PickerView/wiki/English-Documentation)
@@ -24,11 +26,11 @@
 ### [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
 
 
-### V3.0.3版本更新说明（2017-2-24）
-* 新增标题栏和滚轮的背景color区分设置
-* 修正选项选择器设置默认选中项失效的问题
-* 修正选中项颜色问题
-* 调整UI，修复确定取消按钮显示偏差问题
+## V3.0.4版本更新说明（2017-2-27）
+* 新增分割线颜色设置
+* 新增滚轮的选中文字颜色设置
+* 新增滚轮的未选中文字颜色设置
+* 新增滚轮横线的间隔倍数设置
 
 
 ### 历史版本更新说明请查看Wiki
@@ -39,7 +41,7 @@
 
 ### Gradle
 ```java
-compile 'com.contrarywind:Android-PickerView:3.0.3'
+compile 'com.contrarywind:Android-PickerView:3.0.4'
 ```
 OR
 ### Maven
@@ -47,7 +49,7 @@ OR
 <dependency> 
 <groupId>com.contrarywind</groupId> 
 <artifactId>Android-PickerView</artifactId>
-<version>3.0.3</version>
+<version>3.0.4</version>
 <type>pom</type>
 </dependency>
 ```
