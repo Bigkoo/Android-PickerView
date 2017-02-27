@@ -68,25 +68,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tvTime.setText(getTime(date));
             }
         })
-                /*.setType(TimePickerView.Type.ALL)//default all
+                /*.setType(TimePickerView.Type.ALL)//default is all
                 .setCancelText("Cancel")
                 .setSubmitText("Sure")
                 .setContentSize(18)
                 .setTitleSize(20)
                 .setTitleText("Title")
-                .setOutSideCancelable(false)// default true
-                .isCyclic(true)// default false
+                .setOutSideCancelable(false)// default is true
+                .isCyclic(true)// default is false
                 .setTitleColor(Color.BLACK)
                 .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//default 1900-2100 years *//*
                 .setDate(new Date())// default system*/
-                .setDividerColor(Color.WHITE)//设置分割线的颜色
+               /*.setDividerColor(Color.WHITE)//设置分割线的颜色
                 .setTextColorCenter(Color.LTGRAY)//设置选中项的颜色
                 .setLineSpacingMultiplier(1.6f)//设置两横线之间的间隔倍数
                 .setTitleBgColor(Color.DKGRAY)//标题背景颜色 Night mode
                 .setBgColor(Color.BLACK)//滚轮背景颜色 Night mode
                 .setSubmitColor(Color.WHITE)
-                .setCancelColor(Color.WHITE)
-                .setLabel("年","月","日","时","分","秒")
+                .setCancelColor(Color.WHITE)*/
+                /*.setLabel("年","月","日","时","分","秒")*/
+               /* .gravity(Gravity.RIGHT)// default is Center*/
+                .setLabel("","","","","","") //设置空字符串以隐藏单位提示   hide label
                 .build();
     }
 

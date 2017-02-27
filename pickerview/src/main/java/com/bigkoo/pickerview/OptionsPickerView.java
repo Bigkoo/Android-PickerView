@@ -23,16 +23,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     WheelOptions<T> wheelOptions;
 
-   /* private ArrayList<T> optionsItems;
-    private ArrayList<ArrayList<T>> options2Items;
-    private ArrayList<ArrayList<ArrayList<T>>> options3Items;*/
-
     private Button btnSubmit, btnCancel; //确定、取消按钮
     private TextView tvTitle;
 
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
-
 
     private OnOptionsSelectListener optionsSelectListener;
 

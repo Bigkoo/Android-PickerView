@@ -372,7 +372,7 @@ public class WheelView extends View {
         canvas.drawLine(0.0F, firstLineY, measuredWidth, firstLineY, paintIndicator);
         canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintIndicator);
         //单位的Label
-        if (label != null) {
+        if (label != null&& !label.equals("")) {
             int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
             //绘制文字，靠右并留出空隙
             canvas.drawText(label, drawRightContentStart - CENTERCONTENTOFFSET, centerY, paintCenterText);
@@ -504,18 +504,18 @@ public class WheelView extends View {
         Rect rect = new Rect();
         paintCenterText.getTextBounds(content, 0, content.length(), rect);
         switch (mGravity) {
-            case Gravity.CENTER:
-                if (isOptions) {
+            case Gravity.CENTER://单位不显示时，时间选择器内容居中
+                if (isOptions||label == null|| label.equals("")) {
                     drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
-                } else {
+                } else {//时间选择器内容偏左一点，留出空间绘制单位标签
                     drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
                 }
                 break;
             case Gravity.LEFT:
                 drawCenterContentStart = 0;
                 break;
-            case Gravity.RIGHT:
-                drawCenterContentStart = measuredWidth - rect.width();
+            case Gravity.RIGHT://添加偏移量 CENTERCONTENTOFFSET
+                drawCenterContentStart = measuredWidth - rect.width() -(int)CENTERCONTENTOFFSET;
                 break;
         }
     }
@@ -525,7 +525,7 @@ public class WheelView extends View {
         paintOuterText.getTextBounds(content, 0, content.length(), rect);
         switch (mGravity) {
             case Gravity.CENTER:
-                if (isOptions) {
+                if (isOptions||label == null|| label.equals("")) {
                     drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
                 } else {
                     drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
@@ -535,7 +535,7 @@ public class WheelView extends View {
                 drawOutContentStart = 0;
                 break;
             case Gravity.RIGHT:
-                drawOutContentStart = measuredWidth - rect.width();
+                drawOutContentStart = measuredWidth - rect.width()-(int)CENTERCONTENTOFFSET;
                 break;
         }
     }

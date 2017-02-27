@@ -124,7 +124,7 @@ public class WheelTime {
             public void onItemSelected(int index) {
                 int year_num = index + startYear;
                 // 判断大小月及是否闰年,用来确定"日"的数据
-                int maxItem = 30;
+                int maxItem ;
                 if (list_big
                         .contains(String.valueOf(wv_month.getCurrentItem() + 1))) {
                     wv_day.setAdapter(new NumericWheelAdapter(1, 31));
