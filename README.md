@@ -13,11 +13,8 @@
 * 新版本支持背景颜色更换，有夜间模式需求的问题可以解决了
 
 ——TimePickerView  时间选择器，支持年月日时分，年月日，年月，时分等格式   
-
-![TimePicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177272_3347.gif)
-
 ——OptionsPickerView  选项选择器，支持一，二，三级选项选择，并且可以设置是否联动 
-
+![TimePicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177272_3347.gif)
 ![OptionsPicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177483_4301.gif)
 
 ## 说明文档 Documentation（还在持续更新中）
