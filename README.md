@@ -39,7 +39,7 @@
 
 ### Gradle
 ```java
-compile 'com.contrarywind:Android-PickerView:3.0.3'
+compile 'com.contrarywind:Android-PickerView:3.0.4'
 ```
 OR
 ### Maven
@@ -47,7 +47,7 @@ OR
 <dependency> 
 <groupId>com.contrarywind</groupId> 
 <artifactId>Android-PickerView</artifactId>
-<version>3.0.3</version>
+<version>3.0.4</version>
 <type>pom</type>
 </dependency>
 ```
