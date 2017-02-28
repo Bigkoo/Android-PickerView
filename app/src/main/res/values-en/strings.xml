@@ -3,6 +3,6 @@
     <string name="pickerview_cancel">Cancel</string>
     <string name="pickerview_submit">Sure</string>
 
-    <string name="picker_time">Time</string>
-    <string name="picker_province">Province</string>
+    <string name="picker_time">TimePicker</string>
+    <string name="picker_province">OptionsPicker</string>
 </resources>

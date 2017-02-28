@@ -33,6 +33,12 @@ public class BasePickerView {
     private ViewGroup rootView;//附加View 的 根View
     private ViewGroup dialogView;//附加Dialog 的 根View
 
+    protected int pickerview_timebtn_nor = 0xFF057dff;
+    protected int pickerview_timebtn_pre = 0xFFc2daf5;
+    protected int pickerview_bg_topbar = 0xFFf5f5f5;
+    protected int pickerview_topbar_title = 0xFF000000;
+    protected int bgColor_default = 0xFFFFFFFF;
+
     private OnDismissListener onDismissListener;
     private boolean dismissing;
 

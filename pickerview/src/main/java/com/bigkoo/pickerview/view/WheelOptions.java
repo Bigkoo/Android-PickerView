@@ -7,7 +7,7 @@ import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
 import com.bigkoo.pickerview.lib.WheelView;
 import com.bigkoo.pickerview.listener.OnItemSelectedListener;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class WheelOptions<T> {
     private View view;
@@ -15,9 +15,9 @@ public class WheelOptions<T> {
     private WheelView wv_option2;
     private WheelView wv_option3;
 
-    private ArrayList<T> mOptions1Items;
-    private ArrayList<ArrayList<T>> mOptions2Items;
-    private ArrayList<ArrayList<ArrayList<T>>> mOptions3Items;
+    private List<T> mOptions1Items;
+    private List<List<T>> mOptions2Items;
+    private List<List<List<T>>> mOptions3Items;
 
     private boolean linkage;
     private OnItemSelectedListener wheelListener_option1;
@@ -47,18 +47,18 @@ public class WheelOptions<T> {
         wv_option3 = (WheelView) view.findViewById(R.id.options3);
     }
 
-    public void setPicker(ArrayList<T> optionsItems) {
+    public void setPicker(List<T> optionsItems) {
         setPicker(optionsItems, null);
     }
 
-    public void setPicker(ArrayList<T> options1Items,
-                          ArrayList<ArrayList<T>> options2Items) {
+    public void setPicker(List<T> options1Items,
+                          List<List<T>> options2Items) {
         setPicker(options1Items, options2Items);
     }
 
-    public void setPicker(ArrayList<T> options1Items,
-                          ArrayList<ArrayList<T>> options2Items,
-                          ArrayList<ArrayList<ArrayList<T>>> options3Items) {
+    public void setPicker(List<T> options1Items,
+                          List<List<T>> options2Items,
+                          List<List<List<T>>> options3Items) {
         this.mOptions1Items = options1Items;
         this.mOptions2Items = options2Items;
         this.mOptions3Items = options3Items;

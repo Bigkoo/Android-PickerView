@@ -2,7 +2,6 @@ package com.bigkoo.pickerviewdemo;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
                 /*.setLabel("年","月","日","时","分","秒")*/
-               /* .gravity(Gravity.RIGHT)// default is Center*/
+               /* .gravity(Gravity.RIGHT)// default is center*/
                 .setLabel("","","","","","") //设置空字符串以隐藏单位提示   hide label
 
                 .build();
@@ -237,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setLabels("省", "市", "区")//设置选择的三级单位*/
                 .setSubCalSize(18)//确定取消按钮大小
                 .setLineSpacingMultiplier(1.5f) //设置两横线之间的间隔倍数（范围：1.2 - 2.0倍 文字高度）
-                .setDividerColor(ContextCompat.getColor(this,R.color.colorAccent))//设置分割线的颜色
+                .setDividerColor(Color.RED)//设置分割线的颜色
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(20)//设置滚轮文字大小
                 .setSelectOptions(0,1,2)  //设置默认选中项
