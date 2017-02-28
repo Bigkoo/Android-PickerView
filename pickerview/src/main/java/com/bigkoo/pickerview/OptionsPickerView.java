@@ -1,7 +1,6 @@
 package com.bigkoo.pickerview;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.WheelOptions;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 条件选择器
@@ -318,9 +317,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         tvTitle.setText(TextUtils.isEmpty(Str_Title)?"":Str_Title);//默认为空
 
         //设置文字颜色
-        btnSubmit.setTextColor(Color_Submit==0? ContextCompat.getColor(context, R.color.pickerview_timebtn_nor):Color_Submit);
-        btnCancel.setTextColor(Color_Cancel==0?ContextCompat.getColor(context, R.color.pickerview_timebtn_nor):Color_Cancel);
-        tvTitle.setTextColor(Color_Title==0?ContextCompat.getColor(context, R.color.pickerview_topbar_title):Color_Title);
+        btnSubmit.setTextColor(Color_Submit==0?pickerview_timebtn_nor:Color_Submit);
+        btnCancel.setTextColor(Color_Cancel==0?pickerview_timebtn_nor:Color_Cancel);
+        tvTitle.setTextColor(Color_Title==0?pickerview_topbar_title:Color_Title);
 
         //设置文字大小
         btnSubmit.setTextSize(Size_Submit_Cancel);
@@ -331,8 +330,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         final LinearLayout optionsPicker = (LinearLayout) findViewById(R.id.optionspicker);
 
         RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
-        rv_top_bar.setBackgroundColor(Color_Background_Title==0?ContextCompat.getColor(context, R.color.pickerview_bg_topbar):Color_Background_Title);
-        optionsPicker.setBackgroundColor(Color_Background_Wheel==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background_Wheel);
+        rv_top_bar.setBackgroundColor(Color_Background_Title==0?pickerview_bg_topbar:Color_Background_Title);
+        optionsPicker.setBackgroundColor(Color_Background_Wheel==0?bgColor_default:Color_Background_Wheel);
 
         wheelOptions = new WheelOptions(optionsPicker,linkage);
         wheelOptions.setTextContentSize(Size_Content);
@@ -349,19 +348,19 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     }
 
-    public void setPicker(ArrayList<T> optionsItems) {
+    public void setPicker(List<T> optionsItems) {
         wheelOptions.setPicker(optionsItems, null, null);
         wheelOptions.setCurrentItems(option1, option2, option3);
     }
 
-    public void setPicker(ArrayList<T> options1Items, ArrayList<ArrayList<T>> options2Items) {
+    public void setPicker(List<T> options1Items, List<List<T>> options2Items) {
         wheelOptions.setPicker(options1Items, options2Items, null);
         wheelOptions.setCurrentItems(option1, option2, option3);
     }
 
-    public void setPicker(ArrayList<T> options1Items,
-                          ArrayList<ArrayList<T>> options2Items,
-                          ArrayList<ArrayList<ArrayList<T>>> options3Items) {
+    public void setPicker(List<T> options1Items,
+                          List<List<T>> options2Items,
+                          List<List<List<T>>> options3Items) {
 
         wheelOptions.setPicker(options1Items, options2Items, options3Items);
         wheelOptions.setCurrentItems(option1, option2, option3);

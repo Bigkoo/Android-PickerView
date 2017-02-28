@@ -1,7 +1,6 @@
 package com.bigkoo.pickerview;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -308,9 +307,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         tvTitle.setText(TextUtils.isEmpty(Str_Title)?"":Str_Title);//默认为空
 
         //设置文字颜色
-        btnSubmit.setTextColor(Color_Submit==0?ContextCompat.getColor(context, R.color.pickerview_timebtn_nor):Color_Submit);
-        btnCancel.setTextColor(Color_Cancel==0?ContextCompat.getColor(context, R.color.pickerview_timebtn_nor):Color_Cancel);
-        tvTitle.setTextColor(Color_Title==0?ContextCompat.getColor(context, R.color.pickerview_topbar_title):Color_Title);
+        btnSubmit.setTextColor(Color_Submit==0?pickerview_timebtn_nor:Color_Submit);
+        btnCancel.setTextColor(Color_Cancel==0?pickerview_timebtn_nor:Color_Cancel);
+        tvTitle.setTextColor(Color_Title==0?pickerview_topbar_title:Color_Title);
 
         //设置文字大小
         btnSubmit.setTextSize(Size_Submit_Cancel);
@@ -321,8 +320,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);
 
         RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
-        rv_top_bar.setBackgroundColor(Color_Background_Title==0?ContextCompat.getColor(context, R.color.pickerview_bg_topbar):Color_Background_Title);
-        timePickerView.setBackgroundColor(Color_Background_Wheel==0?ContextCompat.getColor(context, R.color.bgColor_default):Color_Background_Wheel);
+        rv_top_bar.setBackgroundColor(Color_Background_Title==0?pickerview_bg_topbar:Color_Background_Title);
+        timePickerView.setBackgroundColor(Color_Background_Wheel==0?bgColor_default:Color_Background_Wheel);
 
         wheelTime = new WheelTime(timePickerView, type, gravity,Size_Content);
 

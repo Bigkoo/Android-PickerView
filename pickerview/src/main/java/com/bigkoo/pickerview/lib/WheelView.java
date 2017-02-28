@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -60,9 +59,9 @@ public class WheelView extends View {
     int maxTextHeight;
     float itemHeight;//每行高度
 
-    int textColorOut;
-    int textColorCenter;
-    int dividerColor;
+    int textColorOut = 0xFFa8a8a8;
+    int textColorCenter = 0xFF2a2a2a;
+    int dividerColor = 0xFFd5d5d5;
 
     // 条目间距倍数
     float lineSpacingMultiplier = 1.6F;
@@ -116,9 +115,9 @@ public class WheelView extends View {
 
     public WheelView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        textColorOut = ContextCompat.getColor(context,R.color.pickerview_wheelview_textcolor_out);
-        textColorCenter = ContextCompat.getColor(context,R.color.pickerview_wheelview_textcolor_center);
-        dividerColor = ContextCompat.getColor(context,R.color.pickerview_wheelview_textcolor_out);
+       /* textColorOut = getResources().getColor(R.color.pickerview_wheelview_textcolor_out);
+        textColorCenter =getResources().getColor(R.color.pickerview_wheelview_textcolor_center);
+        dividerColor = getResources().getColor(R.color.pickerview_wheelview_textcolor_out);*/
 
         textSize = getResources().getDimensionPixelSize(R.dimen.pickerview_textsize);//默认大小
         if (attrs != null) {
