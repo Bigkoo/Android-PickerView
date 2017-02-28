@@ -89,7 +89,6 @@ OR
 
 
 ## 效果图（招行信用卡的“掌上生活”里面条件选择器他们用的就是我这个库，大家可以当实际项目参考）
-![](https://github.com/saiwu-bigkoo/PickerView/blob/master/preview/pickerdemo1x.gif)
 ![](https://github.com/saiwu-bigkoo/Android-PickerView/blob/master/preview/pickerdemo_zhangshangshenghuo.gif)
 
 
