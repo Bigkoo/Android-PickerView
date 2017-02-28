@@ -41,6 +41,7 @@
 ### Gradle
 ```java
 compile 'com.contrarywind:Android-PickerView:3.0.5'
+//compile 'com.bigkoo:pickerview:lunar.1.0'  Lunar calendar 农历分支
 ```
 OR
 ### Maven
