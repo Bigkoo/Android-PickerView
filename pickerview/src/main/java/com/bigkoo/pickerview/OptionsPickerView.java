@@ -51,6 +51,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private int dividerColor; //分割线的颜色
     // 条目间距倍数 默认1.6
     private float lineSpacingMultiplier = 1.6F;
+    private boolean isDialog;//是否是对话框模式
 
     private boolean cancelable;//是否能取消
     private boolean linkage;//是否联动
@@ -102,6 +103,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         this.textColorOut = builder.textColorOut;
         this.dividerColor = builder.dividerColor;
         this.lineSpacingMultiplier = builder.lineSpacingMultiplier;
+        this.isDialog = builder.isDialog;
         initView(builder.context);
     }
 
@@ -135,6 +137,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private int dividerColor; //分割线的颜色
         // 条目间距倍数 默认1.6
         private float lineSpacingMultiplier = 1.6F;
+        private boolean isDialog;//是否是对话框模式
 
         private String label1;
         private String label2;
@@ -168,6 +171,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         public Builder setTitleText(String Str_Title){
             this.Str_Title = Str_Title;
+            return this;
+        }
+
+        public Builder isDialog(boolean isDialog){
+            this.isDialog = isDialog;
             return this;
         }
 
@@ -298,6 +306,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
 
     private void initView(Context context) {
+        initViews();
+        init();
+        initEvents();
+
         LayoutInflater.from(context).inflate(R.layout.pickerview_options, contentContainer);
 
         //顶部标题
@@ -389,4 +401,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         void onOptionsSelect(int options1, int option2, int options3, View v);
     }
 
+    @Override
+    public boolean isDialog() {
+        return isDialog;
+    }
 }

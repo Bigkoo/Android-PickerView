@@ -63,6 +63,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     // 条目间距倍数 默认1.6
     private float lineSpacingMultiplier = 1.6F;
 
+    private boolean isDialog;//是否是对话框模式
+
     private String label_year, label_month,  label_day,  label_hours,  label_mins, label_seconds;
 
     private static final String TAG_SUBMIT = "submit";
@@ -100,6 +102,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.textColorOut = builder.textColorOut;
         this.dividerColor = builder.dividerColor;
         this.lineSpacingMultiplier = builder.lineSpacingMultiplier;
+        this.isDialog = builder.isDialog;
         initView(builder.context);
     }
 
@@ -139,6 +142,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         // 条目间距倍数 默认1.6
         private float lineSpacingMultiplier = 1.6F;
 
+        private boolean isDialog;//是否是对话框模式
+
         private String label_year, label_month,  label_day,  label_hours,  label_mins, label_seconds;//单位
         //Required
         public Builder(Context context, OnTimeSelectListener listener) {
@@ -159,6 +164,11 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         public Builder setSubmitText(String Str_Submit){
             this.Str_Submit = Str_Submit;
+            return this;
+        }
+
+        public Builder isDialog(boolean isDialog){
+            this.isDialog = isDialog;
             return this;
         }
 
@@ -286,6 +296,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
 
     private void initView(Context context) {
+        initViews();
+        init();
+        initEvents();
 
         LayoutInflater.from(context).inflate(R.layout.pickerview_time, contentContainer);
 
@@ -393,4 +406,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     }
 
 
+    @Override
+    public boolean isDialog() {
+        return isDialog;
+    }
 }

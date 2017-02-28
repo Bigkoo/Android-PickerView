@@ -1,7 +1,9 @@
 package com.bigkoo.pickerview.view;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.bigkoo.pickerview.R;
@@ -28,6 +31,7 @@ public class BasePickerView {
     protected ViewGroup contentContainer;
     private ViewGroup decorView;//activity的根View
     private ViewGroup rootView;//附加View 的 根View
+    private ViewGroup dialogView;//附加Dialog 的 根View
 
     private OnDismissListener onDismissListener;
     private boolean dismissing;
@@ -37,31 +41,54 @@ public class BasePickerView {
     private boolean isShowing;
     private int gravity = Gravity.BOTTOM;
 
-    public BasePickerView(Context context){
+    private Dialog mDialog;
+
+
+    public BasePickerView(Context context) {
         this.context = context;
 
-        initViews();
+        /*initViews();
         init();
-        initEvents();
+        initEvents();*/
     }
 
-    protected void initViews(){
+    protected void initViews() {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        decorView = (ViewGroup) ((Activity)context).getWindow().getDecorView().findViewById(android.R.id.content);
-        rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, decorView, false);
-        rootView.setLayoutParams(new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
-        ));
-        contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
-        contentContainer.setLayoutParams(params);
+        if (isDialog()) {
+            dialogView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, null, false);
+            dialogView.setBackgroundColor(Color.TRANSPARENT);
+            contentContainer = (ViewGroup) dialogView.findViewById(R.id.content_container);
+            this.params.leftMargin = 30;
+            this.params.rightMargin = 30;
+            contentContainer.setLayoutParams(this.params);
+            createDialog();
+            dialogView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dismiss();
+                }
+            });
+        } else {
+            decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
+            rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, decorView, false);
+            rootView.setLayoutParams(new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+            ));
+            contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
+            contentContainer.setLayoutParams(params);
+        }
+
+
     }
 
     protected void init() {
         inAnim = getInAnimation();
         outAnim = getOutAnimation();
     }
+
     protected void initEvents() {
     }
+
     /**
      * show的时候调用
      *
@@ -71,55 +98,74 @@ public class BasePickerView {
         decorView.addView(view);
         contentContainer.startAnimation(inAnim);
     }
+
     /**
      * 添加这个View到Activity的根视图
      */
     public void show() {
-        if (isShowing()) {
-            return;
+
+        if (isDialog()) {
+            showDialog();
+        } else {
+            if (isShowing()) {
+                return;
+            }
+            isShowing = true;
+            onAttached(rootView);
+            rootView.requestFocus();
         }
-        isShowing = true;
-        onAttached(rootView);
-        rootView.requestFocus();
+
     }
+
     /**
      * 检测该View是不是已经添加到根视图
+     *
      * @return 如果视图已经存在该View返回true
      */
     public boolean isShowing() {
-        return rootView.getParent() != null || isShowing;
+        if (isDialog()) {
+            return false;
+        } else {
+            return rootView.getParent() != null || isShowing;
+        }
+
     }
 
     public void dismiss() {
-        if (dismissing) {
-            return;
+        if (isDialog()) {
+            dismissDialog();
+        } else {
+            if (dismissing) {
+                return;
+            }
+
+            dismissing = true;
+
+            //消失动画
+            outAnim.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    decorView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            dismissImmediately();
+                        }
+                    });
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            contentContainer.startAnimation(outAnim);
         }
 
-        dismissing = true;
-
-        //消失动画
-        outAnim.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                decorView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        dismissImmediately();
-                    }
-                });
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        contentContainer.startAnimation(outAnim);
     }
 
     public void dismissImmediately() {
@@ -132,6 +178,7 @@ public class BasePickerView {
         }
 
     }
+
     public Animation getInAnimation() {
         int res = PickerViewAnimateUtil.getAnimationResource(this.gravity, true);
         return AnimationUtils.loadAnimation(context, res);
@@ -172,16 +219,19 @@ public class BasePickerView {
     } ;*/
 
     protected BasePickerView setOutSideCancelable(boolean isCancelable) {
-        View view = rootView.findViewById(R.id.outmost_container);
+        if (rootView != null) {
+            View view = rootView.findViewById(R.id.outmost_container);
 
-        if (isCancelable) {
-            view.setOnTouchListener(onCancelableTouchListener);
+            if (isCancelable) {
+                view.setOnTouchListener(onCancelableTouchListener);
+            } else {
+                view.setOnTouchListener(null);
+            }
         }
-        else{
-            view.setOnTouchListener(null);
-        }
+
         return this;
     }
+
     /**
      * Called when the user touch on black overlay in order to dismiss the dialog
      */
@@ -195,7 +245,32 @@ public class BasePickerView {
         }
     };
 
-    public View findViewById(int id){
+    public View findViewById(int id) {
         return contentContainer.findViewById(id);
+    }
+
+    public void createDialog() {
+        if (dialogView != null) {
+            mDialog = new Dialog(context, R.style.custom_dialog2);
+            mDialog.setCancelable(true);//不能点外面取消,也不 能点back取消
+            mDialog.setContentView(dialogView);
+        }
+
+    }
+
+    public void showDialog() {
+        if (mDialog != null) {
+            mDialog.show();
+        }
+    }
+
+    public void dismissDialog() {
+        if (mDialog != null) {
+            mDialog.dismiss();
+        }
+    }
+
+    public boolean isDialog() {
+        return false;
     }
 }

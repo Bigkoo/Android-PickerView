@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v.getId()==R.id.tvTime && pvTime!=null){
             pvTime.show(); //弹出时间选择器
+
         }
         else if (v.getId()==R.id.tvOptions && pvOptions!=null){
             pvOptions.show(); //弹出时间选择器
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 /*.setLabel("年","月","日","时","分","秒")*/
                /* .gravity(Gravity.RIGHT)// default is Center*/
                 .setLabel("","","","","","") //设置空字符串以隐藏单位提示   hide label
+
                 .build();
     }
 
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //选项1
         options1Items.add(new ProvinceBean(0,"广东","描述部分","其他数据"));
         options1Items.add(new ProvinceBean(1,"湖南","描述部分","其他数据"));
-        options1Items.add(new ProvinceBean(2,"广西","描述部分","其他数据"));
+        options1Items.add(new ProvinceBean(2,"广西壮族字字去区","描述部分","其他数据"));
 
         //选项2
         ArrayList<String> options2Items_01=new ArrayList<>();
@@ -239,6 +241,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(20)//设置滚轮文字大小
                 .setSelectOptions(0,1,2)  //设置默认选中项
+                .isDialog(true)//设置为对话框模式
                 .build();
 
         pvOptions.setPicker(options1Items, options2Items, options3Items);
@@ -252,6 +255,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            System.out.println("pvtime:"+pvTime.isShowing());
+            System.out.println("pvOptions:"+pvOptions.isShowing());
             if(pvTime.isShowing()){
                 pvTime.dismiss();
                 return true;
