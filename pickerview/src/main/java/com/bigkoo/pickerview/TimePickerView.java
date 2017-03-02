@@ -51,12 +51,11 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private int Size_Content;//内容字体大小
 
     private Date date;//当前选中时间
+    private Date startDate;//开始时间
+    private Date endDate;//终止时间
     private int startYear;//开始年份
     private int endYear;//结尾年份
-    private int startMonth;//开始月
-    private int endMonth;//结尾月
-    private int startDay;//开始日
-    private int endDay;//结尾日
+
     private boolean cyclic;//是否循环
     private boolean cancelable;//是否能取消
 
@@ -92,10 +91,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.Size_Content = builder.Size_Content;
         this.startYear = builder.startYear;
         this.endYear = builder.endYear;
-        this.startMonth = builder.startMonth;
-        this.endMonth = builder.endMonth;
-        this.startDay = builder.startDay;
-        this.endDay = builder.endDay;
+        this.startDate = builder.startDate;
+        this.endDate = builder.endDate;
         this.date = builder.date;
         this.cyclic = builder.cyclic;
         this.cancelable = builder.cancelable;
@@ -138,12 +135,11 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private int Size_Title = 18;//标题字体大小
         private int Size_Content = 18;//内容字体大小
         private Date date;//当前选中时间
+        private Date startDate;//开始时间
+        private Date endDate;//终止时间
         private int startYear;//开始年份
         private int endYear;//结尾年份
-        private int startMonth;//开始月
-        private int endMonth;//结尾月
-        private int startDay;//开始日
-        private int endDay;//结尾日
+
         private boolean cyclic = false;//是否循环
         private boolean cancelable = true;//是否能取消
 
@@ -246,30 +242,18 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         }
 
         /**
-         * 设置起始月份
+         * 设置起始时间
          *
-         * @param startMonth
-         * @param endMonth
          * @return
          */
-        public Builder setRangeMonth(int startMonth, int endMonth) {
-            this.startMonth = startMonth;
-            this.endMonth = endMonth;
+        public Builder setRange2(Date startDate,Date endDate) {
+            this.startDate = startDate;
+            this.endDate = endDate;
+
             return this;
         }
 
-        /**
-         * 设置起始日
-         *
-         * @param startDay
-         * @param endDay
-         * @return
-         */
-        public Builder setRangeDay(int startDay, int endDay) {
-            this.startDay = startDay;
-            this.endDay = endDay;
-            return this;
-        }
+
 
         /**
          * 设置间距倍数,但是只能在1.2-2.0f之间
@@ -384,12 +368,28 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         if (startYear != 0 && endYear != 0 && startYear <= endYear) {
             setRange();
         }
-        if (startMonth > 0 && startMonth<13 &&endMonth >0 && endMonth<13&&startMonth <= endMonth) {
-            setRangeMonth();
+
+        if (startDate != null && endDate != null) {
+            if (startDate.getYear() < endDate.getYear()) {
+                setRange2();
+            } else if (startDate.getYear() == endDate.getYear()) {
+
+                if (startDate.getMonth() < endDate.getMonth()) {
+                    setRange2();
+                } else if (startDate.getMonth() == endDate.getMonth()) {
+                    if (startDate.getDate() < endDate.getDate()) {
+                        setRange2();
+                    }
+                }
+            }
+        } else if (startDate != null && endDate == null) {
+            setRange2();
+        } else if (startDate == null && endDate != null) {
+            setRange2();
         }
-        if (startDay > 0&&startDay<32 && endDay > 0&&endDay<32 && startDay <= endDay) {
-            setRangeDay();
-        }
+
+        setRange2();
+
         setTime();
         wheelTime.setLabels(label_year, label_month, label_day, label_hours, label_mins, label_seconds);
         setOutSideCancelable(cancelable);
@@ -407,25 +407,19 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private void setRange() {
         wheelTime.setStartYear(startYear);
         wheelTime.setEndYear(endYear);
-    }
-
-    /**
-     * 设置月的范围
+    }  /**
      * 设置可以选择的时间范围, 要在setTime之前调用才有效果
      */
-    private void setRangeMonth() {
-        wheelTime.setStartMonth(startMonth);
-        wheelTime.setEndMonth(endMonth);
+    private void setRange2() {
+        wheelTime.setRange2(startDate, endDate);
+
+
     }
 
-    /**
-     * 设置日的范围
-     * 设置可以选择的时间范围, 要在setTime之前调用才有效果
-     */
-    private void setRangeDay() {
-        wheelTime.setStartDay(startDay);
-        wheelTime.setEndDay(endDay);
-    }
+
+
+
+
 
     /**
      * 设置选中时间,默认选中当前时间

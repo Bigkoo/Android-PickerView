@@ -49,6 +49,11 @@ public class NumericWheelAdapter implements WheelAdapter {
 	
 	@Override
 	public int indexOf(Object o){
-		return (int)o - minValue;
+		try {
+			return (int)o - minValue;
+		} catch (Exception e) {
+			return minValue;
+		}
+
 	}
 }

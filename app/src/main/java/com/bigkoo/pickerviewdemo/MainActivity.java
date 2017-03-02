@@ -2,6 +2,7 @@ package com.bigkoo.pickerviewdemo;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //最好等数据加载完毕再初始化并显示，以免数据量大的时候，还未加载完毕就显示，造成APP崩溃
         initTimePicker();
         initOptionData();
@@ -92,8 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentSize(20)
                 //.setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                  .setLabel("年","月","日","时","分","秒")
-                .setRangeMonth(1, 9)
-                .setRangeDay(1,31)
+                .setRange2(new Date(2017,3,3),null)
                 .build();
     }
 
