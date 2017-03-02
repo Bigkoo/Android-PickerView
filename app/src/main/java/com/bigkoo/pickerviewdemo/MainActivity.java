@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setCancelColor(Color.WHITE)*/
                 /*.setLabel("年","月","日","时","分","秒")*/
                /* .gravity(Gravity.RIGHT)// default is center*/
+                .setType(TimePickerView.Type.YEAR_MONTH_DAY)//default is all
+                .setContentSize(20)
                 .setLabel("","","","","","") //设置空字符串以隐藏单位提示   hide label
 
                 .build();
@@ -224,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setCancelText("取消")
                 .setTitleText("城市选择")
                 .setTitleSize(20)
+                .setSubCalSize(18)//确定取消按钮大小
                 .setTitleColor(Color.BLACK)
                 .setSubmitColor(Color.BLUE)
                 .setCancelColor(Color.BLUE)
@@ -232,18 +235,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setCyclic(false, false, false)//循环与否
                 .setOutSideCancelable(false)//点击外部dismiss, default true
                 .setTitleBgColor(0xFF333333)//标题背景颜色 Night mode
-                .setBgColor(0xFF000000)//滚轮背景颜色 Night mode
-                .setLabels("省", "市", "区")//设置选择的三级单位*/
-                .setSubCalSize(18)//确定取消按钮大小
-                .setLineSpacingMultiplier(1.5f) //设置两横线之间的间隔倍数（范围：1.2 - 2.0倍 文字高度）
-                .setDividerColor(Color.RED)//设置分割线的颜色
+                .setBgColor(0xFF000000)//滚轮背景颜色 Night mode*/
+               /* .setLabels("省", "市", "区")//设置选择的三级单位*/
+               /* .setLineSpacingMultiplier(2.0f) //设置两横线之间的间隔倍数（范围：1.2 - 2.0倍 文字高度）*/
+               /* .setDividerColor(Color.RED)//设置分割线的颜色*/
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(20)//设置滚轮文字大小
                 .setSelectOptions(0,1,2)  //设置默认选中项
                 .isDialog(true)//设置为对话框模式
                 .build();
-
-        pvOptions.setPicker(options1Items, options2Items, options3Items);
+        /*pvOptions.setPicker(options1Items);//一级选择器
+        pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
+        pvOptions.setPicker(options1Items, options2Items, options3Items);//三级选择器
 
     }
 

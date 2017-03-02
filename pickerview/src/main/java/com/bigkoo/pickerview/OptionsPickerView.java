@@ -360,6 +360,24 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     }
 
+
+    /**
+     * 设置默认选中项
+     * @param option1
+     */
+    public void setSelectOptions(int option1){
+        this.option1 =option1;
+    }
+    public void setSelectOptions(int option1, int option2){
+        this.option1 =option1;
+        this.option2 =option2;
+    }
+    public void setSelectOptions(int option1, int option2, int option3){
+        this.option1 =option1;
+        this.option2 =option2;
+        this.option3 =option3;
+    }
+
     public void setPicker(List<T> optionsItems) {
         wheelOptions.setPicker(optionsItems, null, null);
         wheelOptions.setCurrentItems(option1, option2, option3);
