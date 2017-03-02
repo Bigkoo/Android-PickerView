@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //时间选择器
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
-            public void onTimeSelect(Date date,View v) {//选中事件回调
+            public void onTimeSelect(Date date, View v) {//选中事件回调
                 tvTime.setText(getTime(date));
             }
         })
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setOutSideCancelable(false)// default is true
                 .isCyclic(true)// default is false
                 .setTitleColor(Color.BLACK)
-                .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//default 1900-2100 years *//*
+
                 .setDate(new Date())// default system*/
                /*.setDividerColor(Color.WHITE)//设置分割线的颜色
                 .setTextColorCenter(Color.LTGRAY)//设置选中项的颜色
@@ -86,12 +86,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setBgColor(Color.BLACK)//滚轮背景颜色 Night mode
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
-                /*.setLabel("年","月","日","时","分","秒")*/
-               /* .gravity(Gravity.RIGHT)// default is center*/
-                .setType(TimePickerView.Type.YEAR_MONTH_DAY)//default is all
-                .setContentSize(20)
-                .setLabel("","","","","","") //设置空字符串以隐藏单位提示   hide label
 
+               /* .gravity(Gravity.RIGHT)// default is center*/
+                .setType(TimePickerView.Type.YEAR_MONTH_DAY_HOUR_MIN)//default is all
+                .setContentSize(20)
+                //.setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
+                 .setLabel("年","月","日","时","分","秒")
+                .setRangeMonth(1, 9)
+                .setRangeDay(1,31)
                 .build();
     }
 

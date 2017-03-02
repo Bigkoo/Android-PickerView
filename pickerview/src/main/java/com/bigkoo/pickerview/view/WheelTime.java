@@ -29,8 +29,19 @@ public class WheelTime {
     private Type type;
     public static final int DEFULT_START_YEAR = 1900;
     public static final int DEFULT_END_YEAR = 2100;
+    public static final int DEFULT_START_MONTH = 1;
+    public static final int DEFULT_END_MONTH = 12;
+    public static final int DEFULT_START_DAY = 1;
+    public static final int DEFULT_END_DAY = 31;
     private int startYear = DEFULT_START_YEAR;
     private int endYear = DEFULT_END_YEAR;
+    private int startMonth = DEFULT_START_MONTH;
+    private int endMonth = DEFULT_END_MONTH;
+    private int startDay = DEFULT_START_DAY;
+    private int endDay = DEFULT_END_DAY; //表示31天的
+    private int endDay2 = DEFULT_END_DAY;//表示30天的
+    private int endDay3 = DEFULT_END_DAY;//表示29天的
+    private int endDay4 = DEFULT_END_DAY;//表示28天的
 
     // 根据屏幕密度来指定选择器字体的大小(不同屏幕可能不同)
     private int textSize = 18;
@@ -78,7 +89,7 @@ public class WheelTime {
         wv_year.setGravity(gravity);
         // 月
         wv_month = (WheelView) view.findViewById(R.id.month);
-        wv_month.setAdapter(new NumericWheelAdapter(1, 12));
+        wv_month.setAdapter(new NumericWheelAdapter(startMonth, endMonth));
         wv_month.setLabel(context.getString(R.string.pickerview_month));
         wv_month.setCurrentItem(month);
         wv_month.setGravity(gravity);
@@ -86,15 +97,28 @@ public class WheelTime {
         wv_day = (WheelView) view.findViewById(R.id.day);
         // 判断大小月及是否闰年,用来确定"日"的数据
         if (list_big.contains(String.valueOf(month + 1))) {
-            wv_day.setAdapter(new NumericWheelAdapter(1, 31));
+            if (endDay > 31) {
+                endDay = 31;
+            }
+            wv_day.setAdapter(new NumericWheelAdapter(startDay, endDay));
         } else if (list_little.contains(String.valueOf(month + 1))) {
-            wv_day.setAdapter(new NumericWheelAdapter(1, 30));
+            if (endDay2 > 30) {
+                endDay2 = 30;
+            }
+            wv_day.setAdapter(new NumericWheelAdapter(startDay, endDay2));
         } else {
             // 闰年
-            if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
-                wv_day.setAdapter(new NumericWheelAdapter(1, 29));
-            else
-                wv_day.setAdapter(new NumericWheelAdapter(1, 28));
+            if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
+                if (endDay3 > 29) {
+                    endDay3 = 29;
+                }
+                wv_day.setAdapter(new NumericWheelAdapter(startDay, endDay3));
+            } else{
+                if (endDay4 > 28) {
+                    endDay4 = 28;
+                }
+                wv_day.setAdapter(new NumericWheelAdapter(startDay, endDay4));
+            }
         }
         wv_day.setLabel(context.getString(R.string.pickerview_day));
         wv_day.setCurrentItem(day - 1);
@@ -124,23 +148,35 @@ public class WheelTime {
             public void onItemSelected(int index) {
                 int year_num = index + startYear;
                 // 判断大小月及是否闰年,用来确定"日"的数据
-                int maxItem ;
+                int maxItem;
                 if (list_big
                         .contains(String.valueOf(wv_month.getCurrentItem() + 1))) {
-                    wv_day.setAdapter(new NumericWheelAdapter(1, 31));
-                    maxItem = 31;
+                    if (endDay > 31) {
+                        endDay = 31;
+                    }
+                    wv_day.setAdapter(new NumericWheelAdapter(1, endDay));
+                    maxItem = endDay;
                 } else if (list_little.contains(String.valueOf(wv_month
                         .getCurrentItem() + 1))) {
-                    wv_day.setAdapter(new NumericWheelAdapter(1, 30));
-                    maxItem = 30;
+                    if (endDay2 > 30) {
+                        endDay2 = 30;
+                    }
+                    wv_day.setAdapter(new NumericWheelAdapter(1, endDay2));
+                    maxItem = endDay2;
                 } else {
                     if ((year_num % 4 == 0 && year_num % 100 != 0)
                             || year_num % 400 == 0) {
-                        wv_day.setAdapter(new NumericWheelAdapter(1, 29));
-                        maxItem = 29;
+                        if (endDay3 > 29) {
+                            endDay3 = 29;
+                        }
+                        wv_day.setAdapter(new NumericWheelAdapter(1, endDay3));
+                        maxItem = endDay3;
                     } else {
-                        wv_day.setAdapter(new NumericWheelAdapter(1, 28));
-                        maxItem = 28;
+                        if (endDay4 > 28) {
+                            endDay4 = 28;
+                        }
+                        wv_day.setAdapter(new NumericWheelAdapter(1, endDay4));
+                        maxItem = endDay4;
                     }
                 }
                 if (wv_day.getCurrentItem() > maxItem - 1) {
@@ -156,20 +192,32 @@ public class WheelTime {
                 int maxItem = 30;
                 // 判断大小月及是否闰年,用来确定"日"的数据
                 if (list_big.contains(String.valueOf(month_num))) {
-                    wv_day.setAdapter(new NumericWheelAdapter(1, 31));
-                    maxItem = 31;
+                    if (endDay > 31) {
+                        endDay = 31;
+                    }
+                    wv_day.setAdapter(new NumericWheelAdapter(1, endDay));
+                    maxItem = endDay;
                 } else if (list_little.contains(String.valueOf(month_num))) {
-                    wv_day.setAdapter(new NumericWheelAdapter(1, 30));
-                    maxItem = 30;
+                    if (endDay2 > 30) {
+                        endDay2= 30;
+                    }
+                    wv_day.setAdapter(new NumericWheelAdapter(1, endDay2));
+                    maxItem = endDay2;
                 } else {
                     if (((wv_year.getCurrentItem() + startYear) % 4 == 0 && (wv_year
                             .getCurrentItem() + startYear) % 100 != 0)
                             || (wv_year.getCurrentItem() + startYear) % 400 == 0) {
-                        wv_day.setAdapter(new NumericWheelAdapter(1, 29));
-                        maxItem = 29;
+                        if (endDay3 > 29) {
+                            endDay3 = 29;
+                        }
+                        wv_day.setAdapter(new NumericWheelAdapter(1, endDay3));
+                        maxItem = endDay3;
                     } else {
-                        wv_day.setAdapter(new NumericWheelAdapter(1, 28));
-                        maxItem = 28;
+                        if (endDay4 > 28) {
+                            endDay4 = 28;
+                        }
+                        wv_day.setAdapter(new NumericWheelAdapter(1, endDay4));
+                        maxItem = endDay4;
                     }
                 }
                 if (wv_day.getCurrentItem() > maxItem - 1) {
@@ -208,6 +256,10 @@ public class WheelTime {
                 wv_day.setVisibility(View.GONE);
                 wv_hours.setVisibility(View.GONE);
                 wv_mins.setVisibility(View.GONE);
+                wv_seconds.setVisibility(View.GONE);
+            case YEAR_MONTH_DAY_HOUR_MIN:
+               /* textSize = textSize * 4;*/
+
                 wv_seconds.setVisibility(View.GONE);
         }
         setContentTextSize();
@@ -321,6 +373,27 @@ public class WheelTime {
 
     public void setEndYear(int endYear) {
         this.endYear = endYear;
+    }
+
+
+    public void setStartDay(int startDay) {
+        this.startDay = startDay;
+    }
+
+    public void setEndDay(int endDay) {
+        this.endDay = endDay;
+        this.endDay2 = endDay;
+        this.endDay3 = endDay;
+        this.endDay4 = endDay;
+
+    }
+
+    public void setEndMonth(int endMonth) {
+        this.endMonth = endMonth;
+    }
+
+    public void setStartMonth(int startMonth) {
+        this.startMonth = startMonth;
     }
 
     /**
