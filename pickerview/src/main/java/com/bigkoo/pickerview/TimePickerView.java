@@ -249,7 +249,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         public Builder setRange2(Date startDate,Date endDate) {
             this.startDate = startDate;
             this.endDate = endDate;
-
             return this;
         }
 
@@ -388,7 +387,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             setRange2();
         }
 
-        setRange2();
 
         setTime();
         wheelTime.setLabels(label_year, label_month, label_day, label_hours, label_mins, label_seconds);
