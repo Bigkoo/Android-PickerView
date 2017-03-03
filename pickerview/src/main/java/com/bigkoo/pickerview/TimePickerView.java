@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.lib.WheelView;
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.WheelTime;
 
@@ -26,7 +27,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
     public enum Type {
         ALL, YEAR_MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN, YEAR_MONTH, YEAR_MONTH_DAY_HOUR_MIN
-    } // 五种选择模式，年月日时分秒，年月日，时分，月日时分，年月
+    } // 六种选择模式，年月日时分秒，年月日，时分，月日时分，年月，年月日时分
 
     WheelTime wheelTime; //自定义控件
     private Button btnSubmit, btnCancel; //确定、取消按钮
@@ -64,10 +65,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private int dividerColor; //分割线的颜色
     // 条目间距倍数 默认1.6
     private float lineSpacingMultiplier = 1.6F;
-
     private boolean isDialog;//是否是对话框模式
-
     private String label_year, label_month, label_day, label_hours, label_mins, label_seconds;
+    private WheelView.DividerType dividerType;//分隔线类型
 
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
@@ -107,6 +107,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.dividerColor = builder.dividerColor;
         this.lineSpacingMultiplier = builder.lineSpacingMultiplier;
         this.isDialog = builder.isDialog;
+        this.dividerType = builder.dividerType;
         initView(builder.context);
     }
 
@@ -146,6 +147,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private int textColorOut; //分割线以外的文字颜色
         private int textColorCenter; //分割线之间的文字颜色
         private int dividerColor; //分割线的颜色
+        private WheelView.DividerType dividerType;//分隔线类型
         // 条目间距倍数 默认1.6
         private float lineSpacingMultiplier = 1.6F;
 
@@ -275,6 +277,16 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         }
 
         /**
+         * 设置分割线的类型
+         *
+         * @param dividerType
+         */
+        public Builder setDividerType(WheelView.DividerType dividerType) {
+            this.dividerType = dividerType;
+            return this;
+        }
+
+        /**
          * 设置分割线之间的文字的颜色
          *
          * @param textColorCenter
@@ -393,6 +405,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         setOutSideCancelable(cancelable);
         wheelTime.setCyclic(cyclic);
         wheelTime.setDividerColor(dividerColor);
+        wheelTime.setDividerType(dividerType);
         wheelTime.setLineSpacingMultiplier(lineSpacingMultiplier);
         wheelTime.setTextColorOut(textColorOut);
         wheelTime.setTextColorCenter(textColorCenter);

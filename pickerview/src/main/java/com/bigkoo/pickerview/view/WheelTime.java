@@ -1,7 +1,6 @@
 package com.bigkoo.pickerview.view;
 
 import android.content.Context;
-import android.telecom.StatusHints;
 import android.view.View;
 
 import com.bigkoo.pickerview.R;
@@ -52,6 +51,8 @@ public class WheelTime {
     int dividerColor;
     // 条目间距倍数
     float lineSpacingMultiplier = 1.6F;
+
+    private WheelView.DividerType dividerType;
 
     public WheelTime(View view) {
         super();
@@ -428,6 +429,17 @@ public class WheelTime {
         wv_seconds.setDividerColor(dividerColor);
     }
 
+    private void setDividerType() {
+
+        wv_day.setDividerType(dividerType);
+        wv_month.setDividerType(dividerType);
+        wv_year.setDividerType(dividerType);
+        wv_hours.setDividerType(dividerType);
+        wv_mins.setDividerType(dividerType);
+        wv_seconds.setDividerType(dividerType);
+
+    }
+
     private void setLineSpacingMultiplier() {
         wv_day.setLineSpacingMultiplier(lineSpacingMultiplier);
         wv_month.setLineSpacingMultiplier(lineSpacingMultiplier);
@@ -590,6 +602,16 @@ public class WheelTime {
     public void setDividerColor(int dividerColor) {
         this.dividerColor = dividerColor;
         setDividerColor();
+    }
+
+    /**
+     * 设置分割线的类型
+     *
+     * @param dividerType
+     */
+    public void setDividerType(WheelView.DividerType dividerType) {
+        this.dividerType = dividerType;
+        setDividerType();
     }
 
     /**

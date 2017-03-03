@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.lib.WheelView;
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.WheelOptions;
 
@@ -66,6 +67,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private int option1;//默认选中项
     private int option2;
     private int option3;
+    private WheelView.DividerType dividerType;//分隔线类型
+
     //构造方法
     public OptionsPickerView(Builder builder) {
         super(builder.context);
@@ -103,6 +106,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         this.dividerColor = builder.dividerColor;
         this.lineSpacingMultiplier = builder.lineSpacingMultiplier;
         this.isDialog = builder.isDialog;
+        this.dividerType = builder.dividerType;
+
         initView(builder.context);
     }
 
@@ -149,6 +154,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private int option1;//默认选中项
         private int option2;
         private int option3;
+
+        private WheelView.DividerType dividerType;//分隔线类型
 
         //Required
         public Builder(Context context,OnOptionsSelectListener listener) {
@@ -255,6 +262,16 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         }
 
         /**
+         * 设置分割线的类型
+         *
+         * @param dividerType
+         */
+        public Builder setDividerType(WheelView.DividerType dividerType) {
+            this.dividerType = dividerType;
+            return this;
+        }
+
+        /**
          * 设置分割线之间的文字的颜色
          *
          * @param textColorCenter
@@ -352,8 +369,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         setOutSideCancelable(cancelable);
         tvTitle.setText(Str_Title);
-        /*wheelOptions.setPicker(optionsItems, options2Items, options3Items, linkage);*/
+
         wheelOptions.setDividerColor(dividerColor);
+        wheelOptions.setDividerType(dividerType);
         wheelOptions.setLineSpacingMultiplier(lineSpacingMultiplier);
         wheelOptions.setTextColorOut(textColorOut);
         wheelOptions.setTextColorCenter(textColorCenter);
