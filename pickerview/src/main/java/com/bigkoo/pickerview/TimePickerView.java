@@ -251,6 +251,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         public Builder setRangDate(Date startDate,Date endDate) {
             this.startDate = startDate;
             this.endDate = endDate;
+
             return this;
         }
 
@@ -400,6 +401,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         }
 
 
+
+
         setTime();
         wheelTime.setLabels(label_year, label_month, label_day, label_hours, label_mins, label_seconds);
         setOutSideCancelable(cancelable);
@@ -424,7 +427,22 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private void setRangDate() {
         wheelTime.setRangDate(startDate, endDate);
 
+        //如果设置了时间范围
+        if (startDate != null || endDate != null) {
+            if (date != null) {
+                //如果设置了默认时间,就判断一下默认时间是否在时间范围内
+                if (date.getTime() > startDate.getTime() && date.getTime() < endDate.getTime()) {
 
+                } else {
+                    date = startDate;
+                }
+
+
+            } else {
+                //没有设置默认选中时间,那就拿开始时间当默认时间
+                date = startDate;
+            }
+        }
     }
 
 
@@ -436,19 +454,39 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
      * 设置选中时间,默认选中当前时间
      */
     private void setTime() {
+        int year ;
+        int month ;
+        int day ;
+        int hours ;
+        int minute;
+        int seconds;
         Calendar calendar = Calendar.getInstance();
         if (date == null) {
             calendar.setTimeInMillis(System.currentTimeMillis());
+            year = calendar.get(Calendar.YEAR);
+            month = calendar.get(Calendar.MONTH);
+            day = calendar.get(Calendar.DAY_OF_MONTH);
+            hours = calendar.get(Calendar.HOUR_OF_DAY);
+            minute = calendar.get(Calendar.MINUTE);
+            seconds = calendar.get(Calendar.SECOND);
         } else {
-            calendar.setTime(date);
+            year = date.getYear();
+            month = date.getMonth()-1;
+            day = date.getDate();
+            hours = date.getHours();
+            minute = date.getMinutes();
+            seconds = date.getSeconds();
         }
 
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int hours = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        int seconds = calendar.get(Calendar.SECOND);
+
+
+        System.out.println("month:"+month
+        );
+        System.out.println("day:"+day
+        );
+  System.out.println("year:"+year
+        );
+
         wheelTime.setPicker(year, month, day, hours, minute, seconds);
     }
 
