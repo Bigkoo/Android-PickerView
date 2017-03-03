@@ -86,12 +86,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
                /* .gravity(Gravity.RIGHT)// default is center*/
-                .setDividerType(WheelView.DividerType.WARP)
+                .setDividerType(WheelView.DividerType.FILL) // default is FILL
                 .setType(TimePickerView.Type.YEAR_MONTH_DAY_HOUR_MIN)//default is all
                 .setContentSize(20)
                 //.setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                  .setLabel("年","月","日","时","分","秒")
-                .setRangDate(new Date(2012,3,3),null)
+                .setRangDate(new Date(2012,3,3),new Date(2016,10,1))
                 .build();
     }
 
