@@ -61,13 +61,19 @@ public class BasePickerView {
     protected void initViews() {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         if (isDialog()) {
+            //如果是对话框模式
             dialogView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, null, false);
+            //设置界面的背景为透明
             dialogView.setBackgroundColor(Color.TRANSPARENT);
+            //这个是真正要加载时间选取器的父布局
             contentContainer = (ViewGroup) dialogView.findViewById(R.id.content_container);
+            //设置对话框 左右间距屏幕30
             this.params.leftMargin = 30;
             this.params.rightMargin = 30;
             contentContainer.setLayoutParams(this.params);
+            //创建对话框
             createDialog();
+            //给背景设置点击事件,这样当点击内容以外的地方会关闭界面
             dialogView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -75,11 +81,15 @@ public class BasePickerView {
                 }
             });
         } else {
+            //如果只是要显示在屏幕的下方
+            //decorView是activity的根View
             decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
+            //将控件添加到decorView中
             rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, decorView, false);
             rootView.setLayoutParams(new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
             ));
+            //这个是真正要加载时间选取器的父布局
             contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
             contentContainer.setLayoutParams(params);
         }

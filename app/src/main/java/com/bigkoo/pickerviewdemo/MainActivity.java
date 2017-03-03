@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentSize(20)
                 //.setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                  .setLabel("年","月","日","时","分","秒")
-                .setRange2(new Date(2017,3,3),null)
+                .setRange2(new Date(2017,2,1),null)
                 .build();
     }
 
@@ -244,6 +244,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentTextSize(20)//设置滚轮文字大小
                 .setSelectOptions(0,1,2)  //设置默认选中项
                 .isDialog(true)//设置为对话框模式
+                .setOutSideCancelable(false)
                 .build();
         /*pvOptions.setPicker(options1Items);//一级选择器
         pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
