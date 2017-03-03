@@ -16,6 +16,7 @@ import com.bigkoo.pickerviewdemo.bean.ProvinceBean;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -59,8 +60,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initTimePicker() {
 
         //控制时间范围,setRange方法 要在setDate 之前才有效果(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
-         /*Calendar calendar = Calendar.getInstance();*/
-
+         Calendar calendar = Calendar.getInstance();
+        calendar.set(2013,2,29);
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2013,1,23);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2019,2,28);
         //时间选择器
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
@@ -91,7 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentSize(20)
                 //.setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                  .setLabel("年","月","日","时","分","秒")
-                .setRangDate(new Date(2012,3,3),new Date(2019,10,1))
+                .setDate(calendar)
+                .setRangDate(startDate,endDate)
                 .build();
     }
 

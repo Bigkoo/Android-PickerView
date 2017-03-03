@@ -51,9 +51,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private int Size_Title;//标题字体大小
     private int Size_Content;//内容字体大小
 
-    private Date date;//当前选中时间
-    private Date startDate;//开始时间
-    private Date endDate;//终止时间
+    private Calendar date;//当前选中时间
+    private Calendar startDate;//开始时间
+    private Calendar endDate;//终止时间
     private int startYear;//开始年份
     private int endYear;//结尾年份
 
@@ -135,9 +135,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private int Size_Submit_Cancel = 17;//确定取消按钮大小
         private int Size_Title = 18;//标题字体大小
         private int Size_Content = 18;//内容字体大小
-        private Date date;//当前选中时间
-        private Date startDate;//开始时间
-        private Date endDate;//终止时间
+        private Calendar date;//当前选中时间
+        private Calendar startDate;//开始时间
+        private Calendar endDate;//终止时间
         private int startYear;//开始年份
         private int endYear;//结尾年份
 
@@ -232,7 +232,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
-        public Builder setDate(Date date) {
+        public Builder setDate(Calendar date) {
             this.date = date;
             return this;
         }
@@ -248,13 +248,12 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          *
          * @return
          */
-        public Builder setRangDate(Date startDate,Date endDate) {
+        public Builder setRangDate(Calendar startDate, Calendar endDate) {
             this.startDate = startDate;
             this.endDate = endDate;
 
             return this;
         }
-
 
 
         /**
@@ -382,25 +381,14 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         }
 
         if (startDate != null && endDate != null) {
-            if (startDate.getYear() < endDate.getYear()) {
+            if (startDate.getTimeInMillis() < endDate.getTimeInMillis()) {
                 setRangDate();
-            } else if (startDate.getYear() == endDate.getYear()) {
-
-                if (startDate.getMonth() < endDate.getMonth()) {
-                    setRangDate();
-                } else if (startDate.getMonth() == endDate.getMonth()) {
-                    if (startDate.getDate() < endDate.getDate()) {
-                        setRangDate();
-                    }
-                }
             }
         } else if (startDate != null && endDate == null) {
             setRangDate();
         } else if (startDate == null && endDate != null) {
             setRangDate();
         }
-
-
 
 
         setTime();
@@ -421,43 +409,44 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private void setRange() {
         wheelTime.setStartYear(startYear);
         wheelTime.setEndYear(endYear);
-    }  /**
+    }
+
+    /**
      * 设置可以选择的时间范围, 要在setTime之前调用才有效果
      */
     private void setRangDate() {
         wheelTime.setRangDate(startDate, endDate);
 
         //如果设置了时间范围
-        if (startDate != null || endDate != null) {
+        if (startDate != null && endDate != null) {
             if (date != null) {
                 //如果设置了默认时间,就判断一下默认时间是否在时间范围内
-                if (date.getTime() > startDate.getTime() && date.getTime() < endDate.getTime()) {
+                if (date.getTimeInMillis() > startDate.getTimeInMillis() && date.getTimeInMillis() < endDate.getTimeInMillis()) {
 
                 } else {
                     date = startDate;
                 }
-
-
             } else {
-                //没有设置默认选中时间,那就拿开始时间当默认时间
                 date = startDate;
             }
+        } else if (startDate != null) {
+            //没有设置默认选中时间,那就拿开始时间当默认时间
+            date = startDate;
+        } else if (endDate != null) {
+            date = endDate;
         }
+
     }
-
-
-
-
 
 
     /**
      * 设置选中时间,默认选中当前时间
      */
     private void setTime() {
-        int year ;
-        int month ;
-        int day ;
-        int hours ;
+        int year;
+        int month;
+        int day;
+        int hours;
         int minute;
         int seconds;
         Calendar calendar = Calendar.getInstance();
@@ -470,21 +459,20 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             minute = calendar.get(Calendar.MINUTE);
             seconds = calendar.get(Calendar.SECOND);
         } else {
-            year = date.getYear();
-            month = date.getMonth()-1;
-            day = date.getDate();
-            hours = date.getHours();
-            minute = date.getMinutes();
-            seconds = date.getSeconds();
+            year = date.get(Calendar.YEAR);
+            month = date.get(Calendar.MONTH);
+            day = date.get(Calendar.DAY_OF_MONTH);
+            hours = date.get(Calendar.HOUR_OF_DAY);
+            minute = date.get(Calendar.MINUTE);
+            seconds = date.get(Calendar.SECOND);
         }
 
 
-
-        System.out.println("month:"+month
+        System.out.println("month:" + month
         );
-        System.out.println("day:"+day
+        System.out.println("day:" + day
         );
-  System.out.println("year:"+year
+        System.out.println("year:" + year
         );
 
         wheelTime.setPicker(year, month, day, hours, minute, seconds);

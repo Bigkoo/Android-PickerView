@@ -12,6 +12,7 @@ import com.bigkoo.pickerview.listener.OnItemSelectedListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -578,56 +579,66 @@ public class WheelTime {
     }
 
 
-    public void setRangDate(Date startDate, Date endDate) {
+    public void setRangDate(Calendar startDate, Calendar endDate) {
+
         if (startDate == null && endDate != null) {
-            if (endDate.getYear() > startYear) {
-                this.endYear = endDate.getYear();
-                this.endMonth = endDate.getMonth();
-                this.endDay = endDate.getDate();
-            } else if (endDate.getYear() == startYear) {
-                if (endDate.getMonth() > startMonth) {
-                    this.endYear = endDate.getYear();
-                    this.endMonth = endDate.getMonth();
-                    this.endDay = endDate.getDate();
-                } else if (endDate.getMonth() == startMonth) {
-                    if (endDate.getDate() > startDay) {
-                        this.endYear = endDate.getYear();
-                        this.endMonth = endDate.getMonth();
-                        this.endDay = endDate.getDate();
+            int year = endDate.get(Calendar.YEAR);
+            int month = endDate.get(Calendar.MONTH)+1;
+            int day = endDate.get(Calendar.DAY_OF_MONTH);
+            if (year > startYear) {
+                this.endYear = year;
+                this.endMonth = month;
+                this.endDay = day;
+            } else if (year == startYear) {
+                if (month > startMonth) {
+                    this.endYear = year;
+                    this.endMonth = month;
+                    this.endDay = day;
+                } else if (month == startMonth) {
+                    if (month > startDay) {
+                        this.endYear = year;
+                        this.endMonth = month;
+                        this.endDay = day;
                     }
                 }
             }
 
         } else if (startDate != null && endDate == null) {
-            if (startDate.getYear() < endYear) {
-                this.startMonth = startDate.getMonth();
-                this.startDay = startDate.getDate();
-                this.startYear = startDate.getYear();
-            } else if (startDate.getYear() == endYear) {
-                if (startDate.getMonth() < endMonth) {
-                    this.startMonth = startDate.getMonth();
-                    this.startDay = startDate.getDate();
-                    this.startYear = startDate.getYear();
-                } else if ((startDate.getMonth() == endMonth)) {
-                    if (startDate.getDate() < endDay) {
-                        this.startMonth = startDate.getMonth();
-                        this.startDay = startDate.getDate();
-                        this.startYear = startDate.getYear();
+            int year = startDate.get(Calendar.YEAR);
+            int month = startDate.get(Calendar.MONTH)+1;
+            int day = startDate.get(Calendar.DAY_OF_MONTH);
+            if (year < endYear) {
+                this.startMonth = month;
+                this.startDay = day;
+                this.startYear = year;
+            } else if (year == endYear) {
+                if (month < endMonth) {
+                    this.startMonth = month;
+                    this.startDay = day;
+                    this.startYear = year;
+                } else if (month == endMonth) {
+                    if (day < endDay) {
+                        this.startMonth = month;
+                        this.startDay = day;
+                        this.startYear = year;
                     }
                 }
             }
 
         } else if (startDate != null && endDate != null) {
-            this.startYear = startDate.getYear();
-            this.endYear = endDate.getYear();
-            this.startMonth = startDate.getMonth();
-            this.endMonth = endDate.getMonth();
-            this.startDay = startDate.getDate();
-            this.endDay = endDate.getDate();
+            this.startYear = startDate.get(Calendar.YEAR);
+            this.endYear = endDate.get(Calendar.YEAR);
+            this.startMonth = startDate.get(Calendar.MONTH)+1;
+            this.endMonth = endDate.get(Calendar.MONTH)+1;
+            this.startDay = startDate.get(Calendar.DAY_OF_MONTH);
+            this.endDay = endDate.get(Calendar.DAY_OF_MONTH);
 
 
         }
 
+        System.out.println("endyear:"+this.endYear);
+        System.out.println("endMonth:"+this.endMonth);
+        System.out.println("endDay:"+this.endDay);
 
     }
 
