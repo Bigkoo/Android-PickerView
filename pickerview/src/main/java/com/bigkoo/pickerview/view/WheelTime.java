@@ -82,7 +82,7 @@ public class WheelTime {
         final List<String> list_big = Arrays.asList(months_big);
         final List<String> list_little = Arrays.asList(months_little);
 
-        Context context = view.getContext();
+        final Context context = view.getContext();
         currentYear = year;
         // 年
         wv_year = (WheelView) view.findViewById(R.id.year);
@@ -92,10 +92,10 @@ public class WheelTime {
         wv_year.setGravity(gravity);
         // 月
         wv_month = (WheelView) view.findViewById(R.id.month);
-        if (startYear == endYear) {
+        if (startYear == endYear) {//开始年等于终止年
             wv_month.setAdapter(new NumericWheelAdapter(startMonth, endMonth));
             wv_month.setCurrentItem(month + 1 - startMonth);
-        }else if (year == startYear) {
+        } else if (year == startYear) {
 
             wv_month.setAdapter(new NumericWheelAdapter(startMonth, 12));
             wv_month.setCurrentItem(month + 1 - startMonth);
@@ -138,7 +138,7 @@ public class WheelTime {
                 }
             }
             wv_day.setCurrentItem(day - startDay);
-        }else if (year == startYear && month + 1 == startMonth) {
+        } else if (year == startYear && month + 1 == startMonth) {
 // 判断大小月及是否闰年,用来确定"日"的数据
             if (list_big.contains(String.valueOf(month + 1))) {
 
@@ -234,59 +234,72 @@ public class WheelTime {
             public void onItemSelected(int index) {
                 int year_num = index + startYear;
                 currentYear = year_num;
-
+                int currentMonthItem = wv_month.getCurrentItem();//记录上一次的item位置
                 // 判断大小月及是否闰年,用来确定"日"的数据
                 if (startYear == endYear) {
                     //重新设置月份
                     wv_month.setAdapter(new NumericWheelAdapter(startMonth, endMonth));
-                    wv_month.setCurrentItem(0);
-                    int monthNum = wv_month.getCurrentItem() + startMonth;
+
+                    if (currentMonthItem > wv_month.getAdapter().getItemsCount()-1) {
+                        currentMonthItem = wv_month.getAdapter().getItemsCount()-1;
+                        wv_month.setCurrentItem(currentMonthItem);
+                    }
+
+                    int monthNum = currentMonthItem + 1;
                     if (startMonth == endMonth) {
                         //重新设置日
-                        setReDay(year_num, monthNum,startDay,endMonth, list_big, list_little);
-                    }else if (monthNum == startMonth) {
+                        setReDay(year_num, monthNum, startDay, endMonth, list_big, list_little);
+                    } else if (monthNum == startMonth) {
                         //重新设置日
-                        setReDay(year_num, monthNum,startDay,31, list_big, list_little);
+                        setReDay(year_num, monthNum, startDay, 31, list_big, list_little);
                     } else {
                         //重新设置日
-                        setReDay(year_num, monthNum,1,31, list_big, list_little);
+                        setReDay(year_num, monthNum, 1, 31, list_big, list_little);
                     }
-                }else if (year_num == startYear) {//等于开始的年
+                } else if (year_num == startYear) {//等于开始的年
                     //重新设置月份
                     wv_month.setAdapter(new NumericWheelAdapter(startMonth, 12));
-                    wv_month.setCurrentItem(0);
-                    int monthNum = wv_month.getCurrentItem() + startMonth;
 
-                    if (monthNum == startMonth) {
+                    if (currentMonthItem > wv_month.getAdapter().getItemsCount()-1) {
+                        currentMonthItem = wv_month.getAdapter().getItemsCount()-1;
+                        wv_month.setCurrentItem(currentMonthItem);
+                    }
+
+                    int month = currentMonthItem + startMonth;
+                    if (month == startMonth) {
+
                         //重新设置日
-                        setReDay(year_num, monthNum,startDay,31, list_big, list_little);
+                        setReDay(year_num, month, startDay, 31, list_big, list_little);
                     } else {
                         //重新设置日
-                        setReDay(year_num, monthNum,1,31, list_big, list_little);
-                    }
+
+                        setReDay(year_num, month, 1, 31, list_big, list_little);
+                   }
 
                 } else if (year_num == endYear) {
                     //重新设置月份
                     wv_month.setAdapter(new NumericWheelAdapter(1, endMonth));
-                    wv_month.setCurrentItem(0);
-                    int monthNum = wv_month.getCurrentItem() + 1;
+                    if (currentMonthItem > wv_month.getAdapter().getItemsCount()-1) {
+                        currentMonthItem = wv_month.getAdapter().getItemsCount()-1;
+                        wv_month.setCurrentItem(currentMonthItem);
+                    }
+                    int monthNum = currentMonthItem + 1;
+
                     if (monthNum == endMonth) {
                         //重新设置日
-                        setReDay(year_num, wv_month.getCurrentItem() + 1,1,endDay, list_big, list_little);
+                        setReDay(year_num, monthNum, 1, endDay, list_big, list_little);
                     } else {
                         //重新设置日
-                        setReDay(year_num, wv_month.getCurrentItem() + 1,1,31, list_big, list_little);
+                        setReDay(year_num, monthNum, 1, 31, list_big, list_little);
                     }
 
                 } else {
                     //重新设置月份
                     wv_month.setAdapter(new NumericWheelAdapter(1, 12));
-                    wv_month.setCurrentItem(0);
                     //重新设置日
-                    setReDay(year_num, wv_month.getCurrentItem() + 1,1,31, list_big, list_little);
+                    setReDay(year_num, wv_month.getCurrentItem() + 1, 1, 31, list_big, list_little);
 
                 }
-
 
             }
         };
@@ -298,19 +311,24 @@ public class WheelTime {
 
                 if (startYear == endYear && startMonth == endMonth) {
                     //重新设置日
-                    setReDay(currentYear, month_num,startDay,endDay, list_big, list_little);
+                    setReDay(currentYear, month_num, startDay, endDay, list_big, list_little);
                 } else if (currentYear == startYear) {
                     month_num = month_num + startMonth - 1;
-                    //重新设置日
-                    setReDay(currentYear, month_num,startDay,31, list_big, list_little);
+                    if (month_num == startMonth) {
+                        //重新设置日
+                        setReDay(currentYear, month_num, startDay, 31, list_big, list_little);
+                    } else {
+                        //重新设置日
+                        setReDay(currentYear, month_num, 1, 31, list_big, list_little);
+                    }
 
                 } else if (currentYear == endYear && month_num == endMonth) {
                     //重新设置日
-                    setReDay(currentYear, wv_month.getCurrentItem() + 1,1,endDay, list_big, list_little);
+                    setReDay(currentYear, wv_month.getCurrentItem() + 1, 1, endDay, list_big, list_little);
 
                 } else {
                     //重新设置日
-                    setReDay(currentYear, month_num,1,31, list_big, list_little);
+                    setReDay(currentYear, month_num, 1, 31, list_big, list_little);
 
                 }
 
@@ -357,18 +375,20 @@ public class WheelTime {
     }
 
 
-    private void setReDay(int year_num, int monthNum,int startD,int endD, List<String> list_big, List<String> list_little) {
+    private void setReDay(int year_num, int monthNum, int startD, int endD, List<String> list_big, List<String> list_little) {
+        int currentItem = wv_day.getCurrentItem();
+
         int maxItem;
         if (list_big
                 .contains(String.valueOf(monthNum))) {
             if (endD > 31) {
-                endD=31;
+                endD = 31;
             }
             wv_day.setAdapter(new NumericWheelAdapter(startD, endD));
             maxItem = endD;
         } else if (list_little.contains(String.valueOf(monthNum))) {
             if (endD > 30) {
-                endD=30;
+                endD = 30;
             }
             wv_day.setAdapter(new NumericWheelAdapter(startD, endD));
             maxItem = endD;
@@ -376,20 +396,24 @@ public class WheelTime {
             if ((year_num % 4 == 0 && year_num % 100 != 0)
                     || year_num % 400 == 0) {
                 if (endD > 29) {
-                    endD=29;
+                    endD = 29;
                 }
                 wv_day.setAdapter(new NumericWheelAdapter(startD, endD));
                 maxItem = endD;
             } else {
                 if (endD > 28) {
-                    endD=28;
+                    endD = 28;
                 }
                 wv_day.setAdapter(new NumericWheelAdapter(startD, endD));
                 maxItem = endD;
             }
         }
 
-        wv_day.setCurrentItem(0);
+        if (currentItem > wv_day.getAdapter().getItemsCount()-1) {
+            currentItem = wv_day.getAdapter().getItemsCount()-1;
+            wv_day.setCurrentItem(currentItem);
+        }
+
     }
 
 
@@ -482,13 +506,24 @@ public class WheelTime {
     public String getTime() {
         StringBuffer sb = new StringBuffer();
         if (currentYear == startYear) {
+            int i = wv_month.getCurrentItem() + startMonth;
+            System.out.println("i:"+i);
+            if ((wv_month.getCurrentItem() + startMonth) == startMonth) {
+                sb.append((wv_year.getCurrentItem() + startYear)).append("-")
+                        .append((wv_month.getCurrentItem() + startMonth)).append("-")
+                        .append((wv_day.getCurrentItem() + startDay)).append(" ")
+                        .append(wv_hours.getCurrentItem()).append(":")
+                        .append(wv_mins.getCurrentItem()).append(":")
+                        .append(wv_seconds.getCurrentItem());
+            } else {
+                sb.append((wv_year.getCurrentItem() + startYear)).append("-")
+                        .append((wv_month.getCurrentItem() + startMonth)).append("-")
+                        .append((wv_day.getCurrentItem() + 1)).append(" ")
+                        .append(wv_hours.getCurrentItem()).append(":")
+                        .append(wv_mins.getCurrentItem()).append(":")
+                        .append(wv_seconds.getCurrentItem());
+            }
 
-            sb.append((wv_year.getCurrentItem() + startYear)).append("-")
-                    .append((wv_month.getCurrentItem() + startMonth)).append("-")
-                    .append((wv_day.getCurrentItem() + startDay)).append(" ")
-                    .append(wv_hours.getCurrentItem()).append(":")
-                    .append(wv_mins.getCurrentItem()).append(":")
-                    .append(wv_seconds.getCurrentItem());
 
 
         } else {
@@ -528,7 +563,7 @@ public class WheelTime {
     }
 
 
-    public void setRange2(Date startDate, Date endDate) {
+    public void setRangDate(Date startDate, Date endDate) {
         if (startDate == null && endDate != null) {
             if (endDate.getYear() > startYear) {
                 this.endYear = endDate.getYear();
@@ -547,7 +582,6 @@ public class WheelTime {
                     }
                 }
             }
-            System.out.println("startnull");
 
         } else if (startDate != null && endDate == null) {
             if (startDate.getYear() < endYear) {
@@ -567,7 +601,6 @@ public class WheelTime {
                     }
                 }
             }
-            System.out.println("endnull");
 
         } else if (startDate != null && endDate != null) {
             this.startYear = startDate.getYear();

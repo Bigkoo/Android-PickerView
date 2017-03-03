@@ -358,7 +358,6 @@ public class WheelView extends View {
         int counter = 0;
         while (counter < itemsVisible) {
             int index = preCurrentIndex - (itemsVisible / 2 - counter);//索引值，即当前在控件中间的item看作数据源的中间，计算出相对源数据源的index值
-
             //判断是否循环，如果是循环数据源也使用相对循环的position获取对应的item值，如果不是循环则超出数据源范围使用""空白字符串填充，在界面上形成空白无数据的item项
             if (isLoop) {
                 index = getLoopMappingIndex(index);
@@ -456,9 +455,9 @@ public class WheelView extends View {
                     canvas.drawText(contentText, drawCenterContentStart, Y, paintCenterText);
 
                     int preSelectedItem = adapter.indexOf(visibles[counter]);
-                    if (preSelectedItem != -1) {
-                        selectedItem = preSelectedItem;
-                    }
+
+                    selectedItem = preSelectedItem;
+
                 } else {
                     // 其他条目
                     canvas.save();

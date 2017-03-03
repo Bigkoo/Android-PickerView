@@ -52,7 +52,7 @@ public class NumericWheelAdapter implements WheelAdapter {
 		try {
 			return (int)o - minValue;
 		} catch (Exception e) {
-			return minValue;
+			return -1;
 		}
 
 	}

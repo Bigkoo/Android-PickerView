@@ -248,7 +248,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          *
          * @return
          */
-        public Builder setRange2(Date startDate,Date endDate) {
+        public Builder setRangDate(Date startDate,Date endDate) {
             this.startDate = startDate;
             this.endDate = endDate;
             return this;
@@ -382,21 +382,21 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         if (startDate != null && endDate != null) {
             if (startDate.getYear() < endDate.getYear()) {
-                setRange2();
+                setRangDate();
             } else if (startDate.getYear() == endDate.getYear()) {
 
                 if (startDate.getMonth() < endDate.getMonth()) {
-                    setRange2();
+                    setRangDate();
                 } else if (startDate.getMonth() == endDate.getMonth()) {
                     if (startDate.getDate() < endDate.getDate()) {
-                        setRange2();
+                        setRangDate();
                     }
                 }
             }
         } else if (startDate != null && endDate == null) {
-            setRange2();
+            setRangDate();
         } else if (startDate == null && endDate != null) {
-            setRange2();
+            setRangDate();
         }
 
 
@@ -421,8 +421,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     }  /**
      * 设置可以选择的时间范围, 要在setTime之前调用才有效果
      */
-    private void setRange2() {
-        wheelTime.setRange2(startDate, endDate);
+    private void setRangDate() {
+        wheelTime.setRangDate(startDate, endDate);
 
 
     }
