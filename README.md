@@ -27,11 +27,12 @@
 ### [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
 
 
-## V3.0.5版本更新说明（2017-2-28）
-* 优化：数据源由ArrayList 改为List 类型
-* 优化：在时间选择器中，隐藏单位标签的情况下，修复滚轮偏左的问题。
-* 修复：lib去除 v7 compat包 依赖，解决某些情况下support包冲突问题。
-
+## V3.0.6版本更新说明（2017-3-3）
+* 新增对话框模式
+* 新增timePicker “年月日时分”显示类型
+* 新增分隔线的显示类型选择（FILL、WARP）
+* 新增options默认选中项的调用方法（可重复设置）；
+* 优化选中项显示位置有微小偏差问题
 
 ### 历史版本更新说明请查看Wiki
 
@@ -41,7 +42,7 @@
 
 ### Gradle
 ```java
-compile 'com.contrarywind:Android-PickerView:3.0.5'
+compile 'com.contrarywind:Android-PickerView:3.0.6'
 //compile 'com.bigkoo:pickerview:lunar.1.0'  Lunar Branch 农历分支
 ```
 OR
@@ -50,7 +51,7 @@ OR
 <dependency> 
 <groupId>com.contrarywind</groupId> 
 <artifactId>Android-PickerView</artifactId>
-<version>3.0.5</version>
+<version>3.0.6</version>
 <type>pom</type>
 </dependency>
 ```
