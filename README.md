@@ -19,6 +19,9 @@
 ![TimePicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177272_3347.gif)
 ![OptionsPicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177483_4301.gif)
 
+## 有兴趣研究3D滚轮效果的实现机制，希望把源码研究透彻的可以看看这篇
+ [Android-PickerView系列之源码解析篇（二）](http://blog.csdn.net/qq_22393017/article/details/59488906)
+
 ## 说明文档 Documentation（还在持续更新中）
 ### [English Documentation](https://github.com/Bigkoo/Android-PickerView/wiki/English-Documentation)
 
@@ -95,8 +98,7 @@ OR
 ## 效果图（招行信用卡的“掌上生活”里面条件选择器他们用的就是我这个库，大家可以当实际项目参考）
 ![](https://github.com/saiwu-bigkoo/Android-PickerView/blob/master/preview/pickerdemo_zhangshangshenghuo.gif)
 
- ## 为了能让大家更好地理解3D滚轮这个效果是怎么实现的，我写了一篇博客用来专门讲解WheelView的实现原理，有兴趣把源码研究透彻的可以看看这篇
- [Android-PickerView系列之源码解析篇（二）](http://blog.csdn.net/qq_22393017/article/details/59488906)
+
 ## Thanks
 
 - [WheelView](https://github.com/venshine/WheelView)
