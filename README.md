@@ -19,8 +19,7 @@
 ![TimePicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177272_3347.gif)
 ![OptionsPicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177483_4301.gif)
 
-## 有兴趣研究3D滚轮效果的实现机制，希望把源码研究透彻的可以看看这篇
- [Android-PickerView系列之源码解析篇（二）](http://blog.csdn.net/qq_22393017/article/details/59488906)
+## 有兴趣研究3D滚轮效果的实现机制，希望把源码研究透彻的可以看看这篇[Android-PickerView系列之源码解析篇（二）](http://blog.csdn.net/qq_22393017/article/details/59488906)
 
 ## 说明文档 Documentation（还在持续更新中）
 ### [English Documentation](https://github.com/Bigkoo/Android-PickerView/wiki/English-Documentation)
