@@ -361,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void getData() {
         for (int i = 0; i < 5; i++) {
-            cardItem.add(new CardBean(i, "1111 1111 1111 111" + i));
+            cardItem.add(new CardBean(i, "No.ABC1234 " + i));
         }
     }
 
