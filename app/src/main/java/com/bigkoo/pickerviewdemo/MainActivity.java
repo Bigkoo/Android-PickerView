@@ -2,7 +2,6 @@ package com.bigkoo.pickerviewdemo;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,6 +12,8 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
+import com.bigkoo.pickerview.lib.WheelView;
+
 import com.bigkoo.pickerview.model.IPickerViewData;
 import com.bigkoo.pickerviewdemo.bean.CardBean;
 import com.bigkoo.pickerviewdemo.bean.PickerViewData;
@@ -20,6 +21,7 @@ import com.bigkoo.pickerviewdemo.bean.ProvinceBean;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -63,8 +65,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initTimePicker() {
 
         //控制时间范围,setRange方法 要在setDate 之前才有效果(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
-         /*Calendar calendar = Calendar.getInstance();*/
-
+         Calendar calendar = Calendar.getInstance();
+        calendar.set(2013,2,29);
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2013,1,23);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2019,2,28);
         //时间选择器
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
@@ -81,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setOutSideCancelable(false)// default is true
                 .isCyclic(true)// default is false
                 .setTitleColor(Color.BLACK)
-
                 .setDate(new Date())// default system*/
                /*.setDividerColor(Color.WHITE)//设置分割线的颜色
                 .setTextColorCenter(Color.LTGRAY)//设置选中项的颜色
@@ -90,13 +95,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setBgColor(Color.BLACK)//滚轮背景颜色 Night mode
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
-
                /* .gravity(Gravity.RIGHT)// default is center*/
+                .setDividerType(WheelView.DividerType.FILL) // default is FILL
                 .setType(TimePickerView.Type.YEAR_MONTH_DAY_HOUR_MIN)//default is all
                 .setContentSize(20)
                 //.setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
-                .setLabel("年", "月", "日", "时", "分", "秒")
-                .setRange2(new Date(2017, 3, 4), new Date(2017, 3, 3))
+                .setLabel("年","月","日","时","分","秒")
+                .setDate(calendar)
+                .setRangDate(startDate,endDate)
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
 
                     @Override
@@ -116,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         });
                     }
-                })
+                }) 
                 .build();
     }
 
@@ -128,9 +134,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initOptionData() {
         getData();
         //选项1
-        options1Items.add(new ProvinceBean(0, "广东", "描述部分", "其他数据"));
-        options1Items.add(new ProvinceBean(1, "湖南", "描述部分", "其他数据"));
-        options1Items.add(new ProvinceBean(2, "广西壮族字字去区", "描述部分", "其他数据"));
+
+        options1Items.add(new ProvinceBean(0,"广东","描述部分","其他数据"));
+        options1Items.add(new ProvinceBean(1,"湖南","描述部分","其他数据"));
+        options1Items.add(new ProvinceBean(2,"广西","描述部分","其他数据"));
+
 
         //选项2
         ArrayList<String> options2Items_01 = new ArrayList<>();
@@ -261,6 +269,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                /* .setLabels("省", "市", "区")//设置选择的三级单位*/
                /* .setLineSpacingMultiplier(2.0f) //设置两横线之间的间隔倍数（范围：1.2 - 2.0倍 文字高度）*/
                /* .setDividerColor(Color.RED)//设置分割线的颜色*/
+                .setDividerType(WheelView.DividerType.WARP)
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(20)//设置滚轮文字大小
                 .setSelectOptions(0, 1, 2)  //设置默认选中项

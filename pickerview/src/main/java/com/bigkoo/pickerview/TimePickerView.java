@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.listener.CustomListener;
+import com.bigkoo.pickerview.lib.WheelView;
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.WheelTime;
 
@@ -29,7 +30,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
     public enum Type {
         ALL, YEAR_MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN, YEAR_MONTH, YEAR_MONTH_DAY_HOUR_MIN
-    } // 五种选择模式，年月日时分秒，年月日，时分，月日时分，年月
+    } // 六种选择模式，年月日时分秒，年月日，时分，月日时分，年月，年月日时分
 
     WheelTime wheelTime; //自定义控件
     private Button btnSubmit, btnCancel; //确定、取消按钮
@@ -53,9 +54,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private int Size_Title;//标题字体大小
     private int Size_Content;//内容字体大小
 
-    private Date date;//当前选中时间
-    private Date startDate;//开始时间
-    private Date endDate;//终止时间
+    private Calendar date;//当前选中时间
+    private Calendar startDate;//开始时间
+    private Calendar endDate;//终止时间
     private int startYear;//开始年份
     private int endYear;//结尾年份
 
@@ -67,10 +68,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private int dividerColor; //分割线的颜色
     // 条目间距倍数 默认1.6
     private float lineSpacingMultiplier = 1.6F;
-
     private boolean isDialog;//是否是对话框模式
-
     private String label_year, label_month, label_day, label_hours, label_mins, label_seconds;
+    private WheelView.DividerType dividerType;//分隔线类型
 
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
@@ -112,6 +112,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.layoutRes = builder.layoutRes;
         this.lineSpacingMultiplier = builder.lineSpacingMultiplier;
         this.isDialog = builder.isDialog;
+        this.dividerType = builder.dividerType;
         initView(builder.context);
     }
 
@@ -140,9 +141,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private int Size_Submit_Cancel = 17;//确定取消按钮大小
         private int Size_Title = 18;//标题字体大小
         private int Size_Content = 18;//内容字体大小
-        private Date date;//当前选中时间
-        private Date startDate;//开始时间
-        private Date endDate;//终止时间
+        private Calendar date;//当前选中时间
+        private Calendar startDate;//开始时间
+        private Calendar endDate;//终止时间
         private int startYear;//开始年份
         private int endYear;//结尾年份
 
@@ -152,6 +153,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private int textColorOut; //分割线以外的文字颜色
         private int textColorCenter; //分割线之间的文字颜色
         private int dividerColor; //分割线的颜色
+        private WheelView.DividerType dividerType;//分隔线类型
         // 条目间距倍数 默认1.6
         private float lineSpacingMultiplier = 1.6F;
 
@@ -236,7 +238,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
-        public Builder setDate(Date date) {
+        public Builder setDate(Calendar date) {
             this.date = date;
             return this;
         }
@@ -258,7 +260,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          *
          * @return
          */
-        public Builder setRange2(Date startDate, Date endDate) {
+
+        public Builder setRangDate(Calendar startDate, Calendar endDate) {
             this.startDate = startDate;
             this.endDate = endDate;
             return this;
@@ -282,6 +285,16 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          */
         public Builder setDividerColor(int dividerColor) {
             this.dividerColor = dividerColor;
+            return this;
+        }
+
+        /**
+         * 设置分割线的类型
+         *
+         * @param dividerType
+         */
+        public Builder setDividerType(WheelView.DividerType dividerType) {
+            this.dividerType = dividerType;
             return this;
         }
 
@@ -383,22 +396,13 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         }
 
         if (startDate != null && endDate != null) {
-            if (startDate.getYear() < endDate.getYear()) {
-                setRange2();
-            } else if (startDate.getYear() == endDate.getYear()) {
-
-                if (startDate.getMonth() < endDate.getMonth()) {
-                    setRange2();
-                } else if (startDate.getMonth() == endDate.getMonth()) {
-                    if (startDate.getDate() < endDate.getDate()) {
-                        setRange2();
-                    }
-                }
+            if (startDate.getTimeInMillis() < endDate.getTimeInMillis()) {
+                setRangDate();
             }
         } else if (startDate != null && endDate == null) {
-            setRange2();
+            setRangDate();
         } else if (startDate == null && endDate != null) {
-            setRange2();
+            setRangDate();
         }
 
 
@@ -407,6 +411,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         setOutSideCancelable(cancelable);
         wheelTime.setCyclic(cyclic);
         wheelTime.setDividerColor(dividerColor);
+        wheelTime.setDividerType(dividerType);
         wheelTime.setLineSpacingMultiplier(lineSpacingMultiplier);
         wheelTime.setTextColorOut(textColorOut);
         wheelTime.setTextColorCenter(textColorCenter);
@@ -419,35 +424,73 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private void setRange() {
         wheelTime.setStartYear(startYear);
         wheelTime.setEndYear(endYear);
+
     }
 
     /**
      * 设置可以选择的时间范围, 要在setTime之前调用才有效果
      */
-    private void setRange2() {
-        wheelTime.setRange2(startDate, endDate);
+    private void setRangDate() {
+        wheelTime.setRangDate(startDate, endDate);
 
+
+        //如果设置了时间范围
+        if (startDate != null && endDate != null) {
+            if (date != null) {
+                //如果设置了默认时间,就判断一下默认时间是否在时间范围内
+                if (date.getTimeInMillis() > startDate.getTimeInMillis() && date.getTimeInMillis() < endDate.getTimeInMillis()) {
+
+                } else {
+                    date = startDate;
+                }
+            } else {
+                date = startDate;
+            }
+        } else if (startDate != null) {
+            //没有设置默认选中时间,那就拿开始时间当默认时间
+            date = startDate;
+        } else if (endDate != null) {
+            date = endDate;
+        }
 
     }
-
 
     /**
      * 设置选中时间,默认选中当前时间
      */
     private void setTime() {
+        int year;
+        int month;
+        int day;
+        int hours;
+        int minute;
+        int seconds;
         Calendar calendar = Calendar.getInstance();
         if (date == null) {
             calendar.setTimeInMillis(System.currentTimeMillis());
+            year = calendar.get(Calendar.YEAR);
+            month = calendar.get(Calendar.MONTH);
+            day = calendar.get(Calendar.DAY_OF_MONTH);
+            hours = calendar.get(Calendar.HOUR_OF_DAY);
+            minute = calendar.get(Calendar.MINUTE);
+            seconds = calendar.get(Calendar.SECOND);
         } else {
-            calendar.setTime(date);
+            year = date.get(Calendar.YEAR);
+            month = date.get(Calendar.MONTH);
+            day = date.get(Calendar.DAY_OF_MONTH);
+            hours = date.get(Calendar.HOUR_OF_DAY);
+            minute = date.get(Calendar.MINUTE);
+            seconds = date.get(Calendar.SECOND);
         }
 
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int hours = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        int seconds = calendar.get(Calendar.SECOND);
+
+        System.out.println("month:" + month
+        );
+        System.out.println("day:" + day
+        );
+        System.out.println("year:" + year
+        );
+
         wheelTime.setPicker(year, month, day, hours, minute, seconds);
     }
 

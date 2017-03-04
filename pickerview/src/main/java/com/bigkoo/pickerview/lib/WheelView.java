@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -30,10 +31,18 @@ import java.util.concurrent.TimeUnit;
  */
 public class WheelView extends View {
 
+
+
     public enum ACTION {
         // 点击，滑翔(滑到尽头)，拖拽事件
         CLICK, FLING, DAGGLE
     }
+    public enum DividerType {
+        // 分隔线类型
+        FILL, WARP
+    }
+
+    private DividerType dividerType;//分隔线类型
 
     Context context;
 
@@ -349,7 +358,6 @@ public class WheelView extends View {
         int counter = 0;
         while (counter < itemsVisible) {
             int index = preCurrentIndex - (itemsVisible / 2 - counter);//索引值，即当前在控件中间的item看作数据源的中间，计算出相对源数据源的index值
-
             //判断是否循环，如果是循环数据源也使用相对循环的position获取对应的item值，如果不是循环则超出数据源范围使用""空白字符串填充，在界面上形成空白无数据的item项
             if (isLoop) {
                 index = getLoopMappingIndex(index);
@@ -367,10 +375,28 @@ public class WheelView extends View {
         }
 
         //绘制中间两条横线
-        canvas.drawLine(0.0F, firstLineY, measuredWidth, firstLineY, paintIndicator);
-        canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintIndicator);
+        if (dividerType == DividerType.WARP){
+            float startX;
+            float endX;
+
+            if (TextUtils.isEmpty(label)){//隐藏Label的情况
+                startX = (measuredWidth - maxTextWidth)/2 - 12;
+            }else {
+                startX = (measuredWidth - maxTextWidth)/4 - 12;
+            }
+
+            if (startX<=0){//如果超过了WheelView的边缘
+                startX = 10;
+            }
+            endX = measuredWidth - startX;
+            canvas.drawLine(startX, firstLineY, endX, firstLineY, paintIndicator);
+            canvas.drawLine(startX, secondLineY, endX, secondLineY, paintIndicator);
+        }else {
+            canvas.drawLine(0.0F, firstLineY, measuredWidth, firstLineY, paintIndicator);
+            canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintIndicator);
+        }
         //单位的Label，不为空则进行绘制
-        if (label != null&& !label.equals("")) {
+        if (!TextUtils.isEmpty(label)) {
             int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
             //绘制文字，靠右并留出空隙
             canvas.drawText(label, drawRightContentStart - CENTERCONTENTOFFSET, centerY, paintCenterText);
@@ -429,9 +455,9 @@ public class WheelView extends View {
                     canvas.drawText(contentText, drawCenterContentStart, Y, paintCenterText);
 
                     int preSelectedItem = adapter.indexOf(visibles[counter]);
-                    if (preSelectedItem != -1) {
-                        selectedItem = preSelectedItem;
-                    }
+
+                    selectedItem = preSelectedItem;
+
                 } else {
                     // 其他条目
                     canvas.save();
@@ -661,12 +687,12 @@ public class WheelView extends View {
 
     public void setDividerColor(int dividerColor) {
         if (dividerColor != 0) {
-
-
             this.dividerColor = dividerColor;
             paintIndicator.setColor(this.dividerColor);
-
         }
+    }
+    public void setDividerType(DividerType dividerType) {
+        this.dividerType = dividerType;
     }
 
     public void setLineSpacingMultiplier(float lineSpacingMultiplier) {

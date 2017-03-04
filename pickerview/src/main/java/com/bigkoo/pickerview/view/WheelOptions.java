@@ -27,6 +27,9 @@ public class WheelOptions<T> {
     int textColorOut;
     int textColorCenter;
     int dividerColor;
+
+    private WheelView.DividerType dividerType;
+
     // 条目间距倍数
     float lineSpacingMultiplier = 1.6F;
 
@@ -159,7 +162,12 @@ public class WheelOptions<T> {
         wv_option1.setDividerColor(dividerColor);
         wv_option2.setDividerColor(dividerColor);
         wv_option3.setDividerColor(dividerColor);
+    }
 
+    private void setDividerType() {
+        wv_option1.setDividerType(dividerType);
+        wv_option2.setDividerType(dividerType);
+        wv_option3.setDividerType(dividerType);
     }
 
     private void setLineSpacingMultiplier() {
@@ -262,6 +270,15 @@ public class WheelOptions<T> {
         setDividerColor();
     }
 
+    /**
+     * 设置分割线的类型
+     *
+     * @param dividerType
+     */
+    public void setDividerType(WheelView.DividerType dividerType) {
+        this.dividerType = dividerType;
+        setDividerType();
+    }
     /**
      * 设置分割线之间的文字的颜色
      *
