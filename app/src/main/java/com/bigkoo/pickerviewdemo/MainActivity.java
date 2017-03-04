@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<ProvinceBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<IPickerViewData>>> options3Items = new ArrayList<>();
-    private Button tvTime, tvOptions;
+    private Button btn_Time, btn_Options,btn_CustomOptions,btn_CustomTime;
 
-    private TimePickerView pvTime;
-    private OptionsPickerView pvOptions;
+    private TimePickerView pvTime,pvCustomTime;
+    private OptionsPickerView pvOptions,pvCustomOptions;
     private ArrayList<CardBean> cardItem = new ArrayList<>();
 
     @Override
@@ -41,29 +41,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //最好等数据加载完毕再初始化并显示，以免数据量大的时候，还未加载完毕就显示，造成APP崩溃
+
         initTimePicker();
+        initCustomTimePicker();
+
         initOptionData();
         initOptionPicker();
+        initCustomOptionPicker();
 
-        tvTime = (Button) findViewById(R.id.tvTime);
-        tvOptions = (Button) findViewById(R.id.tvOptions);
-        tvTime.setOnClickListener(this);
-        tvOptions.setOnClickListener(this);
+        btn_Time = (Button) findViewById(R.id.btn_Time);
+        btn_Options = (Button) findViewById(R.id.btn_Options);
+        btn_CustomOptions = (Button) findViewById(R.id.btn_CustomOptions);
+        btn_CustomTime = (Button) findViewById(R.id.btn_CustomTime);
+        btn_Time.setOnClickListener(this);
+        btn_Options.setOnClickListener(this);
+        btn_CustomOptions.setOnClickListener(this);
+        btn_CustomTime.setOnClickListener(this);
     }
+
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.tvTime && pvTime != null) {
+        if (v.getId() == R.id.btn_Time && pvTime != null) {
             pvTime.show(); //弹出时间选择器
-
-        } else if (v.getId() == R.id.tvOptions && pvOptions != null) {
-            pvOptions.show(); //弹出时间选择器
+        } else if (v.getId() == R.id.btn_Options && pvOptions != null) {
+            pvOptions.show(); //弹出条件选择器
+        } else if (v.getId() == R.id.btn_CustomOptions && pvOptions != null) {
+            pvCustomOptions.show(); //弹出自定义条件选择器
+        }else if (v.getId() == R.id.btn_CustomTime && pvOptions != null) {
+            pvCustomTime.show(); //弹出自定义时间选择器
         }
     }
 
 
     private void initTimePicker() {
-
         //控制时间范围,setRange方法 要在setDate 之前才有效果(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
          Calendar calendar = Calendar.getInstance();
         calendar.set(2013,2,29);
@@ -75,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
-                tvTime.setText(getTime(date));
+                btn_Time.setText(getTime(date));
             }
         })
                 /*.setType(TimePickerView.Type.ALL)//default is all
@@ -99,8 +110,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setDividerType(WheelView.DividerType.FILL) // default is FILL
                 .setType(TimePickerView.Type.YEAR_MONTH_DAY_HOUR_MIN)//default is all
                 .setContentSize(20)
-                //.setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
-                .setLabel("年","月","日","时","分","秒")
+                .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
+                .setDate(calendar)
+                .setRangDate(startDate,endDate)
+                .build();
+    }
+
+    private void initCustomTimePicker() {
+        //控制时间范围,setRange方法 要在setDate 之前才有效果(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2013,2,29);
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2013,1,23);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2019,2,28);
+        //时间选择器 ，自定义布局
+        pvCustomTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                btn_CustomTime.setText(getTime(date));
+            }
+        })
                 .setDate(calendar)
                 .setRangDate(startDate,endDate)
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
@@ -112,17 +142,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         tvSubmit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                pvTime.returnData(tvSubmit);
+                                pvCustomTime.returnData(tvSubmit);
                             }
                         });
                         ivCancel.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                pvTime.dismiss();
+                                pvCustomTime.dismiss();
                             }
                         });
                     }
-                }) 
+                })
                 .build();
     }
 
@@ -134,11 +164,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initOptionData() {
         getData();
         //选项1
-
         options1Items.add(new ProvinceBean(0,"广东","描述部分","其他数据"));
         options1Items.add(new ProvinceBean(1,"湖南","描述部分","其他数据"));
         options1Items.add(new ProvinceBean(2,"广西","描述部分","其他数据"));
-
 
         //选项2
         ArrayList<String> options2Items_01 = new ArrayList<>();
@@ -246,10 +274,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initOptionPicker() {//条件选择器初始化
         pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                String tx = cardItem.get(options1).getPickerViewText();
-                tvOptions.setText(tx);
+                String tx = options1Items.get(options1).getPickerViewText()+
+                            options2Items.get(options1).get(options2)+
+                            options3Items.get(options1).get(options2).get(options3).getPickerViewText();
+                btn_Options.setText(tx);
             }
         })
                 /*.setSubmitText("确定")
@@ -265,16 +295,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setCyclic(false, false, false)//循环与否
                 .setOutSideCancelable(false)//点击外部dismiss, default true
                 .setTitleBgColor(0xFF333333)//标题背景颜色 Night mode
-                .setBgColor(0xFF000000)//滚轮背景颜色 Night mode*/
-               /* .setLabels("省", "市", "区")//设置选择的三级单位*/
-               /* .setLineSpacingMultiplier(2.0f) //设置两横线之间的间隔倍数（范围：1.2 - 2.0倍 文字高度）*/
-               /* .setDividerColor(Color.RED)//设置分割线的颜色*/
+                .setBgColor(0xFF000000)//滚轮背景颜色 Night mode
+                .setLabels("省", "市", "区")//设置选择的三级单位
+                .setLineSpacingMultiplier(2.0f) //设置两横线之间的间隔倍数（范围：1.2 - 2.0倍 文字高度）
+                .setDividerColor(Color.RED)//设置分割线的颜色
+                .isDialog(false)//是否设置为对话框模式
+                .setOutSideCancelable(false)//点击屏幕中控件外部范围，是否可以取消显示*/
+                .setTitleText("城市选择")
                 .setDividerType(WheelView.DividerType.WARP)
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(20)//设置滚轮文字大小
                 .setSelectOptions(0, 1, 2)  //设置默认选中项
-                .isDialog(false)//设置为对话框模式
-                .setOutSideCancelable(false)
+                .build();
+        /*pvOptions.setPicker(options1Items);//一级选择器
+        pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
+        pvOptions.setPicker(options1Items, options2Items,options3Items);//三级选择器
+    }
+
+    private void initCustomOptionPicker() {//条件选择器初始化，自定义布局
+        pvCustomOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                //返回的分别是三个级别的选中位置
+                String tx = cardItem.get(options1).getPickerViewText();
+                btn_CustomOptions.setText(tx);
+            }
+        })
                 .setLayoutRes(R.layout.pickerview_custom_options, new CustomListener() {
                     @Override
                     public void customLayout(View v) {
@@ -284,13 +330,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         tvSubmit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                pvOptions.returnData(tvSubmit);
+                                pvCustomOptions.returnData(tvSubmit);
                             }
                         });
                         ivCancel.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                pvOptions.dismiss();
+                                pvCustomOptions.dismiss();
                             }
                         });
 
@@ -298,19 +344,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             @Override
                             public void onClick(View v) {
                                 getData();
-                                pvOptions.setPicker(cardItem);
+                                pvCustomOptions.setPicker(cardItem);
                             }
                         });
 
                     }
                 })
                 .build();
-        /*pvOptions.setPicker(options1Items);//一级选择器
-        pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
-        pvOptions.setPicker(cardItem);//三级选择器
-
+        pvCustomOptions.setPicker(cardItem);//添加数据
     }
-
 
     public void getData() {
         for (int i = 0; i < 5; i++) {

@@ -7,4 +7,7 @@
 
     <string name="picker_time">时间选择器</string>
     <string name="picker_province">条件选择器</string>
+
+    <string name="picker_custom_time">时间选择器自定义布局</string>
+    <string name="picker_custom_province">条件选择器自定义布局</string>
 </resources>

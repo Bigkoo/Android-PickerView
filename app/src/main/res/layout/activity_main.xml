@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
     <Button
-        android:layout_margin="40dp"
-        android:id="@+id/tvTime"
+        android:layout_margin="20dp"
+        android:id="@+id/btn_Time"
         android:text="@string/picker_time"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
     <Button
-        android:id="@+id/tvOptions"
-        android:layout_margin="40dp"
+        android:id="@+id/btn_Options"
+        android:layout_margin="20dp"
         android:layout_below="@+id/tvTime"
         android:text="@string/picker_province"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/btn_CustomOptions"
+        android:layout_margin="20dp"
+        android:layout_below="@+id/tvTime"
+        android:text="@string/picker_custom_time"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <Button
+        android:id="@+id/btn_CustomTime"
+        android:layout_margin="20dp"
+        android:layout_below="@+id/tvTime"
+        android:text="@string/picker_custom_province"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+</LinearLayout>

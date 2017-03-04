@@ -384,7 +384,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         setOutSideCancelable(cancelable);
 
-        tvTitle.setText(Str_Title);
+        if (tvTitle!= null){
+            tvTitle.setText(Str_Title);
+        }
 
         wheelOptions.setDividerColor(dividerColor);
         wheelOptions.setDividerType(dividerType);
@@ -456,7 +458,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     }
 
     public interface OnOptionsSelectListener {
-        void onOptionsSelect(int options1, int option2, int options3, View v);
+        void onOptionsSelect(int options1, int options2, int options3, View v);
     }
 
     @Override
