@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.lib.WheelView;
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.WheelTime;
@@ -24,6 +25,8 @@ import java.util.Date;
  * Updated by XiaoSong on 2017-2-22.
  */
 public class TimePickerView extends BasePickerView implements View.OnClickListener {
+    private int layoutRes;
+    private CustomListener customListener;
 
     public enum Type {
         ALL, YEAR_MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN, YEAR_MONTH, YEAR_MONTH_DAY_HOUR_MIN
@@ -105,6 +108,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.textColorCenter = builder.textColorCenter;
         this.textColorOut = builder.textColorOut;
         this.dividerColor = builder.dividerColor;
+        this.customListener = builder.customListener;
+        this.layoutRes = builder.layoutRes;
         this.lineSpacingMultiplier = builder.lineSpacingMultiplier;
         this.isDialog = builder.isDialog;
         this.dividerType = builder.dividerType;
@@ -114,7 +119,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
     //建造器
     public static class Builder {
-
+        private int layoutRes = R.layout.pickerview_time;
+        private CustomListener customListener;
         private Context context;
         private OnTimeSelectListener timeSelectListener;
 
@@ -237,6 +243,12 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
+        public Builder setLayoutRes(int res, CustomListener customListener) {
+            this.layoutRes = res;
+            this.customListener = customListener;
+            return this;
+        }
+
         public Builder setRange(int startYear, int endYear) {
             this.startYear = startYear;
             this.endYear = endYear;
@@ -248,10 +260,10 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          *
          * @return
          */
+
         public Builder setRangDate(Calendar startDate, Calendar endDate) {
             this.startDate = startDate;
             this.endDate = endDate;
-
             return this;
         }
 
@@ -336,42 +348,45 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         initViews();
         init();
         initEvents();
+        if (customListener == null) {
+            LayoutInflater.from(context).inflate(R.layout.pickerview_time, contentContainer);
 
-        LayoutInflater.from(context).inflate(R.layout.pickerview_time, contentContainer);
+            //顶部标题
+            tvTitle = (TextView) findViewById(R.id.tvTitle);
 
-        //顶部标题
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
+            //确定和取消按钮
+            btnSubmit = (Button) findViewById(R.id.btnSubmit);
+            btnCancel = (Button) findViewById(R.id.btnCancel);
 
-        //确定和取消按钮
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
-        btnCancel = (Button) findViewById(R.id.btnCancel);
+            btnSubmit.setTag(TAG_SUBMIT);
+            btnCancel.setTag(TAG_CANCEL);
 
-        btnSubmit.setTag(TAG_SUBMIT);
-        btnCancel.setTag(TAG_CANCEL);
+            btnSubmit.setOnClickListener(this);
+            btnCancel.setOnClickListener(this);
 
-        btnSubmit.setOnClickListener(this);
-        btnCancel.setOnClickListener(this);
+            //设置文字
+            btnSubmit.setText(TextUtils.isEmpty(Str_Submit) ? context.getResources().getString(R.string.pickerview_submit) : Str_Submit);
+            btnCancel.setText(TextUtils.isEmpty(Str_Cancel) ? context.getResources().getString(R.string.pickerview_cancel) : Str_Cancel);
+            tvTitle.setText(TextUtils.isEmpty(Str_Title) ? "" : Str_Title);//默认为空
 
-        //设置文字
-        btnSubmit.setText(TextUtils.isEmpty(Str_Submit) ? context.getResources().getString(R.string.pickerview_submit) : Str_Submit);
-        btnCancel.setText(TextUtils.isEmpty(Str_Cancel) ? context.getResources().getString(R.string.pickerview_cancel) : Str_Cancel);
-        tvTitle.setText(TextUtils.isEmpty(Str_Title) ? "" : Str_Title);//默认为空
+            //设置文字颜色
+            btnSubmit.setTextColor(Color_Submit == 0 ? pickerview_timebtn_nor : Color_Submit);
+            btnCancel.setTextColor(Color_Cancel == 0 ? pickerview_timebtn_nor : Color_Cancel);
+            tvTitle.setTextColor(Color_Title == 0 ? pickerview_topbar_title : Color_Title);
 
-        //设置文字颜色
-        btnSubmit.setTextColor(Color_Submit == 0 ? pickerview_timebtn_nor : Color_Submit);
-        btnCancel.setTextColor(Color_Cancel == 0 ? pickerview_timebtn_nor : Color_Cancel);
-        tvTitle.setTextColor(Color_Title == 0 ? pickerview_topbar_title : Color_Title);
-
-        //设置文字大小
-        btnSubmit.setTextSize(Size_Submit_Cancel);
-        btnCancel.setTextSize(Size_Submit_Cancel);
-        tvTitle.setTextSize(Size_Title);
-
+            //设置文字大小
+            btnSubmit.setTextSize(Size_Submit_Cancel);
+            btnCancel.setTextSize(Size_Submit_Cancel);
+            tvTitle.setTextSize(Size_Title);
+            RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
+            rv_top_bar.setBackgroundColor(Color_Background_Title == 0 ? pickerview_bg_topbar : Color_Background_Title);
+        } else {
+            customListener.customLayout(LayoutInflater.from(context).inflate(layoutRes, contentContainer));
+        }
         // 时间转轮 自定义控件
         LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);
 
-        RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
-        rv_top_bar.setBackgroundColor(Color_Background_Title == 0 ? pickerview_bg_topbar : Color_Background_Title);
+
         timePickerView.setBackgroundColor(Color_Background_Wheel == 0 ? bgColor_default : Color_Background_Wheel);
 
         wheelTime = new WheelTime(timePickerView, type, gravity, Size_Content);
@@ -409,6 +424,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private void setRange() {
         wheelTime.setStartYear(startYear);
         wheelTime.setEndYear(endYear);
+
     }
 
     /**
@@ -416,6 +432,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
      */
     private void setRangDate() {
         wheelTime.setRangDate(startDate, endDate);
+
 
         //如果设置了时间范围
         if (startDate != null && endDate != null) {
@@ -437,7 +454,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         }
 
     }
-
 
     /**
      * 设置选中时间,默认选中当前时间
@@ -485,16 +501,20 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         if (tag.equals(TAG_CANCEL)) {
             dismiss();
         } else {
-            if (timeSelectListener != null) {
-                try {
-                    Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
-                    timeSelectListener.onTimeSelect(date, v);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-            dismiss();
+            returnData(v);
         }
+    }
+
+    public void returnData(View v) {
+        if (timeSelectListener != null) {
+            try {
+                Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
+                timeSelectListener.onTimeSelect(date, v);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        dismiss();
     }
 
     public interface OnTimeSelectListener {
