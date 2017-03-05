@@ -272,8 +272,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         /*--------数据源添加完毕---------*/
     }
 
-
     private void initOptionPicker() {//条件选择器初始化
+
         pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setSubmitColor(Color.BLUE)
                 .setCancelColor(Color.BLUE)
                 .setBackgroundColor(Color.WHITE)
-                .setLinkage(false)//default true
+                .setLinkage(false)//default is true
                 .setCyclic(false, false, false)//循环与否
                 .setOutSideCancelable(false)//点击外部dismiss, default true
                 .setTitleBgColor(0xFF333333)//标题背景颜色 Night mode
@@ -309,6 +309,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentTextSize(20)//设置滚轮文字大小
                 .setSelectOptions(0, 1, 2)  //设置默认选中项
                 .build();
+
+        //pvOptions.setSelectOptions();
         /*pvOptions.setPicker(options1Items);//一级选择器
         pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
         pvOptions.setPicker(options1Items, options2Items,options3Items);//三级选择器
@@ -361,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void getData() {
         for (int i = 0; i < 5; i++) {
-            cardItem.add(new CardBean(i, "No.ABC1234 " + i));
+            cardItem.add(new CardBean(i, "No.ABC12345 " + i));
         }
     }
 

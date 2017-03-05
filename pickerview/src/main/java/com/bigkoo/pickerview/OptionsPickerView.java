@@ -404,27 +404,37 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
      */
     public void setSelectOptions(int option1) {
         this.option1 = option1;
+        SetCurrentItems();
     }
+
 
     public void setSelectOptions(int option1, int option2) {
         this.option1 = option1;
         this.option2 = option2;
+        SetCurrentItems();
     }
 
     public void setSelectOptions(int option1, int option2, int option3) {
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
+        SetCurrentItems();
+    }
+
+    private void SetCurrentItems() {
+        if(wheelOptions!=null){
+            wheelOptions.setCurrentItems(option1, option2, option3);
+        }
     }
 
     public void setPicker(List<T> optionsItems) {
         wheelOptions.setPicker(optionsItems, null, null);
-        wheelOptions.setCurrentItems(option1, option2, option3);
+        SetCurrentItems();
     }
 
     public void setPicker(List<T> options1Items, List<List<T>> options2Items) {
         wheelOptions.setPicker(options1Items, options2Items, null);
-        wheelOptions.setCurrentItems(option1, option2, option3);
+        SetCurrentItems();
     }
 
     public void setPicker(List<T> options1Items,
@@ -432,7 +442,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
                           List<List<List<T>>> options3Items) {
 
         wheelOptions.setPicker(options1Items, options2Items, options3Items);
-        wheelOptions.setCurrentItems(option1, option2, option3);
+        SetCurrentItems();
     }
 
 
