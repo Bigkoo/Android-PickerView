@@ -396,7 +396,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         }
 
         if (startDate != null && endDate != null) {
-            if (startDate.getTimeInMillis() < endDate.getTimeInMillis()) {
+            if (startDate.getTimeInMillis() <= endDate.getTimeInMillis()) {
                 setRangDate();
             }
         } else if (startDate != null && endDate == null) {
@@ -432,18 +432,11 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
      */
     private void setRangDate() {
         wheelTime.setRangDate(startDate, endDate);
-
-
         //如果设置了时间范围
         if (startDate != null && endDate != null) {
-            if (date != null) {
-                //如果设置了默认时间,就判断一下默认时间是否在时间范围内
-                if (date.getTimeInMillis() > startDate.getTimeInMillis() && date.getTimeInMillis() < endDate.getTimeInMillis()) {
-
-                } else {
-                    date = startDate;
-                }
-            } else {
+            //判断一下默认时间是否设置了，或者是否在起始终止时间范围内
+            if (date == null||date.getTimeInMillis() < startDate.getTimeInMillis()
+                    || date.getTimeInMillis() > endDate.getTimeInMillis()){
                 date = startDate;
             }
         } else if (startDate != null) {
@@ -452,19 +445,14 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         } else if (endDate != null) {
             date = endDate;
         }
-
     }
 
     /**
      * 设置选中时间,默认选中当前时间
      */
     private void setTime() {
-        int year;
-        int month;
-        int day;
-        int hours;
-        int minute;
-        int seconds;
+        int year,month,day,hours,minute,seconds;
+
         Calendar calendar = Calendar.getInstance();
         if (date == null) {
             calendar.setTimeInMillis(System.currentTimeMillis());
@@ -483,13 +471,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             seconds = date.get(Calendar.SECOND);
         }
 
-
-        System.out.println("month:" + month
-        );
-        System.out.println("day:" + day
-        );
-        System.out.println("year:" + year
-        );
+        /*System.out.println("month:" + month);
+        System.out.println("day:" + day);
+        System.out.println("year:" + year);*/
 
         wheelTime.setPicker(year, month, day, hours, minute, seconds);
     }
@@ -520,7 +504,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     public interface OnTimeSelectListener {
         void onTimeSelect(Date date, View v);
     }
-
 
     @Override
     public boolean isDialog() {
