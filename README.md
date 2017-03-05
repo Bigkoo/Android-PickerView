@@ -19,6 +19,8 @@
 ![TimePicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177272_3347.gif)
 ![OptionsPicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177483_4301.gif)
 
+## 有兴趣研究3D滚轮效果的实现机制，希望把源码研究透彻的可以看看这篇[Android-PickerView系列之源码解析篇（二）](http://blog.csdn.net/qq_22393017/article/details/59488906)
+
 ## 说明文档 Documentation（还在持续更新中）
 ### [English Documentation](https://github.com/Bigkoo/Android-PickerView/wiki/English-Documentation)
 
@@ -26,6 +28,9 @@
 
 ### [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
 
+## V3.0.7版本更新说明（2017-3-4）
+* 优化 起始终止年月日范围设置
+* 新增自定义布局
 
 ## V3.0.6版本更新说明（2017-3-3）
 * 新增对话框模式
@@ -42,7 +47,7 @@
 
 ### Gradle
 ```java
-compile 'com.contrarywind:Android-PickerView:3.0.6'
+compile 'com.contrarywind:Android-PickerView:3.0.7'
 //compile 'com.bigkoo:pickerview:lunar.1.0'  Lunar Branch 农历分支
 ```
 OR
@@ -51,7 +56,7 @@ OR
 <dependency> 
 <groupId>com.contrarywind</groupId> 
 <artifactId>Android-PickerView</artifactId>
-<version>3.0.6</version>
+<version>3.0.7</version>
 <type>pom</type>
 </dependency>
 ```
