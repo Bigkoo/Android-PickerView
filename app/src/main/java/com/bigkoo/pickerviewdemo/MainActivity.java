@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_Time && pvTime != null) {
+            pvTime.setDate(Calendar.getInstance());
             pvTime.show(); //弹出时间选择器
         } else if (v.getId() == R.id.btn_Options && pvOptions != null) {
             pvOptions.show(); //弹出条件选择器
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initTimePicker() {
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
         Calendar selectedDate = Calendar.getInstance();
-        selectedDate.set(2013,2,29);
+        /*selectedDate.set(2013,2,29);*/
         Calendar startDate = Calendar.getInstance();
         startDate.set(2013,1,23);
         Calendar endDate = Calendar.getInstance();
@@ -107,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
                /* .gravity(Gravity.RIGHT)// default is center*/
-                .setType(TimePickerView.Type.YEAR_MONTH_DAY_HOUR_MIN)//default is all
                 .setContentSize(20)
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                 .setDate(selectedDate)
@@ -121,8 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 具体可参考demo 里面的两个自定义布局
 
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
-        Calendar selectedDate = Calendar.getInstance();
-       /* selectedDate.set(2013,2,29);*/
+        Calendar selectedDate = Calendar.getInstance();//系统当前时间
         Calendar startDate = Calendar.getInstance();
         startDate.set(2013,1,23);
         Calendar endDate = Calendar.getInstance();
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 btn_CustomTime.setText(getTime(date));
             }
-        })
+        })      .setType(TimePickerView.Type.YEAR_MONTH_DAY)
                 .setDate(selectedDate)
                 .setRangDate(startDate,endDate)
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {

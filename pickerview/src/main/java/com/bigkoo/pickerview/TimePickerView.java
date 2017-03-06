@@ -405,7 +405,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             setRangDate();
         }
 
-
         setTime();
         wheelTime.setLabels(label_year, label_month, label_day, label_hours, label_mins, label_seconds);
         setOutSideCancelable(cancelable);
@@ -417,6 +416,13 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         wheelTime.setTextColorCenter(textColorCenter);
     }
 
+    /**
+     * 设置默认时间
+     */
+   public void setDate(Calendar date) {
+       this.date = date;
+       setTime();
+   }
 
     /**
      * 设置可以选择的时间范围, 要在setTime之前调用才有效果
