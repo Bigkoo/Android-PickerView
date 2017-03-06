@@ -39,7 +39,7 @@ public class WheelView extends View {
     }
     public enum DividerType {
         // 分隔线类型
-        FILL, WARP
+        FILL, WRAP
     }
 
     private DividerType dividerType;//分隔线类型
@@ -375,7 +375,7 @@ public class WheelView extends View {
         }
 
         //绘制中间两条横线
-        if (dividerType == DividerType.WARP){
+        if (dividerType == DividerType.WRAP){
             float startX;
             float endX;
 

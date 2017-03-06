@@ -66,18 +66,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             pvTime.show(); //弹出时间选择器
         } else if (v.getId() == R.id.btn_Options && pvOptions != null) {
             pvOptions.show(); //弹出条件选择器
-        } else if (v.getId() == R.id.btn_CustomOptions && pvOptions != null) {
+        } else if (v.getId() == R.id.btn_CustomOptions && pvCustomOptions != null) {
             pvCustomOptions.show(); //弹出自定义条件选择器
-        }else if (v.getId() == R.id.btn_CustomTime && pvOptions != null) {
+        }else if (v.getId() == R.id.btn_CustomTime && pvCustomTime != null) {
             pvCustomTime.show(); //弹出自定义时间选择器
         }
     }
 
 
     private void initTimePicker() {
-        //控制时间范围,setRange方法 要在setDate 之前才有效果(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
-         Calendar calendar = Calendar.getInstance();
-        calendar.set(2013,2,29);
+        //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+        Calendar selectedDate = Calendar.getInstance();
+        selectedDate.set(2013,2,29);
         Calendar startDate = Calendar.getInstance();
         startDate.set(2013,1,23);
         Calendar endDate = Calendar.getInstance();
@@ -107,21 +107,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
                /* .gravity(Gravity.RIGHT)// default is center*/
-                .setDividerType(WheelView.DividerType.FILL) // default is FILL
                 .setType(TimePickerView.Type.YEAR_MONTH_DAY_HOUR_MIN)//default is all
                 .setContentSize(20)
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
-                .setDate(calendar)
+                .setDate(selectedDate)
                 .setRangDate(startDate,endDate)
                 .build();
     }
 
     private void initCustomTimePicker() {
-        // 注意，自定义布局中，optionspicker 或者 timepicker 的布局必须要有（即WheelView内容部分），否则会报空指针
+        // 注意，自定义布局中，optionspicker 或者 timepicker 的布局必须要有（即WheelView内容部分）
+        // 否则会报空指针
         // 具体可参考demo 里面的两个自定义布局
-        //控制时间范围,setRange方法 要在setDate 之前才有效果(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2013,2,29);
+
+        //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+        Calendar selectedDate = Calendar.getInstance();
+       /* selectedDate.set(2013,2,29);*/
         Calendar startDate = Calendar.getInstance();
         startDate.set(2013,1,23);
         Calendar endDate = Calendar.getInstance();
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 btn_CustomTime.setText(getTime(date));
             }
         })
-                .setDate(calendar)
+                .setDate(selectedDate)
                 .setRangDate(startDate,endDate)
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
 
@@ -304,7 +305,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .isDialog(false)//是否设置为对话框模式
                 .setOutSideCancelable(false)//点击屏幕中控件外部范围，是否可以取消显示*/
                 .setTitleText("城市选择")
-                .setDividerType(WheelView.DividerType.WARP)
+                .setDividerType(WheelView.DividerType.WRAP)
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(20)//设置滚轮文字大小
                 .setSelectOptions(0, 1, 2)  //设置默认选中项
@@ -376,6 +377,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             if (pvOptions.isShowing()) {
                 pvOptions.dismiss();
+                return true;
+            }
+            if (pvCustomOptions.isShowing()) {
+                pvCustomOptions.dismiss();
+                return true;
+            }
+            if (pvCustomTime.isShowing()) {
+                pvCustomTime.dismiss();
                 return true;
             }
         }

@@ -18,7 +18,7 @@
         android:layout_height="50dp"/>
 
     <Button
-        android:id="@+id/btn_CustomOptions"
+        android:id="@+id/btn_CustomTime"
         android:layout_margin="20dp"
         android:layout_below="@+id/tvTime"
         android:text="@string/picker_custom_time"
@@ -26,7 +26,7 @@
         android:layout_height="50dp"/>
 
     <Button
-        android:id="@+id/btn_CustomTime"
+        android:id="@+id/btn_CustomOptions"
         android:layout_margin="20dp"
         android:layout_below="@+id/tvTime"
         android:text="@string/picker_custom_province"
