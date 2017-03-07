@@ -28,6 +28,10 @@
 
 ### [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
 
+
+## V3.0.8版本更新说明（2017-3-7）
+* 修复timepicker只能在初始化时设置一次默认选中时间的问题
+
 ## V3.0.7版本更新说明（2017-3-4）
 * 优化 起始终止年月日范围设置
 * 新增自定义布局
@@ -47,7 +51,7 @@
 
 ### Gradle
 ```java
-compile 'com.contrarywind:Android-PickerView:3.0.7'
+compile 'com.contrarywind:Android-PickerView:3.0.8'
 //compile 'com.bigkoo:pickerview:lunar.1.0'  Lunar Branch 农历分支
 ```
 OR
@@ -56,7 +60,7 @@ OR
 <dependency> 
 <groupId>com.contrarywind</groupId> 
 <artifactId>Android-PickerView</artifactId>
-<version>3.0.7</version>
+<version>3.0.8</version>
 <type>pom</type>
 </dependency>
 ```
