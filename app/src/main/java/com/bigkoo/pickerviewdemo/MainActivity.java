@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initTimePicker() {
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
         Calendar selectedDate = Calendar.getInstance();
-        /*selectedDate.set(2013,2,29);*/
+        selectedDate.set(2013,2,29);
         Calendar startDate = Calendar.getInstance();
         startDate.set(2013,1,23);
         Calendar endDate = Calendar.getInstance();

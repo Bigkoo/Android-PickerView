@@ -251,7 +251,7 @@ public class WheelView extends View {
         cancelFuture();
         if (action == ACTION.FLING || action == ACTION.DAGGLE) {
             mOffset = (int) ((totalScrollY % itemHeight + itemHeight) % itemHeight);
-            if ((float) mOffset > itemHeight / 2.0F) {
+            if ((float) mOffset > itemHeight / 2.0F) {//如果超过Item高度的一半，滚动到下一个Item去
                 mOffset = (int) (itemHeight - (float) mOffset);
             } else {
                 mOffset = -mOffset;
@@ -606,13 +606,20 @@ public class WheelView extends View {
                 break;
             //完成滑动，手指离开屏幕
             case MotionEvent.ACTION_UP:
-            default:
-                if (!eventConsumed) {
-                    float y = event.getY();
-                    double l = Math.acos((radius - y) / radius) * radius;
-                    int circlePosition = (int) ((l + itemHeight / 2) / itemHeight);
 
+            default:
+                if (!eventConsumed) {//屏幕点击或者拖拽事件
+                    float y = event.getY();
+                    // 由于之前是有向右偏移90度，所以 实际弧度范围为α2 =π/2-α （α=[0,π]）
+                    // 根据cosα = sin(π/2-α)
+                    // (radius - y) / radius = sinα2 = sin(π/2-α) = cosα
+                    // arccos(cosα)= α
+                    // 所以 弧长 L = α*R
+                    double L = Math.acos((radius - y) / radius) * radius;
+                    //item0 有一半是在不可见区域，所以需要加上 itemHeight / 2
+                    int circlePosition = (int) ((L + itemHeight / 2) / itemHeight);
                     float extraOffset = (totalScrollY % itemHeight + itemHeight) % itemHeight;
+                    //已滑动的弧长值
                     mOffset = (int) ((circlePosition - itemsVisible / 2) * itemHeight - extraOffset);
 
                     if ((System.currentTimeMillis() - startTime) > 120) {
