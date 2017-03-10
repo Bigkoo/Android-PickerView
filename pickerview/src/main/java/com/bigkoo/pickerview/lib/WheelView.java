@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -116,7 +117,7 @@ public class WheelView extends View {
     private int drawCenterContentStart = 0;//中间选中文字开始绘制位置
     private int drawOutContentStart = 0;//非中间文字开始绘制位置
     private static final float SCALECONTENT = 0.8F;//非中间文字则用此控制高度，压扁形成3d错觉
-    private static final float CENTERCONTENTOFFSET = 7;//偏移量
+    private float CENTERCONTENTOFFSET ;//偏移量
 
     public WheelView(Context context) {
         this(context, null);
@@ -129,6 +130,11 @@ public class WheelView extends View {
         dividerColor = getResources().getColor(R.color.pickerview_wheelview_textcolor_out);*/
 
         textSize = getResources().getDimensionPixelSize(R.dimen.pickerview_textsize);//默认大小
+
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        float density = dm.density; // 屏幕密度（0.75/1.0/1.5/2.0/3.0）
+        CENTERCONTENTOFFSET = density * 2.1F;
+
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.pickerview, 0, 0);
             mGravity = a.getInt(R.styleable.pickerview_pickerview_gravity, Gravity.CENTER);
@@ -234,14 +240,21 @@ public class WheelView extends View {
         for (int i = 0; i < adapter.getItemsCount(); i++) {
             String s1 = getContentText(adapter.getItem(i));
             paintCenterText.getTextBounds(s1, 0, s1.length(), rect);
+
             int textWidth = rect.width();
+            int textHeight = rect.height();
+
             if (textWidth > maxTextWidth) {
                 maxTextWidth = textWidth;
             }
-            paintCenterText.getTextBounds("\u661F\u671F", 0, 2, rect); // 星期的字符编码（设置item高度为两个汉字高度）
-            int textHeight = rect.height();
-            if (textHeight > maxTextHeight) {
+            paintCenterText.getTextBounds("\u661F\u671F", 0, 2, rect); // 星期的字符编码（以它为标准高度）
+            int standardHeight = rect.height();
+
+            if (textHeight > maxTextHeight) {//所有Item文字的最大高度
                 maxTextHeight = textHeight;
+            }
+            if (maxTextHeight<standardHeight){//没有超过标准高度，设为标准高度
+                maxTextHeight = standardHeight;
             }
         }
         itemHeight = lineSpacingMultiplier * maxTextHeight;
@@ -610,7 +623,7 @@ public class WheelView extends View {
             default:
                 if (!eventConsumed) {//屏幕点击或者拖拽事件
                     float y = event.getY();
-                    // 由于之前是有向右偏移90度，所以 实际弧度范围为α2 =π/2-α （α=[0,π]）
+                    // 由于之前是有向右偏移90度，所以 实际弧度范围为α2 =π/2-α （α=[0,π] α2 = [-π/2,π/2]）
                     // 根据cosα = sin(π/2-α)
                     // (radius - y) / radius = sinα2 = sin(π/2-α) = cosα
                     // arccos(cosα)= α

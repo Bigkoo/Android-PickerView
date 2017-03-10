@@ -3,7 +3,6 @@ package com.bigkoo.pickerviewdemo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,9 +10,8 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
-import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.lib.WheelView;
-
+import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.model.IPickerViewData;
 import com.bigkoo.pickerviewdemo.bean.CardBean;
 import com.bigkoo.pickerviewdemo.bean.PickerViewData;
@@ -359,35 +357,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 })
                 .build();
         pvCustomOptions.setPicker(cardItem);//添加数据
+
     }
 
     public void getData() {
         for (int i = 0; i < 5; i++) {
             cardItem.add(new CardBean(i, "No.ABC12345 " + i));
         }
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (pvTime.isShowing()) {
-                pvTime.dismiss();
-                return true;
-            }
-            if (pvOptions.isShowing()) {
-                pvOptions.dismiss();
-                return true;
-            }
-            if (pvCustomOptions.isShowing()) {
-                pvCustomOptions.dismiss();
-                return true;
-            }
-            if (pvCustomTime.isShowing()) {
-                pvCustomTime.dismiss();
-                return true;
-            }
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
 }

@@ -5,13 +5,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.bigkoo.pickerview.R;
@@ -93,7 +93,7 @@ public class BasePickerView {
             contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
             contentContainer.setLayoutParams(params);
         }
-
+        setKeyBackCancelable(true);
 
     }
 
@@ -210,7 +210,7 @@ public class BasePickerView {
         return this;
     }
 
-    /*public BasePickerView setKeyBackCancelable(boolean isCancelable) {
+    public BasePickerView setKeyBackCancelable(boolean isCancelable) {
         rootView.setFocusable(isCancelable);
         rootView.setFocusableInTouchMode(isCancelable);
         if (isCancelable) {
@@ -232,7 +232,7 @@ public class BasePickerView {
             }
             return false;
         }
-    } ;*/
+    } ;
 
     protected BasePickerView setOutSideCancelable(boolean isCancelable) {
         if (rootView != null) {

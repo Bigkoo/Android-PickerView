@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-/*apply plugin: 'com.jfrog.bintray'*/
 apply plugin: 'com.novoda.bintray-release'//添加插件
 
 
