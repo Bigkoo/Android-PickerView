@@ -41,6 +41,8 @@
             android:background="#aaa" />
     </RelativeLayout>
 
+
+    <!--此部分需要完整复制过去，删减或者更改ID会导致初始化找不到内容而报空-->
     <LinearLayout
         android:id="@+id/timepicker"
         android:layout_width="fill_parent"
