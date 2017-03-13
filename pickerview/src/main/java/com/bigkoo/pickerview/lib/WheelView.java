@@ -133,7 +133,19 @@ public class WheelView extends View {
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         float density = dm.density; // 屏幕密度（0.75/1.0/1.5/2.0/3.0）
-        CENTERCONTENTOFFSET = density * 2.1F;
+
+        if (density<1){//根据密度不同进行适配
+           CENTERCONTENTOFFSET=2.4F;
+        }else if (1<=density&&density<2){
+            CENTERCONTENTOFFSET = 3.6F;
+        }else if (1<=density&&density<2){
+            CENTERCONTENTOFFSET = 4.5F;
+        }else if (2<=density&&density<3){
+            CENTERCONTENTOFFSET = 6.0F;
+        }else if (density>=3){
+            CENTERCONTENTOFFSET= density * 2.5F;
+        }
+
 
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.pickerview, 0, 0);

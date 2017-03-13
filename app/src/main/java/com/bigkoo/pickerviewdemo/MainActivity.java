@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
                /* .gravity(Gravity.RIGHT)// default is center*/
+                .setDividerColor(Color.BLACK)
                 .setContentSize(20)
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                 .setDate(selectedDate)
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         });
                     }
                 })
+                .setDividerColor(Color.BLACK)
                 .build();
     }
 
@@ -303,6 +305,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setOutSideCancelable(false)//点击屏幕中控件外部范围，是否可以取消显示*/
                 .setTitleText("城市选择")
                 .setDividerType(WheelView.DividerType.WRAP)
+                .setDividerColor(Color.BLACK)
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(20)//设置滚轮文字大小
                 .setSelectOptions(0, 1, 2)  //设置默认选中项
@@ -355,6 +358,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
                 })
+                .setLineSpacingMultiplier(1.2f)
+                .setContentTextSize(40)
+                .setDividerColor(Color.BLACK)
                 .build();
         pvCustomOptions.setPicker(cardItem);//添加数据
 
