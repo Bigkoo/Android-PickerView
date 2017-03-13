@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentSize(18)
                 .setTitleSize(20)
                 .setTitleText("Title")
-                .setOutSideCancelable(false)// default is true
+
                 .isCyclic(true)// default is false
                 .setTitleColor(Color.BLACK)
                 .setDate(new Date())// default system*/
@@ -106,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
                /* .gravity(Gravity.RIGHT)// default is center*/
+                .isDialog(false)
+                .setOutSideCancelable(true)// default is true
                 .setDividerColor(Color.BLACK)
                 .setContentSize(20)
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
@@ -309,6 +311,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(20)//设置滚轮文字大小
                 .setSelectOptions(0, 1, 2)  //设置默认选中项
+                .isDialog(true)
+                .setOutSideCancelable(false)// default is true
                 .build();
 
         //pvOptions.setSelectOptions();

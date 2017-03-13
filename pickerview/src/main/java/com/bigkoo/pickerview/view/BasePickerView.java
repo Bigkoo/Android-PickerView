@@ -48,7 +48,7 @@ public class BasePickerView {
     private int gravity = Gravity.BOTTOM;
 
     private Dialog mDialog;
-
+    private boolean cancelable;//是否能取消
 
     public BasePickerView(Context context) {
         this.context = context;
@@ -257,6 +257,15 @@ public class BasePickerView {
     }
 
     /**
+     * 设置对话框模式是否可以点击外部取消
+     * @param cancelable
+     */
+    public void setDialogOutSideCancelable(boolean cancelable) {
+        this.cancelable = cancelable;
+    }
+
+
+    /**
      * Called when the user touch on black overlay in order to dismiss the dialog
      */
     private final View.OnTouchListener onCancelableTouchListener = new View.OnTouchListener() {
@@ -276,7 +285,7 @@ public class BasePickerView {
     public void createDialog() {
         if (dialogView != null) {
             mDialog = new Dialog(context, R.style.custom_dialog2);
-            mDialog.setCancelable(true);//不能点外面取消,也不 能点back取消
+            mDialog.setCancelable(cancelable);//不能点外面取消,也不 能点back取消
             mDialog.setContentView(dialogView);
         }
 

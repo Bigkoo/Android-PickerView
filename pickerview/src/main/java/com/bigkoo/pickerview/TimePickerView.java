@@ -345,6 +345,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
 
     private void initView(Context context) {
+        setDialogOutSideCancelable(cancelable);
         initViews();
         init();
         initEvents();
@@ -415,6 +416,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         wheelTime.setTextColorOut(textColorOut);
         wheelTime.setTextColorCenter(textColorCenter);
     }
+
+
 
     /**
      * 设置默认时间
