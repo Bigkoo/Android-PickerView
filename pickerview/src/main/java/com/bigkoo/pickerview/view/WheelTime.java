@@ -29,18 +29,19 @@ public class WheelTime {
     private int gravity;
 
     private Type type;
-    public static final int DEFULT_START_YEAR = 1900;
-    public static final int DEFULT_END_YEAR = 2100;
-    public static final int DEFULT_START_MONTH = 1;
-    public static final int DEFULT_END_MONTH = 12;
-    public static final int DEFULT_START_DAY = 1;
-    public static final int DEFULT_END_DAY = 31;
-    private int startYear = DEFULT_START_YEAR;
-    private int endYear = DEFULT_END_YEAR;
-    private int startMonth = DEFULT_START_MONTH;
-    private int endMonth = DEFULT_END_MONTH;
-    private int startDay = DEFULT_START_DAY;
-    private int endDay = DEFULT_END_DAY; //表示31天的
+    private static final int DEFAULT_START_YEAR = 1900;
+    private static final int DEFAULT_END_YEAR = 2100;
+    private static final int DEFAULT_START_MONTH = 1;
+    private static final int DEFAULT_END_MONTH = 12;
+    private static final int DEFAULT_START_DAY = 1;
+    private static final int DEFAULT_END_DAY = 31;
+
+    private int startYear = DEFAULT_START_YEAR;
+    private int endYear = DEFAULT_END_YEAR;
+    private int startMonth = DEFAULT_START_MONTH;
+    private int endMonth = DEFAULT_END_MONTH;
+    private int startDay = DEFAULT_START_DAY;
+    private int endDay = DEFAULT_END_DAY; //表示31天的
     private int currentYear;
 
 
