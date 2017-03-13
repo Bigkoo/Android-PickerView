@@ -358,8 +358,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
                 })
-                .setLineSpacingMultiplier(1.2f)
-                .setContentTextSize(40)
+                .setContentTextSize(20)
                 .setDividerColor(Color.BLACK)
                 .build();
         pvCustomOptions.setPicker(cardItem);//添加数据

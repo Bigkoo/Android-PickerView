@@ -211,13 +211,21 @@ public class BasePickerView {
     }
 
     public BasePickerView setKeyBackCancelable(boolean isCancelable) {
-        rootView.setFocusable(isCancelable);
-        rootView.setFocusableInTouchMode(isCancelable);
+
+        ViewGroup View;
+        if (isDialog()){
+            View = dialogView;
+        }else {
+            View = rootView;
+        }
+
+        View.setFocusable(isCancelable);
+        View.setFocusableInTouchMode(isCancelable);
         if (isCancelable) {
-            rootView.setOnKeyListener(onKeyBackListener);
+            View.setOnKeyListener(onKeyBackListener);
         }
         else{
-            rootView.setOnKeyListener(null);
+            View.setOnKeyListener(null);
         }
         return this;
     }
