@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initCustomTimePicker() {
-        // 注意，自定义布局中，optionspicker 或者 timepicker 的布局必须要有（即WheelView内容部分）
+        // 注意：自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针
         // 否则会报空指针
         // 具体可参考demo 里面的两个自定义布局
 
@@ -319,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initCustomOptionPicker() {//条件选择器初始化，自定义布局
 
-        // 注意，自定义布局中，optionspicker 或者 timepicker 的布局必须要有（即WheelView内容部分），否则会报空指针
+        // 注意：自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针
         // 具体可参考demo 里面的两个自定义布局
         pvCustomOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
@@ -371,5 +371,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             cardItem.add(new CardBean(i, "No.ABC12345 " + i));
         }
     }
+
 
 }
