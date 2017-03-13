@@ -54,7 +54,7 @@
 
 ### Gradle
 ```java
-compile 'com.contrarywind:Android-PickerView:3.0.8'
+compile 'com.contrarywind:Android-PickerView:3.0.9'
 //compile 'com.bigkoo:pickerview:lunar.1.0'  Lunar Branch 农历分支
 ```
 OR
@@ -63,7 +63,7 @@ OR
 <dependency> 
 <groupId>com.contrarywind</groupId> 
 <artifactId>Android-PickerView</artifactId>
-<version>3.0.8</version>
+<version>3.0.9</version>
 <type>pom</type>
 </dependency>
 ```
