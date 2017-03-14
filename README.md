@@ -28,6 +28,10 @@
 
 ### [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
 
+
+## V3.1.0版本更新说明（2017-3-14）
+* 修复：在自定义布局模式中，设置setOutSideCancelable无效问题
+* 修复：在自定义布局模式中，设置Dialog出现异常情况
 ## V3.0.9版本更新说明（2017-3-13）
 * 优化：多分辨率适配，修复低分辨率手机下显示偏差问题
 * 优化：将系统返回键点击事件封装到BasePickerView，免去在Activity中重写onKeyDown方法。
@@ -54,7 +58,7 @@
 
 ### Gradle
 ```java
-compile 'com.contrarywind:Android-PickerView:3.0.9'
+compile 'com.contrarywind:Android-PickerView:3.1.0'
 //compile 'com.bigkoo:pickerview:lunar.1.0'  Lunar Branch 农历分支
 ```
 OR
@@ -63,7 +67,7 @@ OR
 <dependency> 
 <groupId>com.contrarywind</groupId> 
 <artifactId>Android-PickerView</artifactId>
-<version>3.0.9</version>
+<version>3.1.0</version>
 <type>pom</type>
 </dependency>
 ```
