@@ -1,8 +1,10 @@
-#### [English Document](https://github.com/Bigkoo/Android-PickerView/blob/master/README-en.md)
+
+# Android-PickerView
+
+### [English Document](https://github.com/Bigkoo/Android-PickerView/blob/master/README-en.md)
 
 
-（原作者[saiwu-bigkoo](https://github.com/saiwu-bigkoo)吴哥已经转行了，他已把项目转交给我维护，所以我会继续更新优化，不能白白荒废了，欢迎Pull Request,提issue。有兴趣的小伙伴可以加入QQ群：387051294 讨论交流）
-
+原作者[saiwu-bigkoo](https://github.com/saiwu-bigkoo)吴哥已经转行了，他已把项目转交给我维护，所以我会继续更新优化，不能白白荒废了，欢迎Pull Request,提issue。有兴趣的小伙伴可以加入QQ群：387051294 讨论交流
 
 ## 介绍
 
