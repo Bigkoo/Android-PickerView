@@ -196,7 +196,7 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
     }
 ```
 
-## If there is still doubt about you, pelase refer to the Demo code， or [New Issue](https://github.com/Bigkoo/Android-PickerView/issues) to me
+## If there is still doubt about you, pelase refer to the Demo code， or [New Issue](https://github.com/Bigkoo/Android-PickerView/issues)
 
 ###  [Here is demo code](https://github.com/Bigkoo/Android-PickerView/blob/master/app/src/main/java/com/bigkoo/pickerviewdemo/MainActivity.java)
 
