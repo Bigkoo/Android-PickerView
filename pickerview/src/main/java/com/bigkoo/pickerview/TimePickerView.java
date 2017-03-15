@@ -408,6 +408,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         setTime();
         wheelTime.setLabels(label_year, label_month, label_day, label_hours, label_mins, label_seconds);
+
         setOutSideCancelable(cancelable);
         wheelTime.setCyclic(cyclic);
         wheelTime.setDividerColor(dividerColor);
@@ -480,12 +481,10 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             seconds = date.get(Calendar.SECOND);
         }
 
-        /*System.out.println("month:" + month);
-        System.out.println("day:" + day);
-        System.out.println("year:" + year);*/
-
         wheelTime.setPicker(year, month, day, hours, minute, seconds);
     }
+
+
 
 
     @Override

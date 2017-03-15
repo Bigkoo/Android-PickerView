@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initTimePicker() {
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
         Calendar selectedDate = Calendar.getInstance();
-        selectedDate.set(2013,2,29);
+       /* selectedDate.set(2013,2,29);*/
         Calendar startDate = Calendar.getInstance();
         startDate.set(2013,1,23);
         Calendar endDate = Calendar.getInstance();
@@ -94,10 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentSize(18)
                 .setTitleSize(20)
                 .setTitleText("Title")
-
                 .isCyclic(true)// default is false
                 .setTitleColor(Color.BLACK)
-                .setDate(new Date())// default system*/
                /*.setDividerColor(Color.WHITE)//设置分割线的颜色
                 .setTextColorCenter(Color.LTGRAY)//设置选中项的颜色
                 .setLineSpacingMultiplier(1.6f)//设置两横线之间的间隔倍数
@@ -106,11 +104,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
                /* .gravity(Gravity.RIGHT)// default is center*/
+                .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                 .isDialog(false)
                 .setOutSideCancelable(true)// default is true
                 .setDividerColor(Color.BLACK)
                 .setContentSize(20)
-                .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                 .setDate(selectedDate)
                 .setRangDate(startDate,endDate)
                 .build();
@@ -118,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initCustomTimePicker() {
         // 注意：自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针
-        // 否则会报空指针
         // 具体可参考demo 里面的两个自定义布局
 
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
@@ -362,8 +359,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
                 })
-                .setContentTextSize(20)
-                .setDividerColor(Color.BLACK)
                 .build();
         pvCustomOptions.setPicker(cardItem);//添加数据
 

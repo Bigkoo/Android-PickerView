@@ -13,7 +13,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 
@@ -89,7 +88,7 @@ public class WheelTime {
         // 年
         wv_year = (WheelView) view.findViewById(R.id.year);
         wv_year.setAdapter(new NumericWheelAdapter(startYear, endYear));// 设置"年"的显示数据
-        wv_year.setLabel(context.getString(R.string.pickerview_year));// 添加文字
+        /*wv_year.setLabel(context.getString(R.string.pickerview_year));// 添加文字*/
         wv_year.setCurrentItem(year - startYear);// 初始化时显示的数据
         wv_year.setGravity(gravity);
         // 月
@@ -108,7 +107,7 @@ public class WheelTime {
             wv_month.setAdapter(new NumericWheelAdapter(1, 12));
             wv_month.setCurrentItem(month);
         }
-        wv_month.setLabel(context.getString(R.string.pickerview_month));
+     /*   wv_month.setLabel(context.getString(R.string.pickerview_month));*/
 
         wv_month.setGravity(gravity);
         // 日
@@ -208,25 +207,25 @@ public class WheelTime {
             wv_day.setCurrentItem(day - 1);
         }
 
-        wv_day.setLabel(context.getString(R.string.pickerview_day));
+       /* wv_day.setLabel(context.getString(R.string.pickerview_day));*/
 
         wv_day.setGravity(gravity);
         //时
         wv_hours = (WheelView) view.findViewById(R.id.hour);
         wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
-        wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字
+      /*  wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字*/
         wv_hours.setCurrentItem(h);
         wv_hours.setGravity(gravity);
         //分
         wv_mins = (WheelView) view.findViewById(R.id.min);
         wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
-        wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
+       /* wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字*/
         wv_mins.setCurrentItem(m);
         wv_mins.setGravity(gravity);
         //秒
         wv_seconds = (WheelView) view.findViewById(R.id.second);
         wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
-        wv_seconds.setLabel(context.getString(R.string.pickerview_seconds));// 添加文字
+       /* wv_seconds.setLabel(context.getString(R.string.pickerview_seconds));// 添加文字*/
         wv_seconds.setCurrentItem(s);
         wv_seconds.setGravity(gravity);
 
@@ -492,18 +491,37 @@ public class WheelTime {
     }
 
     public void setLabels(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
-        if (label_year != null)
+        if (label_year!=null){
             wv_year.setLabel(label_year);
-        if (label_month != null)
+        } else {
+            wv_year.setLabel(view.getContext().getString(R.string.pickerview_year));
+        }
+        if (label_month!=null){
             wv_month.setLabel(label_month);
-        if (label_day != null)
+        } else {
+            wv_month.setLabel(view.getContext().getString(R.string.pickerview_month));
+        }
+        if (label_day!=null){
             wv_day.setLabel(label_day);
-        if (label_hours != null)
+        }else {
+            wv_day.setLabel(view.getContext().getString(R.string.pickerview_day));
+        }
+        if (label_hours!=null){
             wv_hours.setLabel(label_hours);
-        if (label_mins != null)
+        } else {
+            wv_hours.setLabel(view.getContext().getString(R.string.pickerview_hours));
+        }
+        if (label_mins!=null){
             wv_mins.setLabel(label_mins);
-        if (label_seconds != null)
+        }else {
+            wv_mins.setLabel(view.getContext().getString(R.string.pickerview_minutes));
+        }
+        if (label_seconds!=null){
             wv_seconds.setLabel(label_seconds);
+        }else {
+            wv_seconds.setLabel(view.getContext().getString(R.string.pickerview_seconds));
+        }
+
     }
 
 
