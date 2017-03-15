@@ -4,7 +4,7 @@
 ### [English Document](https://github.com/Bigkoo/Android-PickerView/blob/master/README-en.md)
 
 
-原作者[saiwu-bigkoo](https://github.com/saiwu-bigkoo)吴哥已经转行了，他已把项目转交给我维护，所以我会继续更新优化，不能白白荒废了，欢迎Pull Request,提issue。有兴趣的小伙伴可以加入QQ群：387051294 讨论交流
+原作者[saiwu-bigkoo](https://github.com/saiwu-bigkoo)吴哥已经转行了，他已把项目转交给我维护，所以我会继续更新优化，不能白白荒废了，欢迎Pull Request,提issue。欢迎加入QQ群： 387051294 讨论交流技术问题。
 
 ## 介绍
 
@@ -20,11 +20,11 @@
 
 ——TimePickerView  时间选择器，支持年月日时分，年月日，年月，时分等格式   
 ——OptionsPickerView  选项选择器，支持一，二，三级选项选择，并且可以设置是否联动 
-
+ 
 ![TimePicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177272_3347.gif)
 ![OptionsPicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177483_4301.gif)
 
-## 有兴趣研究3D滚轮效果的实现机制，希望把源码研究透彻的可以看看这篇[Android-PickerView系列之源码解析篇（二）](http://blog.csdn.net/qq_22393017/article/details/59488906)
+### 有兴趣研究3D滚轮效果的实现机制，希望把源码研究透彻的可以看看这篇[Android-PickerView系列之源码解析篇（二）](http://blog.csdn.net/qq_22393017/article/details/59488906)
 
 
 ### [中文说明文档（3.x版）](https://github.com/Bigkoo/Android-PickerView/wiki/%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%883.x%E7%89%88%EF%BC%89)
