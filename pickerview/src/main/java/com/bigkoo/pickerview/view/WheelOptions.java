@@ -1,5 +1,6 @@
 package com.bigkoo.pickerview.view;
 
+import android.graphics.Typeface;
 import android.view.View;
 
 import com.bigkoo.pickerview.R;
@@ -204,6 +205,12 @@ public class WheelOptions<T> {
         wv_option3.setCyclic(cyclic);
     }
 
+    public void setTypeface (Typeface font) {
+        wv_option1.setTypeface(font);
+        wv_option2.setTypeface(font);
+        wv_option3.setTypeface(font);
+    }
+
     /**
      * 分别设置第一二三级是否循环滚动
      *
@@ -213,6 +220,12 @@ public class WheelOptions<T> {
         wv_option1.setCyclic(cyclic1);
         wv_option2.setCyclic(cyclic2);
         wv_option3.setCyclic(cyclic3);
+    }
+
+    public void setTypeface (Typeface font1, Typeface font2, Typeface font3) {
+        wv_option1.setTypeface(font1);
+        wv_option2.setTypeface(font2);
+        wv_option3.setTypeface(font3);
     }
 
     /**
