@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_Time && pvTime != null) {
-            pvTime.setDate(Calendar.getInstance());
+           // pvTime.setDate(Calendar.getInstance());
             pvTime.show(); //弹出时间选择器
         } else if (v.getId() == R.id.btn_Options && pvOptions != null) {
             pvOptions.show(); //弹出条件选择器
@@ -81,12 +81,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initTimePicker() {
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+        //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
         Calendar selectedDate = Calendar.getInstance();
-       /* selectedDate.set(2013,2,29);*/
+
         Calendar startDate = Calendar.getInstance();
-        startDate.set(2013,1,23);
+        startDate.set(2013,0,23);
+
         Calendar endDate = Calendar.getInstance();
-        endDate.set(2019,2,28);
+        endDate.set(2019,11,28);
         //时间选择器
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
@@ -123,13 +125,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initCustomTimePicker() {
         // 注意：自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针
         // 具体可参考demo 里面的两个自定义布局
-
+        //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
         Calendar selectedDate = Calendar.getInstance();//系统当前时间
         Calendar startDate = Calendar.getInstance();
-        startDate.set(2013,1,23);
+        startDate.set(2014,1,23);
         Calendar endDate = Calendar.getInstance();
-        endDate.set(2019,2,28);
+        endDate.set(2027,2,28);
         //时间选择器 ，自定义布局
         pvCustomTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override

@@ -238,6 +238,11 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
+        /**
+         * 因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
+         * @param date
+         * @return
+         */
         public Builder setDate(Calendar date) {
             this.date = date;
             return this;
@@ -257,7 +262,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         /**
          * 设置起始时间
-         *
+         * 因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
          * @return
          */
 
@@ -395,7 +400,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         if (startYear != 0 && endYear != 0 && startYear <= endYear) {
             setRange();
         }
-
+        System.out.println("date:"+date.get(Calendar.YEAR));
         if (startDate != null && endDate != null) {
             if (startDate.getTimeInMillis() <= endDate.getTimeInMillis()) {
                 setRangDate();
@@ -480,6 +485,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             minute = date.get(Calendar.MINUTE);
             seconds = date.get(Calendar.SECOND);
         }
+
 
         wheelTime.setPicker(year, month, day, hours, minute, seconds);
     }
