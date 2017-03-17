@@ -1,6 +1,7 @@
 package com.bigkoo.pickerview;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +65,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private boolean cyclic1;//是否循环
     private boolean cyclic2;
     private boolean cyclic3;
+
+    private Typeface font1;
+    private Typeface font2;
+    private Typeface font3;
 
     private int option1;//默认选中项
     private int option2;
@@ -154,6 +159,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private boolean cyclic1 = false;//是否循环，默认否
         private boolean cyclic2 = false;
         private boolean cyclic3 = false;
+
+        private Typeface font1;
+        private Typeface font2;
+        private Typeface font3;
 
         private int option1;//默认选中项
         private int option2;
@@ -303,6 +312,13 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             return this;
         }
 
+        public Builder setTypeface(Typeface font1, Typeface font2, Typeface font3) {
+            this.font1 = font1;
+            this.font2 = font2;
+            this.font3 = font3;
+            return this;
+        }
+
         public Builder setCyclic(boolean cyclic1, boolean cyclic2, boolean cyclic3) {
             this.cyclic1 = cyclic1;
             this.cyclic2 = cyclic2;
@@ -382,6 +398,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions.setTextContentSize(Size_Content);
         wheelOptions.setLabels(label1, label2, label3);
         wheelOptions.setCyclic(cyclic1, cyclic2, cyclic3);
+        wheelOptions.setTypeface(font1, font2, font3);
 
         setOutSideCancelable(cancelable);
 

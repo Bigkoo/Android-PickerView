@@ -69,6 +69,8 @@ public class WheelView extends View {
     int maxTextHeight;
     float itemHeight;//每行高度
 
+    Typeface typeface;
+
     int textColorOut = 0xFFa8a8a8;
     int textColorCenter = 0xFF2a2a2a;
     int dividerColor = 0xFFd5d5d5;
@@ -193,14 +195,14 @@ public class WheelView extends View {
         paintOuterText = new Paint();
         paintOuterText.setColor(textColorOut);
         paintOuterText.setAntiAlias(true);
-        paintOuterText.setTypeface(Typeface.MONOSPACE);
+        paintOuterText.setTypeface(typeface);
         paintOuterText.setTextSize(textSize);
 
         paintCenterText = new Paint();
         paintCenterText.setColor(textColorCenter);
         paintCenterText.setAntiAlias(true);
         paintCenterText.setTextScaleX(1.1F);
-        paintCenterText.setTypeface(Typeface.MONOSPACE);
+        paintCenterText.setTypeface(typeface);
         paintCenterText.setTextSize(textSize);
 
 
@@ -306,6 +308,12 @@ public class WheelView extends View {
      */
     public final void setCyclic(boolean cyclic) {
         isLoop = cyclic;
+    }
+
+    public final void setTypeface(Typeface font) {
+        typeface = font;
+        paintOuterText.setTypeface(typeface);
+        paintCenterText.setTypeface(typeface);
     }
 
     public final void setTextSize(float size) {
