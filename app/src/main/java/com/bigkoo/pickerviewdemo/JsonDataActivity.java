@@ -87,7 +87,7 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 if (isLoaded){
                     ShowPickerView();
                 }else {
-                    Toast.makeText(JsonDataActivity.this,"数据暂未解析成功，请先解析数据",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JsonDataActivity.this,"数据暂未解析成功，请等待",Toast.LENGTH_SHORT).show();
                 }
 
                 break;

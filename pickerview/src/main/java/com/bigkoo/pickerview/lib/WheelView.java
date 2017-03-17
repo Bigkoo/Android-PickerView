@@ -262,14 +262,18 @@ public class WheelView extends View {
                 maxTextWidth = textWidth;
             }
             paintCenterText.getTextBounds("\u661F\u671F", 0, 2, rect); // 星期的字符编码（以它为标准高度）
-            int standardHeight = rect.height();
+
+            maxTextHeight = rect.height() + 2;
+
+            //此处判断会导致在多选项中，maxTextHeight不一致时，出现分割线不在同一水平线问题
+            /*int standardHeight = rect.height();
 
             if (textHeight > maxTextHeight) {//所有Item文字的最大高度
                 maxTextHeight = textHeight;
             }
             if (maxTextHeight<standardHeight){//没有超过标准高度，设为标准高度
                 maxTextHeight = standardHeight;
-            }
+            }*/
         }
         itemHeight = lineSpacingMultiplier * maxTextHeight;
     }
