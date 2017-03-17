@@ -655,9 +655,6 @@ public class WheelTime {
 
         }
 
-        System.out.println("endyear:"+this.endYear);
-        System.out.println("endMonth:"+this.endMonth);
-        System.out.println("endDay:"+this.endDay);
 
     }
 
