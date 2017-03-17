@@ -66,9 +66,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private boolean cyclic2;
     private boolean cyclic3;
 
-    private Typeface font1;
-    private Typeface font2;
-    private Typeface font3;
+    private Typeface font;//字体样式
 
     private int option1;//默认选中项
     private int option2;
@@ -103,6 +101,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         this.label1 = builder.label1;
         this.label2 = builder.label2;
         this.label3 = builder.label3;
+
+        this.font = builder.font;
+
 
         this.option1 = builder.option1;
         this.option2 = builder.option2;
@@ -160,9 +161,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private boolean cyclic2 = false;
         private boolean cyclic3 = false;
 
-        private Typeface font1;
-        private Typeface font2;
-        private Typeface font3;
+        private Typeface font;
 
         private int option1;//默认选中项
         private int option2;
@@ -312,10 +311,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             return this;
         }
 
-        public Builder setTypeface(Typeface font1, Typeface font2, Typeface font3) {
-            this.font1 = font1;
-            this.font2 = font2;
-            this.font3 = font3;
+        public Builder setTypeface(Typeface font) {
+            this.font = font;
             return this;
         }
 
@@ -398,7 +395,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions.setTextContentSize(Size_Content);
         wheelOptions.setLabels(label1, label2, label3);
         wheelOptions.setCyclic(cyclic1, cyclic2, cyclic3);
-        wheelOptions.setTypeface(font1, font2, font3);
+        wheelOptions.setTypeface(font);
 
         setOutSideCancelable(cancelable);
 

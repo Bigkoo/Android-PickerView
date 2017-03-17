@@ -69,7 +69,7 @@ public class WheelView extends View {
     int maxTextHeight;
     float itemHeight;//每行高度
 
-    Typeface typeface;
+    Typeface typeface = Typeface.MONOSPACE;//字体样式，默认是等宽字体
 
     int textColorOut = 0xFFa8a8a8;
     int textColorCenter = 0xFF2a2a2a;
@@ -642,12 +642,19 @@ public class WheelView extends View {
 
             default:
                 if (!eventConsumed) {//屏幕点击或者拖拽事件
+
+                    // 弧长 L = α*R
+                    // 反余弦公式：arccos(cosα)= α
+
+                    // 由于之前是有向右偏移90度，所以 实际弧度范围为
+                    // α2 =π/2-α （α=[0,π] α2 = [-π/2,π/2]）
+
+                    // 根据正弦余弦转换公式 cosα = sin(π/2-α)
+                    // 因此 cosα = sin(π/2-α) = sinα2 = (radius - y) / radius
+
+                    // 所以弧长 L = arccos(cosα)*R = arccos((radius - y) / radius)*R
+
                     float y = event.getY();
-                    // 由于之前是有向右偏移90度，所以 实际弧度范围为α2 =π/2-α （α=[0,π] α2 = [-π/2,π/2]）
-                    // 根据cosα = sin(π/2-α)
-                    // (radius - y) / radius = sinα2 = sin(π/2-α) = cosα
-                    // arccos(cosα)= α
-                    // 所以 弧长 L = α*R
                     double L = Math.acos((radius - y) / radius) * radius;
                     //item0 有一半是在不可见区域，所以需要加上 itemHeight / 2
                     int circlePosition = (int) ((L + itemHeight / 2) / itemHeight);

@@ -6,7 +6,7 @@ apply plugin: 'com.novoda.bintray-release'//添加插件
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 9

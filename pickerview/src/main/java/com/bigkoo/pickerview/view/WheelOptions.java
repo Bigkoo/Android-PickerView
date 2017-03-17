@@ -205,6 +205,11 @@ public class WheelOptions<T> {
         wv_option3.setCyclic(cyclic);
     }
 
+    /**
+     * 设置字体样式
+     *
+     * @param font 系统提供的几种样式
+     */
     public void setTypeface (Typeface font) {
         wv_option1.setTypeface(font);
         wv_option2.setTypeface(font);
@@ -222,11 +227,7 @@ public class WheelOptions<T> {
         wv_option3.setCyclic(cyclic3);
     }
 
-    public void setTypeface (Typeface font1, Typeface font2, Typeface font3) {
-        wv_option1.setTypeface(font1);
-        wv_option2.setTypeface(font2);
-        wv_option3.setTypeface(font3);
-    }
+
 
     /**
      * 返回当前选中的结果对应的位置数组 因为支持三级联动效果，分三个级别索引，0，1，2

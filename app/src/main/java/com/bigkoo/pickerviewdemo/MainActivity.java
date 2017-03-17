@@ -1,6 +1,8 @@
 package com.bigkoo.pickerviewdemo;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_Options.setOnClickListener(this);
         btn_CustomOptions.setOnClickListener(this);
         btn_CustomTime.setOnClickListener(this);
+
+        findViewById(R.id.btn_GotoJsonData).setOnClickListener(this);
     }
 
 
@@ -69,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             pvCustomOptions.show(); //弹出自定义条件选择器
         }else if (v.getId() == R.id.btn_CustomTime && pvCustomTime != null) {
             pvCustomTime.show(); //弹出自定义时间选择器
+        }else if (v.getId() == R.id.btn_GotoJsonData){//跳转到 省市区解析示例页面
+            startActivity(new Intent(MainActivity.this,JsonDataActivity.class));
         }
     }
 
@@ -301,13 +307,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setLineSpacingMultiplier(2.0f) //设置两横线之间的间隔倍数（范围：1.2 - 2.0倍 文字高度）
                 .setDividerColor(Color.RED)//设置分割线的颜色
                 .isDialog(false)//是否设置为对话框模式
-                .setOutSideCancelable(false)//点击屏幕中控件外部范围，是否可以取消显示*/
+                .setOutSideCancelable(false)//点击屏幕中控件外部范围，是否可以取消显示
+                .setSelectOptions(0, 1, 2)  //设置默认选中项*/
+                .setTypeface(Typeface.SANS_SERIF)//字体样式
                 .setTitleText("城市选择")
                 .setDividerType(WheelView.DividerType.WRAP)
-                .setDividerColor(Color.BLACK)
-                .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(20)//设置滚轮文字大小
-                .setSelectOptions(0, 1, 2)  //设置默认选中项
                 .isDialog(true)
                 .setOutSideCancelable(false)// default is true
                 .build();
