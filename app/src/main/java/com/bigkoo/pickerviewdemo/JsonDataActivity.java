@@ -1,6 +1,7 @@
 package com.bigkoo.pickerviewdemo;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -114,6 +115,8 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 .setTitleText("城市选择")
                 .setDividerColor(Color.BLACK)
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
+                .setContentTextSize(20)
+                .setTypeface(Typeface.DEFAULT_BOLD)
                 .setOutSideCancelable(false)// default is true
                 .build();
 

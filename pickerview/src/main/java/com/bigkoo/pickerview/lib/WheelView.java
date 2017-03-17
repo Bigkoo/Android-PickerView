@@ -256,7 +256,8 @@ public class WheelView extends View {
             paintCenterText.getTextBounds(s1, 0, s1.length(), rect);
 
             int textWidth = rect.width();
-            int textHeight = rect.height();
+
+          /* int textHeight = rect.height();*/
 
             if (textWidth > maxTextWidth) {
                 maxTextWidth = textWidth;
