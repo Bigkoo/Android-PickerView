@@ -3,6 +3,7 @@ package com.bigkoo.pickerview.view;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -287,6 +288,14 @@ public class BasePickerView {
             mDialog = new Dialog(context, R.style.custom_dialog2);
             mDialog.setCancelable(cancelable);//不能点外面取消,也不 能点back取消
             mDialog.setContentView(dialogView);
+            mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    if (onDismissListener != null) {
+                        onDismissListener.onDismiss(BasePickerView.this);
+                    }
+                }
+            });
         }
 
     }
