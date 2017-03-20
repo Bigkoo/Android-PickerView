@@ -31,6 +31,12 @@
 
 ### [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
 
+
+## V3.1.2版本更新说明（2017-3-20）
+* 修复：多级选项时，不同选项最大文字高度不同导致分割线不在同一水平问题
+* 新增：选项选择器的字体样式设置（setTypeface方法）
+
+
 ## V3.1.1版本更新说明（2017-3-15）
 * 修复：timePicker的label单位设置为空，但隐藏无效问题
 
