@@ -99,8 +99,8 @@ public class WheelView extends View {
     // 显示几个条目
     int itemsVisible = 11;
 
-    int measuredHeight;
-    int measuredWidth;
+    int measuredHeight;// WheelView 控件高度
+    int measuredWidth;// WheelView 控件宽度
 
     // 半圆周长
     int halfCircumference;
@@ -444,11 +444,12 @@ public class WheelView extends View {
         while (counter < itemsVisible) {
             canvas.save();
             // 弧长 L = itemHeight * counter - itemHeightOffset
-            // 求弧度 α = L / r  (弧长/半径)
+            // 求弧度 α = L / r  (弧长/半径) [0,π]
             double radian = ((itemHeight * counter - itemHeightOffset)) / radius;
             // 弧度转换成角度(把半圆以Y轴为轴心向右转90度，使其处于第一象限及第四象限
+            // angle [-90°,90°]
             float angle = (float) (90D - (radian / Math.PI) * 180D);//item第一项,从90度开始，逐渐递减到 -90度
-            // 九十度以上的不绘制
+            // 计算取值可能有细微偏差，保证负90°到90°以外的不绘制
             if (angle >= 90F || angle <= -90F) {
                 canvas.restore();
             } else {

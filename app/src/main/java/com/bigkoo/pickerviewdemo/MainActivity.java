@@ -2,7 +2,6 @@ package com.bigkoo.pickerviewdemo;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -112,10 +111,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
                /* .gravity(Gravity.RIGHT)// default is center*/
+                .setType(TimePickerView.Type.YEAR_MONTH_DAY)
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
-                .isDialog(false)
-                .setOutSideCancelable(true)// default is true
-                .setDividerColor(Color.BLACK)
+                .setDividerColor(Color.DKGRAY)
                 .setContentSize(20)
                 .setDate(selectedDate)
                 .setRangDate(startDate,endDate)
@@ -138,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 btn_CustomTime.setText(getTime(date));
             }
-        })      .setType(TimePickerView.Type.YEAR_MONTH_DAY)
+        })
                 .setDate(selectedDate)
                 .setRangDate(startDate,endDate)
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
@@ -163,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 })
                 .setDividerColor(Color.BLACK)
                 .build();
+
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
@@ -310,19 +309,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setDividerColor(Color.RED)//设置分割线的颜色
                 .isDialog(false)//是否设置为对话框模式
                 .setOutSideCancelable(false)//点击屏幕中控件外部范围，是否可以取消显示
-                .setSelectOptions(0, 1, 2)  //设置默认选中项*/
-                .setTypeface(Typeface.SANS_SERIF)//字体样式
+                .setSelectOptions(0, 1, 2)  //设置默认选中项
+                .setTypeface(Typeface.SANS_SERIF)//字体样式*/
                 .setTitleText("城市选择")
                 .setDividerType(WheelView.DividerType.WRAP)
                 .setContentTextSize(20)//设置滚轮文字大小
                 .isDialog(true)
-                .setOutSideCancelable(false)// default is true
+                .setDividerColor(Color.RED)//设置分割线的颜色
                 .build();
 
         //pvOptions.setSelectOptions();
         /*pvOptions.setPicker(options1Items);//一级选择器
         pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
         pvOptions.setPicker(options1Items, options2Items,options3Items);//三级选择器
+
     }
 
     private void initCustomOptionPicker() {//条件选择器初始化，自定义布局
@@ -366,6 +366,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
                 })
+                .isDialog(true)
                 .build();
         pvCustomOptions.setPicker(cardItem);//添加数据
 

@@ -94,6 +94,7 @@ public class BasePickerView {
             contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
             contentContainer.setLayoutParams(params);
         }
+
         setKeyBackCancelable(true);
 
     }

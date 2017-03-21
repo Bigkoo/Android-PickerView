@@ -1,7 +1,6 @@
 package com.bigkoo.pickerviewdemo;
 
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -116,7 +115,7 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 .setDividerColor(Color.BLACK)
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(20)
-                .setTypeface(Typeface.DEFAULT_BOLD)//加粗字体
+                /*.setTypeface(Typeface.DEFAULT_BOLD)//加粗字体*/
                 .setOutSideCancelable(false)// default is true
                 .build();
 
@@ -157,10 +156,10 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 if (jsonBean.get(i).getCityList().get(c).getArea().size() == 0) {
                     City_AreaList.add("");
                 }
-                for (int d = 0; d < jsonBean.get(i).getCityList().get(c).getArea().size(); d++) {//该城市对应地区所有数据
-                    String Area = jsonBean.get(i).getCityList().get(c).getArea().get(d);
+                for (int d=0; d < jsonBean.get(i).getCityList().get(c).getArea().size(); d++) {//该城市对应地区所有数据
+                    String AreaName = jsonBean.get(i).getCityList().get(c).getArea().get(d);
 
-                    City_AreaList.add(Area);//添加该城市所有地区数据
+                    City_AreaList.add(AreaName);//添加该城市所有地区数据
                 }
                 Province_AreaList.add(City_AreaList);//添加该省所有地区数据
             }
