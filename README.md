@@ -20,9 +20,13 @@
 
 ——TimePickerView  时间选择器，支持年月日时分，年月日，年月，时分等格式   
 ——OptionsPickerView  选项选择器，支持一，二，三级选项选择，并且可以设置是否联动 
- 
-![TimePicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177272_3347.gif)
-![OptionsPicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177483_4301.gif)
+
+![TimePicker.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/timepicker.gif)
+![TimePickerNight.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/timepicker_night.gif)
+
+![Province.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/JsonData.gif)
+![CustomLayout.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/CustomLayout.gif)
+
 
 ### 有兴趣研究3D滚轮效果的实现机制，希望把源码研究透彻的可以看看这篇[Android-PickerView系列之源码解析篇（二）](http://blog.csdn.net/qq_22393017/article/details/59488906)
 
@@ -32,26 +36,26 @@
 ### [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
 
 
-## V3.1.2版本更新说明（2017-3-20）
+### V3.1.2版本更新说明（2017-3-20）
 * 修复：多级选项时，不同选项最大文字高度不同导致分割线不在同一水平问题
 * 新增：选项选择器的字体样式设置（setTypeface方法）
 
-
-## V3.1.1版本更新说明（2017-3-15）
+### V3.1.1版本更新说明（2017-3-15）
 * 修复：timePicker的label单位设置为空，但隐藏无效问题
 
-## V3.1.0版本更新说明（2017-3-14）
+### V3.1.0版本更新说明（2017-3-14）
 * 修复：在自定义布局模式中，设置setOutSideCancelable无效问题
 * 修复：在自定义布局模式中，设置Dialog出现异常情况
 
-## V3.0.9版本更新说明（2017-3-13）
+### V3.0.9版本更新说明（2017-3-13）
 * 优化：多分辨率适配，修复低分辨率手机下显示偏差问题
 * 优化：将系统返回键点击事件封装到BasePickerView，免去在Activity中重写onKeyDown方法。
 
-### 历史版本更新说明请查看Wiki
+### 更多历史版本详情，请查阅：[Wiki](https://github.com/Bigkoo/Android-PickerView/wiki) 
+
+### 方法名与参数请查阅：[方法名与参数说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%96%B9%E6%B3%95%E5%90%8D%E4%B8%8E%E5%8F%82%E6%95%B0)
 
 
-### 方法名与参数请看这里：[方法名与参数说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%96%B9%E6%B3%95%E5%90%8D%E4%B8%8E%E5%8F%82%E6%95%B0)
 ## **使用步骤：**
 
 ### 1.添加Jcenter仓库 Gradle依赖：
