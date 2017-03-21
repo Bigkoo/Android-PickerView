@@ -40,7 +40,6 @@
 * 修复：多级选项时，不同选项最大文字高度不同导致分割线不在同一水平问题
 * 新增：选项选择器的字体样式设置（setTypeface方法）
 
-
 ### V3.1.1版本更新说明（2017-3-15）
 * 修复：timePicker的label单位设置为空，但隐藏无效问题
 
@@ -52,10 +51,11 @@
 * 优化：多分辨率适配，修复低分辨率手机下显示偏差问题
 * 优化：将系统返回键点击事件封装到BasePickerView，免去在Activity中重写onKeyDown方法。
 
-### 历史版本更新说明请查看Wiki
+### 更多历史版本详情，请查阅：[Wiki](https://github.com/Bigkoo/Android-PickerView/wiki) 
+
+### 方法名与参数请查阅：[方法名与参数说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%96%B9%E6%B3%95%E5%90%8D%E4%B8%8E%E5%8F%82%E6%95%B0)
 
 
-### 方法名与参数请看这里：[方法名与参数说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%96%B9%E6%B3%95%E5%90%8D%E4%B8%8E%E5%8F%82%E6%95%B0)
 ## **使用步骤：**
 
 ### 1.添加Jcenter仓库 Gradle依赖：
