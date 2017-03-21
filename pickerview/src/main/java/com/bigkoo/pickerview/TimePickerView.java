@@ -400,7 +400,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         if (startYear != 0 && endYear != 0 && startYear <= endYear) {
             setRange();
         }
-        System.out.println("date:"+date.get(Calendar.YEAR));
+
         if (startDate != null && endDate != null) {
             if (startDate.getTimeInMillis() <= endDate.getTimeInMillis()) {
                 setRangDate();
