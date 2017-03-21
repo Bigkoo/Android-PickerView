@@ -20,9 +20,12 @@
 
 ——TimePickerView  时间选择器，支持年月日时分，年月日，年月，时分等格式   
 ——OptionsPickerView  选项选择器，支持一，二，三级选项选择，并且可以设置是否联动 
- 
-![TimePicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177272_3347.gif)
-![OptionsPicker.gif](http://img.my.csdn.net/uploads/201702/27/1488177483_4301.gif)
+
+![TimePicker.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/timepicker.gif)
+![TimePickerNight.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/timepicker_night.gif)
+![Province.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/JsonData.gif)
+![CustomLayout.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/CustomLayout.gif)
+
 
 ### 有兴趣研究3D滚轮效果的实现机制，希望把源码研究透彻的可以看看这篇[Android-PickerView系列之源码解析篇（二）](http://blog.csdn.net/qq_22393017/article/details/59488906)
 
