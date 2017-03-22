@@ -51,6 +51,8 @@ public class BasePickerView {
     private Dialog mDialog;
     private boolean cancelable;//是否能取消
 
+    protected View clickView;//是通过哪个View弹出的
+
     public BasePickerView(Context context) {
         this.context = context;
 
@@ -121,7 +123,6 @@ public class BasePickerView {
      * 添加这个View到Activity的根视图
      */
     public void show() {
-
         if (isDialog()) {
             showDialog();
         } else {
@@ -132,7 +133,15 @@ public class BasePickerView {
             onAttached(rootView);
             rootView.requestFocus();
         }
-
+    }
+    /**
+     * 添加这个View到Activity的根视图
+     *
+     * @param v (是通过哪个View弹出的)
+     */
+    public void show(View v) {
+        this.clickView = v;
+        show();
     }
 
     /**

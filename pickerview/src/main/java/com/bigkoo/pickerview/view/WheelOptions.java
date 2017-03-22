@@ -18,8 +18,9 @@ public class WheelOptions<T> {
 
     private List<T> mOptions1Items;
     private List<List<T>> mOptions2Items;
+    private List<T> N_mOptions2Items;
     private List<List<List<T>>> mOptions3Items;
-
+    private List<T> N_mOptions3Items;
     private boolean linkage;
     private OnItemSelectedListener wheelListener_option1;
     private OnItemSelectedListener wheelListener_option2;
@@ -51,14 +52,13 @@ public class WheelOptions<T> {
         wv_option3 = (WheelView) view.findViewById(R.id.options3);
     }
 
-    public void setPicker(List<T> optionsItems) {
+   /* public void setPicker(List<T> optionsItems) {
         setPicker(optionsItems, null);
     }
 
-    public void setPicker(List<T> options1Items,
-                          List<List<T>> options2Items) {
+    public void setPicker(List<T> options1Items, List<List<T>> options2Items) {
         setPicker(options1Items, options2Items);
-    }
+    }*/
 
     public void setPicker(List<T> options1Items,
                           List<List<T>> options2Items,
@@ -138,6 +138,42 @@ public class WheelOptions<T> {
         if (options3Items != null && linkage)
             wv_option2.setOnItemSelectedListener(wheelListener_option2);
     }
+
+
+    //不联动情况下
+    public void setNPicker(List<T> options1Items,
+                         List<T> options2Items,
+                         List<T> options3Items) {
+        this.mOptions1Items = options1Items;
+        this.N_mOptions2Items = options2Items;
+        this.N_mOptions3Items = options3Items;
+        int len = ArrayWheelAdapter.DEFAULT_LENGTH;
+        if (this.N_mOptions3Items == null)
+            len = 8;
+        if (this.N_mOptions2Items == null)
+            len = 12;
+        // 选项1
+        wv_option1.setAdapter(new ArrayWheelAdapter(mOptions1Items, len));// 设置显示数据
+        wv_option1.setCurrentItem(0);// 初始化时显示的数据
+        // 选项2
+        if (N_mOptions2Items != null)
+            wv_option2.setAdapter(new ArrayWheelAdapter(N_mOptions2Items));// 设置显示数据
+        wv_option2.setCurrentItem(wv_option1.getCurrentItem());// 初始化时显示的数据
+        // 选项3
+        if (N_mOptions3Items != null)
+            wv_option3.setAdapter(new ArrayWheelAdapter(N_mOptions3Items));// 设置显示数据
+        wv_option3.setCurrentItem(wv_option3.getCurrentItem());
+        wv_option1.setIsOptions(true);
+        wv_option2.setIsOptions(true);
+        wv_option3.setIsOptions(true);
+
+        if (this.N_mOptions2Items == null)
+            wv_option2.setVisibility(View.GONE);
+        if (this.N_mOptions3Items == null)
+            wv_option3.setVisibility(View.GONE);
+    }
+
+
 
     public void setTextContentSize(int textSize) {
         wv_option1.setTextSize(textSize);

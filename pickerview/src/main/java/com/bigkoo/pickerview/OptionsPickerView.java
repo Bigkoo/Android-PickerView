@@ -9,8 +9,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.bigkoo.pickerview.listener.CustomListener;
+
 import com.bigkoo.pickerview.lib.WheelView;
+import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.WheelOptions;
 
@@ -249,6 +250,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             return this;
         }
 
+        /**
+         * 此方法已废弃
+         * 不联动的情况下，请调用 setNPicker 方法。
+         * */
+        @Deprecated
         public Builder setLinkage(boolean linkage) {
             this.linkage = linkage;
             return this;
@@ -461,6 +467,15 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     }
 
 
+    //不联动情况下调用
+    public void setNPicker(List<T> options1Items,
+                           List<T> options2Items,
+                           List<T> options3Items) {
+
+        wheelOptions.setNPicker(options1Items, options2Items, options3Items);
+        SetCurrentItems();
+    }
+
     @Override
     public void onClick(View v) {
         String tag = (String) v.getTag();
@@ -468,16 +483,16 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             dismiss();
             return;
         } else {
-            returnData(v);
+            returnData();
             return;
         }
     }
 
     //抽离接口回调的方法
-    public void returnData(View v) {
+    public void returnData() {
         if (optionsSelectListener != null) {
             int[] optionsCurrentItems = wheelOptions.getCurrentItems();
-            optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2], v);
+            optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2], clickView);
         }
         dismiss();
     }

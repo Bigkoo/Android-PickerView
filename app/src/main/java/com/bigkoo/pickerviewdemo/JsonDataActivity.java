@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
-import com.bigkoo.pickerviewdemo.ProvinceData.JsonBean;
+import com.bigkoo.pickerviewdemo.bean.JsonBean;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -115,13 +115,11 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 .setDividerColor(Color.BLACK)
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(20)
-                /*.setTypeface(Typeface.DEFAULT_BOLD)//加粗字体*/
                 .setOutSideCancelable(false)// default is true
                 .build();
 
         /*pvOptions.setPicker(options1Items);//一级选择器
         pvOptions.setPicker(options1Items, options2Items);//二级选择器*/
-
         pvOptions.setPicker(options1Items, options2Items,options3Items);//三级选择器
         pvOptions.show();
     }
@@ -139,6 +137,9 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
 
         /**
          * 添加省份数据
+         *
+         * 注意：如果是添加的JavaBean实体，则实体类需要实现 IPickerViewData 接口，
+         * PickerView会通过getPickerViewText方法获取字符串显示出来。
          */
         options1Items = jsonBean;
 

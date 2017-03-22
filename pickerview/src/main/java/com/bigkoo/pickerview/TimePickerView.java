@@ -499,15 +499,15 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         if (tag.equals(TAG_CANCEL)) {
             dismiss();
         } else {
-            returnData(v);
+            returnData();
         }
     }
 
-    public void returnData(View v) {
+    public void returnData() {
         if (timeSelectListener != null) {
             try {
                 Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
-                timeSelectListener.onTimeSelect(date, v);
+                timeSelectListener.onTimeSelect(date, clickView);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
