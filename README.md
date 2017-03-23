@@ -38,7 +38,7 @@
 ### V3.2.1版本更新说明（2017-3-23）
 * 新增：show(View v) 方法，用于绑定所点击弹出 picker 的 View 控件。
 * 废弃：optionsPicker 的 setLinkage 方法。
-* 新增：optionsPicke r的 setNPicker() 方法，用于多级不联动情况下，条件选择器的显示。
+* 新增：optionsPicker 的 setNPicker 方法，用于多级不联动情况下，条件选择器的显示。
 * 修复：在某些极端情况下，快速滑动并还未停止时就点击确定按钮，导致数据匹配不当造成应用崩溃的问题。
 
 ### V3.1.3版本更新说明（2017-3-21）
