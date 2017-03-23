@@ -273,6 +273,7 @@ public class WheelOptions<T> {
         }else {
             currentItems[1] = wv_option2.getCurrentItem();
         }
+
         if (mOptions3Items!=null&&mOptions3Items.size()>0){//非空判断
             currentItems[2] = wv_option3.getCurrentItem()>(mOptions3Items.get(currentItems[0]).get(currentItems[1]).size()-1)?0:wv_option3.getCurrentItem();
         }else {
