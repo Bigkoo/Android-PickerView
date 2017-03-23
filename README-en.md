@@ -40,7 +40,7 @@ compile 'com.contrarywind:Android-PickerView:3.2.1'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>3.1.3</version>
+<version>3.2.1</version>
 <type>pom</type>
 </dependency>
 ```
