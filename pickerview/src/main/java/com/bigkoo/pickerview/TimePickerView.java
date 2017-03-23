@@ -392,7 +392,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         // 时间转轮 自定义控件
         LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);
 
-
         timePickerView.setBackgroundColor(Color_Background_Wheel == 0 ? bgColor_default : Color_Background_Wheel);
 
         wheelTime = new WheelTime(timePickerView, type, gravity, Size_Content);

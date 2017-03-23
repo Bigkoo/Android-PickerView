@@ -52,13 +52,6 @@ public class WheelOptions<T> {
         wv_option3 = (WheelView) view.findViewById(R.id.options3);
     }
 
-   /* public void setPicker(List<T> optionsItems) {
-        setPicker(optionsItems, null);
-    }
-
-    public void setPicker(List<T> options1Items, List<List<T>> options2Items) {
-        setPicker(options1Items, options2Items);
-    }*/
 
     public void setPicker(List<T> options1Items,
                           List<List<T>> options2Items,
@@ -266,15 +259,16 @@ public class WheelOptions<T> {
 
 
     /**
-     * 返回当前选中的结果对应的位置数组 因为支持三级联动效果，分三个级别索引，0，1，2
+     * 返回当前选中的结果对应的位置数组 因为支持三级联动效果，分三个级别索引，0，1，2。
+     * 在快速滑动未停止时，点击确定按钮，会进行判断，如果匹配数据越界，则设为0，防止index出错导致崩溃。
      *
      * @return 索引数组
      */
     public int[] getCurrentItems() {
         int[] currentItems = new int[3];
         currentItems[0] = wv_option1.getCurrentItem();
-        currentItems[1] = wv_option2.getCurrentItem();
-        currentItems[2] = wv_option3.getCurrentItem();
+        currentItems[1] = wv_option2.getCurrentItem()>(mOptions2Items.get(currentItems[0]).size()-1)?0:wv_option2.getCurrentItem();
+        currentItems[2] = wv_option3.getCurrentItem()>(mOptions3Items.get(currentItems[0]).get(currentItems[1]).size()-1)?0:wv_option3.getCurrentItem();
         return currentItems;
     }
 
