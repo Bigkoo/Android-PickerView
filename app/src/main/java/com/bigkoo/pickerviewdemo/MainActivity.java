@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }).build();
         pvOptions_NoLink.setNPicker(food,clothes,computer);
-        pvOptions_NoLink.show();
     }
 
     private void initTimePicker() {
