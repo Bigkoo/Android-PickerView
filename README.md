@@ -35,9 +35,15 @@
 
 ### [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
 
+### V3.2.1版本更新说明（2017-3-23）
+* 新增：show(View v) 方法，用于绑定所点击弹出 picker 的 View 控件。
+* 废弃：optionsPicker 的 setLinkage 方法。
+* 新增：optionsPicker 的 setNPicker 方法，用于多级不联动情况下，条件选择器的显示。
+* 修复：在某些极端情况下，快速滑动并还未停止时就点击确定按钮，导致数据匹配不当造成应用崩溃的问题。
+
 ### V3.1.3版本更新说明（2017-3-21）
 * 修复：timepicker 未设置setDate() 导致空指针异常问题
-* 修复： dialog 模式 setOnDismissListener 监听无效问题
+* 修复：dialog 模式 setOnDismissListener 监听无效问题
 
 ### V3.1.2版本更新说明（2017-3-20）
 * 修复：多级选项时，不同选项最大文字高度不同导致分割线不在同一水平问题
@@ -57,7 +63,7 @@
 
 ### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:3.1.3'
+compile 'com.contrarywind:Android-PickerView:3.2.1'
 ```
 或者
 
@@ -66,7 +72,7 @@ compile 'com.contrarywind:Android-PickerView:3.1.3'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>3.1.3</version>
+<version>3.2.1</version>
 <type>pom</type>
 </dependency>
 ```

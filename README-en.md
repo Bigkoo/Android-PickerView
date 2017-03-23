@@ -31,7 +31,7 @@ and support for the linkage, dialog . It's very easy to use , and you also can c
 ### Gradle
 
 ```java
-compile 'com.contrarywind:Android-PickerView:3.1.3'
+compile 'com.contrarywind:Android-PickerView:3.2.1'
 ```
 
 ### Maven
@@ -40,7 +40,7 @@ compile 'com.contrarywind:Android-PickerView:3.1.3'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>3.1.3</version>
+<version>3.2.1</version>
 <type>pom</type>
 </dependency>
 ```
@@ -196,7 +196,26 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
     }
 ```
 
-## If there is still doubt about you, pelase refer to the Demo code， or [New Issue](https://github.com/Bigkoo/Android-PickerView/issues)
+## If you do need to set the no linkage data：
+
+```java
+pvOptions_NoLink = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+
+                String str = "food:"+food.get(options1)
+                        +"\nclothes:"+clothes.get(options2)
+                        +"\ncomputer:"+computer.get(options3);
+
+                Toast.makeText(MainActivity.this,str,Toast.LENGTH_SHORT).show();
+            }
+        }).build();
+        pvOptions_NoLink.setNPicker(food,clothes,computer);
+        pvOptions_NoLink.show();
+```
+
+## For more detail, pelase refer to the Demo code, If there is still doubt about you, pelase [New Issue](https://github.com/Bigkoo/Android-PickerView/issues) to me
 
 ###  [Here is demo code](https://github.com/Bigkoo/Android-PickerView/blob/master/app/src/main/java/com/bigkoo/pickerviewdemo/MainActivity.java)
 
