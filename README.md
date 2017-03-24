@@ -1,14 +1,18 @@
 
-# Android-PickerView
+## Android-PickerView
 
 ### [English Document](https://github.com/Bigkoo/Android-PickerView/blob/master/README-en.md)
 
+### 关于项目的更多详请，查看 [Wiki](https://github.com/Bigkoo/Android-PickerView/wiki)
+### 对于使用上有任何疑问或优化建议等，欢迎加入QQ群： 387051294 讨论交流技术问题。
 
-原作者[saiwu-bigkoo](https://github.com/saiwu-bigkoo)吴哥已经转行了，他已把项目转交给我维护，所以我会继续更新优化，不能白白荒废了，欢迎Pull Request,提issue。欢迎加入QQ群： 387051294 讨论交流技术问题。
+#### [saiwu-bigkoo](https://github.com/saiwu-bigkoo) 吴哥已经转行不干编程了，他已把项目转交给我维护。2.x/1.x/农历已分支出去停止维护，若有需要请查看旧版本说明文档： [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
+
+</br>
 
 ## 介绍
 
-一款仿iOS的PickerView控件，有时间选择和选项选择，并支持一二三级联动，支持自定义样式
+这是一款仿iOS的PickerView控件，有时间选择和选项选择，并支持一二三级联动，支持自定义样式，详细特性如下：
  
 * 有时间和选项这两种选择器
 * 选项选择器支持三级联动
@@ -28,12 +32,9 @@
 ![CustomLayout.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/CustomLayout.gif)
 
 
-### 有兴趣研究3D滚轮效果的实现机制，希望把源码研究透彻的可以看看这篇[Android-PickerView系列之源码解析篇（二）](http://blog.csdn.net/qq_22393017/article/details/59488906)
+### 有兴趣研究3D滚轮效果的实现机制，希望把源码研究透彻的可以看看这篇博客：
+### [Android-PickerView系列之源码解析篇（二）](http://blog.csdn.net/qq_22393017/article/details/59488906)
 
-
-### [中文说明文档（3.x版）](https://github.com/Bigkoo/Android-PickerView/wiki/%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%883.x%E7%89%88%EF%BC%89)
-
-### [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
 
 ### V3.2.2版本更新说明（2017-3-24）
 * 新增：isCenterLabel（boolean isCenter）方法，该方法默认为true，只在选中项显示label；填false 则每项item后面都会带有label。
@@ -57,20 +58,21 @@
 
 
 
-### 更多历史版本详情，请查阅：[更新说明（3.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E%EF%BC%883.x%E7%89%88%E6%9C%AC%EF%BC%89) 
+#### 更多历史版本详情，请查阅：[更新说明（3.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E%EF%BC%883.x%E7%89%88%E6%9C%AC%EF%BC%89) 
 
-### 方法名与参数请查阅：[方法名与参数说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%96%B9%E6%B3%95%E5%90%8D%E4%B8%8E%E5%8F%82%E6%95%B0)
+#### 方法名与参数请查阅：[方法名与参数说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%96%B9%E6%B3%95%E5%90%8D%E4%B8%8E%E5%8F%82%E6%95%B0)
 
+</br>
 
-## **使用步骤：**
+### **使用步骤：**
 
-### 1.添加Jcenter仓库 Gradle依赖：
+#### 1.添加Jcenter仓库 Gradle依赖：
 ```java
 compile 'com.contrarywind:Android-PickerView:3.2.2'
 ```
 或者
 
-### Maven
+#### Maven
 ```
 <dependency>
 <groupId>com.contrarywind</groupId>
@@ -79,7 +81,7 @@ compile 'com.contrarywind:Android-PickerView:3.2.2'
 <type>pom</type>
 </dependency>
 ```
-### 2.在Activity中添加如下代码：
+#### 2.在Activity中添加如下代码：
 
 ```java
 //时间选择器
@@ -109,9 +111,9 @@ TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTi
  pvOptions.setPicker(options1Items, options2Items, options3Items);
  pvOptions.show(); 
 ```
-### 大功告成~
+#### 大功告成~
 
-### 3.如果默认样式不符合你的口味，可以自定义各种属性：
+#### 3.如果默认样式不符合你的口味，可以自定义各种属性：
 ```java
  Calendar selectedDate = Calendar.getInstance();
  Calendar startDate = Calendar.getInstance();
@@ -180,7 +182,7 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
 
         pvOptions.setPicker(options1Items, options2Items, options3Items);//添加数据源
 ```
-### 4.如果需要自定义布局：
+#### 4.如果需要自定义布局：
 
 ```java
         // 注意：自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针
@@ -227,7 +229,7 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
         pvCustomOptions.setPicker(cardItem);//添加数据
 ```
 
-### 5.对使用还有疑问的话，可参考Demo代码
+#### 5.对使用还有疑问的话，可参考Demo代码
 [请戳我查看demo代码](https://github.com/Bigkoo/Android-PickerView/blob/master/app/src/main/java/com/bigkoo/pickerviewdemo/MainActivity.java)
 
 
@@ -236,12 +238,12 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
 ![](https://github.com/saiwu-bigkoo/Android-PickerView/blob/master/preview/pickerdemo_zhangshangshenghuo.gif)
 
 
-## Thanks
+### Thanks
 
 - [WheelView](https://github.com/venshine/WheelView)
 - [androidWheelView](https://github.com/weidongjian/androidWheelView/)
 
-# License
+## License
 
 ```
 Copyright 2014 Bigkoo
