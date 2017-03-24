@@ -35,6 +35,9 @@
 
 ### [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
 
+### V3.2.2版本更新说明（2017-3-24）
+* 新增：isCenterLabel（boolean isCenter）方法，该方法默认为true，只在选中项显示label；填false 则每项item后面都会带有label。
+
 ### V3.2.1版本更新说明（2017-3-23）
 * 新增：show(View v) 方法，用于绑定所点击弹出 picker 的 View 控件。
 * 废弃：optionsPicker 的 setLinkage 方法。
@@ -63,7 +66,7 @@
 
 ### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:3.2.1'
+compile 'com.contrarywind:Android-PickerView:3.2.2'
 ```
 或者
 
@@ -72,7 +75,7 @@ compile 'com.contrarywind:Android-PickerView:3.2.1'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>3.2.1</version>
+<version>3.2.2</version>
 <type>pom</type>
 </dependency>
 ```
@@ -139,6 +142,7 @@ TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTi
                 .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
                 .setRangDate(startDate,endDate)//起始终止年月日设定
                 .setLabel("年","月","日","时","分","秒")
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .isDialog(true)//是否显示为对话框样式
                 .build();
 ```
@@ -167,6 +171,7 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
                 .setContentTextSize(18)//滚轮文字大小
                 .setLinkage(false)//设置是否联动，默认true
                 .setLabels("省", "市", "区")//设置选择的三级单位
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setCyclic(false, false, false)//循环与否
                 .setSelectOptions(1, 1, 1)  //设置默认选中项
                 .setOutSideCancelable(false)//点击外部dismiss default true
