@@ -155,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentSize(18)
                 .setTitleSize(20)
                 .setTitleText("Title")
-                .isCyclic(true)// default is false
                 .setTitleColor(Color.BLACK)
                /*.setDividerColor(Color.WHITE)//设置分割线的颜色
                 .setTextColorCenter(Color.LTGRAY)//设置选中项的颜色
