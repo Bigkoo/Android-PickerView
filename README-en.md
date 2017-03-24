@@ -6,7 +6,7 @@
 ## Introduction
 
 This is a library for android to pick date or options like IOS system WheelView widget.
-and support for the linkage, dialog . It's very easy to use , and you also can customize layout, which make it very customizable.
+and support for the linkage, dialog . It's very easy to use ,  you also can customize layout, which make it very customizable.
 
 
 * there are two options called OptionsPickerView and TimePickerView
