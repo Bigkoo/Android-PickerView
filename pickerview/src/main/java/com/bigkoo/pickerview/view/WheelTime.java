@@ -708,4 +708,20 @@ public class WheelTime {
         this.textColorOut = textColorOut;
         setTextColorOut();
     }
+
+    /**
+     * Label 是否只显示中间选中项的
+     *
+     * @param isCenterLabel
+     */
+
+    public void isCenterLabel(Boolean isCenterLabel) {
+
+        wv_day.isCenterLabel(isCenterLabel);
+        wv_month.isCenterLabel(isCenterLabel);
+        wv_year.isCenterLabel(isCenterLabel);
+        wv_hours.isCenterLabel(isCenterLabel);
+        wv_mins.isCenterLabel(isCenterLabel);
+        wv_seconds.isCenterLabel(isCenterLabel);
+    }
 }

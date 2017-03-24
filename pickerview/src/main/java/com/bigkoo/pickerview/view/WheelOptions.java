@@ -354,4 +354,16 @@ public class WheelOptions<T> {
         setTextColorOut();
     }
 
+    /**
+     * Label 是否只显示中间选中项的
+     *
+     * @param isCenterLabel
+     */
+
+    public void isCenterLabel(Boolean isCenterLabel) {
+        wv_option1.isCenterLabel(isCenterLabel);
+        wv_option2.isCenterLabel(isCenterLabel);
+        wv_option3.isCenterLabel(isCenterLabel);
+    }
+
 }

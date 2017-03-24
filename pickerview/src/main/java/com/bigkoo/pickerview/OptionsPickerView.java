@@ -59,6 +59,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private boolean cancelable;//是否能取消
     private boolean linkage;//是否联动
 
+    private boolean isCenterLabel ;//是否只显示中间的label
+
     private String label1;//单位
     private String label2;
     private String label3;
@@ -98,6 +100,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         this.cancelable = builder.cancelable;
         this.linkage = builder.linkage;
+        this.isCenterLabel = builder.isCenterLabel;
 
         this.label1 = builder.label1;
         this.label2 = builder.label2;
@@ -146,6 +149,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         private boolean cancelable = true;//是否能取消
         private boolean linkage = true;//是否联动
+        private boolean isCenterLabel = true;//是否只显示中间的label
 
         private int textColorOut; //分割线以外的文字颜色
         private int textColorCenter; //分割线之间的文字颜色
@@ -347,6 +351,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             return this;
         }
 
+        public Builder isCenterLabel(boolean isCenterLabel) {
+            this.isCenterLabel = isCenterLabel;
+            return this;
+        }
 
         public OptionsPickerView build() {
             return new OptionsPickerView(this);
@@ -414,6 +422,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions.setLineSpacingMultiplier(lineSpacingMultiplier);
         wheelOptions.setTextColorOut(textColorOut);
         wheelOptions.setTextColorCenter(textColorCenter);
+        wheelOptions.isCenterLabel(isCenterLabel);
 
     }
 
