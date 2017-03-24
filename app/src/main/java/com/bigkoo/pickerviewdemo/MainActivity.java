@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 .setType(TimePickerView.Type.YEAR_MONTH_DAY)
-                .isCenterLabel(false)//是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(Color.BLACK)
                 .build();
 
