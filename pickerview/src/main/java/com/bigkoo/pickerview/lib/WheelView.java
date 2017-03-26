@@ -622,6 +622,7 @@ public class WheelView extends View {
                 break;
             //滑动中
             case MotionEvent.ACTION_MOVE:
+                float previousTempY = previousY;
                 float dy = previousY - event.getRawY();
                 previousY = event.getRawY();
                 totalScrollY = (int) (totalScrollY + dy);
@@ -630,22 +631,24 @@ public class WheelView extends View {
                 if (!isLoop) {
                     float top = -initPosition * itemHeight;
                     float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
-                    if (totalScrollY - itemHeight * 0.3 < top) {
-                        top = totalScrollY - dy;
-                    } else if (totalScrollY + itemHeight * 0.3 > bottom) {
-                        bottom = totalScrollY - dy;
-                    }
 
-                    if (totalScrollY < top) {
-                        totalScrollY = (int) top;
-                    } else if (totalScrollY > bottom) {
-                        totalScrollY = (int) bottom;
+                    if (totalScrollY + itemHeight * 0.3 < top) {
+                        totalScrollY = (int) (top - itemHeight * 0.3);
+                    } else if (totalScrollY - itemHeight * 0.3 > bottom) {
+                        totalScrollY = (int) (bottom + itemHeight * 0.3);
                     }
                 }
                 break;
             //完成滑动，手指离开屏幕
             case MotionEvent.ACTION_UP:
-
+            case MotionEvent.ACTION_CANCEL:
+                float top = -initPosition * itemHeight;
+                float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
+                if (totalScrollY < top) {
+                    totalScrollY = (int) top;
+                } else if (totalScrollY > bottom) {
+                    totalScrollY = (int) bottom;
+                }
             default:
                 if (!eventConsumed) {//屏幕点击或者拖拽事件
 
