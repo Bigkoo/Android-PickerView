@@ -277,6 +277,9 @@ public class WheelView extends View {
             }*/
         }
         itemHeight = lineSpacingMultiplier * maxTextHeight;
+        if (itemHeight % 1 > 0) {
+            itemHeight = (int) itemHeight + 1;
+        }
     }
 
     void smoothScroll(ACTION action) {
@@ -622,7 +625,6 @@ public class WheelView extends View {
                 break;
             //滑动中
             case MotionEvent.ACTION_MOVE:
-                float previousTempY = previousY;
                 float dy = previousY - event.getRawY();
                 previousY = event.getRawY();
                 totalScrollY = (int) (totalScrollY + dy);
