@@ -78,6 +78,7 @@ public class WheelView extends View {
     // 条目间距倍数
     float lineSpacingMultiplier = 1.6F;
     boolean isLoop;
+    private boolean is3D;
 
     // 第一条线Y坐标值
     float firstLineY;
@@ -97,7 +98,7 @@ public class WheelView extends View {
     int change;
 
     // 显示几个条目
-    int itemsVisible = 11;
+    int itemsVisible = 5;
 
     int measuredHeight;// WheelView 控件高度
     int measuredWidth;// WheelView 控件宽度
@@ -118,7 +119,7 @@ public class WheelView extends View {
     private int mGravity = Gravity.CENTER;
     private int drawCenterContentStart = 0;//中间选中文字开始绘制位置
     private int drawOutContentStart = 0;//非中间文字开始绘制位置
-    private static final float SCALECONTENT = 0.8F;//非中间文字则用此控制高度，压扁形成3d错觉
+    private float SCALECONTENT = 0.8F;//非中间文字则用此控制高度，压扁形成3d错觉
     private float CENTERCONTENTOFFSET ;//偏移量
 
     public WheelView(Context context) {
@@ -131,13 +132,29 @@ public class WheelView extends View {
         textColorCenter =getResources().getColor(R.color.pickerview_wheelview_textcolor_center);
         dividerColor = getResources().getColor(R.color.pickerview_wheelview_textcolor_out);*/
 
+        if (attrs != null) {
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.pickerview, 0, 0);
+            mGravity = a.getInt(R.styleable.pickerview_pickerview_gravity, Gravity.CENTER);
+            textColorOut = a.getColor(R.styleable.pickerview_pickerview_textColorOut, textColorOut);
+            textColorCenter = a.getColor(R.styleable.pickerview_pickerview_textColorCenter, textColorCenter);
+            dividerColor = a.getColor(R.styleable.pickerview_pickerview_dividerColor, dividerColor);
+            textSize = a.getDimensionPixelOffset(R.styleable.pickerview_pickerview_textSize, textSize);
+            lineSpacingMultiplier = a.getFloat(R.styleable.pickerview_pickerview_lineSpacingMultiplier, lineSpacingMultiplier);
+            is3D = a.getBoolean(R.styleable.pickerview_pickerview_is3D, false);
+            itemsVisible = a.getInteger(R.styleable.pickerview_pickerview_visibleCount, 5);
+            if (is3D) {
+                itemsVisible += 2;
+            }
+            a.recycle();//回收内存
+        }
+
         textSize = getResources().getDimensionPixelSize(R.dimen.pickerview_textsize);//默认大小
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         float density = dm.density; // 屏幕密度（0.75/1.0/1.5/2.0/3.0）
 
         if (density<1){//根据密度不同进行适配
-           CENTERCONTENTOFFSET=2.4F;
+            CENTERCONTENTOFFSET=2.4F;
         }else if (1<=density&&density<2){
             CENTERCONTENTOFFSET = 3.6F;
         }else if (1<=density&&density<2){
@@ -147,17 +164,10 @@ public class WheelView extends View {
         }else if (density>=3){
             CENTERCONTENTOFFSET= density * 2.5F;
         }
-
-
-        if (attrs != null) {
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.pickerview, 0, 0);
-            mGravity = a.getInt(R.styleable.pickerview_pickerview_gravity, Gravity.CENTER);
-            textColorOut = a.getColor(R.styleable.pickerview_pickerview_textColorOut, textColorOut);
-            textColorCenter = a.getColor(R.styleable.pickerview_pickerview_textColorCenter, textColorCenter);
-            dividerColor = a.getColor(R.styleable.pickerview_pickerview_dividerColor, dividerColor);
-            textSize = a.getDimensionPixelOffset(R.styleable.pickerview_pickerview_textSize, textSize);
-            lineSpacingMultiplier = a.getFloat(R.styleable.pickerview_pickerview_lineSpacingMultiplier, lineSpacingMultiplier);
-            a.recycle();//回收内存
+        if (is3D) {
+            SCALECONTENT = 0.8f;
+        } else {
+            SCALECONTENT = 1;
         }
 
         judgeLineSpae();
@@ -224,8 +234,12 @@ public class WheelView extends View {
 
         //半圆的周长 = item高度乘以item数目-1
         halfCircumference = (int) (itemHeight * (itemsVisible - 1));
-        //整个圆的周长除以PI得到直径，这个直径用作控件的总高度
-        measuredHeight = (int) ((halfCircumference * 2) / Math.PI);
+        if (is3D) {
+            //整个圆的周长除以PI得到直径，这个直径用作控件的总高度
+            measuredHeight = (int) ((halfCircumference * 2) / Math.PI);
+        } else {
+            measuredHeight = (int) (itemHeight * itemsVisible);
+        }
         //求出半径
         radius = (int) (halfCircumference / Math.PI);
         //控件宽度，这里支持weight
@@ -448,7 +462,12 @@ public class WheelView extends View {
             canvas.save();
             // 弧长 L = itemHeight * counter - itemHeightOffset
             // 求弧度 α = L / r  (弧长/半径) [0,π]
-            double radian = ((itemHeight * counter - itemHeightOffset)) / radius;
+            double radian;
+            if (is3D) {
+                radian = ((itemHeight * counter - itemHeightOffset)) / radius;
+            } else {
+                radian = Math.PI / 2;
+            }
             // 弧度转换成角度(把半圆以Y轴为轴心向右转90度，使其处于第一象限及第四象限
             // angle [-90°,90°]
             float angle = (float) (90D - (radian / Math.PI) * 180D);//item第一项,从90度开始，逐渐递减到 -90度
@@ -461,7 +480,12 @@ public class WheelView extends View {
                 //计算开始绘制的位置
                 measuredCenterContentStart(contentText);
                 measuredOutContentStart(contentText);
-                float translateY = (float) (radius - Math.cos(radian) * radius - (Math.sin(radian) * maxTextHeight) / 2D);
+                float translateY;
+                if (is3D) {
+                    translateY = (float) (radius - Math.cos(radian) * radius - (Math.sin(radian) * maxTextHeight) / 2D);
+                } else {
+                    translateY = counter * itemHeight - itemHeightOffset + itemHeight / lineSpacingMultiplier * (lineSpacingMultiplier - 1) / 2;
+                }
                 //根据Math.sin(radian)来更改canvas坐标系原点，然后缩放画布，使得文字高度进行缩放，形成弧形3d视觉差
                 canvas.translate(0.0F, translateY);
                 canvas.scale(1.0F, (float) Math.sin(radian));
@@ -762,6 +786,5 @@ public class WheelView extends View {
 
         }
     }
-
 
 }
