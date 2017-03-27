@@ -95,8 +95,7 @@ public class WheelOptions<T> {
                     //新opt2的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
                     opt2Select = opt2Select >= mOptions2Items.get(index).size() - 1 ? mOptions2Items.get(index).size() - 1 : opt2Select;
 
-                    wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items
-                            .get(index)));
+                    wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(index)));
                     wv_option2.setCurrentItem(opt2Select);
                 }
                 if (mOptions3Items != null) {
@@ -117,8 +116,7 @@ public class WheelOptions<T> {
                     opt3 = opt3 >= mOptions3Items.get(opt1Select).get(index).size() - 1 ? mOptions3Items.get(opt1Select).get(index).size() - 1 : opt3;
 
                     wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items
-                            .get(wv_option1.getCurrentItem()).get(
-                                    index)));
+                            .get(wv_option1.getCurrentItem()).get(index)));
                     wv_option3.setCurrentItem(opt3);
 
                 }

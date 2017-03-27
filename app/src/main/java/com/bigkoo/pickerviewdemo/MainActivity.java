@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_Time, btn_Options,btn_CustomOptions,btn_CustomTime,btn_no_linkage;
 
     private TimePickerView pvTime,pvCustomTime;
-    private OptionsPickerView pvOptions,pvCustomOptions,pvOptions_NoLink;
+    private OptionsPickerView pvOptions,pvCustomOptions, pvNoLinkOptions;
     private ArrayList<CardBean> cardItem = new ArrayList<>();
 
     private ArrayList<String> food = new ArrayList<>();
@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             pvCustomOptions.show(); //弹出自定义条件选择器
         }else if (v.getId() == R.id.btn_CustomTime && pvCustomTime != null) {
             pvCustomTime.show(); //弹出自定义时间选择器
-        }else if (v.getId() == R.id.btn_no_linkage&&pvOptions_NoLink!=null){//不联动数据选择器
-            pvOptions_NoLink.show();
+        }else if (v.getId() == R.id.btn_no_linkage&& pvNoLinkOptions !=null){//不联动数据选择器
+            pvNoLinkOptions.show();
         }else if (v.getId() == R.id.btn_GotoJsonData){//跳转到 省市区解析示例页面
             startActivity(new Intent(MainActivity.this,JsonDataActivity.class));
         }
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void initNoLinkOptionsPicker() {// 不联动的多级选项
-        pvOptions_NoLink = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+        pvNoLinkOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
 
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this,str,Toast.LENGTH_SHORT).show();
             }
         }).build();
-        pvOptions_NoLink.setNPicker(food,clothes,computer);
+        pvNoLinkOptions.setNPicker(food,clothes,computer);
     }
 
     private void initTimePicker() {
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 })
                 .setType(TimePickerView.Type.YEAR_MONTH_DAY)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-                .setDividerColor(Color.BLACK)
+                .setDividerColor(Color.RED)
                 .build();
 
     }
