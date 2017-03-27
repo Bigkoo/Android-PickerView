@@ -31,7 +31,7 @@ and support for the linkage, dialog . It's very easy to use ,  you also can cust
 ### Gradle
 
 ```java
-compile 'com.contrarywind:Android-PickerView:3.2.1'
+compile 'com.contrarywind:Android-PickerView:3.2.2'
 ```
 
 ### Maven
@@ -40,7 +40,7 @@ compile 'com.contrarywind:Android-PickerView:3.2.1'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>3.2.1</version>
+<version>3.2.2</version>
 <type>pom</type>
 </dependency>
 ```
@@ -140,6 +140,7 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
                 .setBgColor(0xFF444444)//Night mode
                 .setContentTextSize(18)
                 .setLinkage(false)
+                .isCenterLabel(false) //default is true , if you choose false , the label text will add to all item ContentText right
                 .setLabels("province", "city", "district")
                 .setCyclic(false, false, false)
                 .setSelectOptions(0, 0, 0)  //default options
@@ -199,7 +200,7 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
 ## If you do need to set the no linkage data：
 
 ```java
-pvOptions_NoLink = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+pvNoLinkOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
 
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -211,8 +212,8 @@ pvOptions_NoLink = new OptionsPickerView.Builder(this, new OptionsPickerView.OnO
                 Toast.makeText(MainActivity.this,str,Toast.LENGTH_SHORT).show();
             }
         }).build();
-        pvOptions_NoLink.setNPicker(food,clothes,computer);
-        pvOptions_NoLink.show();
+        pvNoLinkOptions.setNPicker(food,clothes,computer);
+        pvNoLinkOptions.show();
 ```
 
 ## For more detail, pelase refer to the Demo code, If there is still doubt about you, pelase [New Issue](https://github.com/Bigkoo/Android-PickerView/issues) to me
