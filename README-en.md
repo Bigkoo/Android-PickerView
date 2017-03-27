@@ -200,7 +200,7 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
 ## If you do need to set the no linkage data：
 
 ```java
-pvOptions_NoLink = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+pvNoLinkOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
 
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -212,8 +212,8 @@ pvOptions_NoLink = new OptionsPickerView.Builder(this, new OptionsPickerView.OnO
                 Toast.makeText(MainActivity.this,str,Toast.LENGTH_SHORT).show();
             }
         }).build();
-        pvOptions_NoLink.setNPicker(food,clothes,computer);
-        pvOptions_NoLink.show();
+        pvNoLinkOptions.setNPicker(food,clothes,computer);
+        pvNoLinkOptions.show();
 ```
 
 ## For more detail, pelase refer to the Demo code, If there is still doubt about you, pelase [New Issue](https://github.com/Bigkoo/Android-PickerView/issues) to me
