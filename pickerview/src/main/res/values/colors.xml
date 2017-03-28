@@ -8,7 +8,7 @@
     <color name="pickerview_wheelview_textcolor_out">#a8a8a8</color>
     <color name="pickerview_wheelview_textcolor_center">#2a2a2a</color>
     <color name="pickerview_wheelview_textcolor_divider">#d5d5d5</color>
-    <color name="bgColor_overlay">#60000000</color>
-    <color name="bgColor_default">#FFFFFFFF</color>
+    <color name="pickerview_bgColor_overlay">#60000000</color>
+    <color name="pickerview_bgColor_default">#FFFFFFFF</color>
 
 </resources>

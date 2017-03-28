@@ -156,11 +156,13 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 //如果无地区数据，建议添加空数据，防止数据为null 导致三个选项长度不匹配造成崩溃
                 if (jsonBean.get(i).getCityList().get(c).getArea().size() == 0) {
                     City_AreaList.add("");
-                }
-                for (int d=0; d < jsonBean.get(i).getCityList().get(c).getArea().size(); d++) {//该城市对应地区所有数据
-                    String AreaName = jsonBean.get(i).getCityList().get(c).getArea().get(d);
+                }else {
 
-                    City_AreaList.add(AreaName);//添加该城市所有地区数据
+                    for (int d=0; d < jsonBean.get(i).getCityList().get(c).getArea().size(); d++) {//该城市对应地区所有数据
+                        String AreaName = jsonBean.get(i).getCityList().get(c).getArea().get(d);
+
+                        City_AreaList.add(AreaName);//添加该城市所有地区数据
+                    }
                 }
                 Province_AreaList.add(City_AreaList);//添加该省所有地区数据
             }
