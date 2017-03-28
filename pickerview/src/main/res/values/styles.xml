@@ -18,8 +18,8 @@
     </style>
 
     <style name="pickerview_dialogAnim" mce_bogus="1" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/pickerview_dialog_push_in</item>
-        <item name="android:windowExitAnimation">@anim/pickerview_dialog_push_out</item>
+        <item name="android:windowEnterAnimation">@anim/pickerview_dialog_scale_in</item>
+        <item name="android:windowExitAnimation">@anim/pickerview_dialog_scale_out</item>
     </style>
 
 </resources>
