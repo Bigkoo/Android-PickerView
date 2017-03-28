@@ -49,15 +49,6 @@
 * 修复：timepicker 未设置setDate() 导致空指针异常问题
 * 修复：dialog 模式 setOnDismissListener 监听无效问题
 
-### V3.1.2版本更新说明（2017-3-20）
-* 修复：多级选项时，不同选项最大文字高度不同导致分割线不在同一水平问题
-* 新增：选项选择器的字体样式设置（setTypeface方法）
-
-### V3.1.1版本更新说明（2017-3-15）
-* 修复：timePicker的label单位设置为空，但隐藏无效问题
-
-
-
 #### 更多历史版本详情，请查阅：[更新说明（3.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E%EF%BC%883.x%E7%89%88%E6%9C%AC%EF%BC%89) 
 
 #### 方法名与参数请查阅：[方法名与参数说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%96%B9%E6%B3%95%E5%90%8D%E4%B8%8E%E5%8F%82%E6%95%B0)
