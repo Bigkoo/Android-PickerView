@@ -154,7 +154,7 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 ArrayList<String> City_AreaList = new ArrayList<>();//该城市的所有地区列表
 
                 //如果无地区数据，建议添加空数据，防止数据为null 导致三个选项长度不匹配造成崩溃
-                if (jsonBean.get(i).getCityList().get(c).getArea().size() == 0) {
+                if (jsonBean.get(i).getCityList().get(c).getArea() == null) {
                     City_AreaList.add("");
                 }else {
 
