@@ -11,5 +11,7 @@
         <attr name="pickerview_textColorCenter" format="color"/>
         <attr name="pickerview_dividerColor" format="color"/>
         <attr name="pickerview_lineSpacingMultiplier" format="float"/>
+        <attr name="pickerview_is3D" format="boolean"/>
+        <attr name="pickerview_visibleCount" format="integer"/>
     </declare-styleable>
 </resources>
