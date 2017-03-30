@@ -627,11 +627,12 @@ public class WheelView extends View {
                 if (!isLoop) {
                     float top = -initPosition * itemHeight;
                     float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
-                    if (totalScrollY - itemHeight * 0.3 < top) {
+
+                    /*if (totalScrollY - itemHeight * 0.3 < top) {
                         top = totalScrollY - dy;
                     } else if (totalScrollY + itemHeight * 0.3 > bottom) {
                         bottom = totalScrollY - dy;
-                    }
+                    }*/
 
                     if (totalScrollY < top) {
                         totalScrollY = (int) top;

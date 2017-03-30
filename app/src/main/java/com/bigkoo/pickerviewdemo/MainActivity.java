@@ -200,6 +200,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initOptionData() {
 
+        /**
+         * 注意：如果是添加JavaBean实体数据，则实体类需要实现 IPickerViewData 接口，
+         * PickerView会通过getPickerViewText方法获取字符串显示出来。
+         */
+
         getCardData();
         getNoLinkData();
 

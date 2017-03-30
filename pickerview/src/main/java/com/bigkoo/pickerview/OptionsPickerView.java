@@ -28,6 +28,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private CustomListener customListener;
     private Button btnSubmit, btnCancel; //确定、取消按钮
     private TextView tvTitle;
+    private RelativeLayout rv_top_bar;
 
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
@@ -372,6 +373,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
             //顶部标题
             tvTitle = (TextView) findViewById(R.id.tvTitle);
+            rv_top_bar = (RelativeLayout)findViewById(R.id.rv_topbar);
 
             //确定和取消按钮
             btnSubmit = (Button) findViewById(R.id.btnSubmit);
@@ -387,12 +389,12 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             btnCancel.setText(TextUtils.isEmpty(Str_Cancel) ? context.getResources().getString(R.string.pickerview_cancel) : Str_Cancel);
             tvTitle.setText(TextUtils.isEmpty(Str_Title) ? "" : Str_Title);//默认为空
 
-            //设置文字颜色
+            //设置color
             btnSubmit.setTextColor(Color_Submit == 0 ? pickerview_timebtn_nor : Color_Submit);
             btnCancel.setTextColor(Color_Cancel == 0 ? pickerview_timebtn_nor : Color_Cancel);
             tvTitle.setTextColor(Color_Title == 0 ? pickerview_topbar_title : Color_Title);
-            RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
             rv_top_bar.setBackgroundColor(Color_Background_Title == 0 ? pickerview_bg_topbar : Color_Background_Title);
+
             //设置文字大小
             btnSubmit.setTextSize(Size_Submit_Cancel);
             btnCancel.setTextSize(Size_Submit_Cancel);
@@ -401,7 +403,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         } else {
             customListener.customLayout(LayoutInflater.from(context).inflate(layoutRes, contentContainer));
         }
-        // ----转轮
+
+        // ----滚轮布局
         final LinearLayout optionsPicker = (LinearLayout) findViewById(R.id.optionspicker);
         optionsPicker.setBackgroundColor(Color_Background_Wheel == 0 ? bgColor_default : Color_Background_Wheel);
 
