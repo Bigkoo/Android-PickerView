@@ -62,12 +62,10 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
     private boolean cyclic;//是否循环
     private boolean cancelable;//是否能取消
-    private boolean isCenterLabel ;//是否只显示中间的label
 
     private int textColorOut; //分割线以外的文字颜色
     private int textColorCenter; //分割线之间的文字颜色
     private int dividerColor; //分割线的颜色
-
     // 条目间距倍数 默认1.6
     private float lineSpacingMultiplier = 1.6F;
     private boolean isDialog;//是否是对话框模式
@@ -100,7 +98,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.endDate = builder.endDate;
         this.date = builder.date;
         this.cyclic = builder.cyclic;
-        this.isCenterLabel = builder.isCenterLabel;
         this.cancelable = builder.cancelable;
         this.label_year = builder.label_year;
         this.label_month = builder.label_month;
@@ -152,7 +149,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         private boolean cyclic = false;//是否循环
         private boolean cancelable = true;//是否能取消
-        private boolean isCenterLabel = true ;//是否只显示中间的label
 
         private int textColorOut; //分割线以外的文字颜色
         private int textColorCenter; //分割线之间的文字颜色
@@ -242,11 +238,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
-        /**
-         * 因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
-         * @param date
-         * @return
-         */
         public Builder setDate(Calendar date) {
             this.date = date;
             return this;
@@ -266,7 +257,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         /**
          * 设置起始时间
-         * 因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
+         *
          * @return
          */
 
@@ -347,12 +338,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
-        public Builder isCenterLabel(boolean isCenterLabel) {
-            this.isCenterLabel = isCenterLabel;
-            return this;
-        }
-
-
         public TimePickerView build() {
             return new TimePickerView(this);
         }
@@ -360,7 +345,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
 
     private void initView(Context context) {
-        setDialogOutSideCancelable(cancelable);
         initViews();
         init();
         initEvents();
@@ -402,6 +386,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         // 时间转轮 自定义控件
         LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);
 
+
         timePickerView.setBackgroundColor(Color_Background_Wheel == 0 ? bgColor_default : Color_Background_Wheel);
 
         wheelTime = new WheelTime(timePickerView, type, gravity, Size_Content);
@@ -420,9 +405,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             setRangDate();
         }
 
+
         setTime();
         wheelTime.setLabels(label_year, label_month, label_day, label_hours, label_mins, label_seconds);
-
         setOutSideCancelable(cancelable);
         wheelTime.setCyclic(cyclic);
         wheelTime.setDividerColor(dividerColor);
@@ -430,18 +415,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         wheelTime.setLineSpacingMultiplier(lineSpacingMultiplier);
         wheelTime.setTextColorOut(textColorOut);
         wheelTime.setTextColorCenter(textColorCenter);
-        wheelTime.isCenterLabel(isCenterLabel);
     }
 
-
-
-    /**
-     * 设置默认时间
-     */
-   public void setDate(Calendar date) {
-       this.date = date;
-       setTime();
-   }
 
     /**
      * 设置可以选择的时间范围, 要在setTime之前调用才有效果
@@ -496,11 +471,12 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             seconds = date.get(Calendar.SECOND);
         }
 
+        /*System.out.println("month:" + month);
+        System.out.println("day:" + day);
+        System.out.println("year:" + year);*/
 
         wheelTime.setPicker(year, month, day, hours, minute, seconds);
     }
-
-
 
 
     @Override
@@ -509,15 +485,15 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         if (tag.equals(TAG_CANCEL)) {
             dismiss();
         } else {
-            returnData();
+            returnData(v);
         }
     }
 
-    public void returnData() {
+    public void returnData(View v) {
         if (timeSelectListener != null) {
             try {
                 Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
-                timeSelectListener.onTimeSelect(date, clickView);
+                timeSelectListener.onTimeSelect(date, v);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
