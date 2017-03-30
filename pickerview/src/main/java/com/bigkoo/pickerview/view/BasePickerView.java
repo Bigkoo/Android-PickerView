@@ -3,16 +3,15 @@ package com.bigkoo.pickerview.view;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.bigkoo.pickerview.R;
@@ -49,9 +48,7 @@ public class BasePickerView {
     private int gravity = Gravity.BOTTOM;
 
     private Dialog mDialog;
-    private boolean cancelable;//是否能取消
 
-    protected View clickView;//是通过哪个View弹出的
 
     public BasePickerView(Context context) {
         this.context = context;
@@ -97,7 +94,6 @@ public class BasePickerView {
             contentContainer.setLayoutParams(params);
         }
 
-        setKeyBackCancelable(true);
 
     }
 
@@ -123,6 +119,7 @@ public class BasePickerView {
      * 添加这个View到Activity的根视图
      */
     public void show() {
+
         if (isDialog()) {
             showDialog();
         } else {
@@ -133,15 +130,7 @@ public class BasePickerView {
             onAttached(rootView);
             rootView.requestFocus();
         }
-    }
-    /**
-     * 添加这个View到Activity的根视图
-     *
-     * @param v (是通过哪个View弹出的)
-     */
-    public void show(View v) {
-        this.clickView = v;
-        show();
+
     }
 
     /**
@@ -221,22 +210,14 @@ public class BasePickerView {
         return this;
     }
 
-    public BasePickerView setKeyBackCancelable(boolean isCancelable) {
-
-        ViewGroup View;
-        if (isDialog()){
-            View = dialogView;
-        }else {
-            View = rootView;
-        }
-
-        View.setFocusable(isCancelable);
-        View.setFocusableInTouchMode(isCancelable);
+    /*public BasePickerView setKeyBackCancelable(boolean isCancelable) {
+        rootView.setFocusable(isCancelable);
+        rootView.setFocusableInTouchMode(isCancelable);
         if (isCancelable) {
-            View.setOnKeyListener(onKeyBackListener);
+            rootView.setOnKeyListener(onKeyBackListener);
         }
         else{
-            View.setOnKeyListener(null);
+            rootView.setOnKeyListener(null);
         }
         return this;
     }
@@ -251,7 +232,7 @@ public class BasePickerView {
             }
             return false;
         }
-    } ;
+    } ;*/
 
     protected BasePickerView setOutSideCancelable(boolean isCancelable) {
         if (rootView != null) {
@@ -266,15 +247,6 @@ public class BasePickerView {
 
         return this;
     }
-
-    /**
-     * 设置对话框模式是否可以点击外部取消
-     * @param cancelable
-     */
-    public void setDialogOutSideCancelable(boolean cancelable) {
-        this.cancelable = cancelable;
-    }
-
 
     /**
      * Called when the user touch on black overlay in order to dismiss the dialog
@@ -296,17 +268,8 @@ public class BasePickerView {
     public void createDialog() {
         if (dialogView != null) {
             mDialog = new Dialog(context, R.style.custom_dialog2);
-            mDialog.setCancelable(cancelable);//不能点外面取消,也不 能点back取消
+            mDialog.setCancelable(true);//不能点外面取消,也不 能点back取消
             mDialog.setContentView(dialogView);
-            mDialog.getWindow().setWindowAnimations(R.style.pickerview_dialogAnim);
-            mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    if (onDismissListener != null) {
-                        onDismissListener.onDismiss(BasePickerView.this);
-                    }
-                }
-            });
         }
 
     }
