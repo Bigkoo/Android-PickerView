@@ -21,7 +21,7 @@ final class SmoothScrollTimerTask extends TimerTask {
         if (realTotalOffset == Integer.MAX_VALUE) {
             realTotalOffset = offset;
         }
-        //把要滚动的范围细分成十小份，按是小份单位来重绘
+        //把要滚动的范围细分成10小份，按10小份单位来重绘
         realOffset = (int) ((float) realTotalOffset * 0.1F);
 
         if (realOffset == 0) {

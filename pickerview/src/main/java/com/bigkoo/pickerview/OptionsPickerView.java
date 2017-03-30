@@ -1,6 +1,7 @@
 package com.bigkoo.pickerview;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.bigkoo.pickerview.listener.CustomListener;
+
 import com.bigkoo.pickerview.lib.WheelView;
+import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.WheelOptions;
 
@@ -57,6 +59,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private boolean cancelable;//是否能取消
     private boolean linkage;//是否联动
 
+    private boolean isCenterLabel ;//是否只显示中间的label
+
     private String label1;//单位
     private String label2;
     private String label3;
@@ -64,6 +68,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private boolean cyclic1;//是否循环
     private boolean cyclic2;
     private boolean cyclic3;
+
+    private Typeface font;//字体样式
 
     private int option1;//默认选中项
     private int option2;
@@ -94,10 +100,14 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         this.cancelable = builder.cancelable;
         this.linkage = builder.linkage;
+        this.isCenterLabel = builder.isCenterLabel;
 
         this.label1 = builder.label1;
         this.label2 = builder.label2;
         this.label3 = builder.label3;
+
+        this.font = builder.font;
+
 
         this.option1 = builder.option1;
         this.option2 = builder.option2;
@@ -139,6 +149,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         private boolean cancelable = true;//是否能取消
         private boolean linkage = true;//是否联动
+        private boolean isCenterLabel = true;//是否只显示中间的label
 
         private int textColorOut; //分割线以外的文字颜色
         private int textColorCenter; //分割线之间的文字颜色
@@ -154,6 +165,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private boolean cyclic1 = false;//是否循环，默认否
         private boolean cyclic2 = false;
         private boolean cyclic3 = false;
+
+        private Typeface font;
 
         private int option1;//默认选中项
         private int option2;
@@ -241,6 +254,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             return this;
         }
 
+        /**
+         * 此方法已废弃
+         * 不联动的情况下，请调用 setNPicker 方法。
+         * */
+        @Deprecated
         public Builder setLinkage(boolean linkage) {
             this.linkage = linkage;
             return this;
@@ -303,6 +321,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             return this;
         }
 
+        public Builder setTypeface(Typeface font) {
+            this.font = font;
+            return this;
+        }
+
         public Builder setCyclic(boolean cyclic1, boolean cyclic2, boolean cyclic3) {
             this.cyclic1 = cyclic1;
             this.cyclic2 = cyclic2;
@@ -328,6 +351,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             return this;
         }
 
+        public Builder isCenterLabel(boolean isCenterLabel) {
+            this.isCenterLabel = isCenterLabel;
+            return this;
+        }
 
         public OptionsPickerView build() {
             return new OptionsPickerView(this);
@@ -336,6 +363,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
 
     private void initView(Context context) {
+        setDialogOutSideCancelable(cancelable);
         initViews();
         init();
         initEvents();
@@ -381,6 +409,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions.setTextContentSize(Size_Content);
         wheelOptions.setLabels(label1, label2, label3);
         wheelOptions.setCyclic(cyclic1, cyclic2, cyclic3);
+        wheelOptions.setTypeface(font);
 
         setOutSideCancelable(cancelable);
 
@@ -393,6 +422,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions.setLineSpacingMultiplier(lineSpacingMultiplier);
         wheelOptions.setTextColorOut(textColorOut);
         wheelOptions.setTextColorCenter(textColorCenter);
+        wheelOptions.isCenterLabel(isCenterLabel);
 
     }
 
@@ -446,6 +476,15 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     }
 
 
+    //不联动情况下调用
+    public void setNPicker(List<T> options1Items,
+                           List<T> options2Items,
+                           List<T> options3Items) {
+
+        wheelOptions.setNPicker(options1Items, options2Items, options3Items);
+        SetCurrentItems();
+    }
+
     @Override
     public void onClick(View v) {
         String tag = (String) v.getTag();
@@ -453,16 +492,16 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             dismiss();
             return;
         } else {
-            returnData(v);
+            returnData();
             return;
         }
     }
 
     //抽离接口回调的方法
-    public void returnData(View v) {
+    public void returnData() {
         if (optionsSelectListener != null) {
             int[] optionsCurrentItems = wheelOptions.getCurrentItems();
-            optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2], v);
+            optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2], clickView);
         }
         dismiss();
     }

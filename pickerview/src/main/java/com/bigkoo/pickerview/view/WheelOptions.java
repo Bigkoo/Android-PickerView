@@ -1,5 +1,6 @@
 package com.bigkoo.pickerview.view;
 
+import android.graphics.Typeface;
 import android.view.View;
 
 import com.bigkoo.pickerview.R;
@@ -17,8 +18,9 @@ public class WheelOptions<T> {
 
     private List<T> mOptions1Items;
     private List<List<T>> mOptions2Items;
+    private List<T> N_mOptions2Items;
     private List<List<List<T>>> mOptions3Items;
-
+    private List<T> N_mOptions3Items;
     private boolean linkage;
     private OnItemSelectedListener wheelListener_option1;
     private OnItemSelectedListener wheelListener_option2;
@@ -50,14 +52,6 @@ public class WheelOptions<T> {
         wv_option3 = (WheelView) view.findViewById(R.id.options3);
     }
 
-    public void setPicker(List<T> optionsItems) {
-        setPicker(optionsItems, null);
-    }
-
-    public void setPicker(List<T> options1Items,
-                          List<List<T>> options2Items) {
-        setPicker(options1Items, options2Items);
-    }
 
     public void setPicker(List<T> options1Items,
                           List<List<T>> options2Items,
@@ -101,8 +95,7 @@ public class WheelOptions<T> {
                     //新opt2的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
                     opt2Select = opt2Select >= mOptions2Items.get(index).size() - 1 ? mOptions2Items.get(index).size() - 1 : opt2Select;
 
-                    wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items
-                            .get(index)));
+                    wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(index)));
                     wv_option2.setCurrentItem(opt2Select);
                 }
                 if (mOptions3Items != null) {
@@ -123,8 +116,7 @@ public class WheelOptions<T> {
                     opt3 = opt3 >= mOptions3Items.get(opt1Select).get(index).size() - 1 ? mOptions3Items.get(opt1Select).get(index).size() - 1 : opt3;
 
                     wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items
-                            .get(wv_option1.getCurrentItem()).get(
-                                    index)));
+                            .get(wv_option1.getCurrentItem()).get(index)));
                     wv_option3.setCurrentItem(opt3);
 
                 }
@@ -137,6 +129,42 @@ public class WheelOptions<T> {
         if (options3Items != null && linkage)
             wv_option2.setOnItemSelectedListener(wheelListener_option2);
     }
+
+
+    //不联动情况下
+    public void setNPicker(List<T> options1Items,
+                         List<T> options2Items,
+                         List<T> options3Items) {
+        this.mOptions1Items = options1Items;
+        this.N_mOptions2Items = options2Items;
+        this.N_mOptions3Items = options3Items;
+        int len = ArrayWheelAdapter.DEFAULT_LENGTH;
+        if (this.N_mOptions3Items == null)
+            len = 8;
+        if (this.N_mOptions2Items == null)
+            len = 12;
+        // 选项1
+        wv_option1.setAdapter(new ArrayWheelAdapter(mOptions1Items, len));// 设置显示数据
+        wv_option1.setCurrentItem(0);// 初始化时显示的数据
+        // 选项2
+        if (N_mOptions2Items != null)
+            wv_option2.setAdapter(new ArrayWheelAdapter(N_mOptions2Items));// 设置显示数据
+        wv_option2.setCurrentItem(wv_option1.getCurrentItem());// 初始化时显示的数据
+        // 选项3
+        if (N_mOptions3Items != null)
+            wv_option3.setAdapter(new ArrayWheelAdapter(N_mOptions3Items));// 设置显示数据
+        wv_option3.setCurrentItem(wv_option3.getCurrentItem());
+        wv_option1.setIsOptions(true);
+        wv_option2.setIsOptions(true);
+        wv_option3.setIsOptions(true);
+
+        if (this.N_mOptions2Items == null)
+            wv_option2.setVisibility(View.GONE);
+        if (this.N_mOptions3Items == null)
+            wv_option3.setVisibility(View.GONE);
+    }
+
+
 
     public void setTextContentSize(int textSize) {
         wv_option1.setTextSize(textSize);
@@ -205,6 +233,17 @@ public class WheelOptions<T> {
     }
 
     /**
+     * 设置字体样式
+     *
+     * @param font 系统提供的几种样式
+     */
+    public void setTypeface (Typeface font) {
+        wv_option1.setTypeface(font);
+        wv_option2.setTypeface(font);
+        wv_option3.setTypeface(font);
+    }
+
+    /**
      * 分别设置第一二三级是否循环滚动
      *
      * @param cyclic1,cyclic2,cyclic3 是否循环
@@ -215,16 +254,30 @@ public class WheelOptions<T> {
         wv_option3.setCyclic(cyclic3);
     }
 
+
+
     /**
-     * 返回当前选中的结果对应的位置数组 因为支持三级联动效果，分三个级别索引，0，1，2
+     * 返回当前选中的结果对应的位置数组 因为支持三级联动效果，分三个级别索引，0，1，2。
+     * 在快速滑动未停止时，点击确定按钮，会进行判断，如果匹配数据越界，则设为0，防止index出错导致崩溃。
      *
      * @return 索引数组
      */
     public int[] getCurrentItems() {
         int[] currentItems = new int[3];
         currentItems[0] = wv_option1.getCurrentItem();
-        currentItems[1] = wv_option2.getCurrentItem();
-        currentItems[2] = wv_option3.getCurrentItem();
+
+        if (mOptions2Items!=null&&mOptions2Items.size()>0){//非空判断
+            currentItems[1] = wv_option2.getCurrentItem()>(mOptions2Items.get(currentItems[0]).size()-1)?0:wv_option2.getCurrentItem();
+        }else {
+            currentItems[1] = wv_option2.getCurrentItem();
+        }
+
+        if (mOptions3Items!=null&&mOptions3Items.size()>0){//非空判断
+            currentItems[2] = wv_option3.getCurrentItem()>(mOptions3Items.get(currentItems[0]).get(currentItems[1]).size()-1)?0:wv_option3.getCurrentItem();
+        }else {
+            currentItems[2] = wv_option3.getCurrentItem();
+        }
+
         return currentItems;
     }
 
@@ -297,6 +350,18 @@ public class WheelOptions<T> {
     public void setTextColorOut(int textColorOut) {
         this.textColorOut = textColorOut;
         setTextColorOut();
+    }
+
+    /**
+     * Label 是否只显示中间选中项的
+     *
+     * @param isCenterLabel
+     */
+
+    public void isCenterLabel(Boolean isCenterLabel) {
+        wv_option1.isCenterLabel(isCenterLabel);
+        wv_option2.isCenterLabel(isCenterLabel);
+        wv_option3.isCenterLabel(isCenterLabel);
     }
 
 }
