@@ -2,10 +2,10 @@
 
     <string name="pickerview_cancel">Cancel</string>
     <string name="pickerview_submit">Sure</string>
-    <string name="pickerview_year"></string>
-    <string name="pickerview_month"></string>
-    <string name="pickerview_day"></string>
-    <string name="pickerview_hours"></string>
-    <string name="pickerview_minutes"></string>
-    <string name="pickerview_seconds"></string>
+    <string name="pickerview_year">Y</string>
+    <string name="pickerview_month">M</string>
+    <string name="pickerview_day">D</string>
+    <string name="pickerview_hours">h</string>
+    <string name="pickerview_minutes">m</string>
+    <string name="pickerview_seconds">s</string>
 </resources>
