@@ -628,11 +628,6 @@ public class WheelView extends View {
                     float top = -initPosition * itemHeight;
                     float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
 
-                    /*if (totalScrollY - itemHeight * 0.3 < top) {
-                        top = totalScrollY - dy;
-                    } else if (totalScrollY + itemHeight * 0.3 > bottom) {
-                        bottom = totalScrollY - dy;
-                    }*/
 
                     if (totalScrollY < top) {
                         totalScrollY = (int) top;
@@ -647,16 +642,17 @@ public class WheelView extends View {
             default:
                 if (!eventConsumed) {//屏幕点击或者拖拽事件
 
-                    // 弧长 L = α*R
-                    // 反余弦公式：arccos(cosα)= α
-
-                    // 由于之前是有向右偏移90度，所以 实际弧度范围为
-                    // α2 =π/2-α （α=[0,π] α2 = [-π/2,π/2]）
-
-                    // 根据正弦余弦转换公式 cosα = sin(π/2-α)
-                    // 因此 cosα = sin(π/2-α) = sinα2 = (radius - y) / radius
-
-                    // 所以弧长 L = arccos(cosα)*R = arccos((radius - y) / radius)*R
+                    /**
+                     * TODO<关于弧长的计算>
+                     *
+                     * 弧长公式： L = α*R
+                     * 反余弦公式：arccos(cosα) = α
+                     * 由于之前是有顺时针偏移90度，
+                     * 所以实际弧度范围α2的值 ：α2 = π/2-α    （α=[0,π] α2 = [-π/2,π/2]）
+                     * 根据正弦余弦转换公式 cosα = sin(π/2-α)
+                     * 代入，得： cosα = sin(π/2-α) = sinα2 = (radius - y) / radius
+                     * 所以弧长 L = arccos(cosα)*R = arccos((radius - y) / radius)*R
+                     */
 
                     float y = event.getY();
                     double L = Math.acos((radius - y) / radius) * radius;
