@@ -110,7 +110,6 @@ If the default style does not meet your expectations, You can also customize att
                 .setCancelColor(Color.BLUE)
                 .setTitleBgColor(0xFF666666)//Night mode
                 .setBgColor(0xFF333333)//Night mode
-                .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//default 1900-2100 years
                 .setDate(selectedDate)// default is System time
                 .setRangDate(startDate,endDate)
                 .setLabel("year","month","day","hours","mins","seconds")
