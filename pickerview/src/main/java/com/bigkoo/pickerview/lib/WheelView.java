@@ -650,8 +650,8 @@ public class WheelView extends View {
                      * 由于之前是有顺时针偏移90度，
                      * 所以实际弧度范围α2的值 ：α2 = π/2-α    （α=[0,π] α2 = [-π/2,π/2]）
                      * 根据正弦余弦转换公式 cosα = sin(π/2-α)
-                     * 代入，得： cosα = sin(π/2-α) = sinα2 = (radius - y) / radius
-                     * 所以弧长 L = arccos(cosα)*R = arccos((radius - y) / radius)*R
+                     * 代入，得： cosα = sin(π/2-α) = sinα2 = (R - y) / R
+                     * 所以弧长 L = arccos(cosα)*R = arccos((R - y) / R)*R
                      */
 
                     float y = event.getY();
