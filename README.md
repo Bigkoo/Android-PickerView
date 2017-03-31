@@ -35,6 +35,9 @@
 ### 有兴趣研究3D滚轮效果的实现机制，希望把源码研究透彻的可以看看这篇博客：
 ### [Android-PickerView系列之源码解析篇（二）](http://blog.csdn.net/qq_22393017/article/details/59488906)
 
+### V3.2.3版本更新说明（2017-3-31）
+* 优化：滚轮边界处理优化，解决滑动到第一项或最后一项时会跳动的情况。
+* 优化：Dialog 模式 下PickerView的弹出和关闭添加了缩放动画，优化视觉效果。
 
 ### V3.2.2版本更新说明（2017-3-24）
 * 新增：isCenterLabel（boolean isCenter）方法，该方法默认为true，只在选中项显示label；填false 则每项item后面都会带有label。
@@ -59,7 +62,7 @@
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:3.2.2'
+compile 'com.contrarywind:Android-PickerView:3.2.3'
 ```
 或者
 
@@ -68,7 +71,7 @@ compile 'com.contrarywind:Android-PickerView:3.2.2'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>3.2.2</version>
+<version>3.2.3</version>
 <type>pom</type>
 </dependency>
 ```
