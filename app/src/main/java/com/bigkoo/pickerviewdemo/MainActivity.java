@@ -133,10 +133,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initCustomTimePicker() {
-        // 注意：自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针
-        // 具体可参考demo 里面的两个自定义布局
-        //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
-        //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+
+        /**
+         * @deprecated (注意事项)
+         *
+         * 1.自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针
+         * 具体可参考demo 里面的两个自定义布局。
+         * 2.因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
+         * 控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+         */
         Calendar selectedDate = Calendar.getInstance();//系统当前时间
         Calendar startDate = Calendar.getInstance();
         startDate.set(2014,1,23);
