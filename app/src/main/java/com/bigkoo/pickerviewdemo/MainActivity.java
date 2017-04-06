@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v.getId() == R.id.btn_Time && pvTime != null) {
            // pvTime.setDate(Calendar.getInstance());
-         /* pvTime.show(); //show timePicker*/
+           /* pvTime.show(); //show timePicker*/
             pvTime.show(v);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
         } else if (v.getId() == R.id.btn_Options && pvOptions != null) {
             pvOptions.show(); //弹出条件选择器
@@ -135,12 +135,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initCustomTimePicker() {
 
         /**
-         * @deprecated (注意事项)
+         * @description
          *
-         * 1.自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针
-         * 具体可参考demo 里面的两个自定义布局。
+         * 注意事项：
+         * 1.自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针.
+         * 具体可参考demo 里面的两个自定义layout布局。
          * 2.因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
-         * 控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+         * setRangDate方法控制起始终止时间(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
          */
         Calendar selectedDate = Calendar.getInstance();//系统当前时间
         Calendar startDate = Calendar.getInstance();
@@ -242,7 +243,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initOptionPicker() {//条件选择器初始化
 
-        //如果是三级联动的数据 请参照 JsonDataActivity 类里面的写法。
+        /**
+         * 注意 ：如果是三级联动的数据(省市区等)，请参照 JsonDataActivity 类里面的写法。
+         */
 
         pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
@@ -277,9 +280,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initCustomOptionPicker() {//条件选择器初始化，自定义布局
-
-        // 注意：自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针
-        // 具体可参考demo 里面的两个自定义布局
+        /**
+         * @description
+         *
+         * 注意事项：
+         * 自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针。
+         * 具体可参考demo 里面的两个自定义layout布局。
+         */
         pvCustomOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
