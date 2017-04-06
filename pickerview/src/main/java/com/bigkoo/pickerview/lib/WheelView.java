@@ -93,7 +93,7 @@ public class WheelView extends View {
     //滚动偏移值,用于记录滚动了多少个item
     int change;
 
-    // 显示几个条目
+    // 绘制几个条目，实际上第一项和最后一项Y轴压缩成0%了，所以可见的数目实际为9
     int itemsVisible = 11;
 
     int measuredHeight;// WheelView 控件高度
