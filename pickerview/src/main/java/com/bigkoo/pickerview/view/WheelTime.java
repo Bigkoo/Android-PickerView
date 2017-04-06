@@ -1,6 +1,5 @@
 package com.bigkoo.pickerview.view;
 
-import android.content.Context;
 import android.view.View;
 
 import com.bigkoo.pickerview.R;
@@ -83,7 +82,7 @@ public class WheelTime {
         final List<String> list_big = Arrays.asList(months_big);
         final List<String> list_little = Arrays.asList(months_little);
 
-        final Context context = view.getContext();
+      /*  final Context context = view.getContext();*/
         currentYear = year;
         // 年
         wv_year = (WheelView) view.findViewById(R.id.year);
@@ -97,10 +96,11 @@ public class WheelTime {
             wv_month.setAdapter(new NumericWheelAdapter(startMonth, endMonth));
             wv_month.setCurrentItem(month + 1 - startMonth);
         } else if (year == startYear) {
-
+            //起始日期的月份控制
             wv_month.setAdapter(new NumericWheelAdapter(startMonth, 12));
             wv_month.setCurrentItem(month + 1 - startMonth);
         } else if (year == endYear) {
+            //终止日期的月份控制
             wv_month.setAdapter(new NumericWheelAdapter(1, endMonth));
             wv_month.setCurrentItem(month);
         } else {
@@ -140,7 +140,7 @@ public class WheelTime {
             }
             wv_day.setCurrentItem(day - startDay);
         } else if (year == startYear && month + 1 == startMonth) {
-// 判断大小月及是否闰年,用来确定"日"的数据
+            // 起始日期的天数控制
             if (list_big.contains(String.valueOf(month + 1 ))) {
 
                 wv_day.setAdapter(new NumericWheelAdapter(startDay, 31));
@@ -159,8 +159,7 @@ public class WheelTime {
             }
             wv_day.setCurrentItem(day - startDay);
         } else if (year == endYear && month + 1 == endMonth) {
-
-// 判断大小月及是否闰年,用来确定"日"的数据
+            // 终止日期的天数控制
             if (list_big.contains(String.valueOf(month + 1 ))) {
                 if (endDay > 31) {
                     endDay = 31;
