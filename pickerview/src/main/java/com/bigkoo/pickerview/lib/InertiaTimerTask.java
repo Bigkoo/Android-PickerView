@@ -1,7 +1,10 @@
 package com.bigkoo.pickerview.lib;
 
 import java.util.TimerTask;
-
+/**
+ * @TODO<滚动惯性的实现>
+ * @author 小嵩
+ */
 final class InertiaTimerTask extends TimerTask {
 
     float a;
@@ -39,10 +42,10 @@ final class InertiaTimerTask extends TimerTask {
             float itemHeight = loopView.itemHeight;
             float top = (-loopView.initPosition) * itemHeight;
             float bottom = (loopView.getItemsCount() - 1 - loopView.initPosition) * itemHeight;
-            if(loopView.totalScrollY - itemHeight*0.3 < top){
+            if(loopView.totalScrollY - itemHeight*0.25 < top){
                 top = loopView.totalScrollY + i;
             }
-            else if(loopView.totalScrollY + itemHeight*0.3 > bottom){
+            else if(loopView.totalScrollY + itemHeight*0.25 > bottom){
                 bottom = loopView.totalScrollY + i;
             }
 

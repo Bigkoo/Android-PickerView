@@ -84,7 +84,7 @@ public class WheelView extends View {
     float centerY;
 
     //滚动总高度y值
-    int totalScrollY;
+    float totalScrollY;
     //初始化默认选中项
     int initPosition;
     //选中的Item是第几个
@@ -265,7 +265,7 @@ public class WheelView extends View {
         itemHeight = lineSpacingMultiplier * maxTextHeight;
     }
 
-    void smoothScroll(ACTION action) {
+    void smoothScroll(ACTION action) {//平滑滚动的实现
         cancelFuture();
         if (action == ACTION.FLING || action == ACTION.DAGGLE) {
             mOffset = (int) ((totalScrollY % itemHeight + itemHeight) % itemHeight);
@@ -279,9 +279,8 @@ public class WheelView extends View {
         mFuture = mExecutor.scheduleWithFixedDelay(new SmoothScrollTimerTask(this, mOffset), 0, 10, TimeUnit.MILLISECONDS);
     }
 
-    protected final void scrollBy(float velocityY) {
+    protected final void scrollBy(float velocityY) {//滚动惯性的实现
         cancelFuture();
-
         mFuture = mExecutor.scheduleWithFixedDelay(new InertiaTimerTask(this, velocityY), 0, VELOCITYFLING, TimeUnit.MILLISECONDS);
     }
 
@@ -353,10 +352,12 @@ public class WheelView extends View {
         //可见的item数组
         Object visibles[] = new Object[itemsVisible];
         //滚动的Y值高度除去每行Item的高度，得到滚动了多少个item，即change数
-        change = (int) (totalScrollY / itemHeight);
+        change = (int)(totalScrollY / itemHeight);
+
         try {
             //滚动中实际的预选中的item(即经过了中间位置的item) ＝ 滑动前的位置 ＋ 滑动相对位置
             preCurrentIndex = initPosition + change % adapter.getItemsCount();
+
         } catch (ArithmeticException e) {
             Log.e("WheelView","出错了！adapter.getItemsCount() == 0，联动数据不匹配");
         }
@@ -375,9 +376,9 @@ public class WheelView extends View {
                 preCurrentIndex = preCurrentIndex - adapter.getItemsCount();
             }
         }
-
         //跟滚动流畅度有关，总滑动距离与每个item高度取余，即并不是一格格的滚动，每个item不一定滚到对应Rect里的，这个item对应格子的偏移值
-        int itemHeightOffset = (int) (totalScrollY % itemHeight);
+        float itemHeightOffset = (totalScrollY % itemHeight);
+
         // 设置数组中每个元素的值
         int counter = 0;
         while (counter < itemsVisible) {
@@ -619,15 +620,22 @@ public class WheelView extends View {
                 break;
             //滑动中
             case MotionEvent.ACTION_MOVE:
+
                 float dy = previousY - event.getRawY();
                 previousY = event.getRawY();
-                totalScrollY = (int) (totalScrollY + dy);
+                totalScrollY = totalScrollY + dy;
 
                 // 边界处理。
                 if (!isLoop) {
                     float top = -initPosition * itemHeight;
                     float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
 
+
+                    if (totalScrollY - itemHeight * 0.25 < top) {
+                        top = totalScrollY - dy;
+                    } else if (totalScrollY + itemHeight *  0.25 > bottom) {
+                        bottom = totalScrollY - dy;
+                    }
 
                     if (totalScrollY < top) {
                         totalScrollY = (int) top;
@@ -640,7 +648,7 @@ public class WheelView extends View {
             case MotionEvent.ACTION_UP:
 
             default:
-                if (!eventConsumed) {//屏幕点击或者拖拽事件
+                if (!eventConsumed) {//未消费掉事件
 
                     /**
                      * TODO<关于弧长的计算>
@@ -672,8 +680,8 @@ public class WheelView extends View {
                 }
                 break;
         }
-        invalidate();
 
+        invalidate();
         return true;
     }
 
