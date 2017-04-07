@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setDividerColor(Color.DKGRAY)
                 .setContentSize(20)
                 .setDate(selectedDate)
-                .setRangDate(startDate,selectedDate)
+                .setRangDate(startDate,endDate)
                 .build();
     }
 

@@ -11,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 25
-        versionCode 20
-        versionName "3.2.3"
+        versionCode 21
+        versionName "3.2.4"
     }
     buildTypes {
         release {
@@ -38,7 +38,7 @@ publish {
     userOrg = 'contrarywind'//bintray.com 用户名/组织名 user/org name
     groupId = 'com.contrarywind'//JCenter上显示的路径 path
     artifactId = 'Android-PickerView'//项目名称 project name
-    publishVersion = '3.2.3'//版本号 version code
+    publishVersion = '3.2.4'//版本号 version code
     desc = 'this is a pickerview for android'//项目描述 description
     website = 'https://github.com/Contrarywind/Android-PickerView' //项目网址链接 link
 }
