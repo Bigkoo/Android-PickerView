@@ -349,9 +349,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         computer.add("Lenovo");
         computer.add("Apple");
         computer.add("HP");
-        computer.add("Nike");
-        computer.add("Adidas");
-        computer.add("Anima");
     }
 
 
