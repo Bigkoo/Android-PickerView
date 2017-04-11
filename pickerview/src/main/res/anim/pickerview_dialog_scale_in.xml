@@ -3,12 +3,12 @@
 
 
   <alpha
-      android:duration="@android:integer/config_mediumAnimTime"
+      android:duration="@integer/animation_default_duration"
       android:fromAlpha="0.0"
       android:toAlpha="1.0" />
 
   <scale
-      android:duration="@android:integer/config_mediumAnimTime"
+      android:duration="@integer/animation_default_duration"
       android:fromXScale="0.0"
       android:toXScale="1.0"
       android:fromYScale="0.0"
