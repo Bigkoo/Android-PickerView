@@ -461,13 +461,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     }
 
     public void setPicker(List<T> optionsItems) {
-        wheelOptions.setPicker(optionsItems, null, null);
-        SetCurrentItems();
+        this.setPicker(optionsItems, null, null);
     }
 
     public void setPicker(List<T> options1Items, List<List<T>> options2Items) {
-        wheelOptions.setPicker(options1Items, options2Items, null);
-        SetCurrentItems();
+        this.setPicker(options1Items, options2Items, null);
     }
 
     public void setPicker(List<T> options1Items,
