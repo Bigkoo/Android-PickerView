@@ -491,13 +491,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     @Override
     public void onClick(View v) {
         String tag = (String) v.getTag();
-        if (tag.equals(TAG_CANCEL)) {
-            dismiss();
-            return;
-        } else {
+        if (tag.equals(TAG_SUBMIT)) {
             returnData();
-            return;
         }
+        dismiss();
     }
 
     //抽离接口回调的方法
@@ -506,7 +503,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             int[] optionsCurrentItems = wheelOptions.getCurrentItems();
             optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2], clickView);
         }
-        dismiss();
     }
 
     public interface OnOptionsSelectListener {

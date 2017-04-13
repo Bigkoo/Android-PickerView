@@ -506,11 +506,10 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     @Override
     public void onClick(View v) {
         String tag = (String) v.getTag();
-        if (tag.equals(TAG_CANCEL)) {
-            dismiss();
-        } else {
+        if (tag.equals(TAG_SUBMIT)) {
             returnData();
         }
+        dismiss();
     }
 
     public void returnData() {
@@ -522,7 +521,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
                 e.printStackTrace();
             }
         }
-        dismiss();
     }
 
     public interface OnTimeSelectListener {
