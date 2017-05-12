@@ -30,7 +30,7 @@ public class BasePickerView {
 
     private Context context;
     protected ViewGroup contentContainer;
-    private ViewGroup decorView;//activity的根View
+    public ViewGroup decorView;//显示pickerview的根View,默认是activity的根view
     private ViewGroup rootView;//附加View 的 根View
     private ViewGroup dialogView;//附加Dialog 的 根View
 
@@ -48,6 +48,7 @@ public class BasePickerView {
     private boolean isShowing;
     private int gravity = Gravity.BOTTOM;
 
+
     private Dialog mDialog;
     private boolean cancelable;//是否能取消
 
@@ -61,7 +62,7 @@ public class BasePickerView {
         initEvents();*/
     }
 
-    protected void initViews() {
+    protected void initViews(int backgroudId) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         if (isDialog()) {
             //如果是对话框模式
@@ -86,12 +87,18 @@ public class BasePickerView {
         } else {
             //如果只是要显示在屏幕的下方
             //decorView是activity的根View
-            decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
+            if (decorView == null) {
+                decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
+            }
             //将控件添加到decorView中
             rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, decorView, false);
             rootView.setLayoutParams(new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
             ));
+            if (backgroudId != 0) {
+                rootView.setBackgroundColor(backgroudId);
+            }
+            // rootView.setBackgroundColor(ContextCompat.getColor(context,backgroudId));
             //这个是真正要加载时间选取器的父布局
             contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
             contentContainer.setLayoutParams(params);
@@ -134,6 +141,7 @@ public class BasePickerView {
             rootView.requestFocus();
         }
     }
+
     /**
      * 添加这个View到Activity的根视图
      *
@@ -224,9 +232,9 @@ public class BasePickerView {
     public BasePickerView setKeyBackCancelable(boolean isCancelable) {
 
         ViewGroup View;
-        if (isDialog()){
+        if (isDialog()) {
             View = dialogView;
-        }else {
+        } else {
             View = rootView;
         }
 
@@ -234,8 +242,7 @@ public class BasePickerView {
         View.setFocusableInTouchMode(isCancelable);
         if (isCancelable) {
             View.setOnKeyListener(onKeyBackListener);
-        }
-        else{
+        } else {
             View.setOnKeyListener(null);
         }
         return this;
@@ -245,13 +252,13 @@ public class BasePickerView {
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event) {
             if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_DOWN
-                    && isShowing()){
+                    && isShowing()) {
                 dismiss();
                 return true;
             }
             return false;
         }
-    } ;
+    };
 
     protected BasePickerView setOutSideCancelable(boolean isCancelable) {
         if (rootView != null) {
@@ -269,6 +276,7 @@ public class BasePickerView {
 
     /**
      * 设置对话框模式是否可以点击外部取消
+     *
      * @param cancelable
      */
     public void setDialogOutSideCancelable(boolean cancelable) {
@@ -298,6 +306,7 @@ public class BasePickerView {
             mDialog = new Dialog(context, R.style.custom_dialog2);
             mDialog.setCancelable(cancelable);//不能点外面取消,也不 能点back取消
             mDialog.setContentView(dialogView);
+
             mDialog.getWindow().setWindowAnimations(R.style.pickerview_dialogAnim);
             mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override

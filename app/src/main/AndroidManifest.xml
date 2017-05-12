@@ -17,6 +17,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".JsonDataActivity"></activity>
+        <activity android:name=".FragmentTestActivity">
+
+
+        </activity>
     </application>
 
 </manifest>
