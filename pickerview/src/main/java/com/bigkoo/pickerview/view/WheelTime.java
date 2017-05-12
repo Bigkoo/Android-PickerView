@@ -1,6 +1,5 @@
 package com.bigkoo.pickerview.view;
 
-import android.annotation.SuppressLint;
 import android.view.View;
 
 import com.bigkoo.pickerview.R;
@@ -57,7 +56,7 @@ public class WheelTime {
     public WheelTime(View view) {
         super();
         this.view = view;
-        type = new boolean[]{true,true,true,true,true,true};
+        type = new boolean[]{true, true, true, true, true, true};
         setView(view);
     }
 
@@ -356,24 +355,12 @@ public class WheelTime {
         if (type.length != 6) {
             throw new RuntimeException("type[] length is not 6");
         }
-        if (!type[0]) {
-            wv_year.setVisibility(View.GONE);
-        }
-        if (!type[1]) {
-            wv_month.setVisibility(View.GONE);
-        }
-        if (!type[2]) {
-            wv_day.setVisibility(View.GONE);
-        }
-        if (!type[3]) {
-            wv_hours.setVisibility(View.GONE);
-        }
-        if (!type[4]) {
-            wv_mins.setVisibility(View.GONE);
-        }
-        if (!type[5]) {
-            wv_seconds.setVisibility(View.GONE);
-        }
+        wv_year.setVisibility(type[0] ? View.VISIBLE : View.GONE);
+        wv_month.setVisibility(type[1] ? View.VISIBLE : View.GONE);
+        wv_day.setVisibility(type[2] ? View.VISIBLE : View.GONE);
+        wv_hours.setVisibility(type[3] ? View.VISIBLE : View.GONE);
+        wv_mins.setVisibility(type[4] ? View.VISIBLE : View.GONE);
+        wv_seconds.setVisibility(type[5] ? View.VISIBLE : View.GONE);
         setContentTextSize();
     }
 
@@ -587,7 +574,7 @@ public class WheelTime {
     public void setRangDate(Calendar startDate, Calendar endDate) {
 
         if (startDate == null && endDate != null) {
-             int year = endDate.get(Calendar.YEAR);
+            int year = endDate.get(Calendar.YEAR);
             int month = endDate.get(Calendar.MONTH) + 1;
             int day = endDate.get(Calendar.DAY_OF_MONTH);
             if (year > startYear) {
