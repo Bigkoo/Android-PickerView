@@ -104,9 +104,7 @@ public class BasePickerView {
             contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
             contentContainer.setLayoutParams(params);
         }
-
         setKeyBackCancelable(true);
-
     }
 
     protected void init() {
@@ -252,7 +250,7 @@ public class BasePickerView {
         return this;
     }
 
-    public BasePickerView setKeyBackCancelable(boolean isCancelable) {
+    public void setKeyBackCancelable(boolean isCancelable) {
 
         ViewGroup View;
         if (isDialog()) {
@@ -268,7 +266,6 @@ public class BasePickerView {
         } else {
             View.setOnKeyListener(null);
         }
-        return this;
     }
 
     private View.OnKeyListener onKeyBackListener = new View.OnKeyListener() {

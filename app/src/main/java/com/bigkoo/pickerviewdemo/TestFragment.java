@@ -70,6 +70,8 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                 .setDecorView(mFrameLayout)//非dialog模式下,设置ViewGroup, pickerView将会添加到这个ViewGroup中
                 .setBackgroundId(0x00000000)
                 .build();
+
+        pvTime.setKeyBackCancelable(false);//系统返回键监听屏蔽掉
     }
 
     @Override

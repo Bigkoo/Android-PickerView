@@ -55,7 +55,7 @@
         android:id="@+id/btn_fragment"
         android:layout_margin="10dp"
         android:layout_below="@+id/tvTime"
-        android:text="跳转至fragment显示时间选择器"
+        android:text="自定义控件父容器"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
 
