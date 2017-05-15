@@ -31,7 +31,7 @@ and support for the linkage, dialog . It's very easy to use ,  you also can cust
 ### Gradle
 
 ```java
-compile 'com.contrarywind:Android-PickerView:3.2.4'
+compile 'com.contrarywind:Android-PickerView:3.2.5'
 ```
 
 ### Maven
@@ -40,7 +40,7 @@ compile 'com.contrarywind:Android-PickerView:3.2.4'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>3.2.4</version>
+<version>3.2.5</version>
 <type>pom</type>
 </dependency>
 ```
