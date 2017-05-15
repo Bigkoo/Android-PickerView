@@ -131,13 +131,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 btn.setText(getTime(date));
             }
         })
-                .setType(new boolean[]{true, true, true, false, false, false})
-                .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
+                //年月日时分秒 的显示与否，不设置则默认全部显示
+                .setType(new boolean[]{false, false, false, true, true, false})
+                .setLabel("","","","点","分","")
+                .isCenterLabel(false)
                 .setDividerColor(Color.DKGRAY)
-                .setContentSize(20)
+                .setContentSize(21)
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
-                .setRangDate(startDate,selectedDate)
                 .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
                 .setDecorView(null)
                 .build();

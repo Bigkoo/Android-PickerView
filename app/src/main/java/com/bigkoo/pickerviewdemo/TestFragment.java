@@ -50,7 +50,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
 
         Calendar endDate = Calendar.getInstance();
         endDate.set(2019,11,28);
-        //香蕉选择器
+        //时间选择器
         pvTime = new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
