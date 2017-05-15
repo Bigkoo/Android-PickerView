@@ -62,13 +62,13 @@ public class TestFragment extends Fragment implements View.OnClickListener {
             }
         })
                 .setType(new boolean[]{false, true, true, false, false, false})
-
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                 .setDividerColor(Color.DKGRAY)
                 .setContentSize(20)
                 .setDate(selectedDate)
                 .setRangDate(startDate,selectedDate)
                 .setDecorView(mFrameLayout)//非dialog模式下,设置ViewGroup, pickerView将会添加到这个ViewGroup中
+                .setBackgroundId(0x00000000)
                 .build();
     }
 
