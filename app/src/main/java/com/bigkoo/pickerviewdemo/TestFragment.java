@@ -61,7 +61,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                 btn.setText(getTime(date));
             }
         })
-                .setType(TimePickerView.Type.YEAR_MONTH_DAY)
+                .setType(new boolean[]{true, true, true, false, false, false})
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                 .setDividerColor(Color.DKGRAY)
                 .setContentSize(20)
