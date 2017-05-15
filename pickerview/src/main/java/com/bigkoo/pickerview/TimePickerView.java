@@ -68,7 +68,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private int textColorOut; //分割线以外的文字颜色
     private int textColorCenter; //分割线之间的文字颜色
     private int dividerColor; //分割线的颜色
-    private int backgroudId; //显示时的外部背景色颜色,默认是灰色
+    private int backgroundId; //显示时的外部背景色颜色,默认是灰色
 
     // 条目间距倍数 默认1.6
     private float lineSpacingMultiplier = 1.6F;
@@ -118,7 +118,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.lineSpacingMultiplier = builder.lineSpacingMultiplier;
         this.isDialog = builder.isDialog;
         this.dividerType = builder.dividerType;
-        this.backgroudId = builder.backgroudId;
+        this.backgroundId = builder.backgroundId;
         this.decorView = builder.decorView;
         initView(builder.context);
     }
@@ -161,7 +161,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private int textColorOut; //分割线以外的文字颜色
         private int textColorCenter; //分割线之间的文字颜色
         private int dividerColor; //分割线的颜色
-        private int backgroudId; //显示时的外部背景色颜色,默认是灰色
+        private int backgroundId; //显示时的外部背景色颜色,默认是灰色
         private WheelView.DividerType dividerType;//分隔线类型
         // 条目间距倍数 默认1.6
         private float lineSpacingMultiplier = 1.6F;
@@ -324,11 +324,11 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         /**
          * //显示时的外部背景色颜色,默认是灰色
-         * @param backgroudId
+         * @param backgroundId
          */
 
-        public Builder setBackgroudId(int backgroudId) {
-            this.backgroudId = backgroudId;
+        public Builder setBackgroundId(int backgroundId) {
+            this.backgroundId = backgroundId;
             return this;
         }
 
@@ -386,7 +386,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
     private void initView(Context context) {
         setDialogOutSideCancelable(cancelable);
-        initViews(backgroudId);
+        initViews(backgroundId);
         init();
         initEvents();
         if (customListener == null) {

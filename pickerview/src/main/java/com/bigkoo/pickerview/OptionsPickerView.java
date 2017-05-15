@@ -54,7 +54,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private int textColorOut; //分割线以外的文字颜色
     private int textColorCenter; //分割线之间的文字颜色
     private int dividerColor; //分割线的颜色
-    private int backgroudId; //显示时的外部背景色颜色,默认是灰色
+    private int backgroundId; //显示时的外部背景色颜色,默认是灰色
     // 条目间距倍数 默认1.6
     private float lineSpacingMultiplier = 1.6F;
     private boolean isDialog;//是否是对话框模式
@@ -123,7 +123,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         this.layoutRes = builder.layoutRes;
         this.isDialog = builder.isDialog;
         this.dividerType = builder.dividerType;
-        this.backgroudId = builder.backgroudId;
+        this.backgroundId = builder.backgroundId;
         this.decorView = builder.decorView;
         initView(builder.context);
     }
@@ -158,7 +158,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private int textColorOut; //分割线以外的文字颜色
         private int textColorCenter; //分割线之间的文字颜色
         private int dividerColor; //分割线的颜色
-        private int backgroudId; //显示时的外部背景色颜色,默认是灰色
+        private int backgroundId; //显示时的外部背景色颜色,默认是灰色
         public ViewGroup decorView ;//显示pickerview的根View,默认是activity的根view
         // 条目间距倍数 默认1.6
         private float lineSpacingMultiplier = 1.6F;
@@ -220,11 +220,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         /**
          * 显示时的外部背景色颜色,默认是灰色
-         * @param backgroudId
+         * @param backgroundId
          * @return
          */
-        public Builder setBackgroudId(int backgroudId) {
-            this.backgroudId = backgroudId;
+        public Builder setBackgroundId(int backgroundId) {
+            this.backgroundId = backgroundId;
             return this;
         }
         /**
@@ -393,7 +393,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     private void initView(Context context) {
         setDialogOutSideCancelable(cancelable);
-        initViews(backgroudId);
+        initViews(backgroundId);
         init();
         initEvents();
         if (customListener == null) {

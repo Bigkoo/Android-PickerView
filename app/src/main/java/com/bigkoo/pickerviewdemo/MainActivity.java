@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -165,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentSize(20)
                 .setDate(selectedDate)
                 .setRangDate(startDate,selectedDate)
-                .setBackgroudId(ContextCompat.getColor(this,R.color.pickerview_timebtn_nor)) //设置显示时的外部背景颜色
+                .setBackgroundId(ContextCompat.getColor(this,R.color.pickerview_timebtn_nor)) //设置显示时的外部背景颜色
                 .setDecorView(null)
                 .build();
     }
@@ -308,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setTextColorCenter(Color.LTGRAY)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setLabels("省","市","区")
-                .setBackgroudId(ContextCompat.getColor(this,R.color.pickerview_timebtn_nor)) //设置显示时的外部背景颜色
+                .setBackgroundId(ContextCompat.getColor(this,R.color.pickerview_timebtn_nor)) //设置显示时的外部背景颜色
                 .build();
 
         //pvOptions.setSelectOptions(1,1);
