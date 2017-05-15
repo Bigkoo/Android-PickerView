@@ -50,7 +50,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
 
         Calendar endDate = Calendar.getInstance();
         endDate.set(2019,11,28);
-        //时间选择器
+        //香蕉选择器
         pvTime = new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
@@ -61,19 +61,20 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                 btn.setText(getTime(date));
             }
         })
-                .setType(new boolean[]{true, true, true, false, false, false})
+                .setType(new boolean[]{false, true, true, false, false, false})
+
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                 .setDividerColor(Color.DKGRAY)
                 .setContentSize(20)
                 .setDate(selectedDate)
                 .setRangDate(startDate,selectedDate)
-                .setDecorView(mFrameLayout)//设置viewgroup,pickerview将会添加到这个viewgroup中
+                .setDecorView(mFrameLayout)//非dialog模式下,设置ViewGroup, pickerView将会添加到这个ViewGroup中
                 .build();
     }
 
     @Override
     public void onClick(View v) {
-        pvTime.show(v);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
+        pvTime.show(v,false);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示

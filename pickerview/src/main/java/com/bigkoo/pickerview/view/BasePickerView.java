@@ -54,6 +54,7 @@ public class BasePickerView {
 
     protected View clickView;//是通过哪个View弹出的
 
+    private boolean isAnim = true;
     public BasePickerView(Context context) {
         this.context = context;
 
@@ -116,18 +117,30 @@ public class BasePickerView {
     protected void initEvents() {
     }
 
-    /**
-     * show的时候调用
-     *
-     * @param view 这个View
-     */
-    private void onAttached(View view) {
-        decorView.addView(view);
-        contentContainer.startAnimation(inAnim);
-    }
 
     /**
-     * 添加这个View到Activity的根视图
+     * @param v (是通过哪个View弹出的)
+     * @param isAnim  是否显示动画效果
+     */
+    public void show(View v, boolean isAnim) {
+        this.clickView = v;
+        this.isAnim = isAnim;
+        show();
+    }
+
+    public void show(boolean isAnim) {
+        this.isAnim = isAnim;
+        show();
+    }
+
+    public void show(View v) {
+        this.clickView = v;
+        show();
+    }
+
+
+    /**
+     * 添加View到根视图
      */
     public void show() {
         if (isDialog()) {
@@ -142,15 +155,19 @@ public class BasePickerView {
         }
     }
 
+
     /**
-     * 添加这个View到Activity的根视图
+     * show的时候调用
      *
-     * @param v (是通过哪个View弹出的)
+     * @param view 这个View
      */
-    public void show(View v) {
-        this.clickView = v;
-        show();
+    private void onAttached(View view) {
+        decorView.addView(view);
+        if(isAnim){
+            contentContainer.startAnimation(inAnim);
+        }
     }
+
 
     /**
      * 检测该View是不是已经添加到根视图
@@ -174,43 +191,49 @@ public class BasePickerView {
                 return;
             }
 
+            if (isAnim){
+                //消失动画
+                outAnim.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        dismissImmediately();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                contentContainer.startAnimation(outAnim);
+            } else {
+                dismissImmediately();
+            }
             dismissing = true;
-
-            //消失动画
-            outAnim.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    decorView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            dismissImmediately();
-                        }
-                    });
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            contentContainer.startAnimation(outAnim);
         }
+
 
     }
 
     public void dismissImmediately() {
-        //从activity根视图移除
-        decorView.removeView(rootView);
-        isShowing = false;
-        dismissing = false;
-        if (onDismissListener != null) {
-            onDismissListener.onDismiss(BasePickerView.this);
-        }
+
+        decorView.post(new Runnable() {
+            @Override
+            public void run() {
+                //从根视图移除
+                decorView.removeView(rootView);
+                isShowing = false;
+                dismissing = false;
+                if (onDismissListener != null) {
+                    onDismissListener.onDismiss(BasePickerView.this);
+                }
+            }
+        });
+
 
     }
 

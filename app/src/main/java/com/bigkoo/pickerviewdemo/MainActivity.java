@@ -114,10 +114,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
         //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
         Calendar selectedDate = Calendar.getInstance();
-
         Calendar startDate = Calendar.getInstance();
         startDate.set(2013, 0, 23);
-
         Calendar endDate = Calendar.getInstance();
         endDate.set(2019, 11, 28);
         //时间选择器
