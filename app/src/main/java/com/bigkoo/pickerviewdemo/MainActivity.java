@@ -107,35 +107,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pvNoLinkOptions.setNPicker(food,clothes,computer);
     }
 
-  /*  private void initTimePicker() {
-        //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
-        //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
-        Calendar selectedDate = Calendar.getInstance();
-        Calendar startDate = Calendar.getInstance();
-        startDate.set(2013,0,23);
-
-        Calendar endDate = Calendar.getInstance();
-        endDate.set(2019,11,28);
-        //时间选择器
-        pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
-
-                *//*btn_Time.setText(getTime(date));*//*
-                Button btn = (Button) v;
-                btn.setText(getTime(date));
-            }
-        })
-                .setType(TimePickerView.Type.YEAR_MONTH_DAY)
-                .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
-                .setDividerColor(Color.DKGRAY)
-               // .setContentSize(20)
-                .setDate(Calendar.getInstance())
-                .setRangDate(startDate,endDate)
-                .build();
-
-    }*/
 
     private void initTimePicker() {
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
@@ -147,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Calendar endDate = Calendar.getInstance();
         endDate.set(2019,11,28);
-        //香蕉选择器
+        //时间选择器
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
@@ -164,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentSize(20)
                 .setDate(selectedDate)
                 .setRangDate(startDate,selectedDate)
-                .setBackgroundId(ContextCompat.getColor(this,R.color.pickerview_timebtn_nor)) //设置显示时的外部背景颜色
+                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
                 .setDecorView(null)
                 .build();
     }
@@ -307,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setTextColorCenter(Color.LTGRAY)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setLabels("省","市","区")
-                .setBackgroundId(ContextCompat.getColor(this,R.color.pickerview_timebtn_nor)) //设置显示时的外部背景颜色
+                .setBackgroundId(0x66000000) //设置外部遮罩颜色
                 .build();
 
         //pvOptions.setSelectOptions(1,1);
