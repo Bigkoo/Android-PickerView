@@ -27,16 +27,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ArrayList<ProvinceBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
+
  /*   private ArrayList<ArrayList<ArrayList<IPickerViewData>>> options3Items = new ArrayList<>();*/
     private Button btn_Time, btn_Options,btn_CustomOptions,btn_CustomTime,btn_no_linkage,btn_to_Fragment;
 
-    private TimePickerView pvTime,pvCustomTime;
-    private OptionsPickerView pvOptions,pvCustomOptions, pvNoLinkOptions;
+    private TimePickerView pvTime, pvCustomTime;
+    private OptionsPickerView pvOptions, pvCustomOptions, pvNoLinkOptions;
     private ArrayList<CardBean> cardItem = new ArrayList<>();
 
     private ArrayList<String> food = new ArrayList<>();
     private ArrayList<String> clothes = new ArrayList<>();
     private ArrayList<String> computer = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,16 +74,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_Time && pvTime != null) {
-           // pvTime.setDate(Calendar.getInstance());
+            // pvTime.setDate(Calendar.getInstance());
            /* pvTime.show(); //show timePicker*/
             pvTime.show(v);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
         } else if (v.getId() == R.id.btn_Options && pvOptions != null) {
             pvOptions.show(); //弹出条件选择器
         } else if (v.getId() == R.id.btn_CustomOptions && pvCustomOptions != null) {
             pvCustomOptions.show(); //弹出自定义条件选择器
-        }else if (v.getId() == R.id.btn_CustomTime && pvCustomTime != null) {
+        } else if (v.getId() == R.id.btn_CustomTime && pvCustomTime != null) {
             pvCustomTime.show(); //弹出自定义时间选择器
-        }else if (v.getId() == R.id.btn_no_linkage&& pvNoLinkOptions !=null){//不联动数据选择器
+        } else if (v.getId() == R.id.btn_no_linkage && pvNoLinkOptions != null) {//不联动数据选择器
             pvNoLinkOptions.show();
         }else if (v.getId() == R.id.btn_GotoJsonData){//跳转到 省市区解析示例页面
             startActivity(new Intent(MainActivity.this,JsonDataActivity.class));
@@ -97,14 +99,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
 
-                String str = "food:"+food.get(options1)
-                        +"\nclothes:"+clothes.get(options2)
-                        +"\ncomputer:"+computer.get(options3);
+                String str = "food:" + food.get(options1)
+                        + "\nclothes:" + clothes.get(options2)
+                        + "\ncomputer:" + computer.get(options3);
 
-                Toast.makeText(MainActivity.this,str,Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
             }
         }).build();
-        pvNoLinkOptions.setNPicker(food,clothes,computer);
+        pvNoLinkOptions.setNPicker(food, clothes, computer);
     }
 
 
@@ -114,10 +116,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Calendar selectedDate = Calendar.getInstance();
 
         Calendar startDate = Calendar.getInstance();
-        startDate.set(2013,0,23);
+        startDate.set(2013, 0, 23);
 
         Calendar endDate = Calendar.getInstance();
-        endDate.set(2019,11,28);
+        endDate.set(2019, 11, 28);
         //时间选择器
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
@@ -129,11 +131,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 btn.setText(getTime(date));
             }
         })
-                .setType(TimePickerView.Type.YEAR_MONTH_DAY)
+                .setType(new boolean[]{true, true, true, false, false, false})
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                 .setDividerColor(Color.DKGRAY)
                 .setContentSize(20)
                 .setDate(selectedDate)
+                .setRangDate(startDate, endDate)
                 .setRangDate(startDate,selectedDate)
                 .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
                 .setDecorView(null)
@@ -154,9 +157,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          */
         Calendar selectedDate = Calendar.getInstance();//系统当前时间
         Calendar startDate = Calendar.getInstance();
-        startDate.set(2014,1,23);
+        startDate.set(2014, 1, 23);
         Calendar endDate = Calendar.getInstance();
-        endDate.set(2027,2,28);
+        endDate.set(2027, 2, 28);
         //时间选择器 ，自定义布局
         pvCustomTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
@@ -180,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setCancelColor(Color.WHITE)*/
                /*.gravity(Gravity.RIGHT)// default is center*/
                 .setDate(selectedDate)
-                .setRangDate(startDate,endDate)
+                .setRangDate(startDate, endDate)
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
 
                     @Override
@@ -201,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         });
                     }
                 })
-                .setType(TimePickerView.Type.YEAR_MONTH_DAY)
+                .setType(new boolean[]{true, true, true, false, false, false})
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(Color.RED)
                 .build();
@@ -224,9 +227,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getNoLinkData();
 
         //选项1
-        options1Items.add(new ProvinceBean(0,"广东","描述部分","其他数据"));
-        options1Items.add(new ProvinceBean(1,"湖南","描述部分","其他数据"));
-        options1Items.add(new ProvinceBean(2,"广西","描述部分","其他数据"));
+        options1Items.add(new ProvinceBean(0, "广东", "描述部分", "其他数据"));
+        options1Items.add(new ProvinceBean(1, "湖南", "描述部分", "其他数据"));
+        options1Items.add(new ProvinceBean(2, "广西", "描述部分", "其他数据"));
 
         //选项2
         ArrayList<String> options2Items_01 = new ArrayList<>();
@@ -269,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setTitleText("城市选择")
                 .setContentTextSize(20)//设置滚轮文字大小
                 .setDividerColor(Color.GREEN)//设置分割线的颜色
-                .setSelectOptions(0,1)//默认选中项
+                .setSelectOptions(0, 1)//默认选中项
                 .setBgColor(Color.BLACK)
                 .setTitleBgColor(Color.DKGRAY)
                 .setTitleColor(Color.LTGRAY)
@@ -277,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setSubmitColor(Color.YELLOW)
                 .setTextColorCenter(Color.LTGRAY)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-                .setLabels("省","市","区")
+                .setLabels("省", "市", "区")
                 .setBackgroundId(0x66000000) //设置外部遮罩颜色
                 .build();
 

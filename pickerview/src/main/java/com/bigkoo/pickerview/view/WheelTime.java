@@ -3,7 +3,6 @@ package com.bigkoo.pickerview.view;
 import android.view.View;
 
 import com.bigkoo.pickerview.R;
-import com.bigkoo.pickerview.TimePickerView.Type;
 import com.bigkoo.pickerview.adapter.NumericWheelAdapter;
 import com.bigkoo.pickerview.lib.WheelView;
 import com.bigkoo.pickerview.listener.OnItemSelectedListener;
@@ -26,7 +25,7 @@ public class WheelTime {
     private WheelView wv_seconds;
     private int gravity;
 
-    private Type type;
+    private boolean[] type;
     private static final int DEFAULT_START_YEAR = 1900;
     private static final int DEFAULT_END_YEAR = 2100;
     private static final int DEFAULT_START_MONTH = 1;
@@ -57,11 +56,11 @@ public class WheelTime {
     public WheelTime(View view) {
         super();
         this.view = view;
-        type = Type.ALL;
+        type = new boolean[]{true, true, true, true, true, true};
         setView(view);
     }
 
-    public WheelTime(View view, Type type, int gravity, int textSize) {
+    public WheelTime(View view, boolean[] type, int gravity, int textSize) {
         super();
         this.view = view;
         this.type = type;
@@ -114,7 +113,7 @@ public class WheelTime {
         wv_day = (WheelView) view.findViewById(R.id.day);
 
         if (startYear == endYear && startMonth == endMonth) {
-            if (list_big.contains(String.valueOf( month + 1))) {
+            if (list_big.contains(String.valueOf(month + 1))) {
                 if (endDay > 31) {
                     endDay = 31;
                 }
@@ -141,10 +140,10 @@ public class WheelTime {
             wv_day.setCurrentItem(day - startDay);
         } else if (year == startYear && month + 1 == startMonth) {
             // 起始日期的天数控制
-            if (list_big.contains(String.valueOf(month + 1 ))) {
+            if (list_big.contains(String.valueOf(month + 1))) {
 
                 wv_day.setAdapter(new NumericWheelAdapter(startDay, 31));
-            } else if (list_little.contains(String.valueOf(month + 1 ))) {
+            } else if (list_little.contains(String.valueOf(month + 1))) {
 
                 wv_day.setAdapter(new NumericWheelAdapter(startDay, 30));
             } else {
@@ -160,12 +159,12 @@ public class WheelTime {
             wv_day.setCurrentItem(day - startDay);
         } else if (year == endYear && month + 1 == endMonth) {
             // 终止日期的天数控制
-            if (list_big.contains(String.valueOf(month + 1 ))) {
+            if (list_big.contains(String.valueOf(month + 1))) {
                 if (endDay > 31) {
                     endDay = 31;
                 }
                 wv_day.setAdapter(new NumericWheelAdapter(1, endDay));
-            } else if (list_little.contains(String.valueOf(month + 1 ))) {
+            } else if (list_little.contains(String.valueOf(month + 1))) {
                 if (endDay > 30) {
                     endDay = 30;
                 }
@@ -190,7 +189,7 @@ public class WheelTime {
             if (list_big.contains(String.valueOf(month + 1))) {
 
                 wv_day.setAdapter(new NumericWheelAdapter(1, 31));
-            } else if (list_little.contains(String.valueOf(month + 1 ))) {
+            } else if (list_little.contains(String.valueOf(month + 1))) {
 
                 wv_day.setAdapter(new NumericWheelAdapter(1, 30));
             } else {
@@ -245,7 +244,7 @@ public class WheelTime {
                         wv_month.setCurrentItem(currentMonthItem);
                     }
 
-                    int monthNum = currentMonthItem +startMonth;
+                    int monthNum = currentMonthItem + startMonth;
 
                     if (startMonth == endMonth) {
                         //重新设置日
@@ -334,7 +333,7 @@ public class WheelTime {
                         setReDay(currentYear, month_num, 1, 31, list_big, list_little);
                     }
 
-                } else if (currentYear == endYear ) {
+                } else if (currentYear == endYear) {
                     if (month_num == endMonth) {
                         //重新设置日
                         setReDay(currentYear, wv_month.getCurrentItem() + 1, 1, endDay, list_big, list_little);
@@ -353,40 +352,15 @@ public class WheelTime {
         };
         wv_year.setOnItemSelectedListener(wheelListener_year);
         wv_month.setOnItemSelectedListener(wheelListener_month);
-
-        switch (type) {
-            case ALL:
-               /* textSize = textSize * 3;*/
-                break;
-            case YEAR_MONTH_DAY:
-               /* textSize = textSize * 4;*/
-                wv_hours.setVisibility(View.GONE);
-                wv_mins.setVisibility(View.GONE);
-                wv_seconds.setVisibility(View.GONE);
-                break;
-            case HOURS_MINS:
-                /*textSize = textSize * 4;*/
-                wv_year.setVisibility(View.GONE);
-                wv_month.setVisibility(View.GONE);
-                wv_day.setVisibility(View.GONE);
-                wv_seconds.setVisibility(View.GONE);
-                break;
-            case MONTH_DAY_HOUR_MIN:
-               /* textSize = textSize * 3;*/
-                wv_year.setVisibility(View.GONE);
-                wv_seconds.setVisibility(View.GONE);
-                break;
-            case YEAR_MONTH:
-               /* textSize = textSize * 4;*/
-                wv_day.setVisibility(View.GONE);
-                wv_hours.setVisibility(View.GONE);
-                wv_mins.setVisibility(View.GONE);
-                wv_seconds.setVisibility(View.GONE);
-            case YEAR_MONTH_DAY_HOUR_MIN:
-               /* textSize = textSize * 4;*/
-
-                wv_seconds.setVisibility(View.GONE);
+        if (type.length != 6) {
+            throw new RuntimeException("type[] length is not 6");
         }
+        wv_year.setVisibility(type[0] ? View.VISIBLE : View.GONE);
+        wv_month.setVisibility(type[1] ? View.VISIBLE : View.GONE);
+        wv_day.setVisibility(type[2] ? View.VISIBLE : View.GONE);
+        wv_hours.setVisibility(type[3] ? View.VISIBLE : View.GONE);
+        wv_mins.setVisibility(type[4] ? View.VISIBLE : View.GONE);
+        wv_seconds.setVisibility(type[5] ? View.VISIBLE : View.GONE);
         setContentTextSize();
     }
 
@@ -490,34 +464,34 @@ public class WheelTime {
     }
 
     public void setLabels(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
-        if (label_year!=null){
+        if (label_year != null) {
             wv_year.setLabel(label_year);
         } else {
             wv_year.setLabel(view.getContext().getString(R.string.pickerview_year));
         }
-        if (label_month!=null){
+        if (label_month != null) {
             wv_month.setLabel(label_month);
         } else {
             wv_month.setLabel(view.getContext().getString(R.string.pickerview_month));
         }
-        if (label_day!=null){
+        if (label_day != null) {
             wv_day.setLabel(label_day);
-        }else {
+        } else {
             wv_day.setLabel(view.getContext().getString(R.string.pickerview_day));
         }
-        if (label_hours!=null){
+        if (label_hours != null) {
             wv_hours.setLabel(label_hours);
         } else {
             wv_hours.setLabel(view.getContext().getString(R.string.pickerview_hours));
         }
-        if (label_mins!=null){
+        if (label_mins != null) {
             wv_mins.setLabel(label_mins);
-        }else {
+        } else {
             wv_mins.setLabel(view.getContext().getString(R.string.pickerview_minutes));
         }
-        if (label_seconds!=null){
+        if (label_seconds != null) {
             wv_seconds.setLabel(label_seconds);
-        }else {
+        } else {
             wv_seconds.setLabel(view.getContext().getString(R.string.pickerview_seconds));
         }
 
@@ -601,7 +575,7 @@ public class WheelTime {
 
         if (startDate == null && endDate != null) {
             int year = endDate.get(Calendar.YEAR);
-            int month = endDate.get(Calendar.MONTH)+1;
+            int month = endDate.get(Calendar.MONTH) + 1;
             int day = endDate.get(Calendar.DAY_OF_MONTH);
             if (year > startYear) {
                 this.endYear = year;
@@ -623,7 +597,7 @@ public class WheelTime {
 
         } else if (startDate != null && endDate == null) {
             int year = startDate.get(Calendar.YEAR);
-            int month = startDate.get(Calendar.MONTH)+1;
+            int month = startDate.get(Calendar.MONTH) + 1;
             int day = startDate.get(Calendar.DAY_OF_MONTH);
             if (year < endYear) {
                 this.startMonth = month;
@@ -646,8 +620,8 @@ public class WheelTime {
         } else if (startDate != null && endDate != null) {
             this.startYear = startDate.get(Calendar.YEAR);
             this.endYear = endDate.get(Calendar.YEAR);
-            this.startMonth = startDate.get(Calendar.MONTH)+1;
-            this.endMonth = endDate.get(Calendar.MONTH)+1;
+            this.startMonth = startDate.get(Calendar.MONTH) + 1;
+            this.endMonth = endDate.get(Calendar.MONTH) + 1;
             this.startDay = startDate.get(Calendar.DAY_OF_MONTH);
             this.endDay = endDate.get(Calendar.DAY_OF_MONTH);
 
