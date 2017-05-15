@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -63,6 +64,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private int textColorOut; //分割线以外的文字颜色
     private int textColorCenter; //分割线之间的文字颜色
     private int dividerColor; //分割线的颜色
+    private int backgroundId; //显示时的外部背景色颜色,默认是灰色
 
     // 条目间距倍数 默认1.6
     private float lineSpacingMultiplier = 1.6F;
@@ -112,6 +114,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.lineSpacingMultiplier = builder.lineSpacingMultiplier;
         this.isDialog = builder.isDialog;
         this.dividerType = builder.dividerType;
+        this.backgroundId = builder.backgroundId;
+        this.decorView = builder.decorView;
         initView(builder.context);
     }
 
@@ -147,11 +151,14 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         private boolean cyclic = false;//是否循环
         private boolean cancelable = true;//是否能取消
-        private boolean isCenterLabel = true;//是否只显示中间的label
+
+        private boolean isCenterLabel = true ;//是否只显示中间的label
+        public ViewGroup decorView ;//显示pickerview的根View,默认是activity的根view
 
         private int textColorOut; //分割线以外的文字颜色
         private int textColorCenter; //分割线之间的文字颜色
         private int dividerColor; //分割线的颜色
+        private int backgroundId; //显示时的外部背景色颜色,默认是灰色
         private WheelView.DividerType dividerType;//分隔线类型
         // 条目间距倍数 默认1.6
         private float lineSpacingMultiplier = 1.6F;
@@ -204,6 +211,16 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         public Builder setCancelColor(int Color_Cancel) {
             this.Color_Cancel = Color_Cancel;
+            return this;
+        }
+        /**
+         * 必须是viewgroup
+         * 设置要将pickerview显示到的容器id
+         * @param decorView
+         * @return
+         */
+        public Builder setDecorView(ViewGroup decorView) {
+            this.decorView = decorView;
             return this;
         }
 
@@ -305,6 +322,16 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         }
 
         /**
+         * //显示时的外部背景色颜色,默认是灰色
+         * @param backgroundId
+         */
+
+        public Builder setBackgroundId(int backgroundId) {
+            this.backgroundId = backgroundId;
+            return this;
+        }
+
+        /**
          * 设置分割线之间的文字的颜色
          *
          * @param textColorCenter
@@ -358,7 +385,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
     private void initView(Context context) {
         setDialogOutSideCancelable(cancelable);
-        initViews();
+        initViews(backgroundId);
         init();
         initEvents();
         if (customListener == null) {

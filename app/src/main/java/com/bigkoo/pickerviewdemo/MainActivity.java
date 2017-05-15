@@ -3,6 +3,7 @@ package com.bigkoo.pickerviewdemo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -26,8 +27,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ArrayList<ProvinceBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
-    /*   private ArrayList<ArrayList<ArrayList<IPickerViewData>>> options3Items = new ArrayList<>();*/
-    private Button btn_Time, btn_Options, btn_CustomOptions, btn_CustomTime, btn_no_linkage;
+
+ /*   private ArrayList<ArrayList<ArrayList<IPickerViewData>>> options3Items = new ArrayList<>();*/
+    private Button btn_Time, btn_Options,btn_CustomOptions,btn_CustomTime,btn_no_linkage,btn_to_Fragment;
 
     private TimePickerView pvTime, pvCustomTime;
     private OptionsPickerView pvOptions, pvCustomOptions, pvNoLinkOptions;
@@ -56,12 +58,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_CustomOptions = (Button) findViewById(R.id.btn_CustomOptions);
         btn_CustomTime = (Button) findViewById(R.id.btn_CustomTime);
         btn_no_linkage = (Button) findViewById(R.id.btn_no_linkage);
+        btn_to_Fragment = (Button) findViewById(R.id.btn_fragment);
 
         btn_Time.setOnClickListener(this);
         btn_Options.setOnClickListener(this);
         btn_CustomOptions.setOnClickListener(this);
         btn_CustomTime.setOnClickListener(this);
         btn_no_linkage.setOnClickListener(this);
+        btn_to_Fragment.setOnClickListener(this);
 
         findViewById(R.id.btn_GotoJsonData).setOnClickListener(this);
     }
@@ -81,8 +85,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             pvCustomTime.show(); //弹出自定义时间选择器
         } else if (v.getId() == R.id.btn_no_linkage && pvNoLinkOptions != null) {//不联动数据选择器
             pvNoLinkOptions.show();
-        } else if (v.getId() == R.id.btn_GotoJsonData) {//跳转到 省市区解析示例页面
-            startActivity(new Intent(MainActivity.this, JsonDataActivity.class));
+        }else if (v.getId() == R.id.btn_GotoJsonData){//跳转到 省市区解析示例页面
+            startActivity(new Intent(MainActivity.this,JsonDataActivity.class));
+        }else if (v.getId() == R.id.btn_fragment){//跳转到 fragment
+            startActivity(new Intent(MainActivity.this,FragmentTestActivity.class));
         }
     }
 
@@ -103,10 +109,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pvNoLinkOptions.setNPicker(food, clothes, computer);
     }
 
+
     private void initTimePicker() {
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
         //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
         Calendar selectedDate = Calendar.getInstance();
+
         Calendar startDate = Calendar.getInstance();
         startDate.set(2013, 0, 23);
 
@@ -129,8 +137,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentSize(20)
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
+                .setRangDate(startDate,selectedDate)
+                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
+                .setDecorView(null)
                 .build();
     }
+
 
     private void initCustomTimePicker() {
 
@@ -269,6 +281,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setTextColorCenter(Color.LTGRAY)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setLabels("省", "市", "区")
+                .setBackgroundId(0x66000000) //设置外部遮罩颜色
                 .build();
 
         //pvOptions.setSelectOptions(1,1);

@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -53,6 +54,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private int textColorOut; //分割线以外的文字颜色
     private int textColorCenter; //分割线之间的文字颜色
     private int dividerColor; //分割线的颜色
+    private int backgroundId; //显示时的外部背景色颜色,默认是灰色
     // 条目间距倍数 默认1.6
     private float lineSpacingMultiplier = 1.6F;
     private boolean isDialog;//是否是对话框模式
@@ -121,7 +123,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         this.layoutRes = builder.layoutRes;
         this.isDialog = builder.isDialog;
         this.dividerType = builder.dividerType;
-
+        this.backgroundId = builder.backgroundId;
+        this.decorView = builder.decorView;
         initView(builder.context);
     }
 
@@ -155,6 +158,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private int textColorOut; //分割线以外的文字颜色
         private int textColorCenter; //分割线之间的文字颜色
         private int dividerColor; //分割线的颜色
+        private int backgroundId; //显示时的外部背景色颜色,默认是灰色
+        public ViewGroup decorView ;//显示pickerview的根View,默认是activity的根view
         // 条目间距倍数 默认1.6
         private float lineSpacingMultiplier = 1.6F;
         private boolean isDialog;//是否是对话框模式
@@ -212,6 +217,29 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             this.Color_Cancel = Color_Cancel;
             return this;
         }
+
+        /**
+         * 显示时的外部背景色颜色,默认是灰色
+         * @param backgroundId
+         * @return
+         */
+        public Builder setBackgroundId(int backgroundId) {
+            this.backgroundId = backgroundId;
+            return this;
+        }
+        /**
+         * 必须是viewgroup
+         * 设置要将pickerview显示到的容器
+         * @param decorView
+         * @return
+         */
+        public Builder setDecorView(ViewGroup decorView) {
+            this.decorView = decorView;
+            return this;
+        }
+
+
+
 
         public Builder setLayoutRes(int res, CustomListener listener) {
             this.layoutRes = res;
@@ -365,7 +393,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     private void initView(Context context) {
         setDialogOutSideCancelable(cancelable);
-        initViews();
+        initViews(backgroundId);
         init();
         initEvents();
         if (customListener == null) {
