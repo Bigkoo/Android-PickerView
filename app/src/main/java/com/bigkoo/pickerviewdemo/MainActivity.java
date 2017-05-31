@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<ProvinceBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
 
- /*   private ArrayList<ArrayList<ArrayList<IPickerViewData>>> options3Items = new ArrayList<>();*/
-    private Button btn_Time, btn_Options,btn_CustomOptions,btn_CustomTime,btn_no_linkage,btn_to_Fragment;
+    /*   private ArrayList<ArrayList<ArrayList<IPickerViewData>>> options3Items = new ArrayList<>();*/
+    private Button btn_Time, btn_Options, btn_CustomOptions, btn_CustomTime, btn_no_linkage, btn_to_Fragment;
 
     private TimePickerView pvTime, pvCustomTime;
     private OptionsPickerView pvOptions, pvCustomOptions, pvNoLinkOptions;
@@ -85,10 +85,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             pvCustomTime.show(); //弹出自定义时间选择器
         } else if (v.getId() == R.id.btn_no_linkage && pvNoLinkOptions != null) {//不联动数据选择器
             pvNoLinkOptions.show();
-        }else if (v.getId() == R.id.btn_GotoJsonData){//跳转到 省市区解析示例页面
-            startActivity(new Intent(MainActivity.this,JsonDataActivity.class));
-        }else if (v.getId() == R.id.btn_fragment){//跳转到 fragment
-            startActivity(new Intent(MainActivity.this,FragmentTestActivity.class));
+        } else if (v.getId() == R.id.btn_GotoJsonData) {//跳转到 省市区解析示例页面
+            startActivity(new Intent(MainActivity.this, JsonDataActivity.class));
+        } else if (v.getId() == R.id.btn_fragment) {//跳转到 fragment
+            startActivity(new Intent(MainActivity.this, FragmentTestActivity.class));
         }
     }
 
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         })
                 //年月日时分秒 的显示与否，不设置则默认全部显示
                 .setType(new boolean[]{false, false, false, true, true, false})
-                .setLabel("","","","点","分","")
+                .setLabel("", "", "", "点", "分", "")
                 .isCenterLabel(false)
                 .setDividerColor(Color.DKGRAY)
                 .setContentSize(21)
@@ -193,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             @Override
                             public void onClick(View v) {
                                 pvCustomTime.returnData();
+                                pvCustomTime.dismiss();
                             }
                         });
                         ivCancel.setOnClickListener(new View.OnClickListener() {
@@ -284,11 +285,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
 
         //pvOptions.setSelectOptions(1,1);
-
         /*pvOptions.setPicker(options1Items);//一级选择器*/
         pvOptions.setPicker(options1Items, options2Items);//二级选择器
         /*pvOptions.setPicker(options1Items, options2Items,options3Items);//三级选择器*/
-
     }
 
     private void initCustomOptionPicker() {//条件选择器初始化，自定义布局
@@ -317,8 +316,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             @Override
                             public void onClick(View v) {
                                 pvCustomOptions.returnData();
+                                pvCustomOptions.dismiss();
                             }
                         });
+
                         ivCancel.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -346,6 +347,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void getCardData() {
         for (int i = 0; i < 5; i++) {
             cardItem.add(new CardBean(i, "No.ABC12345 " + i));
+        }
+
+        for (int i = 0; i < cardItem.size(); i++) {
+            if (cardItem.get(i).getCardNo().length() > 6) {
+                String str_item = cardItem.get(i).getCardNo().substring(0, 6) + "...";
+                cardItem.get(i).setCardNo(str_item);
+            }
         }
     }
 

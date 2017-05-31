@@ -37,4 +37,6 @@ public class CardBean implements IPickerViewData {
     public String getPickerViewText() {
         return cardNo;
     }
+
 }
+

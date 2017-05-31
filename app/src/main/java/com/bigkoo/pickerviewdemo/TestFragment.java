@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.listener.CustomListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -50,18 +53,38 @@ public class TestFragment extends Fragment implements View.OnClickListener {
 
         Calendar endDate = Calendar.getInstance();
         endDate.set(2019,11,28);
-        //香蕉选择器
+        //时间选择器
         pvTime = new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
-
                 /*btn_Time.setText(getTime(date));*/
                 Button btn = (Button) v;
                 btn.setText(getTime(date));
             }
         })
-                .setType(new boolean[]{false, true, true, false, false, false})
+                .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
+
+                    @Override
+                    public void customLayout(View v) {
+                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
+                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
+                        tvSubmit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvTime.returnData();
+                                /*pvTime.dismiss();*/
+                            }
+                        });
+                        ivCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                /*pvTime.dismiss();*/
+                            }
+                        });
+                    }
+                })
+                .setType(new boolean[]{true, true, true, false, false, false})
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                 .setDividerColor(Color.DKGRAY)
                 .setContentSize(20)
