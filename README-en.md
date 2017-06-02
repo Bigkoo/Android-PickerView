@@ -110,7 +110,6 @@ If the default style does not meet your expectations, You can also customize att
                 .setCancelColor(Color.BLUE)
                 .setTitleBgColor(0xFF666666)//Night mode
                 .setBgColor(0xFF333333)//Night mode
-                .setDate(selectedDate)// default is System time
                 .setRangDate(startDate,endDate)
                 .setLabel("year","month","day","hours","mins","seconds")
                 .build();
