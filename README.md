@@ -141,7 +141,6 @@ TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTi
                 .setCancelColor(Color.BLUE)//取消按钮文字颜色
                 .setTitleBgColor(0xFF666666)//标题背景颜色 Night mode
                 .setBgColor(0xFF333333)//滚轮背景颜色 Night mode
-                .setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR) + 20)//默认是1900-2100年
                 .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
                 .setRangDate(startDate,endDate)//起始终止年月日设定
                 .setLabel("年","月","日","时","分","秒")
