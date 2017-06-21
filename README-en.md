@@ -195,7 +195,7 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
     }
 ```
 
-## If you do need to set the no linkage data：
+## If you need to set the non-linkage data：
 
 ```java
 pvNoLinkOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
