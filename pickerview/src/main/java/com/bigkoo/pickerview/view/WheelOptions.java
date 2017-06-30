@@ -79,10 +79,16 @@ public class WheelOptions<T> {
         wv_option2.setIsOptions(true);
         wv_option3.setIsOptions(true);
 
-        if (this.mOptions2Items == null)
+        if (this.mOptions2Items == null) {
             wv_option2.setVisibility(View.GONE);
-        if (this.mOptions3Items == null)
+        } else {
+            wv_option2.setVisibility(View.VISIBLE);
+        }
+        if (this.mOptions3Items == null) {
             wv_option3.setVisibility(View.GONE);
+        } else {
+            wv_option3.setVisibility(View.VISIBLE);
+        }
 
         // 联动监听器
         wheelListener_option1 = new OnItemSelectedListener() {
@@ -158,12 +164,17 @@ public class WheelOptions<T> {
         wv_option2.setIsOptions(true);
         wv_option3.setIsOptions(true);
 
-        if (this.N_mOptions2Items == null)
+        if (this.N_mOptions2Items == null) {
             wv_option2.setVisibility(View.GONE);
-        if (this.N_mOptions3Items == null)
+        } else {
+            wv_option2.setVisibility(View.VISIBLE);
+        }
+        if (this.N_mOptions3Items == null) {
             wv_option3.setVisibility(View.GONE);
+        } else {
+            wv_option3.setVisibility(View.VISIBLE);
+        }
     }
-
 
 
     public void setTextContentSize(int textSize) {
