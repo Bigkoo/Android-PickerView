@@ -349,6 +349,15 @@ public class WheelView extends View {
         if (adapter == null) {
             return;
         }
+        //initPosition越界会造成preCurrentIndex的值不正确
+        if(initPosition<0)
+        {
+            initPosition = 0;
+        }
+        if(initPosition>=adapter.getItemsCount())
+        {
+            initPosition = adapter.getItemsCount()-1;
+        }
         //可见的item数组
         Object visibles[] = new Object[itemsVisible];
         //滚动的Y值高度除去每行Item的高度，得到滚动了多少个item，即change数
