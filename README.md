@@ -35,6 +35,16 @@
 ### 有兴趣研究3D滚轮效果的实现机制，希望把源码研究透彻的可以看看这篇博客：
 ### [Android-PickerView系列之源码解析篇（二）](http://blog.csdn.net/qq_22393017/article/details/59488906)
 
+### 使用注意事项（2017-7-10）
+* 注意：当我们进行设置时间的启始位置时，需要特别注意
+* 原因：组件内部对月份进行了加1 处理，并且结束日期 设置为 最后月份的天数
+* 错误使用案例： 
+  startDate.set(2013,1,1);
+  endDate.set(2020,1,1);
+* 正确使用案例：
+  startDate.set(2013,0,1);
+  endDate.set(2020,11,31);
+  
 ### V3.2.5版本更新说明（2017-5-15）
 * 优化：年月日时分秒 从枚举类型改为boolean 数组，分别控制它们的显示与否。
 * 新增：setBackgroundId方法，原本是默认灰色，新增此方法，可根据实际需求自由定制背景遮罩颜色。
@@ -118,9 +128,13 @@ TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTi
 ```java
  Calendar selectedDate = Calendar.getInstance();
  Calendar startDate = Calendar.getInstance();
- startDate.set(2013,1,1);
+ //startDate.set(2013,1,1);
  Calendar endDate = Calendar.getInstance();
- endDate.set(2020,1,1);
+ //endDate.set(2020,1,1);
+ 
+  //正确设置方式 原因：注意事项有说明
+  startDate.set(2013,0,1);
+  endDate.set(2020,11,31);
 
  pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
