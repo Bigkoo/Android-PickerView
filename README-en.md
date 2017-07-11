@@ -81,20 +81,20 @@ compile 'com.contrarywind:Android-PickerView:3.2.5'
 
 
 ### Notes（2017-7-10）
-* Note: when we start setting the time, we need to pay special attention
-* reason: the internal component of the month adds 1 processing and the end date is set to the last month's number of days
+- when we start setting the date, we need to pay special attention.
 
-* error usage case:
+- reason: the internal component of the Calendar adds 1 processing, which made the month's number of  count reduced one.
+- error usage case:
 
-StartDate.set (2013,1,1);
+>StartDate.set (2013,1,1);
 
-EndDate.set (2020,12,31);
+>EndDate.set (2020,12,31);
 
-* correct use case:
+- correct use case:
 
-StartDate.set (2013,0,1);
+>StartDate.set (2013,0,1);
 
-EndDate.set (2020,11,31);
+>EndDate.set (2020,11,31);
 </br>
 
 
