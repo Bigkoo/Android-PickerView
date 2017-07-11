@@ -142,7 +142,7 @@ TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTi
                 tvTime.setText(getTime(date));
             }
         })
-                .setType(TimePickerView.Type.ALL)//默认全部显示
+                .setType(new boolean[]{true, true, true, true, true, true})// 默认全部显示
                 .setCancelText("Cancel")//取消按钮文字
                 .setSubmitText("Sure")//确认按钮文字
                 .setContentSize(18)//滚轮文字大小
@@ -157,7 +157,7 @@ TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTi
                 .setBgColor(0xFF333333)//滚轮背景颜色 Night mode
                 .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
                 .setRangDate(startDate,endDate)//起始终止年月日设定
-                .setLabel("年","月","日","时","分","秒")
+                .setLabel("年","月","日","时","分","秒")//默认设置为年月日时分秒
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .isDialog(true)//是否显示为对话框样式
                 .build();
