@@ -87,9 +87,9 @@ If the default style does not meet your expectations, You can also customize att
 ```java
  Calendar selectedDate = Calendar.getInstance();
  Calendar startDate = Calendar.getInstance();
- startDate.set(2013,1,1);
+ startDate.set(2013,0,1);
  Calendar endDate = Calendar.getInstance();
- endDate.set(2020,1,1);
+ endDate.set(2020,11,1);
 
  pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
@@ -213,6 +213,19 @@ pvNoLinkOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOp
         pvNoLinkOptions.setNPicker(food,clothes,computer);
         pvNoLinkOptions.show();
 ```
+
+### Notes（2017-7-10）
+* Note: when we start setting the time, we need to pay special attention
+* reason: the internal component of the month adds 1 processing and the end date is set to the last month's number of days
+
+* error usage case:
+StartDate.set (2013,1,1);
+EndDate.set (2020,12,31);
+
+* correct use case:
+StartDate.set (2013,0,1);
+EndDate.set (2020,11,31);
+
 
 ## For more detail, pelase refer to the Demo code, If there is still doubt about you, pelase [New Issue](https://github.com/Bigkoo/Android-PickerView/issues) 
 
