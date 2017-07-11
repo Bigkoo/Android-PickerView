@@ -110,11 +110,11 @@ If the default style does not meet your expectations, You can also customize att
 
  pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
-            public void onTimeSelect(Date date,View v) {//Callback
+            public void onTimeSelect(Date date,View v) {//callback
                 tvTime.setText(getTime(date));
             }
         })
-                .setType(TimePickerView.Type.ALL)//default all
+                .setType(new boolean[]{false, false, false, true, true, false})// type of date 
                 .setCancelText("Cancel")
                 .setSubmitText("Sure")
                 .setContentSize(18)
@@ -125,8 +125,8 @@ If the default style does not meet your expectations, You can also customize att
                 .setTitleColor(Color.BLACK)
                 .setSubmitColor(Color.BLUE)
                 .setCancelColor(Color.BLUE)
-                .setTitleBgColor(0xFF666666)//Night mode
-                .setBgColor(0xFF333333)//Night mode
+                .setTitleBgColor(0xFF666666)//night mode
+                .setBgColor(0xFF333333)//night mode
                 .setRangDate(startDate,endDate)
                 .setLabel("year","month","day","hours","mins","seconds")
                 .build();
@@ -151,8 +151,8 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
                 .setTitleColor(Color.BLACK)
                 .setSubmitColor(Color.BLUE)
                 .setCancelColor(Color.BLUE)
-                .setTitleBgColor(0xFF666666)//Night mode
-                .setBgColor(0xFF444444)//Night mode
+                .setTitleBgColor(0xFF666666)//night mode
+                .setBgColor(0xFF444444)//night mode
                 .setContentTextSize(18)
                 .setLinkage(false)
                 .isCenterLabel(false) //default is true , if you choose false , the label text will add to all item ContentText right
@@ -183,7 +183,7 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
             public void onTimeSelect(Date date, View v) {//call back
                 btn_CustomTime.setText(getTime(date));
             }
-        })      .setType(TimePickerView.Type.YEAR_MONTH_DAY)
+        })       .setType(new boolean[]{true, true, true, false, false, false})// year - month - day
                 .setDate(selectedDate)
                 .setRangDate(startDate,endDate)
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
