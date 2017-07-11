@@ -80,6 +80,23 @@ compile 'com.contrarywind:Android-PickerView:3.2.5'
 ## Just so easy ~
 
 
+### Notes（2017-7-10）
+* Note: when we start setting the time, we need to pay special attention
+* reason: the internal component of the month adds 1 processing and the end date is set to the last month's number of days
+
+* error usage case:
+
+StartDate.set (2013,1,1);
+
+EndDate.set (2020,12,31);
+
+* correct use case:
+
+StartDate.set (2013,0,1);
+
+EndDate.set (2020,11,31);
+</br>
+
 
 If the default style does not meet your expectations, You can also customize attributes to apply
 
@@ -213,19 +230,6 @@ pvNoLinkOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOp
         pvNoLinkOptions.setNPicker(food,clothes,computer);
         pvNoLinkOptions.show();
 ```
-
-### Notes（2017-7-10）
-* Note: when we start setting the time, we need to pay special attention
-* reason: the internal component of the month adds 1 processing and the end date is set to the last month's number of days
-
-* error usage case:
-StartDate.set (2013,1,1);
-EndDate.set (2020,12,31);
-
-* correct use case:
-StartDate.set (2013,0,1);
-EndDate.set (2020,11,31);
-
 
 ## For more detail, pelase refer to the Demo code, If there is still doubt about you, pelase [New Issue](https://github.com/Bigkoo/Android-PickerView/issues) 
 
