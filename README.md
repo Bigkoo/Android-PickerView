@@ -1,13 +1,19 @@
 
 ## Android-PickerView
+[![Bintray](https://img.shields.io/bintray/v/contrarywind/maven/Android-PickerView.svg)](https://bintray.com/contrarywind/maven/Android-PickerView)
+[![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg)](https://android-arsenal.com/api?level=9) 
+[![download](https://img.shields.io/badge/download-2.3M-brightgreen.svg)](https://github.com/Bigkoo/Android-PickerView/archive/master.zip)
+[![license](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+
+#### Show some :heart: and :stars: the repo to support the project
+[![GitHub stars](https://img.shields.io/github/stars/Bigkoo/Android-PickerView.svg?style=social)](https://github.com/Bigkoo/Android-PickerView/stargazers) [![GitHub forks](https://img.shields.io/github/forks/Bigkoo/Android-PickerView.svg?style=social)](https://github.com/Bigkoo/Android-PickerView/network) [![GitHub watchers](https://img.shields.io/github/watchers/Bigkoo/Android-PickerView.svg?style=social)](https://github.com/Bigkoo/Android-PickerView/watchers)
 
 ### [English Document](https://github.com/Bigkoo/Android-PickerView/blob/master/README-en.md)
-
-### 关于项目的更多详请，请查看 [Wiki](https://github.com/Bigkoo/Android-PickerView/wiki)
-### 对于使用上有任何疑问或优化建议等，欢迎加入QQ群： 387051294 讨论交流技术问题。
+</br>
+#### 关于项目的更多详请，请查看 [Wiki](https://github.com/Bigkoo/Android-PickerView/wiki)
+#### 对于使用上有任何疑问或优化建议等，欢迎加入QQ群： 387051294 讨论交流技术问题。
 
 #### [saiwu-bigkoo](https://github.com/saiwu-bigkoo) 吴哥已经转行不干编程了，他已把项目转交给我维护。2.x/1.x/农历已分支出去并停止更新，若有需要请查看旧版本说明文档： [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
-
 </br>
 
 ## 介绍
