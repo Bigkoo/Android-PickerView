@@ -2,7 +2,7 @@
 ## Android-PickerView
 [![Bintray](https://img.shields.io/bintray/v/contrarywind/maven/Android-PickerView.svg)](https://bintray.com/contrarywind/maven/Android-PickerView)
 [![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg)](https://android-arsenal.com/api?level=9) 
-[![download](https://img.shields.io/badge/download-2.3M-brightgreen.svg)](https://github.com/Bigkoo/Android-PickerView/archive/master.zip)
+[![download](https://img.shields.io/badge/download-v2.3.5-brightgreen.svg)](https://github.com/Bigkoo/Android-PickerView/archive/master.zip)
 [![license](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 #### Show some :heart: and :stars: the repo to support the project
