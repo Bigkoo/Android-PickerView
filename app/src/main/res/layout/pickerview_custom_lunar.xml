@@ -23,15 +23,14 @@
             android:padding="8dp"
             android:src="@drawable/to_down" />
 
-        <TextView
+        <CheckBox
             android:layout_centerInParent="true"
-            android:id="@+id/tv_lunar"
+            android:id="@+id/cb_lunar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="17dp"
-            android:padding="8dp"
-            android:text="切换"
+            android:text="农历"
             android:textColor="#24AD9D"
             android:textSize="18sp" />
         <TextView

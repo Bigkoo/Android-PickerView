@@ -5,8 +5,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -112,11 +116,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         })
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
-                .setLunarCalendar(true)
                 .setLayoutRes(R.layout.pickerview_custom_lunar, new CustomListener() {
 
                     @Override
-                    public void customLayout(View v) {
+                    public void customLayout(final View v) {
                         final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
                         ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
                         tvSubmit.setOnClickListener(new View.OnClickListener() {
@@ -132,13 +135,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 pvLunar.dismiss();
                             }
                         });
-                        v.findViewById(R.id.tv_lunar).setOnClickListener(new View.OnClickListener() {
+                        CheckBox cb_lunar = (CheckBox) v.findViewById(R.id.cb_lunar);
+                        cb_lunar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
-                            public void onClick(View v) {
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                                 pvLunar.setLunarCalendar(!pvLunar.isLunarCalendar());
+                                //自适应宽
+                                setTimePickerChildWeight(v, isChecked ? 0.8f : 1f, 1.1f);
                             }
                         });
 
+                    }
+
+                    /**
+                     * 公农历切换后调整宽
+                     * @param v
+                     * @param yearWeight
+                     * @param weight
+                     */
+                    private void setTimePickerChildWeight(View v, float yearWeight, float weight) {
+                        ViewGroup timepicker = (ViewGroup) v.findViewById(R.id.timepicker);
+                        View year = timepicker.getChildAt(0);
+                        LinearLayout.LayoutParams lp = ((LinearLayout.LayoutParams) year.getLayoutParams());
+                        lp.weight = yearWeight;
+                        year.setLayoutParams(lp);
+                        for (int i = 1; i < timepicker.getChildCount(); i++) {
+                            View childAt = timepicker.getChildAt(i);
+                            LinearLayout.LayoutParams childLp = ((LinearLayout.LayoutParams) childAt.getLayoutParams());
+                            childLp.weight = weight;
+                            childAt.setLayoutParams(childLp);
+                        }
                     }
                 })
                 .setType(new boolean[]{true, true, true, true, true, false})
