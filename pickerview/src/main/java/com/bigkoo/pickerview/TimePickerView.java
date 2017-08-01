@@ -569,6 +569,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             seconds = calendar.get(Calendar.SECOND);
 
             wheelTime.setLunarCalendar(lunar);
+            wheelTime.setLabels(label_year, label_month, label_day, label_hours, label_mins, label_seconds);
             wheelTime.setPicker(year, month, day, hours, minute, seconds);
         } catch (ParseException e) {
             e.printStackTrace();

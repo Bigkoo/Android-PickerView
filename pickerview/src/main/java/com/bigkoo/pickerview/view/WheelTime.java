@@ -1,7 +1,5 @@
 package com.bigkoo.pickerview.view;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.View;
 
 import com.bigkoo.pickerview.R;
@@ -109,7 +107,6 @@ public class WheelTime {
      * @param s
      */
     private void setLunar(int year, final int month, int day, boolean isLeap, int h, int m, int s) {
-        Context context = view.getContext();
         // 年
         wv_year = (WheelView) view.findViewById(R.id.year);
         wv_year.setAdapter(new ArrayWheelAdapter(ChinaDate.getYears(startYear, endYear)));// 设置"年"的显示数据
@@ -138,19 +135,19 @@ public class WheelTime {
 
         wv_hours = (WheelView) view.findViewById(R.id.hour);
         wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
-        wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字
+        //wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字
         wv_hours.setCurrentItem(h);
         wv_hours.setGravity(gravity);
 
         wv_mins = (WheelView) view.findViewById(R.id.min);
         wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
-        wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
+        //wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
         wv_mins.setCurrentItem(m);
         wv_mins.setGravity(gravity);
 
         wv_seconds = (WheelView) view.findViewById(R.id.second);
         wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
-        wv_seconds.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
+        //wv_seconds.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
         wv_seconds.setCurrentItem(m);
         wv_seconds.setGravity(gravity);
 
@@ -239,7 +236,6 @@ public class WheelTime {
      * @param s
      */
     private void setSolar(int year, final int month, int day, int h, int m, int s) {
-        Log.d("---------->", "setSolar");
         // 添加大小月月份并将其转换为list,方便之后的判断
         String[] months_big = {"1", "3", "5", "7", "8", "10", "12"};
         String[] months_little = {"4", "6", "9", "11"};
@@ -629,6 +625,10 @@ public class WheelTime {
     }
 
     public void setLabels(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
+        if (isLunarCalendar){
+            return;
+        }
+
         if (label_year != null) {
             wv_year.setLabel(label_year);
         } else {

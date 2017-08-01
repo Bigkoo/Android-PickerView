@@ -141,8 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
                 })
-                .setType(new boolean[]{true, true, true, false, false, false})
-                .setLabel("", "", "", "", "", "")
+                .setType(new boolean[]{true, true, true, true, true, false})
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(Color.RED)
                 .build();
