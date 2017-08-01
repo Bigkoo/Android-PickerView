@@ -3,7 +3,6 @@ package com.bigkoo.pickerviewdemo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -68,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_to_Fragment.setOnClickListener(this);
 
         findViewById(R.id.btn_GotoJsonData).setOnClickListener(this);
+        findViewById(R.id.btn_lunar).setOnClickListener(this);
     }
 
 
@@ -89,7 +89,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(MainActivity.this, JsonDataActivity.class));
         } else if (v.getId() == R.id.btn_fragment) {//跳转到 fragment
             startActivity(new Intent(MainActivity.this, FragmentTestActivity.class));
+        } else if (v.getId() == R.id.btn_lunar) {
+            initLunarPicker();
+            pvLunar.show();
         }
+    }
+
+    TimePickerView pvLunar;
+
+    private void initLunarPicker() {
+        Calendar selectedDate = Calendar.getInstance();//系统当前时间
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2014, 1, 23);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2027, 2, 28);
+        //时间选择器 ，自定义布局
+        pvLunar = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
+            }
+        })
+                .setDate(selectedDate)
+                .setRangDate(startDate, endDate)
+                .setLunarCalendar(true)
+                .setLayoutRes(R.layout.pickerview_custom_lunar, new CustomListener() {
+
+                    @Override
+                    public void customLayout(View v) {
+                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
+                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
+                        tvSubmit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvLunar.returnData();
+                                pvLunar.dismiss();
+                            }
+                        });
+                        ivCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvLunar.dismiss();
+                            }
+                        });
+                        v.findViewById(R.id.tv_lunar).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvLunar.setLunarCalendar(!pvLunar.isLunarCalendar());
+                            }
+                        });
+
+                    }
+                })
+                .setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel("", "", "", "", "", "")
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .setDividerColor(Color.RED)
+                .build();
     }
 
 
