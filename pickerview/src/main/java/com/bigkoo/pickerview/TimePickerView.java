@@ -60,7 +60,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private boolean cyclic;//是否循环
     private boolean cancelable;//是否能取消
     private boolean isCenterLabel;//是否只显示中间的label
-    private boolean isLunarCalendar;//是否显示农历
 
     private int textColorOut; //分割线以外的文字颜色
     private int textColorCenter; //分割线之间的文字颜色
@@ -100,7 +99,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.date = builder.date;
         this.cyclic = builder.cyclic;
         this.isCenterLabel = builder.isCenterLabel;
-        this.isLunarCalendar = builder.isLunarCalendar;
         this.cancelable = builder.cancelable;
         this.label_year = builder.label_year;
         this.label_month = builder.label_month;
@@ -154,9 +152,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private boolean cyclic = false;//是否循环
         private boolean cancelable = true;//是否能取消
 
-        private boolean isCenterLabel = true;//是否只显示中间的label
-        private boolean isLunarCalendar = false;//是否显示农历
-        public ViewGroup decorView;//显示pickerview的根View,默认是activity的根view
+        private boolean isCenterLabel = true ;//是否只显示中间的label
+        public ViewGroup decorView ;//显示pickerview的根View,默认是activity的根view
 
         private int textColorOut; //分割线以外的文字颜色
         private int textColorCenter; //分割线之间的文字颜色
@@ -216,11 +213,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             this.Color_Cancel = Color_Cancel;
             return this;
         }
-
         /**
          * 必须是viewgroup
          * 设置要将pickerview显示到的容器id
-         *
          * @param decorView
          * @return
          */
@@ -328,7 +323,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         /**
          * //显示时的外部背景色颜色,默认是灰色
-         *
          * @param backgroundId
          */
 
@@ -367,11 +361,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
-        public Builder setLunarCalendar(boolean lunarCalendar) {
-            isLunarCalendar = lunarCalendar;
-            return this;
-        }
-
         public Builder setLabel(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
             this.label_year = label_year;
             this.label_month = label_month;
@@ -394,7 +383,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     }
 
 
-    public void initView(Context context) {
+    private void initView(Context context) {
         setDialogOutSideCancelable(cancelable);
         initViews(backgroundId);
         init();
@@ -440,7 +429,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         timePickerView.setBackgroundColor(Color_Background_Wheel == 0 ? bgColor_default : Color_Background_Wheel);
 
         wheelTime = new WheelTime(timePickerView, type, gravity, Size_Content);
-        wheelTime.setLunarCalendar(isLunarCalendar);
 
         if (startYear != 0 && endYear != 0 && startYear <= endYear) {
             setRange();
@@ -555,31 +543,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             }
         }
     }
-
-    public void setLunarCalendar(boolean lunar) {
-        try {
-            int year, month, day, hours, minute, seconds;
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(WheelTime.dateFormat.parse(wheelTime.getTime()));
-            year = calendar.get(Calendar.YEAR);
-            month = calendar.get(Calendar.MONTH);
-            day = calendar.get(Calendar.DAY_OF_MONTH);
-            hours = calendar.get(Calendar.HOUR_OF_DAY);
-            minute = calendar.get(Calendar.MINUTE);
-            seconds = calendar.get(Calendar.SECOND);
-
-            wheelTime.setLunarCalendar(lunar);
-            wheelTime.setLabels(label_year, label_month, label_day, label_hours, label_mins, label_seconds);
-            wheelTime.setPicker(year, month, day, hours, minute, seconds);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public boolean isLunarCalendar() {
-        return wheelTime.isLunarCalendar();
-    }
-
 
     public interface OnTimeSelectListener {
         void onTimeSelect(Date date, View v);
