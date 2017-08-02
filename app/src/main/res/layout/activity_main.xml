@@ -5,6 +5,18 @@
 
     android:orientation="vertical">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+
     <Button
         android:id="@+id/btn_lunar"
         android:layout_margin="10dp"
@@ -64,5 +76,9 @@
         android:text="自定义控件父容器"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
