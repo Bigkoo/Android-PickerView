@@ -3,12 +3,9 @@ package com.bigkoo.pickerview.view;
 import android.view.View;
 
 import com.bigkoo.pickerview.R;
-import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
 import com.bigkoo.pickerview.adapter.NumericWheelAdapter;
 import com.bigkoo.pickerview.lib.WheelView;
 import com.bigkoo.pickerview.listener.OnItemSelectedListener;
-import com.bigkoo.pickerview.utils.ChinaDate;
-import com.bigkoo.pickerview.utils.LunarCalendar;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -56,8 +53,6 @@ public class WheelTime {
 
     private WheelView.DividerType dividerType;
 
-    private boolean isLunarCalendar = false;
-
     public WheelTime(View view) {
         super();
         this.view = view;
@@ -74,168 +69,11 @@ public class WheelTime {
         setView(view);
     }
 
-
-    public void setLunarCalendar(boolean isLunarCalendar) {
-        this.isLunarCalendar = isLunarCalendar;
-    }
-
-    public boolean isLunarCalendar() {
-        return isLunarCalendar;
-    }
-
     public void setPicker(int year, int month, int day) {
         this.setPicker(year, month, day, 0, 0, 0);
     }
 
     public void setPicker(int year, final int month, int day, int h, int m, int s) {
-        if (isLunarCalendar) {
-            int[] lunar = LunarCalendar.solarToLunar(year, month + 1, day);
-            setLunar(lunar[0], lunar[1], lunar[2], lunar[3] == 1, h, m, s);
-        } else {
-            setSolar(year, month, day, h, m, s);
-        }
-    }
-
-    /**
-     * 设置农历
-     *
-     * @param year
-     * @param month
-     * @param day
-     * @param h
-     * @param m
-     * @param s
-     */
-    private void setLunar(int year, final int month, int day, boolean isLeap, int h, int m, int s) {
-        // 年
-        wv_year = (WheelView) view.findViewById(R.id.year);
-        wv_year.setAdapter(new ArrayWheelAdapter(ChinaDate.getYears(startYear, endYear)));// 设置"年"的显示数据
-        wv_year.setLabel("");// 添加文字
-        wv_year.setCurrentItem(year - startYear);// 初始化时显示的数据
-        wv_year.setGravity(gravity);
-
-        // 月
-        wv_month = (WheelView) view.findViewById(R.id.month);
-        wv_month.setAdapter(new ArrayWheelAdapter(ChinaDate.getMonths(year)));
-        wv_month.setLabel("");
-        wv_month.setCurrentItem(isLeap ? month : month - 1);
-        wv_month.setGravity(gravity);
-
-        // 日
-        wv_day = (WheelView) view.findViewById(R.id.day);
-        // 判断大小月及是否闰年,用来确定"日"的数据
-        if (ChinaDate.leapMonth(year) == 0) {
-            wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year, month))));
-        } else {
-            wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.leapDays(year))));
-        }
-        wv_day.setLabel("");
-        wv_day.setCurrentItem(day - 1);
-        wv_day.setGravity(gravity);
-
-        wv_hours = (WheelView) view.findViewById(R.id.hour);
-        wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
-        //wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字
-        wv_hours.setCurrentItem(h);
-        wv_hours.setGravity(gravity);
-
-        wv_mins = (WheelView) view.findViewById(R.id.min);
-        wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
-        //wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
-        wv_mins.setCurrentItem(m);
-        wv_mins.setGravity(gravity);
-
-        wv_seconds = (WheelView) view.findViewById(R.id.second);
-        wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
-        //wv_seconds.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
-        wv_seconds.setCurrentItem(m);
-        wv_seconds.setGravity(gravity);
-
-        // 添加"年"监听
-        OnItemSelectedListener wheelListener_year = new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                int year_num = index + startYear;
-                // 判断是不是闰年,来确定月和日的选择
-                wv_month.setAdapter(new ArrayWheelAdapter(ChinaDate.getMonths(year_num)));
-                if (ChinaDate.leapMonth(year_num) != 0 && wv_month.getCurrentItem() > ChinaDate.leapMonth(year_num) - 1) {
-                    wv_month.setCurrentItem(wv_month.getCurrentItem() + 1);
-                } else {
-                    wv_month.setCurrentItem(wv_month.getCurrentItem());
-                }
-
-                int maxItem = 29;
-                if (ChinaDate.leapMonth(year_num) != 0 && wv_month.getCurrentItem() > ChinaDate.leapMonth(year_num) - 1) {
-                    if (wv_month.getCurrentItem() == ChinaDate.leapMonth(year_num) + 1) {
-                        wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.leapDays(year_num))));
-                        maxItem = ChinaDate.leapDays(year_num);
-                    } else {
-                        wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year_num, wv_month.getCurrentItem()))));
-                        maxItem = ChinaDate.monthDays(year_num, wv_month.getCurrentItem());
-                    }
-                } else {
-                    wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year_num, wv_month.getCurrentItem() + 1))));
-                    maxItem = ChinaDate.monthDays(year_num, wv_month.getCurrentItem() + 1);
-                }
-
-                if (wv_day.getCurrentItem() > maxItem - 1) {
-                    wv_day.setCurrentItem(maxItem - 1);
-                }
-            }
-        };
-        // 添加"月"监听
-        OnItemSelectedListener wheelListener_month = new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                int month_num = index;
-                int year_num = wv_year.getCurrentItem() + startYear;
-                int maxItem = 29;
-                if (ChinaDate.leapMonth(year_num) != 0 && month_num > ChinaDate.leapMonth(year_num) - 1) {
-                    if (wv_month.getCurrentItem() == ChinaDate.leapMonth(year_num) + 1) {
-                        wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.leapDays(year_num))));
-                        maxItem = ChinaDate.leapDays(year_num);
-                    } else {
-                        wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year_num, month_num))));
-                        maxItem = ChinaDate.monthDays(year_num, month_num);
-                    }
-                } else {
-                    wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year_num, month_num + 1))));
-                    maxItem = ChinaDate.monthDays(year_num, month_num + 1);
-                }
-
-                if (wv_day.getCurrentItem() > maxItem - 1) {
-                    wv_day.setCurrentItem(maxItem - 1);
-                }
-
-            }
-        };
-        wv_year.setOnItemSelectedListener(wheelListener_year);
-        wv_month.setOnItemSelectedListener(wheelListener_month);
-
-
-        if (type.length != 6) {
-            throw new RuntimeException("type[] length is not 6");
-        }
-        wv_year.setVisibility(type[0] ? View.VISIBLE : View.GONE);
-        wv_month.setVisibility(type[1] ? View.VISIBLE : View.GONE);
-        wv_day.setVisibility(type[2] ? View.VISIBLE : View.GONE);
-        wv_hours.setVisibility(type[3] ? View.VISIBLE : View.GONE);
-        wv_mins.setVisibility(type[4] ? View.VISIBLE : View.GONE);
-        wv_seconds.setVisibility(type[5] ? View.VISIBLE : View.GONE);
-        setContentTextSize();
-    }
-
-    /**
-     * 设置公历
-     *
-     * @param year
-     * @param month
-     * @param day
-     * @param h
-     * @param m
-     * @param s
-     */
-    private void setSolar(int year, final int month, int day, int h, int m, int s) {
         // 添加大小月月份并将其转换为list,方便之后的判断
         String[] months_big = {"1", "3", "5", "7", "8", "10", "12"};
         String[] months_little = {"4", "6", "9", "11"};
@@ -565,6 +403,7 @@ public class WheelTime {
             currentItem = wv_day.getAdapter().getItemsCount() - 1;
             wv_day.setCurrentItem(currentItem);
         }
+
     }
 
 
@@ -625,10 +464,6 @@ public class WheelTime {
     }
 
     public void setLabels(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
-        if (isLunarCalendar){
-            return;
-        }
-
         if (label_year != null) {
             wv_year.setLabel(label_year);
         } else {
@@ -678,10 +513,6 @@ public class WheelTime {
     }
 
     public String getTime() {
-        if (isLunarCalendar) {
-            //如果是农历 返回对应的公历时间
-            return getLunarTime();
-        }
         StringBuffer sb = new StringBuffer();
         if (currentYear == startYear) {
            /* int i = wv_month.getCurrentItem() + startMonth;
@@ -712,41 +543,6 @@ public class WheelTime {
                     .append(wv_seconds.getCurrentItem());
         }
 
-        return sb.toString();
-    }
-
-
-    /**
-     * 农历返回对应的公历时间
-     *
-     * @return
-     */
-    private String getLunarTime() {
-        StringBuffer sb = new StringBuffer();
-        int year = wv_year.getCurrentItem() + startYear;
-        int month = 1;
-        boolean isLeapMonth = false;
-        if (ChinaDate.leapMonth(year) == 0) {
-            month = wv_month.getCurrentItem() + 1;
-        } else {
-            if ((wv_month.getCurrentItem() + 1) - ChinaDate.leapMonth(year) <= 0) {
-                month = wv_month.getCurrentItem() + 1;
-            } else if ((wv_month.getCurrentItem() + 1) - ChinaDate.leapMonth(year) == 1) {
-                month = wv_month.getCurrentItem();
-                isLeapMonth = true;
-            } else {
-                month = wv_month.getCurrentItem();
-            }
-        }
-        int day = wv_day.getCurrentItem() + 1;
-        int[] solar = LunarCalendar.lunarToSolar(year, month, day, isLeapMonth);
-
-        sb.append(solar[0]).append("-")
-                .append(solar[1]).append("-")
-                .append(solar[2]).append(" ")
-                .append(wv_hours.getCurrentItem()).append(":")
-                .append(wv_mins.getCurrentItem()).append(":")
-                .append(wv_seconds.getCurrentItem());
         return sb.toString();
     }
 
