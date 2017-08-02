@@ -281,6 +281,7 @@ public class BasePickerView {
     };
 
     protected BasePickerView setOutSideCancelable(boolean isCancelable) {
+
         if (rootView != null) {
             View view = rootView.findViewById(R.id.outmost_container);
 
