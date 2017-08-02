@@ -356,4 +356,5 @@ public class BasePickerView {
     public boolean isDialog() {
         return false;
     }
+
 }

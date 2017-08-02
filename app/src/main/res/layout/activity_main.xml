@@ -18,6 +18,12 @@
 
 
     <Button
+        android:id="@+id/btn_lunar"
+        android:layout_margin="10dp"
+        android:text="公历农历切换"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <Button
         android:id="@+id/btn_Time"
         android:layout_margin="10dp"
         android:text="@string/picker_time"
