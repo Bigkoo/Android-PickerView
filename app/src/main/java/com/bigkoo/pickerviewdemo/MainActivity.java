@@ -196,9 +196,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
         Calendar selectedDate = Calendar.getInstance();
         Calendar startDate = Calendar.getInstance();
-        startDate.set(2013, 0, 23);
+        startDate.set(2013, 1, 23);
         Calendar endDate = Calendar.getInstance();
         endDate.set(2019, 11, 28);
+
         //时间选择器
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
@@ -211,8 +212,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         })
                 //年月日时分秒 的显示与否，不设置则默认全部显示
-                .setType(new boolean[]{false, false, false, true, true, false})
-                .setLabel("", "", "", "点", "分", "")
+               // .setType(new boolean[]{false, false, false, true, true, false})
+               // .setLabel("", "", "", "点", "分", "")
                 .isCenterLabel(false)
                 .setDividerColor(Color.DKGRAY)
                 .setContentSize(21)
@@ -220,6 +221,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setRangDate(startDate, endDate)
                 .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
                 .setDecorView(null)
+                .isDialog(true)
+                 .setOutSideCancelable(false)
                 .build();
     }
 
@@ -294,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         return format.format(date);
     }
 
