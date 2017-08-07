@@ -3,14 +3,11 @@ package com.bigkoo.pickerviewdemo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_to_Fragment.setOnClickListener(this);
 
         findViewById(R.id.btn_GotoJsonData).setOnClickListener(this);
-        findViewById(R.id.btn_lunar).setOnClickListener(this);
     }
 
 
@@ -93,84 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(MainActivity.this, JsonDataActivity.class));
         } else if (v.getId() == R.id.btn_fragment) {//跳转到 fragment
             startActivity(new Intent(MainActivity.this, FragmentTestActivity.class));
-        } else if (v.getId() == R.id.btn_lunar) {
-            initLunarPicker();
-            pvLunar.show();
         }
-    }
-
-    TimePickerView pvLunar;
-
-    private void initLunarPicker() {
-        Calendar selectedDate = Calendar.getInstance();//系统当前时间
-        Calendar startDate = Calendar.getInstance();
-        startDate.set(2014, 1, 23);
-        Calendar endDate = Calendar.getInstance();
-        endDate.set(2027, 2, 28);
-        //时间选择器 ，自定义布局
-        pvLunar = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
-            }
-        })
-                .setDate(selectedDate)
-                .setRangDate(startDate, endDate)
-                .setLayoutRes(R.layout.pickerview_custom_lunar, new CustomListener() {
-
-                    @Override
-                    public void customLayout(final View v) {
-                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
-                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
-                        tvSubmit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pvLunar.returnData();
-                                pvLunar.dismiss();
-                            }
-                        });
-                        ivCancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pvLunar.dismiss();
-                            }
-                        });
-                        CheckBox cb_lunar = (CheckBox) v.findViewById(R.id.cb_lunar);
-                        cb_lunar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                pvLunar.setLunarCalendar(!pvLunar.isLunarCalendar());
-                                //自适应宽
-                                setTimePickerChildWeight(v, isChecked ? 0.8f : 1f, 1.1f);
-                            }
-                        });
-
-                    }
-
-                    /**
-                     * 公农历切换后调整宽
-                     * @param v
-                     * @param yearWeight
-                     * @param weight
-                     */
-                    private void setTimePickerChildWeight(View v, float yearWeight, float weight) {
-                        ViewGroup timepicker = (ViewGroup) v.findViewById(R.id.timepicker);
-                        View year = timepicker.getChildAt(0);
-                        LinearLayout.LayoutParams lp = ((LinearLayout.LayoutParams) year.getLayoutParams());
-                        lp.weight = yearWeight;
-                        year.setLayoutParams(lp);
-                        for (int i = 1; i < timepicker.getChildCount(); i++) {
-                            View childAt = timepicker.getChildAt(i);
-                            LinearLayout.LayoutParams childLp = ((LinearLayout.LayoutParams) childAt.getLayoutParams());
-                            childLp.weight = weight;
-                            childAt.setLayoutParams(childLp);
-                        }
-                    }
-                })
-                .setType(new boolean[]{true, true, true, true, true, false})
-                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-                .setDividerColor(Color.RED)
-                .build();
     }
 
 
@@ -196,10 +115,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
         Calendar selectedDate = Calendar.getInstance();
         Calendar startDate = Calendar.getInstance();
-        startDate.set(2013, 1, 23);
+        startDate.set(2013, 0, 23);
         Calendar endDate = Calendar.getInstance();
         endDate.set(2019, 11, 28);
-
         //时间选择器
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
@@ -212,8 +130,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         })
                 //年月日时分秒 的显示与否，不设置则默认全部显示
-               // .setType(new boolean[]{false, false, false, true, true, false})
-               // .setLabel("", "", "", "点", "分", "")
+                .setType(new boolean[]{false, true, true, false, false, false})
+                .setLabel("", "", "", "点", "分", "")
                 .isCenterLabel(false)
                 .setDividerColor(Color.DKGRAY)
                 .setContentSize(21)
@@ -221,8 +139,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setRangDate(startDate, endDate)
                 .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
                 .setDecorView(null)
-                .isDialog(true)
-                 .setOutSideCancelable(false)
                 .build();
     }
 
@@ -297,7 +213,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
         return format.format(date);
     }
 
