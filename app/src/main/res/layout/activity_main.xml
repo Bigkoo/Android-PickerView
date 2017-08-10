@@ -39,7 +39,7 @@
         android:id="@+id/btn_no_linkage"
         android:layout_margin="10dp"
         android:layout_below="@+id/tvTime"
-        android:text="条件选择器(不联动)"
+        android:text="@string/picker_non_linkage"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
 
@@ -47,7 +47,7 @@
         android:id="@+id/btn_GotoJsonData"
         android:layout_margin="10dp"
         android:layout_below="@+id/tvTime"
-        android:text="省市区Json文件解析示例"
+        android:text="@string/picker_json_parse_sample"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
 
@@ -55,7 +55,7 @@
         android:id="@+id/btn_fragment"
         android:layout_margin="10dp"
         android:layout_below="@+id/tvTime"
-        android:text="自定义控件父容器"
+        android:text="@string/picker_custom_parent"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
 

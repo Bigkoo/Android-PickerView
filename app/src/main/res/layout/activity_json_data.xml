@@ -14,13 +14,13 @@
         android:id="@+id/btn_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="解析数据"/>
+        android:text="@string/picker_text_parse"/>
 
     <Button
         android:id="@+id/btn_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="弹出省市区选择器"
+        android:text="@string/picker_text_show"
         android:layout_marginTop="@dimen/activity_horizontal_margin" />
 
 </LinearLayout>
