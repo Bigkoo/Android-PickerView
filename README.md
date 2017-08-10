@@ -2,7 +2,7 @@
 ## Android-PickerView
 [![Bintray](https://img.shields.io/bintray/v/contrarywind/maven/Android-PickerView.svg)](https://bintray.com/contrarywind/maven/Android-PickerView)
 [![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg)](https://android-arsenal.com/api?level=9) 
-[![download](https://img.shields.io/badge/download-v3.2.5-brightgreen.svg)](https://github.com/Bigkoo/Android-PickerView/archive/master.zip)
+[![download](https://img.shields.io/badge/downloadZip-v3.2.6-orange.svg)](https://github.com/Bigkoo/Android-PickerView/archive/master.zip)
 [![license](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 #### Show some :heart: and :stars: the repo to support the project
@@ -53,6 +53,12 @@
   startDate.set(2013,0,1);
   endDate.set(2020,11,1);
   
+  
+### V3.2.6（2017-8-10）
+* 修复设定初始值越界而造成滑动异常的问题。
+* 修复OptionsPikerView 在复用时，第二列和第三列可能无法显示的问题。
+* 修复TimePicker在不显示年份时，设定年份失效导致一直回调默认初始年份问题。
+
 ### V3.2.5版本更新说明（2017-5-15）
 * 优化：年月日时分秒 从枚举类型改为boolean 数组，分别控制它们的显示与否。
 * 新增：setBackgroundId方法，原本是默认灰色，新增此方法，可根据实际需求自由定制背景遮罩颜色。
@@ -61,20 +67,6 @@
 
 ### V3.2.4版本更新说明（2017-4-7）
 * 修复：修复偶尔会出现item滑到第一项或最后一项时滑出边界的情况 。
-
-### V3.2.3版本更新说明（2017-3-31）
-* 优化：滚轮边界处理优化，解决滑动到第一项或最后一项时会跳动的情况。
-* 优化：Dialog 模式 下PickerView的弹出和关闭添加了缩放动画，优化视觉效果。
-
-### V3.2.2版本更新说明（2017-3-24）
-* 新增：isCenterLabel（boolean isCenter）方法，该方法默认为true，只在选中项显示label；填false 则每项item后面都会带有label。
-
-### V3.2.1版本更新说明（2017-3-23）
-* 新增：show(View v) 方法，用于绑定所点击弹出 picker 的 View 控件。
-* 废弃：optionsPicker 的 setLinkage 方法。
-* 新增：optionsPicker 的 setNPicker 方法，用于多级不联动情况下，条件选择器的显示。
-* 修复：在某些极端情况下，快速滑动并还未停止时就点击确定按钮，导致数据匹配不当造成应用崩溃的问题。
-
 
 
 #### 更多历史版本详情，请查阅：[更新说明（3.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E%EF%BC%883.x%E7%89%88%E6%9C%AC%EF%BC%89) 
@@ -87,7 +79,7 @@
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:3.2.5'
+compile 'com.contrarywind:Android-PickerView:3.2.6'
 ```
 或者
 
@@ -96,7 +88,7 @@ compile 'com.contrarywind:Android-PickerView:3.2.5'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>3.2.5</version>
+<version>3.2.6</version>
 <type>pom</type>
 </dependency>
 ```
