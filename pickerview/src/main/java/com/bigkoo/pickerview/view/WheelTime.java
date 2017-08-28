@@ -587,7 +587,7 @@ public class WheelTime {
                     this.endMonth = month;
                     this.endDay = day;
                 } else if (month == startMonth) {
-                    if (month > startDay) {
+                    if (day > startDay) {
                         this.endYear = year;
                         this.endMonth = month;
                         this.endDay = day;

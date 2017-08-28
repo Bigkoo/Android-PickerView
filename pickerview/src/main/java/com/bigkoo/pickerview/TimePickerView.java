@@ -152,8 +152,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private boolean cyclic = false;//是否循环
         private boolean cancelable = true;//是否能取消
 
-        private boolean isCenterLabel = true ;//是否只显示中间的label
-        public ViewGroup decorView ;//显示pickerview的根View,默认是activity的根view
+        private boolean isCenterLabel = true;//是否只显示中间的label
+        public ViewGroup decorView;//显示pickerview的根View,默认是activity的根view
 
         private int textColorOut; //分割线以外的文字颜色
         private int textColorCenter; //分割线之间的文字颜色
@@ -213,9 +213,11 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             this.Color_Cancel = Color_Cancel;
             return this;
         }
+
         /**
          * 必须是viewgroup
          * 设置要将pickerview显示到的容器id
+         *
          * @param decorView
          * @return
          */
@@ -323,6 +325,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         /**
          * //显示时的外部背景色颜色,默认是灰色
+         *
          * @param backgroundId
          */
 
@@ -518,7 +521,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             minute = date.get(Calendar.MINUTE);
             seconds = date.get(Calendar.SECOND);
         }
-
 
         wheelTime.setPicker(year, month, day, hours, minute, seconds);
     }
