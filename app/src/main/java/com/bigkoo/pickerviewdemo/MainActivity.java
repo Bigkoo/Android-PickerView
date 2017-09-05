@@ -5,12 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,11 +43,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //最好等数据加载完毕再初始化并显示，以免数据量大的时候，还未加载完毕就显示，造成APP崩溃。
+        //等数据加载完毕再初始化并显示Picker,以免还未加载完数据就显示,造成APP崩溃。
+        getOptionData();
+
         initTimePicker();
         initCustomTimePicker();
-
-        initOptionData();
         initOptionPicker();
         initCustomOptionPicker();
         initNoLinkOptionsPicker();
@@ -71,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_to_Fragment.setOnClickListener(this);
 
         findViewById(R.id.btn_GotoJsonData).setOnClickListener(this);
-        findViewById(R.id.btn_lunar).setOnClickListener(this);
     }
 
 
@@ -93,127 +88,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(MainActivity.this, JsonDataActivity.class));
         } else if (v.getId() == R.id.btn_fragment) {//跳转到 fragment
             startActivity(new Intent(MainActivity.this, FragmentTestActivity.class));
-        } else if (v.getId() == R.id.btn_lunar) {
-            initLunarPicker();
-            pvLunar.show();
         }
     }
-
-    TimePickerView pvLunar;
-
-    private void initLunarPicker() {
-        Calendar selectedDate = Calendar.getInstance();//系统当前时间
-        Calendar startDate = Calendar.getInstance();
-        startDate.set(2014, 1, 23);
-        Calendar endDate = Calendar.getInstance();
-        endDate.set(2027, 2, 28);
-        //时间选择器 ，自定义布局
-        pvLunar = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
-            }
-        })
-                .setDate(selectedDate)
-                .setRangDate(startDate, endDate)
-                .setLayoutRes(R.layout.pickerview_custom_lunar, new CustomListener() {
-
-                    @Override
-                    public void customLayout(final View v) {
-                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
-                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
-                        tvSubmit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pvLunar.returnData();
-                                pvLunar.dismiss();
-                            }
-                        });
-                        ivCancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pvLunar.dismiss();
-                            }
-                        });
-                        CheckBox cb_lunar = (CheckBox) v.findViewById(R.id.cb_lunar);
-                        cb_lunar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                pvLunar.setLunarCalendar(!pvLunar.isLunarCalendar());
-                                //自适应宽
-                                setTimePickerChildWeight(v, isChecked ? 0.8f : 1f, 1.1f);
-                            }
-                        });
-
-                    }
-
-                    /**
-                     * 公农历切换后调整宽
-                     * @param v
-                     * @param yearWeight
-                     * @param weight
-                     */
-                    private void setTimePickerChildWeight(View v, float yearWeight, float weight) {
-                        ViewGroup timepicker = (ViewGroup) v.findViewById(R.id.timepicker);
-                        View year = timepicker.getChildAt(0);
-                        LinearLayout.LayoutParams lp = ((LinearLayout.LayoutParams) year.getLayoutParams());
-                        lp.weight = yearWeight;
-                        year.setLayoutParams(lp);
-                        for (int i = 1; i < timepicker.getChildCount(); i++) {
-                            View childAt = timepicker.getChildAt(i);
-                            LinearLayout.LayoutParams childLp = ((LinearLayout.LayoutParams) childAt.getLayoutParams());
-                            childLp.weight = weight;
-                            childAt.setLayoutParams(childLp);
-                        }
-                    }
-                })
-                .setType(new boolean[]{true, true, true, true, true, false})
-                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-                .setDividerColor(Color.RED)
-                .build();
-    }
-
-
-    private void initNoLinkOptionsPicker() {// 不联动的多级选项
-        pvNoLinkOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
-
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-
-                String str = "food:" + food.get(options1)
-                        + "\nclothes:" + clothes.get(options2)
-                        + "\ncomputer:" + computer.get(options3);
-
-                Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
-            }
-        }).build();
-        pvNoLinkOptions.setNPicker(food, clothes, computer);
-    }
-
 
     private void initTimePicker() {
         //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
         //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
         Calendar selectedDate = Calendar.getInstance();
         Calendar startDate = Calendar.getInstance();
-        startDate.set(2013, 1, 23);
+        startDate.set(2013, 0, 23);
         Calendar endDate = Calendar.getInstance();
         endDate.set(2019, 11, 28);
-
         //时间选择器
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
-
                 /*btn_Time.setText(getTime(date));*/
                 Button btn = (Button) v;
                 btn.setText(getTime(date));
             }
         })
                 //年月日时分秒 的显示与否，不设置则默认全部显示
-               // .setType(new boolean[]{false, false, false, true, true, false})
-               // .setLabel("", "", "", "点", "分", "")
+                .setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel("", "", "", "", "", "")
                 .isCenterLabel(false)
                 .setDividerColor(Color.DKGRAY)
                 .setContentSize(21)
@@ -221,11 +119,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setRangDate(startDate, endDate)
                 .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
                 .setDecorView(null)
-                .isDialog(true)
-                 .setOutSideCancelable(false)
                 .build();
     }
-
 
     private void initCustomTimePicker() {
 
@@ -288,55 +183,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         });
                     }
                 })
-                .setType(new boolean[]{true, true, true, false, false, false})
+                .setType(new boolean[]{true, true, true, true, true, true})
+                .setLabel("年","月","日","时","分","秒")
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-                .setDividerColor(Color.RED)
+                .setDividerColor(0xFF24AD9D)
                 .build();
 
     }
-
-    private String getTime(Date date) {//可根据需要自行截取数据显示
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        return format.format(date);
-    }
-
-    private void initOptionData() {
-
-        /**
-         * 注意：如果是添加JavaBean实体数据，则实体类需要实现 IPickerViewData 接口，
-         * PickerView会通过getPickerViewText方法获取字符串显示出来。
-         */
-
-        getCardData();
-        getNoLinkData();
-
-        //选项1
-        options1Items.add(new ProvinceBean(0, "广东", "描述部分", "其他数据"));
-        options1Items.add(new ProvinceBean(1, "湖南", "描述部分", "其他数据"));
-        options1Items.add(new ProvinceBean(2, "广西", "描述部分", "其他数据"));
-
-        //选项2
-        ArrayList<String> options2Items_01 = new ArrayList<>();
-        options2Items_01.add("广州");
-        options2Items_01.add("佛山");
-        options2Items_01.add("东莞");
-        options2Items_01.add("珠海");
-        ArrayList<String> options2Items_02 = new ArrayList<>();
-        options2Items_02.add("长沙");
-        options2Items_02.add("岳阳");
-        options2Items_02.add("株洲");
-        options2Items_02.add("衡阳");
-        ArrayList<String> options2Items_03 = new ArrayList<>();
-        options2Items_03.add("桂林");
-        options2Items_03.add("玉林");
-        options2Items.add(options2Items_01);
-        options2Items.add(options2Items_02);
-        options2Items.add(options2Items_03);
-
-        /*--------数据源添加完毕---------*/
-    }
-
 
     private void initOptionPicker() {//条件选择器初始化
 
@@ -356,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         })
                 .setTitleText("城市选择")
                 .setContentTextSize(20)//设置滚轮文字大小
-                .setDividerColor(Color.GREEN)//设置分割线的颜色
+                .setDividerColor(Color.LTGRAY)//设置分割线的颜色
                 .setSelectOptions(0, 1)//默认选中项
                 .setBgColor(Color.BLACK)
                 .setTitleBgColor(Color.DKGRAY)
@@ -427,6 +280,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         pvCustomOptions.setPicker(cardItem);//添加数据
 
+    }
+
+    private void initNoLinkOptionsPicker() {// 不联动的多级选项
+        pvNoLinkOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+
+                String str = "food:" + food.get(options1)
+                        + "\nclothes:" + clothes.get(options2)
+                        + "\ncomputer:" + computer.get(options3);
+
+                Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
+            }
+        }).build();
+        pvNoLinkOptions.setNPicker(food, clothes, computer);
+    }
+
+    private String getTime(Date date) {//可根据需要自行截取数据显示
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(date);
+    }
+
+    private void getOptionData() {
+
+        /**
+         * 注意：如果是添加JavaBean实体数据，则实体类需要实现 IPickerViewData 接口，
+         * PickerView会通过getPickerViewText方法获取字符串显示出来。
+         */
+
+        getCardData();
+        getNoLinkData();
+
+        //选项1
+        options1Items.add(new ProvinceBean(0, "广东", "描述部分", "其他数据"));
+        options1Items.add(new ProvinceBean(1, "湖南", "描述部分", "其他数据"));
+        options1Items.add(new ProvinceBean(2, "广西", "描述部分", "其他数据"));
+
+        //选项2
+        ArrayList<String> options2Items_01 = new ArrayList<>();
+        options2Items_01.add("广州");
+        options2Items_01.add("佛山");
+        options2Items_01.add("东莞");
+        options2Items_01.add("珠海");
+        ArrayList<String> options2Items_02 = new ArrayList<>();
+        options2Items_02.add("长沙");
+        options2Items_02.add("岳阳");
+        options2Items_02.add("株洲");
+        options2Items_02.add("衡阳");
+        ArrayList<String> options2Items_03 = new ArrayList<>();
+        options2Items_03.add("桂林");
+        options2Items_03.add("玉林");
+        options2Items.add(options2Items_01);
+        options2Items.add(options2Items_02);
+        options2Items.add(options2Items_03);
+
+        /*--------数据源添加完毕---------*/
     }
 
     private void getCardData() {
