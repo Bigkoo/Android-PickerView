@@ -118,7 +118,7 @@ public class WheelTime {
         wv_month = (WheelView) view.findViewById(R.id.month);
         wv_month.setAdapter(new ArrayWheelAdapter(ChinaDate.getMonths(year)));
         wv_month.setLabel("");
-        wv_month.setCurrentItem(isLeap ? month : month - 1);
+        wv_month.setCurrentItem(month);
         wv_month.setGravity(gravity);
 
         // 日
