@@ -448,6 +448,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         if (startDate != null && endDate != null) {
             if (startDate.getTimeInMillis() <= endDate.getTimeInMillis()) {
+
                 setRangDate();
             }
         } else if (startDate != null && endDate == null) {
@@ -514,6 +515,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         int year, month, day, hours, minute, seconds;
 
         Calendar calendar = Calendar.getInstance();
+
         if (date == null) {
             calendar.setTimeInMillis(System.currentTimeMillis());
             year = calendar.get(Calendar.YEAR);
@@ -548,6 +550,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         if (timeSelectListener != null) {
             try {
                 Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
+
                 timeSelectListener.onTimeSelect(date, clickView);
             } catch (ParseException e) {
                 e.printStackTrace();

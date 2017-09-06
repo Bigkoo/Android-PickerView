@@ -3,14 +3,11 @@ package com.bigkoo.pickerviewdemo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -272,6 +269,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
 
     }
+
+    private String getTime(Date date) {//可根据需要自行截取数据显示
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(date);
+    }
+
+    private void initOptionData() {
+
+        /**
+         * 注意：如果是添加JavaBean实体数据，则实体类需要实现 IPickerViewData 接口，
+         * PickerView会通过getPickerViewText方法获取字符串显示出来。
+         */
+
+        getCardData();
+        getNoLinkData();
+
+        //选项1
+        options1Items.add(new ProvinceBean(0, "广东", "描述部分", "其他数据"));
+        options1Items.add(new ProvinceBean(1, "湖南", "描述部分", "其他数据"));
+        options1Items.add(new ProvinceBean(2, "广西", "描述部分", "其他数据"));
+
+        //选项2
+        ArrayList<String> options2Items_01 = new ArrayList<>();
+        options2Items_01.add("广州");
+        options2Items_01.add("佛山");
+        options2Items_01.add("东莞");
+        options2Items_01.add("珠海");
+        ArrayList<String> options2Items_02 = new ArrayList<>();
+        options2Items_02.add("长沙");
+        options2Items_02.add("岳阳");
+        options2Items_02.add("株洲");
+        options2Items_02.add("衡阳");
+        ArrayList<String> options2Items_03 = new ArrayList<>();
+        options2Items_03.add("桂林");
+        options2Items_03.add("玉林");
+        options2Items.add(options2Items_01);
+        options2Items.add(options2Items_02);
+        options2Items.add(options2Items_03);
+
+        /*--------数据源添加完毕---------*/
+    }
+
 
     private void initOptionPicker() {//条件选择器初始化
 
