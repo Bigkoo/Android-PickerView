@@ -18,6 +18,8 @@
 #### [saiwu-bigkoo](https://github.com/saiwu-bigkoo) 吴哥已经转行不干编程了，他已把项目转交给我维护。2.x/1.x/农历已分支出去并停止更新，若有需要请查看旧版本说明文档： [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
 </br>
 
+#### 农历请移步该分支：[lunar3.x](https://github.com/Bigkoo/Android-PickerView/tree/lunar3.x) ，后续4.x版本会上传到Jcenter库，目前若有需要请通过Module引入。
+
 ## 介绍
 
 这是一款仿iOS的PickerView控件，有时间选择和选项选择，并支持一二三级联动，支持自定义样式，3.x新版本的详细特性如下：
