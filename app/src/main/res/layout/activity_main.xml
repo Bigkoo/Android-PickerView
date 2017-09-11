@@ -10,72 +10,72 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
+            <Button
+                android:id="@+id/btn_lunar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:text="@string/picker_custom_lunar" />
 
+            <Button
+                android:id="@+id/btn_Time"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:text="@string/picker_time" />
 
-    <Button
-        android:id="@+id/btn_lunar"
-        android:layout_margin="10dp"
-        android:text="公历农历切换"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
-    <Button
-        android:id="@+id/btn_Time"
-        android:layout_margin="10dp"
-        android:text="@string/picker_time"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
-    <Button
-        android:id="@+id/btn_Options"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/tvTime"
-        android:text="@string/picker_province"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+            <Button
+                android:id="@+id/btn_Options"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/tvTime"
+                android:layout_margin="10dp"
+                android:text="@string/picker_province" />
 
-    <Button
-        android:id="@+id/btn_CustomTime"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/tvTime"
-        android:text="@string/picker_custom_time"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+            <Button
+                android:id="@+id/btn_CustomTime"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/tvTime"
+                android:layout_margin="10dp"
+                android:text="@string/picker_custom_time" />
 
-    <Button
-        android:id="@+id/btn_CustomOptions"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/tvTime"
-        android:text="@string/picker_custom_province"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+            <Button
+                android:id="@+id/btn_CustomOptions"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/tvTime"
+                android:layout_margin="10dp"
+                android:text="@string/picker_custom_province" />
 
-    <Button
-        android:id="@+id/btn_no_linkage"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/tvTime"
-        android:text="条件选择器(不联动)"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+            <Button
+                android:id="@+id/btn_no_linkage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/tvTime"
+                android:layout_margin="10dp"
+                android:text="@string/picker_non_linkage" />
 
-    <Button
-        android:id="@+id/btn_GotoJsonData"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/tvTime"
-        android:text="省市区Json文件解析示例"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+            <Button
+                android:id="@+id/btn_GotoJsonData"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/tvTime"
+                android:layout_margin="10dp"
+                android:text="@string/picker_json_parse_sample" />
 
-    <Button
-        android:id="@+id/btn_fragment"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/tvTime"
-        android:text="自定义控件父容器"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+            <Button
+                android:id="@+id/btn_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/tvTime"
+                android:layout_margin="10dp"
+                android:text="@string/picker_custom_parent" />
 
         </LinearLayout>
 

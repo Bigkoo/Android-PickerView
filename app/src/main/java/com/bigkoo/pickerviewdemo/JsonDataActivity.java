@@ -47,7 +47,7 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 case MSG_LOAD_DATA:
                     if (thread==null){//如果已创建就不再重新创建子线程了
 
-                        Toast.makeText(JsonDataActivity.this,"开始解析数据",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(JsonDataActivity.this,"Begin Parse Data",Toast.LENGTH_SHORT).show();
                         thread = new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -60,12 +60,12 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                     break;
 
                 case MSG_LOAD_SUCCESS:
-                    Toast.makeText(JsonDataActivity.this,"解析数据成功",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JsonDataActivity.this,"Parse Succeed",Toast.LENGTH_SHORT).show();
                     isLoaded = true;
                     break;
 
                 case MSG_LOAD_FAILED:
-                    Toast.makeText(JsonDataActivity.this,"解析数据失败",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JsonDataActivity.this,"Parse Failed",Toast.LENGTH_SHORT).show();
                     break;
 
             }
@@ -87,7 +87,7 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 if (isLoaded){
                     ShowPickerView();
                 }else {
-                    Toast.makeText(JsonDataActivity.this,"数据暂未解析成功，请等待",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JsonDataActivity.this,"Please waiting until the data is parsed",Toast.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -115,7 +115,6 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 .setDividerColor(Color.BLACK)
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
                 .setContentTextSize(20)
-                .setOutSideCancelable(false)// default is true
                 .build();
 
         /*pvOptions.setPicker(options1Items);//一级选择器

@@ -1,11 +1,11 @@
 <resources>
 
     <string name="pickerview_cancel">Cancel</string>
-    <string name="pickerview_submit">Sure</string>
-    <string name="pickerview_year"></string>
-    <string name="pickerview_month"></string>
-    <string name="pickerview_day"></string>
-    <string name="pickerview_hours"></string>
-    <string name="pickerview_minutes"></string>
-    <string name="pickerview_seconds"></string>
+    <string name="pickerview_submit">Confirm</string>
+    <string name="pickerview_year"> </string>
+    <string name="pickerview_month"> </string>
+    <string name="pickerview_day"> </string>
+    <string name="pickerview_hours"> </string>
+    <string name="pickerview_minutes"> </string>
+    <string name="pickerview_seconds"> </string>
 </resources>
