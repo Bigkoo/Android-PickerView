@@ -1,5 +1,8 @@
 
 ## Android-PickerView
+
+### 此分支 支持3D效果的农历，具体请参考demo 代码，4.x版本会将其抽出当做一个独立的模块。目前若有需要请通过Module引入。
+
 [![Bintray](https://img.shields.io/bintray/v/contrarywind/maven/Android-PickerView.svg)](https://bintray.com/contrarywind/maven/Android-PickerView)
 [![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg)](https://android-arsenal.com/api?level=9) 
 [![download](https://img.shields.io/badge/downloadZip-v3.2.6-orange.svg)](https://github.com/Bigkoo/Android-PickerView/archive/master.zip)
@@ -19,6 +22,7 @@
 </br>
 
 #### 农历请移步该分支：[lunar3.x](https://github.com/Bigkoo/Android-PickerView/tree/lunar3.x) ，后续4.x版本会上传到Jcenter库，目前若有需要请通过Module引入。
+
 
 ## 介绍
 
