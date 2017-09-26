@@ -1,8 +1,6 @@
 
 ## Android-PickerView
 
-### lunar3.x 支持3D效果的农历，具体请参考demo 代码，分支地址链接：[lunar3.x](https://github.com/Bigkoo/Android-PickerView/tree/lunar3.x)
- 
 [![Bintray](https://img.shields.io/bintray/v/contrarywind/maven/Android-PickerView.svg)](https://bintray.com/contrarywind/maven/Android-PickerView)
 [![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg)](https://android-arsenal.com/api?level=9) 
 [![download](https://img.shields.io/badge/downloadZip-v3.2.6-orange.svg)](https://github.com/Bigkoo/Android-PickerView/archive/master.zip)
