@@ -6,36 +6,39 @@
 [![download](https://img.shields.io/badge/downloadZip-v3.2.6-orange.svg)](https://github.com/Bigkoo/Android-PickerView/archive/master.zip)
 [![license](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-#### Show some :heart: and :stars: the repo to support the project
 [![GitHub stars](https://img.shields.io/github/stars/Bigkoo/Android-PickerView.svg?style=social)](https://github.com/Bigkoo/Android-PickerView/stargazers) [![GitHub forks](https://img.shields.io/github/forks/Bigkoo/Android-PickerView.svg?style=social)](https://github.com/Bigkoo/Android-PickerView/network) [![GitHub watchers](https://img.shields.io/github/watchers/Bigkoo/Android-PickerView.svg?style=social)](https://github.com/Bigkoo/Android-PickerView/watchers)
 
 ### [English Document](https://github.com/Bigkoo/Android-PickerView/blob/master/README-en.md)
 </br>
 
-#### 关于项目的更多详请，请查看 [Wiki](https://github.com/Bigkoo/Android-PickerView/wiki)
+#### 更多详请及注意事项，请查看 [Wiki文档](https://github.com/Bigkoo/Android-PickerView/wiki)
 
-#### 对于使用上有任何疑问或优化建议等，欢迎加入QQ群： 387051294 讨论交流技术问题。
+#### 对于使用上有任何疑问或优化建议等，欢迎加入QQ群讨论交流技术问题。
 
-#### [saiwu-bigkoo](https://github.com/saiwu-bigkoo) 吴哥已经转行不干编程了，他已把项目转交给我维护。2.x/1.x/农历已分支出去并停止更新，若有需要请查看旧版本说明文档： [旧版本（2.x/1.x版）中文说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%97%A7%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3%EF%BC%88old-version-1.x-2.x%E7%89%88%E6%9C%AC%EF%BC%89)
-</br>
+交流群1： 387051294（已满）
 
-#### 农历请移步该分支：[lunar3.x](https://github.com/Bigkoo/Android-PickerView/tree/lunar3.x) ，后续4.x版本会上传到Jcenter库，目前若有需要请通过Module引入。
-
+交流群2： 219962328
 
 ## 介绍
 
-这是一款仿iOS的PickerView控件，有时间选择和选项选择，并支持一二三级联动，支持自定义样式，3.x新版本的详细特性如下：
+这是一款仿iOS的PickerView控件，有时间选择器和选项选择器，3.x新版本的详细特性如下：
  
-* 有时间和选项这两种选择器
-* 选项选择器支持三级联动
-* 时间选择器支持起始和终止日期设定
+——TimePickerView  时间选择器，支持年月日时分，年月日，年月，时分等格式。   
+——OptionsPickerView  选项选择器，支持一，二，三级选项选择，并且可以设置是否联动 。
+
+* 支持三级联动
+* 设置是否联动 
+* 设置循环模式
+* 支持自定义布局。
+* 支持item的分隔线设置。
+* 支持item间距设置。
+* 时间选择器支持起始和终止日期设定。
 * 支持“年，月，日，时，分，秒”，“省，市，区”等选项的单位（label）显示、隐藏和自定义。
 * 支持自定义文字、颜色、文字大小等属性
-* 支持背景颜色更换，有夜间模式需求的问题可以解决了
 * Item的文字长度过长时，文字会自适应缩放到Item的长度，避免显示不完全的问题
+* 支持Dialog 模式。
+* 支持自定义设置容器。
 
-——TimePickerView  时间选择器，支持年月日时分，年月日，年月，时分等格式   
-——OptionsPickerView  选项选择器，支持一，二，三级选项选择，并且可以设置是否联动 
 
 ![TimePicker.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/timepicker.gif)
 ![TimePickerNight.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/timepicker_night.gif)
@@ -58,18 +61,18 @@
   endDate.set(2020,11,1);
   
   
-### V3.2.6（2017-8-10）
+#### V3.2.6版本更新说明（2017-8-10）
 * 修复设定初始值越界而造成滑动异常的问题。
 * 修复OptionsPikerView 在复用时，第二列和第三列可能无法显示的问题。
 * 修复TimePicker在不显示年份时，设定年份失效导致一直回调默认初始年份问题。
 
-### V3.2.5版本更新说明（2017-5-15）
+#### V3.2.5版本更新说明（2017-5-15）
 * 优化：年月日时分秒 从枚举类型改为boolean 数组，分别控制它们的显示与否。
 * 新增：setBackgroundId方法，原本是默认灰色，新增此方法，可根据实际需求自由定制背景遮罩颜色。
 * 新增：setDecorView方法，可自由设置pickview的容器，即控件显示在哪个控件里面。
 * 新增：show方法添加isAnim参数，控制是否显示动画效果。
 
-### V3.2.4版本更新说明（2017-4-7）
+#### V3.2.4版本更新说明（2017-4-7）
 * 修复：修复偶尔会出现item滑到第一项或最后一项时滑出边界的情况 。
 
 
