@@ -394,7 +394,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     }
 
 
-    public void initView(Context context) {
+    private void initView(Context context) {
         setDialogOutSideCancelable(cancelable);
         initViews(backgroundId);
         init();
@@ -557,6 +557,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             }
         }
     }
+
 
     public void setLunarCalendar(boolean lunar) {
         try {

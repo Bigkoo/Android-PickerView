@@ -1,13 +1,17 @@
 <resources>
 
-    <string name="pickerview_cancel">Cancel</string>
-    <string name="pickerview_submit">Sure</string>
+    <string name="picker_custom_lunar">LunarTimePicker</string>
 
     <string name="picker_time">TimePicker</string>
     <string name="picker_province">OptionsPicker</string>
 
     <string name="picker_custom_time">CustomLayoutTimePicker</string>
     <string name="picker_custom_province">CustomLayoutOptionsPicker</string>
+    <string name="picker_custom_parent">CustomParentView</string>
 
+    <string name="picker_non_linkage">OptionsPicker(Non-Linkage)</string>
+    <string name="picker_json_parse_sample">AreaDataParseSample</string>
 
+    <string name="picker_text_parse">Parse Data</string>
+    <string name="picker_text_show">Show OptionsPicker</string>
 </resources>
