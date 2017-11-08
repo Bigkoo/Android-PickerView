@@ -55,6 +55,7 @@ public class BasePickerView {
     protected View clickView;//是通过哪个View弹出的
 
     private boolean isAnim = true;
+
     public BasePickerView(Context context) {
         this.context = context;
 
@@ -117,8 +118,8 @@ public class BasePickerView {
 
 
     /**
-     * @param v (是通过哪个View弹出的)
-     * @param isAnim  是否显示动画效果
+     * @param v      (是通过哪个View弹出的)
+     * @param isAnim 是否显示动画效果
      */
     public void show(View v, boolean isAnim) {
         this.clickView = v;
@@ -161,7 +162,7 @@ public class BasePickerView {
      */
     private void onAttached(View view) {
         decorView.addView(view);
-        if(isAnim){
+        if (isAnim) {
             contentContainer.startAnimation(inAnim);
         }
     }
@@ -189,7 +190,7 @@ public class BasePickerView {
                 return;
             }
 
-            if (isAnim){
+            if (isAnim) {
                 //消失动画
                 outAnim.setAnimationListener(new Animation.AnimationListener() {
                     @Override
@@ -302,6 +303,9 @@ public class BasePickerView {
      */
     public void setDialogOutSideCancelable(boolean cancelable) {
         this.cancelable = cancelable;
+        if (mDialog != null) {
+            mDialog.setCancelable(cancelable);
+        }
     }
 
 
