@@ -664,6 +664,14 @@ public class WheelTime {
 
     }
 
+    public void setTextXOffset(int xoffset_year, int xoffset_month, int xoffset_day, int xoffset_hours, int xoffset_mins, int xoffset_seconds){
+        wv_day.setTextXOffset(xoffset_year);
+        wv_month.setTextXOffset(xoffset_month);
+        wv_year.setTextXOffset(xoffset_day);
+        wv_hours.setTextXOffset(xoffset_hours);
+        wv_mins.setTextXOffset(xoffset_mins);
+        wv_seconds.setTextXOffset(xoffset_seconds);
+    }
 
     /**
      * 设置是否循环滚动
