@@ -65,6 +65,7 @@ public class WheelView extends View {
     int textSize;//选项的文字大小
     int maxTextWidth;
     int maxTextHeight;
+    private int textXOffset;
     float itemHeight;//每行高度
 
     Typeface typeface = Typeface.MONOSPACE;//字体样式，默认是等宽字体
@@ -118,6 +119,8 @@ public class WheelView extends View {
     private int drawOutContentStart = 0;//非中间文字开始绘制位置
     private static final float SCALECONTENT = 0.8F;//非中间文字则用此控制高度，压扁形成3d错觉
     private float CENTERCONTENTOFFSET;//偏移量
+
+    private final float DEFAULT_TEXT_TARGET_SKEWX = 0.5f;
 
     public WheelView(Context context) {
         this(context, null);
@@ -445,6 +448,8 @@ public class WheelView extends View {
             if (angle >= 90F || angle <= -90F) {
                 canvas.restore();
             } else {
+                // 根据当前角度计算出偏差系数，用以在绘制时控制文字的 水平移动 透明度 倾斜程度
+                float offsetCoefficient = (float) Math.pow(Math.abs(angle) / 90f, 2.2);
                 //获取内容文字
                 String contentText;
 
@@ -462,7 +467,7 @@ public class WheelView extends View {
                 float translateY = (float) (radius - Math.cos(radian) * radius - (Math.sin(radian) * maxTextHeight) / 2D);
                 //根据Math.sin(radian)来更改canvas坐标系原点，然后缩放画布，使得文字高度进行缩放，形成弧形3d视觉差
                 canvas.translate(0.0F, translateY);
-                canvas.scale(1.0F, (float) Math.sin(radian));
+//                canvas.scale(1.0F, (float) Math.sin(radian));
                 if (translateY <= firstLineY && maxTextHeight + translateY >= firstLineY) {
                     // 条目经过第一条线
                     canvas.save();
@@ -503,7 +508,12 @@ public class WheelView extends View {
                     canvas.save();
                     canvas.clipRect(0, 0, measuredWidth, (int) (itemHeight));
                     canvas.scale(1.0F, (float) Math.sin(radian) * SCALECONTENT);
-                    canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
+                    // 控制文字倾斜角度
+                    paintOuterText.setTextSkewX((textXOffset == 0 ? 0 : (textXOffset > 0 ? 1 : -1)) * (angle > 0 ? -1 : 1) * DEFAULT_TEXT_TARGET_SKEWX * offsetCoefficient);
+                    // 控制透明度
+                    paintOuterText.setAlpha((int) ((1 - offsetCoefficient) * 255));
+                    // 控制文字水平便宜距离
+                    canvas.drawText(contentText, drawOutContentStart + textXOffset * offsetCoefficient, maxTextHeight, paintOuterText);
                     canvas.restore();
                 }
                 canvas.restore();
@@ -746,6 +756,10 @@ public class WheelView extends View {
             this.textColorCenter = textColorCenter;
             paintCenterText.setColor(this.textColorCenter);
         }
+    }
+
+    public void setTextXOffset(int textXOffset) {
+        this.textXOffset = textXOffset;
     }
 
     public void setDividerColor(int dividerColor) {
