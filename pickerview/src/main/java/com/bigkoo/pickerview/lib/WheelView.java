@@ -760,6 +760,9 @@ public class WheelView extends View {
 
     public void setTextXOffset(int textXOffset) {
         this.textXOffset = textXOffset;
+        if (textXOffset != 0) {
+            paintCenterText.setTextScaleX(1.0f);
+        }
     }
 
     public void setDividerColor(int dividerColor) {

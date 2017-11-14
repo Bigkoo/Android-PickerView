@@ -232,6 +232,15 @@ public class WheelOptions<T> {
     }
 
     /**
+     * 设置x轴偏移量
+     */
+    public void setTextXOffset(int xoffset_one, int xoffset_two, int xoffset_three){
+        wv_option1.setTextXOffset(xoffset_one);
+        wv_option2.setTextXOffset(xoffset_two);
+        wv_option3.setTextXOffset(xoffset_three);
+    }
+
+    /**
      * 设置是否循环滚动
      *
      * @param cyclic 是否循环

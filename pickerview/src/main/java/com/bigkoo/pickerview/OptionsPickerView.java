@@ -62,7 +62,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private boolean cancelable;//是否能取消
     private boolean linkage;//是否联动
 
-    private boolean isCenterLabel ;//是否只显示中间的label
+    private boolean isCenterLabel;//是否只显示中间的label
 
     private String label1;//单位
     private String label2;
@@ -77,6 +77,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private int option1;//默认选中项
     private int option2;
     private int option3;
+
+    private int xoffset_one;//x轴偏移量
+    private int xoffset_two;
+    private int xoffset_three;
+
     private WheelView.DividerType dividerType;//分隔线类型
 
     //构造方法
@@ -111,10 +116,13 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         this.font = builder.font;
 
-
         this.option1 = builder.option1;
         this.option2 = builder.option2;
         this.option3 = builder.option3;
+        this.xoffset_one = builder.xoffset_one;
+        this.xoffset_two = builder.xoffset_two;
+        this.xoffset_three = builder.xoffset_three;
+
         this.textColorCenter = builder.textColorCenter;
         this.textColorOut = builder.textColorOut;
         this.dividerColor = builder.dividerColor;
@@ -159,7 +167,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private int textColorCenter; //分割线之间的文字颜色
         private int dividerColor; //分割线的颜色
         private int backgroundId; //显示时的外部背景色颜色,默认是灰色
-        public ViewGroup decorView ;//显示pickerview的根View,默认是activity的根view
+        public ViewGroup decorView;//显示pickerview的根View,默认是activity的根view
         // 条目间距倍数 默认1.6
         private float lineSpacingMultiplier = 1.6F;
         private boolean isDialog;//是否是对话框模式
@@ -177,6 +185,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private int option1;//默认选中项
         private int option2;
         private int option3;
+
+        private int xoffset_one;//x轴偏移量
+        private int xoffset_two;
+        private int xoffset_three;
 
         private WheelView.DividerType dividerType;//分隔线类型
 
@@ -220,6 +232,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         /**
          * 显示时的外部背景色颜色,默认是灰色
+         *
          * @param backgroundId
          * @return
          */
@@ -227,9 +240,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             this.backgroundId = backgroundId;
             return this;
         }
+
         /**
          * 必须是viewgroup
          * 设置要将pickerview显示到的容器
+         *
          * @param decorView
          * @return
          */
@@ -237,9 +252,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             this.decorView = decorView;
             return this;
         }
-
-
-
 
         public Builder setLayoutRes(int res, CustomListener listener) {
             this.layoutRes = res;
@@ -277,7 +289,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             return this;
         }
 
-
         public Builder setOutSideCancelable(boolean cancelable) {
             this.cancelable = cancelable;
             return this;
@@ -286,7 +297,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         /**
          * 此方法已废弃
          * 不联动的情况下，请调用 setNPicker 方法。
-         * */
+         */
         @Deprecated
         public Builder setLinkage(boolean linkage) {
             this.linkage = linkage;
@@ -380,6 +391,13 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             return this;
         }
 
+        public Builder setTextXOffset(int xoffset_one, int xoffset_two, int xoffset_three) {
+            this.xoffset_one = xoffset_one;
+            this.xoffset_two = xoffset_two;
+            this.xoffset_three = xoffset_three;
+            return this;
+        }
+
         public Builder isCenterLabel(boolean isCenterLabel) {
             this.isCenterLabel = isCenterLabel;
             return this;
@@ -401,7 +419,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
             //顶部标题
             tvTitle = (TextView) findViewById(R.id.tvTitle);
-            rv_top_bar = (RelativeLayout)findViewById(R.id.rv_topbar);
+            rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
 
             //确定和取消按钮
             btnSubmit = (Button) findViewById(R.id.btnSubmit);
@@ -439,12 +457,14 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions = new WheelOptions(optionsPicker, linkage);
         wheelOptions.setTextContentSize(Size_Content);
         wheelOptions.setLabels(label1, label2, label3);
+        wheelOptions.setTextXOffset(xoffset_one, xoffset_two, xoffset_three);
+
         wheelOptions.setCyclic(cyclic1, cyclic2, cyclic3);
         wheelOptions.setTypeface(font);
 
         setOutSideCancelable(cancelable);
 
-        if (tvTitle!= null){
+        if (tvTitle != null) {
             tvTitle.setText(Str_Title);
         }
 
@@ -454,7 +474,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions.setTextColorOut(textColorOut);
         wheelOptions.setTextColorCenter(textColorCenter);
         wheelOptions.isCenterLabel(isCenterLabel);
-
     }
 
 
@@ -483,7 +502,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     }
 
     private void SetCurrentItems() {
-        if(wheelOptions!=null){
+        if (wheelOptions != null) {
             wheelOptions.setCurrentItems(option1, option2, option3);
         }
     }

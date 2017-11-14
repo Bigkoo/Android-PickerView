@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setType(new boolean[]{false, false, false, true, true, true})
                 .setLabel("年", "月", "日", "时", "分", "秒")
                 .setLineSpacingMultiplier(1.2f)
-                .setTextXOffset(0, 0, 0, 50, 0, -50)
+                .setTextXOffset(0, 0, 0, 40, 0, -40)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(0xFF24AD9D)
                 .build();

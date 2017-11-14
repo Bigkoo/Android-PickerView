@@ -390,6 +390,16 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
+        /**
+         * 设置X轴倾斜角度[ -90 , 90°]
+         * @param xoffset_year 年
+         * @param xoffset_month 月
+         * @param xoffset_day 日
+         * @param xoffset_hours 时
+         * @param xoffset_mins 分
+         * @param xoffset_seconds 秒
+         * @return
+         */
         public Builder setTextXOffset(int xoffset_year, int xoffset_month, int xoffset_day, int xoffset_hours, int xoffset_mins, int xoffset_seconds){
             this.xoffset_year = xoffset_year;
             this.xoffset_month = xoffset_month;
