@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentSize(21)
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
-                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
+//                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
                 .setDecorView(null)
                 .build();
     }

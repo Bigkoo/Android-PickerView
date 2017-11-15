@@ -416,8 +416,9 @@ public class WheelTime {
                     } else if (monthNum == startMonth) {
                         //重新设置日
                         setReDay(year_num, monthNum, startDay, 31, list_big, list_little);
-                    } else {
-                        //重新设置日
+                    } else if (monthNum == endMonth){
+                        setReDay(year_num, monthNum, 1, endDay, list_big, list_little);
+                    }else {//重新设置日
                         setReDay(year_num, monthNum, 1, 31, list_big, list_little);
                     }
                 } else if (year_num == startYear) {//等于开始的年
@@ -431,12 +432,10 @@ public class WheelTime {
 
                     int month = currentMonthItem + startMonth;
                     if (month == startMonth) {
-
                         //重新设置日
                         setReDay(year_num, month, startDay, 31, list_big, list_little);
                     } else {
                         //重新设置日
-
                         setReDay(year_num, month, 1, 31, list_big, list_little);
                     }
 
@@ -532,20 +531,19 @@ public class WheelTime {
     private void setReDay(int year_num, int monthNum, int startD, int endD, List<String> list_big, List<String> list_little) {
         int currentItem = wv_day.getCurrentItem();
 
-        int maxItem;
-        if (list_big
-                .contains(String.valueOf(monthNum))) {
+//        int maxItem;
+        if (list_big.contains(String.valueOf(monthNum))) {
             if (endD > 31) {
                 endD = 31;
             }
             wv_day.setAdapter(new NumericWheelAdapter(startD, endD));
-            maxItem = endD;
+//            maxItem = endD;
         } else if (list_little.contains(String.valueOf(monthNum))) {
             if (endD > 30) {
                 endD = 30;
             }
             wv_day.setAdapter(new NumericWheelAdapter(startD, endD));
-            maxItem = endD;
+//            maxItem = endD;
         } else {
             if ((year_num % 4 == 0 && year_num % 100 != 0)
                     || year_num % 400 == 0) {
@@ -553,13 +551,13 @@ public class WheelTime {
                     endD = 29;
                 }
                 wv_day.setAdapter(new NumericWheelAdapter(startD, endD));
-                maxItem = endD;
+//                maxItem = endD;
             } else {
                 if (endD > 28) {
                     endD = 28;
                 }
                 wv_day.setAdapter(new NumericWheelAdapter(startD, endD));
-                maxItem = endD;
+//                maxItem = endD;
             }
         }
 
