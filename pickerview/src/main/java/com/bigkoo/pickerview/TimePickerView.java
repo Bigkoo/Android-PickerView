@@ -71,6 +71,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private float lineSpacingMultiplier = 1.6F;
     private boolean isDialog;//是否是对话框模式
     private String label_year, label_month, label_day, label_hours, label_mins, label_seconds;
+    private int xoffset_year, xoffset_month, xoffset_day, xoffset_hours, xoffset_mins, xoffset_seconds;
     private WheelView.DividerType dividerType;//分隔线类型
 
     private static final String TAG_SUBMIT = "submit";
@@ -108,6 +109,12 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.label_hours = builder.label_hours;
         this.label_mins = builder.label_mins;
         this.label_seconds = builder.label_seconds;
+        this.xoffset_year = builder.xoffset_year;
+        this.xoffset_month = builder.xoffset_month;
+        this.xoffset_day = builder.xoffset_day;
+        this.xoffset_hours = builder.xoffset_hours;
+        this.xoffset_mins = builder.xoffset_mins;
+        this.xoffset_seconds = builder.xoffset_seconds;
         this.textColorCenter = builder.textColorCenter;
         this.textColorOut = builder.textColorOut;
         this.dividerColor = builder.dividerColor;
@@ -169,6 +176,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private boolean isDialog;//是否是对话框模式
 
         private String label_year, label_month, label_day, label_hours, label_mins, label_seconds;//单位
+        private int xoffset_year, xoffset_month, xoffset_day, xoffset_hours, xoffset_mins, xoffset_seconds;//单位
 
         //Required
         public Builder(Context context, OnTimeSelectListener listener) {
@@ -382,6 +390,26 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
+        /**
+         * 设置X轴倾斜角度[ -90 , 90°]
+         * @param xoffset_year 年
+         * @param xoffset_month 月
+         * @param xoffset_day 日
+         * @param xoffset_hours 时
+         * @param xoffset_mins 分
+         * @param xoffset_seconds 秒
+         * @return
+         */
+        public Builder setTextXOffset(int xoffset_year, int xoffset_month, int xoffset_day, int xoffset_hours, int xoffset_mins, int xoffset_seconds){
+            this.xoffset_year = xoffset_year;
+            this.xoffset_month = xoffset_month;
+            this.xoffset_day = xoffset_day;
+            this.xoffset_hours = xoffset_hours;
+            this.xoffset_mins = xoffset_mins;
+            this.xoffset_seconds = xoffset_seconds;
+            return this;
+        }
+
         public Builder isCenterLabel(boolean isCenterLabel) {
             this.isCenterLabel = isCenterLabel;
             return this;
@@ -459,6 +487,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         setTime();
         wheelTime.setLabels(label_year, label_month, label_day, label_hours, label_mins, label_seconds);
+        wheelTime.setTextXOffset(xoffset_year, xoffset_month, xoffset_day, xoffset_hours, xoffset_mins, xoffset_seconds);
 
         setOutSideCancelable(cancelable);
         wheelTime.setCyclic(cyclic);

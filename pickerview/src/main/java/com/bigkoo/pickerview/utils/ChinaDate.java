@@ -399,7 +399,8 @@ public class ChinaDate {
     /**
      * @param lunarYear 农历年份
      * @return String of Ganzhi: 甲子年
-     * Tiangan:甲乙丙丁戊己庚辛壬癸<br/>Dizhi: 子丑寅卯辰巳无为申酉戌亥
+     *  甲乙丙丁戊己庚辛壬癸
+     *  子丑寅卯辰巳无为申酉戌亥
      */
     public static String getLunarYearText(int lunarYear) {
         return Gan[(lunarYear - 4) % 10] + Zhi[(lunarYear - 4) % 12] + "年";

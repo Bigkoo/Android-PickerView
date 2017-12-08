@@ -3,7 +3,6 @@
 
 [![Bintray](https://img.shields.io/bintray/v/contrarywind/maven/Android-PickerView.svg)](https://bintray.com/contrarywind/maven/Android-PickerView)
 [![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg)](https://android-arsenal.com/api?level=9) 
-[![download](https://img.shields.io/badge/downloadZip-v3.2.6-orange.svg)](https://github.com/Bigkoo/Android-PickerView/archive/master.zip)
 [![license](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 [![GitHub stars](https://img.shields.io/github/stars/Bigkoo/Android-PickerView.svg?style=social)](https://github.com/Bigkoo/Android-PickerView/stargazers) [![GitHub forks](https://img.shields.io/github/forks/Bigkoo/Android-PickerView.svg?style=social)](https://github.com/Bigkoo/Android-PickerView/network) [![GitHub watchers](https://img.shields.io/github/watchers/Bigkoo/Android-PickerView.svg?style=social)](https://github.com/Bigkoo/Android-PickerView/watchers)
@@ -42,7 +41,8 @@
 
 ![TimePicker.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/timepicker.gif)
 ![TimePickerNight.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/timepicker_night.gif)
-
+![lunar.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/lunar.gif)
+![XOffset.png](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/Screen%20Shot%202017-11-09%20at%204.25.02%20PM.png)
 ![Province.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/JsonData.gif)
 ![CustomLayout.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/CustomLayout.gif)
 
@@ -60,21 +60,11 @@
   startDate.set(2013,0,1);
   endDate.set(2020,11,1);
   
-  
-#### V3.2.6版本更新说明（2017-8-10）
-* 修复设定初始值越界而造成滑动异常的问题。
-* 修复OptionsPikerView 在复用时，第二列和第三列可能无法显示的问题。
-* 修复TimePicker在不显示年份时，设定年份失效导致一直回调默认初始年份问题。
-
-#### V3.2.5版本更新说明（2017-5-15）
-* 优化：年月日时分秒 从枚举类型改为boolean 数组，分别控制它们的显示与否。
-* 新增：setBackgroundId方法，原本是默认灰色，新增此方法，可根据实际需求自由定制背景遮罩颜色。
-* 新增：setDecorView方法，可自由设置pickview的容器，即控件显示在哪个控件里面。
-* 新增：show方法添加isAnim参数，控制是否显示动画效果。
-
-#### V3.2.4版本更新说明（2017-4-7）
-* 修复：修复偶尔会出现item滑到第一项或最后一项时滑出边界的情况 。
-
+#### V3.2.7版本更新说明（2017-11-15）
+* 修复dialog模式中，在build之后，重新设定cancelable不生效的问题。
+* 优化时间选择器，修复startYear= endYear时，滑动年份导致日期设置限制失效问题。
+* 新增X偏移量设定，优化视觉效果。
+* 新增农历模式。
 
 #### 更多历史版本详情，请查阅：[更新说明（3.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E%EF%BC%883.x%E7%89%88%E6%9C%AC%EF%BC%89) 
 
@@ -86,7 +76,7 @@
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:3.2.6'
+compile 'com.contrarywind:Android-PickerView:3.2.7'
 ```
 或者
 
@@ -95,7 +85,7 @@ compile 'com.contrarywind:Android-PickerView:3.2.6'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>3.2.6</version>
+<version>3.2.7</version>
 <type>pom</type>
 </dependency>
 ```

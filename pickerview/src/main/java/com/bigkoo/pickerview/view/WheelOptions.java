@@ -121,15 +121,14 @@ public class WheelOptions<T> {
                     //新opt3的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
                     opt3 = opt3 >= mOptions3Items.get(opt1Select).get(index).size() - 1 ? mOptions3Items.get(opt1Select).get(index).size() - 1 : opt3;
 
-                    wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items
-                            .get(wv_option1.getCurrentItem()).get(index)));
+                    wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(wv_option1.getCurrentItem()).get(index)));
                     wv_option3.setCurrentItem(opt3);
 
                 }
             }
         };
 
-		// 添加联动监听
+        // 添加联动监听
         if (options2Items != null && linkage)
             wv_option1.setOnItemSelectedListener(wheelListener_option1);
         if (options3Items != null && linkage)
@@ -139,8 +138,8 @@ public class WheelOptions<T> {
 
     //不联动情况下
     public void setNPicker(List<T> options1Items,
-                         List<T> options2Items,
-                         List<T> options3Items) {
+                           List<T> options2Items,
+                           List<T> options3Items) {
         this.mOptions1Items = options1Items;
         this.N_mOptions2Items = options2Items;
         this.N_mOptions3Items = options3Items;
@@ -233,6 +232,15 @@ public class WheelOptions<T> {
     }
 
     /**
+     * 设置x轴偏移量
+     */
+    public void setTextXOffset(int xoffset_one, int xoffset_two, int xoffset_three){
+        wv_option1.setTextXOffset(xoffset_one);
+        wv_option2.setTextXOffset(xoffset_two);
+        wv_option3.setTextXOffset(xoffset_three);
+    }
+
+    /**
      * 设置是否循环滚动
      *
      * @param cyclic 是否循环
@@ -248,7 +256,7 @@ public class WheelOptions<T> {
      *
      * @param font 系统提供的几种样式
      */
-    public void setTypeface (Typeface font) {
+    public void setTypeface(Typeface font) {
         wv_option1.setTypeface(font);
         wv_option2.setTypeface(font);
         wv_option3.setTypeface(font);
@@ -266,7 +274,6 @@ public class WheelOptions<T> {
     }
 
 
-
     /**
      * 返回当前选中的结果对应的位置数组 因为支持三级联动效果，分三个级别索引，0，1，2。
      * 在快速滑动未停止时，点击确定按钮，会进行判断，如果匹配数据越界，则设为0，防止index出错导致崩溃。
@@ -277,15 +284,15 @@ public class WheelOptions<T> {
         int[] currentItems = new int[3];
         currentItems[0] = wv_option1.getCurrentItem();
 
-        if (mOptions2Items!=null&&mOptions2Items.size()>0){//非空判断
-            currentItems[1] = wv_option2.getCurrentItem()>(mOptions2Items.get(currentItems[0]).size()-1)?0:wv_option2.getCurrentItem();
-        }else {
+        if (mOptions2Items != null && mOptions2Items.size() > 0) {//非空判断
+            currentItems[1] = wv_option2.getCurrentItem() > (mOptions2Items.get(currentItems[0]).size() - 1) ? 0 : wv_option2.getCurrentItem();
+        } else {
             currentItems[1] = wv_option2.getCurrentItem();
         }
 
-        if (mOptions3Items!=null&&mOptions3Items.size()>0){//非空判断
-            currentItems[2] = wv_option3.getCurrentItem()>(mOptions3Items.get(currentItems[0]).get(currentItems[1]).size()-1)?0:wv_option3.getCurrentItem();
-        }else {
+        if (mOptions3Items != null && mOptions3Items.size() > 0) {//非空判断
+            currentItems[2] = wv_option3.getCurrentItem() > (mOptions3Items.get(currentItems[0]).get(currentItems[1]).size() - 1) ? 0 : wv_option3.getCurrentItem();
+        } else {
             currentItems[2] = wv_option3.getCurrentItem();
         }
 
@@ -303,17 +310,15 @@ public class WheelOptions<T> {
 
     private void itemSelected(int opt1Select, int opt2Select, int opt3Select) {
         if (mOptions2Items != null) {
-            wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items
-                    .get(opt1Select)));
+            wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(opt1Select)));
             wv_option2.setCurrentItem(opt2Select);
         }
         if (mOptions3Items != null) {
-            wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items
-                    .get(opt1Select).get(
-                            opt2Select)));
+            wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(opt1Select).get(opt2Select)));
             wv_option3.setCurrentItem(opt3Select);
         }
     }
+
     /**
      * 设置间距倍数,但是只能在1.2-2.0f之间
      *
@@ -343,6 +348,7 @@ public class WheelOptions<T> {
         this.dividerType = dividerType;
         setDividerType();
     }
+
     /**
      * 设置分割线之间的文字的颜色
      *
