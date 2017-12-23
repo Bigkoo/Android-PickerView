@@ -45,5 +45,5 @@ publish {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
+    compile project(path: ':wheelview')
 }

@@ -1,6 +1,8 @@
 package com.bigkoo.pickerview.adapter;
 
 
+import com.contrarywind.adapter.WheelAdapter;
+
 /**
  * Numeric Wheel adapter.
  */

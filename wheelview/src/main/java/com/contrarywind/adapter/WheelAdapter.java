@@ -1,4 +1,5 @@
-package com.contrarywind.wheelview;
+package com.contrarywind.adapter;
+
 
 public interface WheelAdapter<T> {
 	/**

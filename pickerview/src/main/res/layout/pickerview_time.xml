@@ -16,38 +16,38 @@
         android:background="@android:color/white"
         android:orientation="horizontal">
 
-        <com.bigkoo.pickerview.lib.WheelView
+        <com.contrarywind.view.WheelView
             android:id="@+id/year"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.96" />
 
-        <com.bigkoo.pickerview.lib.WheelView
+        <com.contrarywind.view.WheelView
 
             android:id="@+id/month"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <com.bigkoo.pickerview.lib.WheelView
+        <com.contrarywind.view.WheelView
             android:id="@+id/day"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <com.bigkoo.pickerview.lib.WheelView
+        <com.contrarywind.view.WheelView
             android:id="@+id/hour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <com.bigkoo.pickerview.lib.WheelView
+        <com.contrarywind.view.WheelView
             android:id="@+id/min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <com.bigkoo.pickerview.lib.WheelView
+        <com.contrarywind.view.WheelView
             android:id="@+id/second"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
