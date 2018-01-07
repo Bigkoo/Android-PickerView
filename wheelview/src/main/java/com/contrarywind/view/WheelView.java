@@ -20,6 +20,9 @@ import com.contrarywind.adapter.WheelAdapter;
 import com.contrarywind.interfaces.IPickerViewData;
 import com.contrarywind.listener.LoopViewGestureListener;
 import com.contrarywind.listener.OnItemSelectedListener;
+import com.contrarywind.timer.InertiaTimerTask;
+import com.contrarywind.timer.MessageHandler;
+import com.contrarywind.timer.SmoothScrollTimerTask;
 
 import java.util.Locale;
 import java.util.concurrent.Executors;
@@ -43,9 +46,9 @@ public class WheelView extends View {
 
     private DividerType dividerType;//分隔线类型
 
-    Context context;
+    private Context context;
 
-    Handler handler;
+    private Handler handler;
     private GestureDetector gestureDetector;
     private OnItemSelectedListener onItemSelectedListener;
 
@@ -67,7 +70,8 @@ public class WheelView extends View {
     private int maxTextWidth;
     private int maxTextHeight;
     private int textXOffset;
-    float itemHeight;//每行高度
+    private float itemHeight;//每行高度
+
 
     private Typeface typeface = Typeface.MONOSPACE;//字体样式，默认是等宽字体
 
@@ -87,9 +91,11 @@ public class WheelView extends View {
     private float centerY;
 
     //当前滚动总高度y值
-    float totalScrollY;
+    private float totalScrollY;
+
     //初始化默认选中项
-    int initPosition;
+    private int initPosition;
+
     //选中的Item是第几个
     private int selectedItem;
     private int preCurrentIndex;
@@ -261,7 +267,7 @@ public class WheelView extends View {
         itemHeight = lineSpacingMultiplier * maxTextHeight;
     }
 
-    void smoothScroll(ACTION action) {//平滑滚动的实现
+   public void smoothScroll(ACTION action) {//平滑滚动的实现
         cancelFuture();
         if (action == ACTION.FLING || action == ACTION.DAGGLE) {
             mOffset = (int) ((totalScrollY % itemHeight + itemHeight) % itemHeight);
@@ -336,7 +342,7 @@ public class WheelView extends View {
         return selectedItem;
     }
 
-    protected final void onItemSelected() {
+    public final void onItemSelected() {
         if (onItemSelectedListener != null) {
             postDelayed(new Runnable() {
                 @Override
@@ -797,5 +803,26 @@ public class WheelView extends View {
 
     public void setTotalScrollY(float totalScrollY) {
         this.totalScrollY = totalScrollY;
+    }
+
+    public float getItemHeight() {
+        return itemHeight;
+    }
+
+    public void setItemHeight(float itemHeight) {
+        this.itemHeight = itemHeight;
+    }
+
+    public int getInitPosition() {
+        return initPosition;
+    }
+
+    public void setInitPosition(int initPosition) {
+        this.initPosition = initPosition;
+    }
+
+    @Override
+    public Handler getHandler() {
+        return handler;
     }
 }

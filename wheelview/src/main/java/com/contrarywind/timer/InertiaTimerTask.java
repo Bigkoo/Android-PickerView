@@ -1,4 +1,6 @@
-package com.contrarywind.view;
+package com.contrarywind.timer;
+
+import com.contrarywind.view.WheelView;
 
 import java.util.TimerTask;
 
@@ -8,7 +10,7 @@ import java.util.TimerTask;
  * @author 小嵩
  * @date 2017-12-23 23:20:44
  */
-final class InertiaTimerTask extends TimerTask {
+public final class InertiaTimerTask extends TimerTask {
 
     private float mCurrentVelocityY; //当前滑动速度
     private final float mFirstVelocityY;//手指离开屏幕时的初始速度
@@ -18,7 +20,7 @@ final class InertiaTimerTask extends TimerTask {
      * @param wheelView 滚轮对象
      * @param velocityY Y轴滑行速度
      */
-    InertiaTimerTask(WheelView wheelView, float velocityY) {
+    public InertiaTimerTask(WheelView wheelView, float velocityY) {
         super();
         this.mWheelView = wheelView;
         this.mFirstVelocityY = velocityY;
