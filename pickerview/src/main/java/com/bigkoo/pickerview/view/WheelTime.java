@@ -846,7 +846,7 @@ public class WheelTime {
 
 
     /**
-     * 设置间距倍数,但是只能在1.0-2.0f之间
+     * 设置间距倍数,但是只能在1.0-4.0f之间
      *
      * @param lineSpacingMultiplier
      */
