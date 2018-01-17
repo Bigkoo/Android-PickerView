@@ -18,7 +18,7 @@ public interface WheelAdapter<T> {
 	/**
 	 * Gets maximum item length. It is used to determine the wheel width.
 	 * If -1 is returned there will be used the default wheel width.
-	 * @param o
+	 * @param o  the item object
 	 * @return the maximum item length or -1
      */
 	int indexOf(T o);

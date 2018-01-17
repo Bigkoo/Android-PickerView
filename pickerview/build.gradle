@@ -1,18 +1,18 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.novoda.bintray-release'//添加插件
+apply plugin: 'com.novoda.bintray-release'//添加JCenter插件
 
 
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 25
-        versionCode 23
-        versionName "3.2.7"
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 24
+        versionName "4.0.1"
     }
     buildTypes {
         release {
@@ -38,7 +38,7 @@ publish {
     userOrg = 'contrarywind'//bintray.com 用户名/组织名 user/org name
     groupId = 'com.contrarywind'//JCenter上显示的路径 path
     artifactId = 'Android-PickerView'//项目名称 project name
-    publishVersion = '3.2.7'//版本号 version code
+    publishVersion = '4.0.1'//版本号 version code
     desc = 'this is a pickerview for android'//项目描述 description
     website = 'https://github.com/Contrarywind/Android-PickerView' //项目网址链接 link
 }

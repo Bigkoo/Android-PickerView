@@ -5,8 +5,9 @@ import com.contrarywind.view.WheelView;
 import java.util.TimerTask;
 
 /**
+ * 平滑滚动的实现
+ *
  * @author 小嵩
- * @describe <平滑滚动的实现>
  */
 public final class SmoothScrollTimerTask extends TimerTask {
 

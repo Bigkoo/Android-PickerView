@@ -1,5 +1,6 @@
 package com.contrarywind.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -32,7 +33,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 3d滚轮控件
- *
  */
 public class WheelView extends View {
 
@@ -47,7 +47,6 @@ public class WheelView extends View {
     private DividerType dividerType;//分隔线类型
 
     private Context context;
-
     private Handler handler;
     private GestureDetector gestureDetector;
     private OnItemSelectedListener onItemSelectedListener;
@@ -74,10 +73,9 @@ public class WheelView extends View {
 
 
     private Typeface typeface = Typeface.MONOSPACE;//字体样式，默认是等宽字体
-
-    private int textColorOut = 0xFFa8a8a8;
-    private int textColorCenter = 0xFF2a2a2a;
-    private int dividerColor = 0xFFd5d5d5;
+    private int textColorOut;
+    private int textColorCenter;
+    private int dividerColor;
 
     // 条目间距倍数
     private float lineSpacingMultiplier = 1.6F;
@@ -108,8 +106,6 @@ public class WheelView extends View {
     private int measuredHeight;// WheelView 控件高度
     private int measuredWidth;// WheelView 控件宽度
 
-    // 半圆周长
-    private int halfCircumference;
     // 半径
     private int radius;
 
@@ -155,12 +151,12 @@ public class WheelView extends View {
 
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.pickerview, 0, 0);
-            mGravity = a.getInt(R.styleable.pickerview_pickerview_gravity, Gravity.CENTER);
-            textColorOut = a.getColor(R.styleable.pickerview_pickerview_textColorOut, textColorOut);
-            textColorCenter = a.getColor(R.styleable.pickerview_pickerview_textColorCenter, textColorCenter);
-            dividerColor = a.getColor(R.styleable.pickerview_pickerview_dividerColor, dividerColor);
-            textSize = a.getDimensionPixelOffset(R.styleable.pickerview_pickerview_textSize, textSize);
-            lineSpacingMultiplier = a.getFloat(R.styleable.pickerview_pickerview_lineSpacingMultiplier, lineSpacingMultiplier);
+            mGravity = a.getInt(R.styleable.pickerview_wheelview_gravity, Gravity.CENTER);
+            textColorOut = a.getColor(R.styleable.pickerview_wheelview_textColorOut, 0xFFa8a8a8);
+            textColorCenter = a.getColor(R.styleable.pickerview_wheelview_textColorCenter, 0xFF2a2a2a);
+            dividerColor = a.getColor(R.styleable.pickerview_wheelview_dividerColor, 0xFFd5d5d5);
+            textSize = a.getDimensionPixelOffset(R.styleable.pickerview_wheelview_textSize, textSize);
+            lineSpacingMultiplier = a.getFloat(R.styleable.pickerview_wheelview_lineSpacingMultiplier, lineSpacingMultiplier);
             a.recycle();//回收内存
         }
 
@@ -209,9 +205,7 @@ public class WheelView extends View {
         paintIndicator.setColor(dividerColor);
         paintIndicator.setAntiAlias(true);
 
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
-            setLayerType(LAYER_TYPE_SOFTWARE, null);
-        }
+        setLayerType(LAYER_TYPE_SOFTWARE, null);
     }
 
     private void remeasure() {//重新测量
@@ -222,7 +216,7 @@ public class WheelView extends View {
         measureTextWidthHeight();
 
         //半圆的周长 = item高度乘以item数目-1
-        halfCircumference = (int) (itemHeight * (itemsVisible - 1));
+        int halfCircumference = (int) (itemHeight * (itemsVisible - 1));
         //整个圆的周长除以PI得到直径，这个直径用作控件的总高度
         measuredHeight = (int) ((halfCircumference * 2) / Math.PI);
         //求出半径
@@ -267,7 +261,7 @@ public class WheelView extends View {
         itemHeight = lineSpacingMultiplier * maxTextHeight;
     }
 
-   public void smoothScroll(ACTION action) {//平滑滚动的实现
+    public void smoothScroll(ACTION action) {//平滑滚动的实现
         cancelFuture();
         if (action == ACTION.FLING || action == ACTION.DAGGLE) {
             mOffset = (int) ((totalScrollY % itemHeight + itemHeight) % itemHeight);
@@ -366,6 +360,7 @@ public class WheelView extends View {
             initPosition = adapter.getItemsCount() - 1;
         }
         //可见的item数组
+        @SuppressLint("DrawAllocation")
         Object visibles[] = new Object[itemsVisible];
         //滚动的Y值高度除去每行Item的高度，得到滚动了多少个item，即change数
         change = (int) (totalScrollY / itemHeight);
