@@ -134,12 +134,17 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
     //建造器
     public static class Builder {
+
+        // 通用部分, 后续创建一个BaseBuilder
         private int layoutRes = R.layout.pickerview_time;
         private CustomListener customListener;
         private Context context;
-        private OnTimeSelectListener timeSelectListener;
-        private boolean[] type = new boolean[]{true, true, true, true, true, true};//显示类型 默认全部显示
         private int gravity = Gravity.CENTER;//内容显示位置 默认居中
+        private ViewGroup decorView;//显示pickerview的根View,默认是activity的根view
+        private int textColorOut; //分割线以外的文字颜色
+        private int textColorCenter; //分割线之间的文字颜色
+        private int dividerColor; //分割线的颜色
+        private int backgroundId; //显示时的外部背景色颜色,默认是灰色
 
         private String Str_Submit;//确定按钮文字
         private String Str_Cancel;//取消按钮文字
@@ -155,6 +160,17 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private int Size_Submit_Cancel = 17;//确定取消按钮大小
         private int Size_Title = 18;//标题字体大小
         private int Size_Content = 18;//内容字体大小
+        private boolean cancelable = true;//是否能取消
+        private boolean isCenterLabel = true;//是否只显示中间的label
+
+        private WheelView.DividerType dividerType;//分隔线类型
+        private float lineSpacingMultiplier = 1.6F; // 条目间距倍数 默认1.6
+        private boolean isDialog;//是否是对话框模式
+
+        //专用部分
+        private OnTimeSelectListener timeSelectListener;
+        private boolean[] type = new boolean[]{true, true, true, true, true, true};//显示类型 默认全部显示
+
         private Calendar date;//当前选中时间
         private Calendar startDate;//开始时间
         private Calendar endDate;//终止时间
@@ -162,24 +178,11 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private int endYear;//结尾年份
 
         private boolean cyclic = false;//是否循环
-        private boolean cancelable = true;//是否能取消
-
-        private boolean isCenterLabel = true;//是否只显示中间的label
         private boolean isLunarCalendar = false;//是否显示农历
-        public ViewGroup decorView;//显示pickerview的根View,默认是activity的根view
-
-        private int textColorOut; //分割线以外的文字颜色
-        private int textColorCenter; //分割线之间的文字颜色
-        private int dividerColor; //分割线的颜色
-        private int backgroundId; //显示时的外部背景色颜色,默认是灰色
-        private WheelView.DividerType dividerType;//分隔线类型
-        // 条目间距倍数 默认1.6
-        private float lineSpacingMultiplier = 1.6F;
-
-        private boolean isDialog;//是否是对话框模式
 
         private String label_year, label_month, label_day, label_hours, label_mins, label_seconds;//单位
         private int xoffset_year, xoffset_month, xoffset_day, xoffset_hours, xoffset_mins, xoffset_seconds;//单位
+
 
         //Required
         public Builder(Context context, OnTimeSelectListener listener) {
@@ -287,6 +290,11 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
+        /**
+         * use the setRangDate method instead.
+         * @deprecated Use {@link  #setRangDate()} with two Calendar value.
+         */
+        @Deprecated
         public Builder setRange(int startYear, int endYear) {
             this.startYear = startYear;
             this.endYear = endYear;
@@ -296,8 +304,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         /**
          * 设置起始时间
          * 因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
-         *
-         * @return
          */
 
         public Builder setRangDate(Calendar startDate, Calendar endDate) {
@@ -480,12 +486,11 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         if (startDate != null && endDate != null) {
             if (startDate.getTimeInMillis() <= endDate.getTimeInMillis()) {
-
                 setRangDate();
             }
-        } else if (startDate != null && endDate == null) {
+        } else if (startDate != null) {
             setRangDate();
-        } else if (startDate == null && endDate != null) {
+        } else if (endDate != null) {
             setRangDate();
         }
 

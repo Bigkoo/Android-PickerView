@@ -138,11 +138,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     //建造器
     public static class Builder {
+
+        // 通用部分, 后续创建一个BaseBuilder
         private int layoutRes = R.layout.pickerview_options;
         private CustomListener customListener;
         private Context context;
-        private OnOptionsSelectListener optionsSelectListener;
-
         private String Str_Submit;//确定按钮文字
         private String Str_Cancel;//取消按钮文字
         private String Str_Title;//标题文字
@@ -157,9 +157,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private int Size_Submit_Cancel = 17;//确定取消按钮大小
         private int Size_Title = 18;//标题文字大小
         private int Size_Content = 18;//内容文字大小
-
         private boolean cancelable = true;//是否能取消
-        private boolean linkage = true;//是否联动
         private boolean isCenterLabel = true;//是否只显示中间的label
 
         private int textColorOut; //分割线以外的文字颜色
@@ -167,9 +165,15 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private int dividerColor; //分割线的颜色
         private int backgroundId; //显示时的外部背景色颜色,默认是灰色
         public ViewGroup decorView;//显示pickerview的根View,默认是activity的根view
-        // 条目间距倍数 默认1.6
-        private float lineSpacingMultiplier = 1.6F;
+        private float lineSpacingMultiplier = 1.6F;// 条目间距倍数 默认1.6
         private boolean isDialog;//是否是对话框模式
+        private Typeface font;
+        private WheelView.DividerType dividerType;//分隔线类型
+
+
+        //专用部分
+        private OnOptionsSelectListener optionsSelectListener;
+        private boolean linkage = true;//是否联动
 
         private String label1;
         private String label2;
@@ -179,8 +183,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private boolean cyclic2 = false;
         private boolean cyclic3 = false;
 
-        private Typeface font;
-
         private int option1;//默认选中项
         private int option2;
         private int option3;
@@ -189,7 +191,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private int xoffset_two;
         private int xoffset_three;
 
-        private WheelView.DividerType dividerType;//分隔线类型
 
         //Required
         public Builder(Context context, OnOptionsSelectListener listener) {
@@ -198,7 +199,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         }
 
         //Option
-
         public Builder setSubmitText(String Str_Cancel) {
             this.Str_Submit = Str_Cancel;
             return this;
