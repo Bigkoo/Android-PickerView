@@ -69,6 +69,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
     // 条目间距倍数 默认1.6
     private float lineSpacingMultiplier = 1.6F;
+    // 步长
+    private int[] stepSize;
     private boolean isDialog;//是否是对话框模式
     private String label_year, label_month, label_day, label_hours, label_mins, label_seconds;
     private int xoffset_year, xoffset_month, xoffset_day, xoffset_hours, xoffset_mins, xoffset_seconds;
@@ -125,6 +127,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.dividerType = builder.dividerType;
         this.backgroundId = builder.backgroundId;
         this.decorView = builder.decorView;
+        this.stepSize = builder.stepSize;
         initView(builder.context);
     }
 
@@ -177,6 +180,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         private String label_year, label_month, label_day, label_hours, label_mins, label_seconds;//单位
         private int xoffset_year, xoffset_month, xoffset_day, xoffset_hours, xoffset_mins, xoffset_seconds;//单位
+        // 步长
+        private int[] stepSize = new int[3];
 
         //Required
         public Builder(Context context, OnTimeSelectListener listener) {
@@ -415,6 +420,15 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
+        /**
+         * 设置步长。
+         * @param stepSize 步长
+         * @return {@link Builder}
+         */
+        public Builder setStepSize(int[] stepSize){
+            this.stepSize = stepSize;
+            return this;
+        }
 
         public TimePickerView build() {
             return new TimePickerView(this);
@@ -469,6 +483,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         wheelTime = new WheelTime(timePickerView, type, gravity, Size_Content);
         wheelTime.setLunarCalendar(isLunarCalendar);
+        wheelTime.setStepSize(stepSize);
 
         if (startYear != 0 && endYear != 0 && startYear <= endYear) {
             setRange();

@@ -272,6 +272,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setTextXOffset(0, 0, 0, 40, 0, -40)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(0xFF24AD9D)
+//                .setStepSize(new int[]{1, 5, 20})// 步长
                 .build();
 
     }

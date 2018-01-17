@@ -57,6 +57,7 @@ public class WheelTime {
     private WheelView.DividerType dividerType;
 
     private boolean isLunarCalendar = false;
+    private int[] stepSize;
 
     public WheelTime(View view) {
         super();
@@ -134,19 +135,19 @@ public class WheelTime {
         wv_day.setGravity(gravity);
 
         wv_hours = (WheelView) view.findViewById(R.id.hour);
-        wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
+        wv_hours.setAdapter(new NumericWheelAdapter(0, 23, stepSize[0]));
         //wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字
         wv_hours.setCurrentItem(h);
         wv_hours.setGravity(gravity);
 
         wv_mins = (WheelView) view.findViewById(R.id.min);
-        wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
+        wv_mins.setAdapter(new NumericWheelAdapter(0, 59, stepSize[1]));
         //wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
         wv_mins.setCurrentItem(m);
         wv_mins.setGravity(gravity);
 
         wv_seconds = (WheelView) view.findViewById(R.id.second);
-        wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
+        wv_seconds.setAdapter(new NumericWheelAdapter(0, 59, stepSize[2]));
         //wv_seconds.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
         wv_seconds.setCurrentItem(m);
         wv_seconds.setGravity(gravity);
@@ -374,19 +375,19 @@ public class WheelTime {
         wv_day.setGravity(gravity);
         //时
         wv_hours = (WheelView) view.findViewById(R.id.hour);
-        wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
+        wv_hours.setAdapter(new NumericWheelAdapter(0, 23, stepSize[0]));
       /*  wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字*/
         wv_hours.setCurrentItem(h);
         wv_hours.setGravity(gravity);
         //分
         wv_mins = (WheelView) view.findViewById(R.id.min);
-        wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
+        wv_mins.setAdapter(new NumericWheelAdapter(0, 59, stepSize[1]));
        /* wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字*/
         wv_mins.setCurrentItem(m);
         wv_mins.setGravity(gravity);
         //秒
         wv_seconds = (WheelView) view.findViewById(R.id.second);
-        wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
+        wv_seconds.setAdapter(new NumericWheelAdapter(0, 59, stepSize[2]));
        /* wv_seconds.setLabel(context.getString(R.string.pickerview_seconds));// 添加文字*/
         wv_seconds.setCurrentItem(s);
         wv_seconds.setGravity(gravity);
@@ -909,5 +910,9 @@ public class WheelTime {
         wv_hours.isCenterLabel(isCenterLabel);
         wv_mins.isCenterLabel(isCenterLabel);
         wv_seconds.isCenterLabel(isCenterLabel);
+    }
+
+    public void setStepSize(int[] stepSize){
+        this.stepSize = stepSize;
     }
 }
