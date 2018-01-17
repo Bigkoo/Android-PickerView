@@ -29,12 +29,12 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private int layoutRes;
     private CustomListener customListener;
 
-    WheelTime wheelTime; //自定义控件
-    private Button btnSubmit, btnCancel; //确定、取消按钮
-    private TextView tvTitle;//标题
+    private WheelTime wheelTime; //自定义控件
     private OnTimeSelectListener timeSelectListener;//回调接口
+
+
+    //******* 公有字段，后续抽取到BasePickerView里去  ******//
     private int gravity = Gravity.CENTER;//内容显示位置 默认居中
-    private boolean[] type;// 显示类型
 
     private String Str_Submit;//确定按钮字符串
     private String Str_Cancel;//取消按钮字符串
@@ -50,6 +50,23 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private int Size_Submit_Cancel;//确定取消按钮大小
     private int Size_Title;//标题字体大小
     private int Size_Content;//内容字体大小
+    private boolean cyclic;//是否循环
+    private boolean cancelable;//是否能取消
+    private boolean isCenterLabel;//是否只显示中间的label
+    private WheelView.DividerType dividerType;//分隔线类型
+    private int textColorOut; //分割线以外的文字颜色
+    private int textColorCenter; //分割线之间的文字颜色
+    private int dividerColor; //分割线的颜色
+    private int backgroundId; //显示时的外部背景色颜色,默认是灰色
+
+    // 条目间距倍数 默认1.6
+    private float lineSpacingMultiplier;
+    private boolean isDialog;//是否是对话框模式
+
+
+    //******* 专有字段  ******//
+    private boolean[] type;// 时间显示类型
+    private boolean isLunarCalendar;//是否显示农历
 
     private Calendar date;//当前选中时间
     private Calendar startDate;//开始时间
@@ -57,22 +74,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private int startYear;//开始年份
     private int endYear;//结尾年份
 
-    private boolean cyclic;//是否循环
-    private boolean cancelable;//是否能取消
-    private boolean isCenterLabel;//是否只显示中间的label
-    private boolean isLunarCalendar;//是否显示农历
-
-    private int textColorOut; //分割线以外的文字颜色
-    private int textColorCenter; //分割线之间的文字颜色
-    private int dividerColor; //分割线的颜色
-    private int backgroundId; //显示时的外部背景色颜色,默认是灰色
-
-    // 条目间距倍数 默认1.6
-    private float lineSpacingMultiplier = 1.6F;
-    private boolean isDialog;//是否是对话框模式
     private String label_year, label_month, label_day, label_hours, label_mins, label_seconds;
     private int xoffset_year, xoffset_month, xoffset_day, xoffset_hours, xoffset_mins, xoffset_seconds;
-    private WheelView.DividerType dividerType;//分隔线类型
 
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
@@ -392,15 +395,16 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         /**
          * 设置X轴倾斜角度[ -90 , 90°]
-         * @param xoffset_year 年
-         * @param xoffset_month 月
-         * @param xoffset_day 日
-         * @param xoffset_hours 时
-         * @param xoffset_mins 分
+         *
+         * @param xoffset_year    年
+         * @param xoffset_month   月
+         * @param xoffset_day     日
+         * @param xoffset_hours   时
+         * @param xoffset_mins    分
          * @param xoffset_seconds 秒
          * @return
          */
-        public Builder setTextXOffset(int xoffset_year, int xoffset_month, int xoffset_day, int xoffset_hours, int xoffset_mins, int xoffset_seconds){
+        public Builder setTextXOffset(int xoffset_year, int xoffset_month, int xoffset_day, int xoffset_hours, int xoffset_mins, int xoffset_seconds) {
             this.xoffset_year = xoffset_year;
             this.xoffset_month = xoffset_month;
             this.xoffset_day = xoffset_day;
@@ -431,11 +435,11 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             LayoutInflater.from(context).inflate(R.layout.pickerview_time, contentContainer);
 
             //顶部标题
-            tvTitle = (TextView) findViewById(R.id.tvTitle);
+            TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
 
             //确定和取消按钮
-            btnSubmit = (Button) findViewById(R.id.btnSubmit);
-            btnCancel = (Button) findViewById(R.id.btnCancel);
+            Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
+            Button btnCancel = (Button) findViewById(R.id.btnCancel);
 
             btnSubmit.setTag(TAG_SUBMIT);
             btnCancel.setTag(TAG_CANCEL);

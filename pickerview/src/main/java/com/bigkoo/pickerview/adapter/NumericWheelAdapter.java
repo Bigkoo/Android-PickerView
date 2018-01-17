@@ -8,22 +8,8 @@ import com.contrarywind.adapter.WheelAdapter;
  */
 public class NumericWheelAdapter implements WheelAdapter {
 	
-	/** The default min value */
-	public static final int DEFAULT_MAX_VALUE = 9;
-
-	/** The default max value */
-	private static final int DEFAULT_MIN_VALUE = 0;
-	
-	// Values
 	private int minValue;
 	private int maxValue;
-
-	/**
-	 * Default constructor
-	 */
-	public NumericWheelAdapter() {
-		this(DEFAULT_MIN_VALUE, DEFAULT_MAX_VALUE);
-	}
 
 	/**
 	 * Constructor

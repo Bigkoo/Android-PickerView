@@ -24,18 +24,16 @@ import java.util.List;
  */
 public class OptionsPickerView<T> extends BasePickerView implements View.OnClickListener {
 
-    WheelOptions<T> wheelOptions;
+    private WheelOptions<T> wheelOptions;
     private int layoutRes;
     private CustomListener customListener;
-    private Button btnSubmit, btnCancel; //确定、取消按钮
-    private TextView tvTitle;
-    private RelativeLayout rv_top_bar;
 
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
 
     private OnOptionsSelectListener optionsSelectListener;
 
+    //******* 公有字段，后续抽取到BasePickerView里去  ******//
     private String Str_Submit;//确定按钮文字
     private String Str_Cancel;//取消按钮文字
     private String Str_Title;//标题文字
@@ -55,14 +53,19 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private int textColorCenter; //分割线之间的文字颜色
     private int dividerColor; //分割线的颜色
     private int backgroundId; //显示时的外部背景色颜色,默认是灰色
+
     // 条目间距倍数 默认1.6
-    private float lineSpacingMultiplier = 1.6F;
+    private float lineSpacingMultiplier;
     private boolean isDialog;//是否是对话框模式
 
     private boolean cancelable;//是否能取消
-    private boolean linkage;//是否联动
-
     private boolean isCenterLabel;//是否只显示中间的label
+    private Typeface font;//字体样式
+    private WheelView.DividerType dividerType;//分隔线类型
+
+
+    //******* 专有字段  ******//
+    private boolean linkage;//是否联动
 
     private String label1;//单位
     private String label2;
@@ -72,8 +75,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private boolean cyclic2;
     private boolean cyclic3;
 
-    private Typeface font;//字体样式
-
     private int option1;//默认选中项
     private int option2;
     private int option3;
@@ -81,8 +82,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private int xoffset_one;//x轴偏移量
     private int xoffset_two;
     private int xoffset_three;
-
-    private WheelView.DividerType dividerType;//分隔线类型
 
     //构造方法
     public OptionsPickerView(Builder builder) {
@@ -418,12 +417,12 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             LayoutInflater.from(context).inflate(layoutRes, contentContainer);
 
             //顶部标题
-            tvTitle = (TextView) findViewById(R.id.tvTitle);
-            rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
+            TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+            RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
 
             //确定和取消按钮
-            btnSubmit = (Button) findViewById(R.id.btnSubmit);
-            btnCancel = (Button) findViewById(R.id.btnCancel);
+            Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
+            Button btnCancel = (Button) findViewById(R.id.btnCancel);
 
             btnSubmit.setTag(TAG_SUBMIT);
             btnCancel.setTag(TAG_CANCEL);
@@ -464,9 +463,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         setOutSideCancelable(cancelable);
 
-        if (tvTitle != null) {
-            tvTitle.setText(Str_Title);
-        }
 
         wheelOptions.setDividerColor(dividerColor);
         wheelOptions.setDividerType(dividerType);
