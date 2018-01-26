@@ -163,7 +163,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private int textColorOut; //分割线以外的文字颜色
         private int textColorCenter; //分割线之间的文字颜色
         private int dividerColor; //分割线的颜色
-        private int backgroundId; //显示时的外部背景色颜色,默认是灰色
+        private int backgroundId = -1; //显示时的外部背景色颜色,默认是灰色
         public ViewGroup decorView;//显示pickerview的根View,默认是activity的根view
         private float lineSpacingMultiplier = 1.6F;// 条目间距倍数 默认1.6
         private boolean isDialog;//是否是对话框模式
@@ -480,24 +480,24 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
      */
     public void setSelectOptions(int option1) {
         this.option1 = option1;
-        SetCurrentItems();
+        reSetCurrentItems();
     }
 
 
     public void setSelectOptions(int option1, int option2) {
         this.option1 = option1;
         this.option2 = option2;
-        SetCurrentItems();
+        reSetCurrentItems();
     }
 
     public void setSelectOptions(int option1, int option2, int option3) {
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
-        SetCurrentItems();
+        reSetCurrentItems();
     }
 
-    private void SetCurrentItems() {
+    private void reSetCurrentItems() {
         if (wheelOptions != null) {
             wheelOptions.setCurrentItems(option1, option2, option3);
         }
@@ -516,7 +516,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
                           List<List<List<T>>> options3Items) {
 
         wheelOptions.setPicker(options1Items, options2Items, options3Items);
-        SetCurrentItems();
+        reSetCurrentItems();
     }
 
 
@@ -526,7 +526,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
                            List<T> options3Items) {
 
         wheelOptions.setNPicker(options1Items, options2Items, options3Items);
-        SetCurrentItems();
+        reSetCurrentItems();
     }
 
     @Override

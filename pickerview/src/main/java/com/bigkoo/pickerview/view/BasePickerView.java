@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -97,7 +98,7 @@ public class BasePickerView {
             rootView.setLayoutParams(new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
             ));
-            if (backgroudId != 0) {
+            if (backgroudId != -1) {
                 rootView.setBackgroundColor(backgroudId);
             }
             // rootView.setBackgroundColor(ContextCompat.getColor(context,backgroudId));
@@ -329,10 +330,15 @@ public class BasePickerView {
     public void createDialog() {
         if (dialogView != null) {
             mDialog = new Dialog(context, R.style.custom_dialog2);
-            mDialog.setCancelable(cancelable);//不能点外面取消,也不 能点back取消
+            mDialog.setCancelable(cancelable);//不能点外面取消,也不能点back取消
             mDialog.setContentView(dialogView);
 
-            mDialog.getWindow().setWindowAnimations(R.style.pickerview_dialogAnim);
+            Window dialogWindow = mDialog.getWindow();
+            if (dialogWindow != null) {
+                dialogWindow.setWindowAnimations(R.style.pickerview_dialogAnim);
+                dialogWindow.setGravity(Gravity.CENTER);//可以改成Bottom
+            }
+
             mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {

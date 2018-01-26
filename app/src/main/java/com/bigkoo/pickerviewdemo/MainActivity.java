@@ -306,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setTextColorCenter(Color.LTGRAY)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setLabels("省", "市", "区")
-                .setBackgroundId(0x66000000) //设置外部遮罩颜色
+                .setBackgroundId(0x00000000) //设置外部遮罩颜色
                 .build();
 
         //pvOptions.setSelectOptions(1,1);

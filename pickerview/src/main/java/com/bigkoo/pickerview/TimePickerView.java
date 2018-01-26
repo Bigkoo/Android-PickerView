@@ -144,7 +144,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private int textColorOut; //分割线以外的文字颜色
         private int textColorCenter; //分割线之间的文字颜色
         private int dividerColor; //分割线的颜色
-        private int backgroundId; //显示时的外部背景色颜色,默认是灰色
+        private int backgroundId = -1; //显示时的外部背景色颜色,默认是灰色
 
         private String Str_Submit;//确定按钮文字
         private String Str_Cancel;//取消按钮文字
@@ -292,6 +292,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         /**
          * use the setRangDate method instead.
+         *
          * @deprecated Use {@link  #setRangDate()} with two Calendar value.
          */
         @Deprecated
