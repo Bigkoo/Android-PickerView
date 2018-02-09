@@ -25,6 +25,7 @@ import java.util.List;
 public class OptionsPickerView<T> extends BasePickerView implements View.OnClickListener {
 
     private WheelOptions<T> wheelOptions;
+    private TextView tvTitle;
     private int layoutRes;
     private CustomListener customListener;
 
@@ -133,6 +134,11 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         this.backgroundId = builder.backgroundId;
         this.decorView = builder.decorView;
         initView(builder.context);
+    }
+
+    public void setTitleText(String Str_Title) {
+        this.Str_Title = Str_Title;
+        this.tvTitle.setText(Str_Title);
     }
 
 
@@ -417,7 +423,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             LayoutInflater.from(context).inflate(layoutRes, contentContainer);
 
             //顶部标题
-            TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+            tvTitle = (TextView) findViewById(R.id.tvTitle);
             RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
 
             //确定和取消按钮
