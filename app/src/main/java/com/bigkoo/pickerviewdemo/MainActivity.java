@@ -23,6 +23,7 @@ import com.bigkoo.pickerviewdemo.bean.ProvinceBean;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,10 +34,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
 
     /*   private ArrayList<ArrayList<ArrayList<IPickerViewData>>> options3Items = new ArrayList<>();*/
-    private Button btn_Time, btn_Options, btn_CustomOptions, btn_CustomTime, btn_no_linkage, btn_to_Fragment;
+    private Button btn_Time, btn_Options, btn_no_linkage, btn_range, btn_CustomOptions, btn_CustomTime, btn_to_Fragment;
 
     private TimePickerView pvTime, pvCustomTime, pvCustomLunar;
-    private OptionsPickerView pvOptions, pvCustomOptions, pvNoLinkOptions;
+    private OptionsPickerView pvOptions, pvCustomOptions;
     private ArrayList<CardBean> cardItem = new ArrayList<>();
 
     private ArrayList<String> food = new ArrayList<>();
@@ -56,20 +57,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initLunarPicker();
         initOptionPicker();
         initCustomOptionPicker();
-        initNoLinkOptionsPicker();
 
         btn_Time = (Button) findViewById(R.id.btn_Time);
         btn_Options = (Button) findViewById(R.id.btn_Options);
+        btn_no_linkage = (Button) findViewById(R.id.btn_no_linkage);
+        btn_range = (Button) findViewById(R.id.btn_range);
         btn_CustomOptions = (Button) findViewById(R.id.btn_CustomOptions);
         btn_CustomTime = (Button) findViewById(R.id.btn_CustomTime);
-        btn_no_linkage = (Button) findViewById(R.id.btn_no_linkage);
         btn_to_Fragment = (Button) findViewById(R.id.btn_fragment);
 
         btn_Time.setOnClickListener(this);
         btn_Options.setOnClickListener(this);
+        btn_no_linkage.setOnClickListener(this);
+        btn_range.setOnClickListener(this);
         btn_CustomOptions.setOnClickListener(this);
         btn_CustomTime.setOnClickListener(this);
-        btn_no_linkage.setOnClickListener(this);
         btn_to_Fragment.setOnClickListener(this);
 
         findViewById(R.id.btn_GotoJsonData).setOnClickListener(this);
@@ -84,13 +86,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            /* pvTime.show(); //show timePicker*/
             pvTime.show(v);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
         } else if (v.getId() == R.id.btn_Options && pvOptions != null) {
+            pvOptions.setLabels("省", "市", "区");
+            pvOptions.setPicker(options1Items, options2Items);
             pvOptions.show(); //弹出条件选择器
+        } else if (v.getId() == R.id.btn_no_linkage && pvOptions != null) {//不联动数据选择器
+            pvOptions.setLabels(null,null,null);
+            pvOptions.setNPicker(food, clothes, computer);
+            pvOptions.show();
+        }else if (v.getId() == R.id.btn_range && pvOptions != null) {//区间选择器
+            pvOptions.setLabels("岁","岁","");
+            pvOptions.setRangePicker(Arrays.asList("18","约19","20","约21","23","24","25","26"));
+            pvOptions.show();
         } else if (v.getId() == R.id.btn_CustomOptions && pvCustomOptions != null) {
             pvCustomOptions.show(); //弹出自定义条件选择器
         } else if (v.getId() == R.id.btn_CustomTime && pvCustomTime != null) {
-            pvCustomTime.show(); //弹出自定义时间选择器
-        } else if (v.getId() == R.id.btn_no_linkage && pvNoLinkOptions != null) {//不联动数据选择器
-            pvNoLinkOptions.show();
+            pvCustomLunar.show();
         } else if (v.getId() == R.id.btn_GotoJsonData) {//跳转到 省市区解析示例页面
             startActivity(new Intent(MainActivity.this, JsonDataActivity.class));
         } else if (v.getId() == R.id.btn_fragment) {//跳转到 fragment
@@ -291,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String tx = options1Items.get(options1).getPickerViewText()
                         + options2Items.get(options1).get(options2)
                        /* + options3Items.get(options1).get(options2).get(options3).getPickerViewText()*/;
-                btn_Options.setText(tx);
+                       Toast.makeText(getApplicationContext(),tx,Toast.LENGTH_SHORT);
             }
         })
                 .setTitleText("城市选择")
@@ -367,22 +377,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         pvCustomOptions.setPicker(cardItem);//添加数据
 
-    }
-
-    private void initNoLinkOptionsPicker() {// 不联动的多级选项
-        pvNoLinkOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
-
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-
-                String str = "food:" + food.get(options1)
-                        + "\nclothes:" + clothes.get(options2)
-                        + "\ncomputer:" + computer.get(options3);
-
-                Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
-            }
-        }).build();
-        pvNoLinkOptions.setNPicker(food, clothes, computer);
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
