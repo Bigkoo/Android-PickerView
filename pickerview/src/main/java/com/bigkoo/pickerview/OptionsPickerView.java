@@ -25,6 +25,7 @@ import java.util.List;
 public class OptionsPickerView<T> extends BasePickerView implements View.OnClickListener {
 
     private WheelOptions<T> wheelOptions;
+    private TextView tvTitle;
     private int layoutRes;
     private CustomListener customListener;
 
@@ -64,8 +65,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private WheelView.DividerType dividerType;//分隔线类型
 
 
-    //******* 专有字段  ******//
-    private boolean linkage;//是否联动
 
     private String label1;//单位
     private String label2;
@@ -106,7 +105,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         this.cyclic3 = builder.cyclic3;
 
         this.cancelable = builder.cancelable;
-        this.linkage = builder.linkage;
         this.isCenterLabel = builder.isCenterLabel;
 
         this.label1 = builder.label1;
@@ -134,7 +132,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         this.decorView = builder.decorView;
         initView(builder.context);
     }
-
 
     //建造器
     public static class Builder {
@@ -417,7 +414,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             LayoutInflater.from(context).inflate(layoutRes, contentContainer);
 
             //顶部标题
-            TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+            tvTitle = (TextView) findViewById(R.id.tvTitle);
             RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
 
             //确定和取消按钮
@@ -453,7 +450,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         final LinearLayout optionsPicker = (LinearLayout) findViewById(R.id.optionspicker);
         optionsPicker.setBackgroundColor(Color_Background_Wheel == 0 ? bgColor_default : Color_Background_Wheel);
 
-        wheelOptions = new WheelOptions(optionsPicker, linkage);
+        wheelOptions = new WheelOptions<>(optionsPicker);
         wheelOptions.setTextContentSize(Size_Content);
         wheelOptions.setLabels(label1, label2, label3);
         wheelOptions.setTextXOffset(xoffset_one, xoffset_two, xoffset_three);
@@ -527,6 +524,29 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         wheelOptions.setNPicker(options1Items, options2Items, options3Items);
         reSetCurrentItems();
+    }
+
+
+    /**
+     * 是否以作为区间选择器。是：只有第一列数据有效，第二列数据跟第一列一样。
+     * 使第二列的选中 index 小于等于 第一列 index
+     * @param options1Items
+     */
+    public void setRangePicker(List<T> options1Items) {
+        wheelOptions.setRangePicker(options1Items);
+        reSetCurrentItems();
+    }
+
+    public void setTitleText(String Str_Title) {
+        this.Str_Title = Str_Title;
+        this.tvTitle.setText(Str_Title);
+    }
+
+    public void setLabels(String label1, String label2, String label3){
+        this.label1 = label1;
+        this.label2 = label2;
+        this.label3 = label3;
+        wheelOptions.setLabels(label1, label2, label3);
     }
 
     @Override

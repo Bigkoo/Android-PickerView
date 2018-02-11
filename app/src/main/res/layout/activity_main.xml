@@ -38,6 +38,22 @@
                 android:text="@string/picker_province" />
 
             <Button
+                android:id="@+id/btn_no_linkage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/tvTime"
+                android:layout_margin="10dp"
+                android:text="@string/picker_non_linkage" />
+
+            <Button
+                android:id="@+id/btn_range"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/tvTime"
+                android:layout_margin="10dp"
+                android:text="@string/picker_range" />
+
+            <Button
                 android:id="@+id/btn_CustomTime"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -52,14 +68,6 @@
                 android:layout_below="@+id/tvTime"
                 android:layout_margin="10dp"
                 android:text="@string/picker_custom_province" />
-
-            <Button
-                android:id="@+id/btn_no_linkage"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@+id/tvTime"
-                android:layout_margin="10dp"
-                android:text="@string/picker_non_linkage" />
 
             <Button
                 android:id="@+id/btn_GotoJsonData"

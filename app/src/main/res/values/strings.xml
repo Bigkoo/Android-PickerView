@@ -21,6 +21,7 @@
     <string name="picker_non_linkage">条件选择器(不联动)</string>
 
     <string name="picker_json_parse_sample">省市区Json文件解析示例</string>
+    <string name="picker_range">区间选择器</string>
 
 
 </resources>
