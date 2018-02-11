@@ -56,11 +56,8 @@ public class WheelOptions<T> {
 
             @Override
             public void onItemSelected(int index) {
-                if (mOptions2Items == null){
-                    return;
-                }
                 int opt2Select = wv_option2.getCurrentItem();//上一个opt2的选中位置
-                if (linkage) {
+                if (mOptions2Items != null && linkage) {
                     //新opt2的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
                     opt2Select = opt2Select >= mOptions2Items.get(index).size() - 1 ? mOptions2Items.get(index).size() - 1 : opt2Select;
 
@@ -68,7 +65,7 @@ public class WheelOptions<T> {
                     wv_option2.setCurrentItem(opt2Select);
                     wheelListener_option2.onItemSelected(opt2Select);
                 }
-                else if(range){
+                else if(N_mOptions2Items != null && range){
                     //区间选择器，op1 <= op2
                     int opt1Select = wv_option1.getCurrentItem();//上一个opt1的选中位置
                     if(opt2Select<opt1Select){
@@ -314,7 +311,7 @@ public class WheelOptions<T> {
         } else if(range) {
             int idx1 = wv_option1.getCurrentItem();
             int idx2 = wv_option2.getCurrentItem();
-            currentItems[1] = idx1 > idx2 ? idx2 : idx1;
+            currentItems[1] = idx1 < idx2 ? idx2 : idx1;
         }
         else {
             currentItems[1] = wv_option2.getCurrentItem();
@@ -332,13 +329,15 @@ public class WheelOptions<T> {
     public void setCurrentItems(int option1, int option2, int option3) {
         if (linkage) {
             itemSelected(option1, option2, option3);
+        } else {
+            wv_option1.setCurrentItem(option1);
+            wv_option2.setCurrentItem(option2);
+            wv_option3.setCurrentItem(option3);
         }
-        wv_option1.setCurrentItem(option1);
-        wv_option2.setCurrentItem(option2);
-        wv_option3.setCurrentItem(option3);
     }
 
     private void itemSelected(int opt1Select, int opt2Select, int opt3Select) {
+        wv_option1.setCurrentItem(opt1Select);
         if (mOptions2Items != null) {
             wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(opt1Select)));
             wv_option2.setCurrentItem(opt2Select);
