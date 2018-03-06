@@ -90,7 +90,7 @@ public class WheelTime {
     public void setPicker(int year, final int month, int day, int h, int m, int s) {
         if (isLunarCalendar) {
             int[] lunar = LunarCalendar.solarToLunar(year, month + 1, day);
-            setLunar(lunar[0], lunar[1], lunar[2], lunar[3] == 1, h, m, s);
+            setLunar(lunar[0], lunar[1] - 1, lunar[2], lunar[3] == 1, h, m, s);
         } else {
             setSolar(year, month, day, h, m, s);
         }
@@ -416,9 +416,9 @@ public class WheelTime {
                     } else if (monthNum == startMonth) {
                         //重新设置日
                         setReDay(year_num, monthNum, startDay, 31, list_big, list_little);
-                    } else if (monthNum == endMonth){
+                    } else if (monthNum == endMonth) {
                         setReDay(year_num, monthNum, 1, endDay, list_big, list_little);
-                    }else {//重新设置日
+                    } else {//重新设置日
                         setReDay(year_num, monthNum, 1, 31, list_big, list_little);
                     }
                 } else if (year_num == startYear) {//等于开始的年
@@ -625,7 +625,7 @@ public class WheelTime {
     }
 
     public void setLabels(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
-        if (isLunarCalendar){
+        if (isLunarCalendar) {
             return;
         }
 
@@ -662,7 +662,7 @@ public class WheelTime {
 
     }
 
-    public void setTextXOffset(int xoffset_year, int xoffset_month, int xoffset_day, int xoffset_hours, int xoffset_mins, int xoffset_seconds){
+    public void setTextXOffset(int xoffset_year, int xoffset_month, int xoffset_day, int xoffset_hours, int xoffset_mins, int xoffset_seconds) {
         wv_day.setTextXOffset(xoffset_year);
         wv_month.setTextXOffset(xoffset_month);
         wv_year.setTextXOffset(xoffset_day);

@@ -377,23 +377,6 @@ public class ChinaDate {
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日 EEEEE");
 
-    /**
-     * 返回星座
-     *
-     * @return 星座
-     */
-
-    public static String getConstellation(int month, int day) {
-        return day < dayArr[month - 1] ? constellationArr[month - 1] : constellationArr[month];
-    }
-
-    public static int getMonthByYear(int year) {
-        if (leapMonth(year) == 0) {
-            return 12;
-        } else {
-            return 13;
-        }
-    }
 
 
     /**

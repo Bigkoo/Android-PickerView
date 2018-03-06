@@ -644,15 +644,16 @@ public class WheelView extends View {
                 previousY = event.getRawY();
                 totalScrollY = totalScrollY + dy;
 
+                float ratio = 0.5f;
                 // 边界处理。
                 if (!isLoop) {
                     float top = -initPosition * itemHeight;
                     float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
 
-
-                    if (totalScrollY - itemHeight * 0.25 < top) {
+                    if (totalScrollY + itemHeight * ratio < top) {
                         top = totalScrollY - dy;
-                    } else if (totalScrollY + itemHeight * 0.25 > bottom) {
+
+                    } else if (totalScrollY - itemHeight * ratio > bottom) {
                         bottom = totalScrollY - dy;
                     }
 
@@ -663,9 +664,8 @@ public class WheelView extends View {
                     }
                 }
                 break;
-            //完成滑动，手指离开屏幕
-            case MotionEvent.ACTION_UP:
 
+            case MotionEvent.ACTION_UP:
             default:
                 if (!eventConsumed) {//未消费掉事件
 
