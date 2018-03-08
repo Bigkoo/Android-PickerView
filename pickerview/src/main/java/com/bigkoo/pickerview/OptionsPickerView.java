@@ -34,20 +34,20 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private OnOptionsSelectListener optionsSelectListener;
 
     //******* 公有字段，后续抽取到BasePickerView里去  ******//
-    private String Str_Submit;//确定按钮文字
-    private String Str_Cancel;//取消按钮文字
-    private String Str_Title;//标题文字
+    private String textContentConfirm;//确定按钮文字
+    private String textContentCancel;//取消按钮文字
+    private String textContentTitle;//标题文字
 
-    private int Color_Submit;//确定按钮颜色
-    private int Color_Cancel;//取消按钮颜色
-    private int Color_Title;//标题颜色
+    private int textColorConfirm;//确定按钮颜色
+    private int textColorCancel;//取消按钮颜色
+    private int textColorTitle;//标题颜色
 
-    private int Color_Background_Wheel;//滚轮背景颜色
-    private int Color_Background_Title;//标题背景颜色
+    private int bgColorWheel;//滚轮背景颜色
+    private int bgColorTitle;//标题背景颜色
 
-    private int Size_Submit_Cancel;//确定取消按钮大小
-    private int Size_Title;//标题文字大小
-    private int Size_Content;//内容文字大小
+    private int textSizeSubmitCancel;//确定取消按钮大小
+    private int textSizeTitle;//标题文字大小
+    private int textSizeContent;//内容文字大小
 
     private int textColorOut; //分割线以外的文字颜色
     private int textColorCenter; //分割线之间的文字颜色
@@ -87,19 +87,19 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     public OptionsPickerView(Builder builder) {
         super(builder.context);
         this.optionsSelectListener = builder.optionsSelectListener;
-        this.Str_Submit = builder.Str_Submit;
-        this.Str_Cancel = builder.Str_Cancel;
-        this.Str_Title = builder.Str_Title;
+        this.textContentConfirm = builder.Str_Submit;
+        this.textContentCancel = builder.Str_Cancel;
+        this.textContentTitle = builder.Str_Title;
 
-        this.Color_Submit = builder.Color_Submit;
-        this.Color_Cancel = builder.Color_Cancel;
-        this.Color_Title = builder.Color_Title;
-        this.Color_Background_Wheel = builder.Color_Background_Wheel;
-        this.Color_Background_Title = builder.Color_Background_Title;
+        this.textColorConfirm = builder.Color_Submit;
+        this.textColorCancel = builder.Color_Cancel;
+        this.textColorTitle = builder.Color_Title;
+        this.bgColorWheel = builder.Color_Background_Wheel;
+        this.bgColorTitle = builder.Color_Background_Title;
 
-        this.Size_Submit_Cancel = builder.Size_Submit_Cancel;
-        this.Size_Title = builder.Size_Title;
-        this.Size_Content = builder.Size_Content;
+        this.textSizeSubmitCancel = builder.Size_Submit_Cancel;
+        this.textSizeTitle = builder.Size_Title;
+        this.textSizeContent = builder.Size_Content;
 
         this.cyclic1 = builder.cyclic1;
         this.cyclic2 = builder.cyclic2;
@@ -430,31 +430,31 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             btnCancel.setOnClickListener(this);
 
             //设置文字
-            btnSubmit.setText(TextUtils.isEmpty(Str_Submit) ? context.getResources().getString(R.string.pickerview_submit) : Str_Submit);
-            btnCancel.setText(TextUtils.isEmpty(Str_Cancel) ? context.getResources().getString(R.string.pickerview_cancel) : Str_Cancel);
-            tvTitle.setText(TextUtils.isEmpty(Str_Title) ? "" : Str_Title);//默认为空
+            btnSubmit.setText(TextUtils.isEmpty(textContentConfirm) ? context.getResources().getString(R.string.pickerview_submit) : textContentConfirm);
+            btnCancel.setText(TextUtils.isEmpty(textContentCancel) ? context.getResources().getString(R.string.pickerview_cancel) : textContentCancel);
+            tvTitle.setText(TextUtils.isEmpty(textContentTitle) ? "" : textContentTitle);//默认为空
 
             //设置color
-            btnSubmit.setTextColor(Color_Submit == 0 ? pickerview_timebtn_nor : Color_Submit);
-            btnCancel.setTextColor(Color_Cancel == 0 ? pickerview_timebtn_nor : Color_Cancel);
-            tvTitle.setTextColor(Color_Title == 0 ? pickerview_topbar_title : Color_Title);
-            rv_top_bar.setBackgroundColor(Color_Background_Title == 0 ? pickerview_bg_topbar : Color_Background_Title);
+            btnSubmit.setTextColor(textColorConfirm == 0 ? pickerview_timebtn_nor : textColorConfirm);
+            btnCancel.setTextColor(textColorCancel == 0 ? pickerview_timebtn_nor : textColorCancel);
+            tvTitle.setTextColor(textColorTitle == 0 ? pickerview_topbar_title : textColorTitle);
+            rv_top_bar.setBackgroundColor(bgColorTitle == 0 ? pickerview_bg_topbar : bgColorTitle);
 
             //设置文字大小
-            btnSubmit.setTextSize(Size_Submit_Cancel);
-            btnCancel.setTextSize(Size_Submit_Cancel);
-            tvTitle.setTextSize(Size_Title);
-            tvTitle.setText(Str_Title);
+            btnSubmit.setTextSize(textSizeSubmitCancel);
+            btnCancel.setTextSize(textSizeSubmitCancel);
+            tvTitle.setTextSize(textSizeTitle);
+            tvTitle.setText(textContentTitle);
         } else {
             customListener.customLayout(LayoutInflater.from(context).inflate(layoutRes, contentContainer));
         }
 
         // ----滚轮布局
         final LinearLayout optionsPicker = (LinearLayout) findViewById(R.id.optionspicker);
-        optionsPicker.setBackgroundColor(Color_Background_Wheel == 0 ? bgColor_default : Color_Background_Wheel);
+        optionsPicker.setBackgroundColor(bgColorWheel == 0 ? bgColor_default : bgColorWheel);
 
         wheelOptions = new WheelOptions(optionsPicker, linkage);
-        wheelOptions.setTextContentSize(Size_Content);
+        wheelOptions.setTextContentSize(textSizeContent);
         wheelOptions.setLabels(label1, label2, label3);
         wheelOptions.setTextXOffset(xoffset_one, xoffset_two, xoffset_three);
 
