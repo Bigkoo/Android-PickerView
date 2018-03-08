@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.FrameLayout;
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.listener.OnDismissListener;
 import com.bigkoo.pickerview.utils.PickerViewAnimateUtil;
+import com.contrarywind.view.WheelView;
 
 /**
  * Created by Sai on 15/11/22.
@@ -41,29 +43,55 @@ public class BasePickerView {
     protected int pickerview_topbar_title = 0xFF000000;
     protected int bgColor_default = 0xFFFFFFFF;
 
+
+    //******* 公有字段，抽取到BasePickerView里  ******//
+    protected String textContentConfirm;//确定按钮文字
+    protected String textContentCancel;//取消按钮文字
+    protected String textContentTitle;//标题文字
+
+    protected int textColorConfirm;//确定按钮颜色
+    protected int textColorCancel;//取消按钮颜色
+    protected int textColorTitle;//标题颜色
+
+    protected int bgColorWheel;//滚轮背景颜色
+    protected int bgColorTitle;//标题背景颜色
+
+    protected int textSizeSubmitCancel;//确定取消按钮大小
+    protected int textSizeTitle;//标题文字大小
+    protected int textSizeContent;//内容文字大小
+
+    protected int textColorOut; //分割线以外的文字颜色
+    protected int textColorCenter; //分割线之间的文字颜色
+    protected int dividerColor; //分割线的颜色
+    protected int backgroundId; //显示时的外部背景色颜色,默认是灰色
+
+    // 条目间距倍数 默认1.6
+    protected float lineSpacingMultiplier;
+    protected boolean isDialog;//是否是对话框模式
+
+    protected boolean cancelable;//是否能取消
+    protected boolean isCenterLabel;//是否只显示中间的label
+    protected Typeface font;//字体样式
+    protected WheelView.DividerType dividerType;//分隔线类型
+
+
     private OnDismissListener onDismissListener;
     private boolean dismissing;
 
     private Animation outAnim;
     private Animation inAnim;
     private boolean isShowing;
-    private int gravity = Gravity.BOTTOM;
+    protected int gravity = Gravity.BOTTOM;
 
 
     private Dialog mDialog;
-    private boolean cancelable;//是否能取消
-
     protected View clickView;//是通过哪个View弹出的
-
     private boolean isAnim = true;
 
     public BasePickerView(Context context) {
         this.context = context;
-
-        /*initViews();
-        init();
-        initEvents();*/
     }
+
 
     protected void initViews(int backgroudId) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -101,7 +129,6 @@ public class BasePickerView {
             if (backgroudId != -1) {
                 rootView.setBackgroundColor(backgroudId);
             }
-            // rootView.setBackgroundColor(ContextCompat.getColor(context,backgroudId));
             //这个是真正要加载时间选取器的父布局
             contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
             contentContainer.setLayoutParams(params);
@@ -299,11 +326,8 @@ public class BasePickerView {
 
     /**
      * 设置对话框模式是否可以点击外部取消
-     *
-     * @param cancelable
      */
-    public void setDialogOutSideCancelable(boolean cancelable) {
-        this.cancelable = cancelable;
+    public void setDialogOutSideCancelable() {
         if (mDialog != null) {
             mDialog.setCancelable(cancelable);
         }

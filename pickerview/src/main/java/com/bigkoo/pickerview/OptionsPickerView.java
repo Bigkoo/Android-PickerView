@@ -33,35 +33,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     private OnOptionsSelectListener optionsSelectListener;
 
-    //******* 公有字段，后续抽取到BasePickerView里去  ******//
-    private String textContentConfirm;//确定按钮文字
-    private String textContentCancel;//取消按钮文字
-    private String textContentTitle;//标题文字
 
-    private int textColorConfirm;//确定按钮颜色
-    private int textColorCancel;//取消按钮颜色
-    private int textColorTitle;//标题颜色
-
-    private int bgColorWheel;//滚轮背景颜色
-    private int bgColorTitle;//标题背景颜色
-
-    private int textSizeSubmitCancel;//确定取消按钮大小
-    private int textSizeTitle;//标题文字大小
-    private int textSizeContent;//内容文字大小
-
-    private int textColorOut; //分割线以外的文字颜色
-    private int textColorCenter; //分割线之间的文字颜色
-    private int dividerColor; //分割线的颜色
-    private int backgroundId; //显示时的外部背景色颜色,默认是灰色
-
-    // 条目间距倍数 默认1.6
-    private float lineSpacingMultiplier;
-    private boolean isDialog;//是否是对话框模式
-
-    private boolean cancelable;//是否能取消
-    private boolean isCenterLabel;//是否只显示中间的label
-    private Typeface font;//字体样式
-    private WheelView.DividerType dividerType;//分隔线类型
 
 
     //******* 专有字段  ******//
@@ -409,7 +381,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
 
     private void initView(Context context) {
-        setDialogOutSideCancelable(cancelable);
+        setDialogOutSideCancelable();
         initViews(backgroundId);
         init();
         initEvents();
