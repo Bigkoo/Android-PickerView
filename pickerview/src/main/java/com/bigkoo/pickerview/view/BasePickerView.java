@@ -18,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
 import com.bigkoo.pickerview.R;
+import com.bigkoo.pickerview.constant.Options;
 import com.bigkoo.pickerview.listener.OnDismissListener;
 import com.bigkoo.pickerview.utils.PickerViewAnimateUtil;
 import com.contrarywind.view.WheelView;
@@ -44,36 +45,7 @@ public class BasePickerView {
     protected int bgColor_default = 0xFFFFFFFF;
 
 
-    //******* 公有字段，抽取到BasePickerView里  ******//
-    protected String textContentConfirm;//确定按钮文字
-    protected String textContentCancel;//取消按钮文字
-    protected String textContentTitle;//标题文字
-
-    protected int textColorConfirm;//确定按钮颜色
-    protected int textColorCancel;//取消按钮颜色
-    protected int textColorTitle;//标题颜色
-
-    protected int bgColorWheel;//滚轮背景颜色
-    protected int bgColorTitle;//标题背景颜色
-
-    protected int textSizeSubmitCancel;//确定取消按钮大小
-    protected int textSizeTitle;//标题文字大小
-    protected int textSizeContent;//内容文字大小
-
-    protected int textColorOut; //分割线以外的文字颜色
-    protected int textColorCenter; //分割线之间的文字颜色
-    protected int dividerColor; //分割线的颜色
-    protected int backgroundId; //显示时的外部背景色颜色,默认是灰色
-
-    // 条目间距倍数 默认1.6
-    protected float lineSpacingMultiplier;
-    protected boolean isDialog;//是否是对话框模式
-
-    protected boolean cancelable;//是否能取消
-    protected boolean isCenterLabel;//是否只显示中间的label
-    protected Typeface font;//字体样式
-    protected WheelView.DividerType dividerType;//分隔线类型
-
+    protected Options mOptions;
 
     private OnDismissListener onDismissListener;
     private boolean dismissing;
@@ -329,7 +301,7 @@ public class BasePickerView {
      */
     public void setDialogOutSideCancelable() {
         if (mDialog != null) {
-            mDialog.setCancelable(cancelable);
+            mDialog.setCancelable(mOptions.cancelable);
         }
     }
 
@@ -354,7 +326,7 @@ public class BasePickerView {
     public void createDialog() {
         if (dialogView != null) {
             mDialog = new Dialog(context, R.style.custom_dialog2);
-            mDialog.setCancelable(cancelable);//不能点外面取消,也不能点back取消
+            mDialog.setCancelable(mOptions.cancelable);//不能点外面取消,也不能点back取消
             mDialog.setContentView(dialogView);
 
             Window dialogWindow = mDialog.getWindow();
