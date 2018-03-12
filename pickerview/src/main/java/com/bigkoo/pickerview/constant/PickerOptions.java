@@ -2,6 +2,7 @@ package com.bigkoo.pickerview.constant;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.view.Gravity;
 import android.view.ViewGroup;
 
 import com.bigkoo.pickerview.OptionsPickerView;
@@ -31,10 +32,13 @@ public class PickerOptions {
 
     public OptionsPickerView.OnOptionsSelectListener optionsSelectListener;
     public TimePickerView.OnTimeSelectListener timeSelectListener;
+    public CustomListener customListener;
 
     public int layoutRes;
     public ViewGroup decorView;
-    public CustomListener customListener;
+    public int textGravity = Gravity.CENTER;
+    public Context context;
+
 
     //options picker
     public String label1;
@@ -70,8 +74,6 @@ public class PickerOptions {
     public String label_year, label_month, label_day, label_hours, label_mins, label_seconds;//单位
     public int xoffset_year, xoffset_month, xoffset_day, xoffset_hours, xoffset_mins, xoffset_seconds;//单位
 
-    public int gravity;
-    public Context context;
 
 
     public PickerOptions(int buildType) {
@@ -94,21 +96,21 @@ public class PickerOptions {
     public int bgColorWheel = PICKERVIEW_BG_COLOR_DEFAULT;//滚轮背景颜色
     public int bgColorTitle = PICKERVIEW_BG_TOPBAR;//标题背景颜色
 
-    public int textSizeSubmitCancel;//确定取消按钮大小
-    public int textSizeTitle;//标题文字大小
-    public int textSizeContent;//内容文字大小
+    public int textSizeSubmitCancel = 17;//确定取消按钮大小
+    public int textSizeTitle = 18;//标题文字大小
+    public int textSizeContent = 18;//内容文字大小
 
-    public int textColorOut; //分割线以外的文字颜色
-    public int textColorCenter; //分割线之间的文字颜色
-    public int dividerColor; //分割线的颜色
+    public int textColorOut = 0xFFa8a8a8; //分割线以外的文字颜色
+    public int textColorCenter = 0xFF2a2a2a; //分割线之间的文字颜色
+    public int dividerColor = 0xFFd5d5d5; //分割线的颜色
     public int backgroundId = -1; //显示时的外部背景色颜色,默认是灰色
 
     // 条目间距倍数 默认1.6
-    public float lineSpacingMultiplier;
+    public float lineSpacingMultiplier = 1.6f;
     public boolean isDialog;//是否是对话框模式
 
-    public boolean cancelable;//是否能取消
-    public boolean isCenterLabel;//是否只显示中间的label
+    public boolean cancelable = true;//是否能取消
+    public boolean isCenterLabel = true;//是否只显示中间的label
     public Typeface font = Typeface.MONOSPACE;//字体样式
     public WheelView.DividerType dividerType = WheelView.DividerType.FILL;//分隔线类型
 

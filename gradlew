@@ -6,7 +6,7 @@
 ##
 ##############################################################################
 
-# Add default JVM pickerOptions here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM pickerOptions to this script.
+# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
 DEFAULT_JVM_OPTS=""
 
 APP_NAME="Gradle"
@@ -105,7 +105,7 @@ if [ "$cygwin" = "false" -a "$darwin" = "false" ] ; then
     fi
 fi
 
-# For Darwin, add pickerOptions to specify how the application appears in the dock
+# For Darwin, add options to specify how the application appears in the dock
 if $darwin; then
     GRADLE_OPTS="$GRADLE_OPTS \"-Xdock:name=$APP_NAME\" \"-Xdock:icon=$APP_HOME/media/gradle.icns\""
 fi

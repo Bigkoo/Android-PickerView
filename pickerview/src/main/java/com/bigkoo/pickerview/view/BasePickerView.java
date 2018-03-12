@@ -45,7 +45,8 @@ public class BasePickerView {
     private Animation outAnim;
     private Animation inAnim;
     private boolean isShowing;
-    protected int gravity = Gravity.BOTTOM;
+
+    protected int animGravity = Gravity.BOTTOM;
 
 
     private Dialog mDialog;
@@ -229,12 +230,12 @@ public class BasePickerView {
     }
 
     public Animation getInAnimation() {
-        int res = PickerViewAnimateUtil.getAnimationResource(this.gravity, true);
+        int res = PickerViewAnimateUtil.getAnimationResource(this.animGravity, true);
         return AnimationUtils.loadAnimation(context, res);
     }
 
     public Animation getOutAnimation() {
-        int res = PickerViewAnimateUtil.getAnimationResource(this.gravity, false);
+        int res = PickerViewAnimateUtil.getAnimationResource(this.animGravity, false);
         return AnimationUtils.loadAnimation(context, res);
     }
 

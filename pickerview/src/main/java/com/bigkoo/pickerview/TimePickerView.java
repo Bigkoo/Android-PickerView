@@ -2,7 +2,6 @@ package com.bigkoo.pickerview;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,42 +45,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     //建造器
     public static class Builder {
 
-        // 通用部分, 后续创建一个BaseBuilder
-        private int layoutRes = R.layout.pickerview_time;
-        private CustomListener customListener;
-        private Context context;
-        private int gravity = Gravity.CENTER;//内容显示位置 默认居中
-        private ViewGroup decorView;//显示pickerview的根View,默认是activity的根view
-        private int textColorOut; //分割线以外的文字颜色
-        private int textColorCenter; //分割线之间的文字颜色
-        private int dividerColor; //分割线的颜色
-        private int backgroundId = -1; //显示时的外部背景色颜色,默认是灰色
-
-        private String Str_Submit;//确定按钮文字
-        private String Str_Cancel;//取消按钮文字
-        private String Str_Title;//标题文字
-
-        private int Color_Submit;//确定按钮颜色
-        private int Color_Cancel;//取消按钮颜色
-        private int Color_Title;//标题颜色
-
-        private int Color_Background_Wheel;//滚轮背景颜色
-        private int Color_Background_Title;//标题背景颜色
-
-        private int Size_Submit_Cancel = 17;//确定取消按钮大小
-        private int Size_Title = 18;//标题字体大小
-        private int Size_Content = 18;//内容字体大小
-        private boolean cancelable = true;//是否能取消
-        private boolean isCenterLabel = true;//是否只显示中间的label
-
-        private WheelView.DividerType dividerType;//分隔线类型
-        private float lineSpacingMultiplier = 1.6F; // 条目间距倍数 默认1.6
-        private boolean isDialog;//是否是对话框模式
-
-
         //配置类
         private PickerOptions mPickerOptions;
-
 
         //Required
         public Builder(Context context, OnTimeSelectListener listener) {
@@ -96,8 +61,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
-        public Builder gravity(int gravity) {
-            mPickerOptions.gravity = gravity;
+        public Builder setGravity(int gravity) {
+            mPickerOptions.textGravity = gravity;
             return this;
         }
 
@@ -133,6 +98,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         /**
          * ViewGroup 类型的容器
+         *
          * @param decorView 选择器会被添加到此容器中
          * @return this
          */
@@ -288,6 +254,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
+
         public Builder setLabel(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
             mPickerOptions.label_year = label_year;
             mPickerOptions.label_month = label_month;
@@ -379,7 +346,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         timePickerView.setBackgroundColor(mPickerOptions.bgColorWheel);
 
-        wheelTime = new WheelTime(timePickerView, mPickerOptions.type, gravity, mPickerOptions.textSizeContent);
+        wheelTime = new WheelTime(timePickerView, mPickerOptions.type, mPickerOptions.textGravity, mPickerOptions.textSizeContent);
         wheelTime.setLunarCalendar(mPickerOptions.isLunarCalendar);
 
         if (mPickerOptions.startYear != 0 && mPickerOptions.endYear != 0 && mPickerOptions.startYear <= mPickerOptions.endYear) {

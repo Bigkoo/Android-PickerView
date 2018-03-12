@@ -30,8 +30,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
 
-    private PickerOptions mPickerOptions;
-
 
     //构造方法
     public OptionsPickerView(PickerOptions pickerOptions) {
@@ -43,23 +41,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     //建造器
     public static class Builder {
-
-        private int Size_Submit_Cancel = 17;//确定取消按钮大小
-        private int Size_Title = 18;//标题文字大小
-        private int Size_Content = 18;//内容文字大小
-        private boolean cancelable = true;//是否能取消
-        private boolean isCenterLabel = true;//是否只显示中间的label
-
-        private int textColorOut; //未选中项的文字颜色
-        private int textColorCenter; //选中项的文字颜色
-        private int dividerColor; //分割线的颜色
-        private int backgroundId = -1; //显示时的外部背景色颜色,默认是灰色
-        public ViewGroup decorView;//显示pickerview的根View,默认是activity的根view
-        private float lineSpacingMultiplier = 1.6F;// 条目间距倍数 默认1.6
-        private boolean isDialog;//是否是对话框模式
-        private Typeface font;
-        private WheelView.DividerType dividerType;//分隔线类型
-
 
         //配置类
         private PickerOptions mPickerOptions;

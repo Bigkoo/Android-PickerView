@@ -13,17 +13,17 @@
 
 ## Introduction
 
-This is a library for android to pick date or pickerOptions like IOS system WheelView widget.
+This is a library for android to pick date or options like IOS system WheelView widget.
 and support for the linkage, dialog . It's very easy to use ,  you also can customize layout, which make it very customizable.
 
 
-* there are two pickerOptions called OptionsPickerView and TimePickerView
+* there are two options called OptionsPickerView and TimePickerView
 
 * OptionsPickerView supports three levels of linkage
 
 * TimePickerView support selection date range
 
-* support "year, month, day, hour, minute, second", "provincial, city, district" and other pickerOptions of the unit (label) show or hide and customize label.
+* support "year, month, day, hour, minute, second", "provincial, city, district" and other options of the unit (label) show or hide and customize label.
 
 * supports custom text, color, text size, etc.
 
@@ -166,7 +166,7 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
                 .isCenterLabel(false) //default is true , if you choose false , the label text will add to all item ContentText right
                 .setLabels("province", "city", "district")
                 .setCyclic(false, false, false)
-                .setSelectOptions(0, 0, 0)  //default pickerOptions
+                .setSelectOptions(0, 0, 0)  //default options
                 .setOutSideCancelable(false)//dismiss， default is true
                 .build();
 
