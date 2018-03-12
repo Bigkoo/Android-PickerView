@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,10 +17,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
 import com.bigkoo.pickerview.R;
-import com.bigkoo.pickerview.constant.Options;
+import com.bigkoo.pickerview.constant.PickerOptions;
 import com.bigkoo.pickerview.listener.OnDismissListener;
 import com.bigkoo.pickerview.utils.PickerViewAnimateUtil;
-import com.contrarywind.view.WheelView;
 
 /**
  * Created by Sai on 15/11/22.
@@ -34,18 +32,12 @@ public class BasePickerView {
 
     private Context context;
     protected ViewGroup contentContainer;
-    public ViewGroup decorView;//显示pickerview的根View,默认是activity的根view
+    private ViewGroup decorView;//显示的根View,默认是activity的根view
     private ViewGroup rootView;//附加View 的 根View
     private ViewGroup dialogView;//附加Dialog 的 根View
 
-    protected int pickerview_timebtn_nor = 0xFF057dff;
-    protected int pickerview_timebtn_pre = 0xFFc2daf5;
-    protected int pickerview_bg_topbar = 0xFFf5f5f5;
-    protected int pickerview_topbar_title = 0xFF000000;
-    protected int bgColor_default = 0xFFFFFFFF;
 
-
-    protected Options mOptions;
+    protected PickerOptions mPickerOptions;
 
     private OnDismissListener onDismissListener;
     private boolean dismissing;
@@ -65,7 +57,7 @@ public class BasePickerView {
     }
 
 
-    protected void initViews(int backgroudId) {
+    protected void initViews() {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         if (isDialog()) {
             //如果是对话框模式
@@ -98,8 +90,8 @@ public class BasePickerView {
             rootView.setLayoutParams(new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
             ));
-            if (backgroudId != -1) {
-                rootView.setBackgroundColor(backgroudId);
+            if (mPickerOptions.backgroundId != -1) {
+                rootView.setBackgroundColor(mPickerOptions.backgroundId);
             }
             //这个是真正要加载时间选取器的父布局
             contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
@@ -301,7 +293,7 @@ public class BasePickerView {
      */
     public void setDialogOutSideCancelable() {
         if (mDialog != null) {
-            mDialog.setCancelable(mOptions.cancelable);
+            mDialog.setCancelable(mPickerOptions.cancelable);
         }
     }
 
@@ -326,7 +318,7 @@ public class BasePickerView {
     public void createDialog() {
         if (dialogView != null) {
             mDialog = new Dialog(context, R.style.custom_dialog2);
-            mDialog.setCancelable(mOptions.cancelable);//不能点外面取消,也不能点back取消
+            mDialog.setCancelable(mPickerOptions.cancelable);//不能点外面取消,也不能点back取消
             mDialog.setContentView(dialogView);
 
             Window dialogWindow = mDialog.getWindow();

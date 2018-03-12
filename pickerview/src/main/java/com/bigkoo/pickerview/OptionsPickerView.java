@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.constant.Options;
+import com.bigkoo.pickerview.constant.PickerOptions;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.WheelOptions;
@@ -30,34 +30,19 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
 
-    private Options mOptions;
+    private PickerOptions mPickerOptions;
 
 
     //构造方法
-    public OptionsPickerView(Options options) {
-        super(options.context);
-        mOptions = options;
-        initView(options.context);
+    public OptionsPickerView(PickerOptions pickerOptions) {
+        super(pickerOptions.context);
+        mPickerOptions = pickerOptions;
+        initView(pickerOptions.context);
     }
 
 
     //建造器
     public static class Builder {
-
-        // 通用部分, 后续创建一个BaseBuilder
-        private int layoutRes = R.layout.pickerview_options;
-        private CustomListener customListener;
-        private Context context;
-        private String Str_Submit;//确定按钮文字
-        private String Str_Cancel;//取消按钮文字
-        private String Str_Title;//标题文字
-
-        private int Color_Submit;//确定按钮颜色
-        private int Color_Cancel;//取消按钮颜色
-        private int Color_Title;//标题颜色
-
-        private int Color_Background_Wheel;//滚轮背景颜色
-        private int Color_Background_Title;//标题背景颜色
 
         private int Size_Submit_Cancel = 17;//确定取消按钮大小
         private int Size_Title = 18;//标题文字大小
@@ -65,8 +50,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private boolean cancelable = true;//是否能取消
         private boolean isCenterLabel = true;//是否只显示中间的label
 
-        private int textColorOut; //分割线以外的文字颜色
-        private int textColorCenter; //分割线之间的文字颜色
+        private int textColorOut; //未选中项的文字颜色
+        private int textColorCenter; //选中项的文字颜色
         private int dividerColor; //分割线的颜色
         private int backgroundId = -1; //显示时的外部背景色颜色,默认是灰色
         public ViewGroup decorView;//显示pickerview的根View,默认是activity的根view
@@ -76,52 +61,45 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         private WheelView.DividerType dividerType;//分隔线类型
 
 
-        //专用部分
-        private OnOptionsSelectListener optionsSelectListener;
-        private boolean linkage = true;//是否联动
-
-
-
-
         //配置类
-        private Options mOptions;
+        private PickerOptions mPickerOptions;
 
 
         //Required
         public Builder(Context context, OnOptionsSelectListener listener) {
-            mOptions = new Options();
-            mOptions.context = context;
-            mOptions.optionsSelectListener = listener;
+            mPickerOptions = new PickerOptions(PickerOptions.TYPE_PICKER_OPTIONS);
+            mPickerOptions.context = context;
+            mPickerOptions.optionsSelectListener = listener;
         }
 
         //Option
         public Builder setSubmitText(String textContentCancel) {
-            mOptions.textContentCancel = textContentCancel;
+            mPickerOptions.textContentCancel = textContentCancel;
             return this;
         }
 
         public Builder setCancelText(String textContentCancel) {
-            mOptions.textContentCancel = textContentCancel;
+            mPickerOptions.textContentCancel = textContentCancel;
             return this;
         }
 
         public Builder setTitleText(String textContentTitle) {
-            mOptions.textContentTitle = textContentTitle;
+            mPickerOptions.textContentTitle = textContentTitle;
             return this;
         }
 
         public Builder isDialog(boolean isDialog) {
-            mOptions.isDialog = isDialog;
+            mPickerOptions.isDialog = isDialog;
             return this;
         }
 
         public Builder setSubmitColor(int textColorConfirm) {
-            mOptions.textColorConfirm = textColorConfirm;
+            mPickerOptions.textColorConfirm = textColorConfirm;
             return this;
         }
 
         public Builder setCancelColor(int textColorCancel) {
-            mOptions.textColorCancel = textColorCancel;
+            mPickerOptions.textColorCancel = textColorCancel;
             return this;
         }
 
@@ -132,7 +110,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
          * @return
          */
         public Builder setBackgroundId(int backgroundId) {
-            mOptions.backgroundId = backgroundId;
+            mPickerOptions.backgroundId = backgroundId;
             return this;
         }
 
@@ -144,66 +122,66 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
          * @return
          */
         public Builder setDecorView(ViewGroup decorView) {
-            mOptions.decorView = decorView;
+            mPickerOptions.decorView = decorView;
             return this;
         }
 
         public Builder setLayoutRes(int res, CustomListener listener) {
-            mOptions.layoutRes = res;
-            mOptions.customListener = listener;
+            mPickerOptions.layoutRes = res;
+            mPickerOptions.customListener = listener;
             return this;
         }
 
         public Builder setBgColor(int bgColorWheel) {
-            mOptions.bgColorWheel = bgColorWheel;
+            mPickerOptions.bgColorWheel = bgColorWheel;
             return this;
         }
 
         public Builder setTitleBgColor(int bgColorTitle) {
-            mOptions.bgColorTitle = bgColorTitle;
+            mPickerOptions.bgColorTitle = bgColorTitle;
             return this;
         }
 
         public Builder setTitleColor(int textColorTitle) {
-            mOptions.textColorTitle = textColorTitle;
+            mPickerOptions.textColorTitle = textColorTitle;
             return this;
         }
 
         public Builder setSubCalSize(int textSizeSubmitCancel) {
-            mOptions.textSizeSubmitCancel = textSizeSubmitCancel;
+            mPickerOptions.textSizeSubmitCancel = textSizeSubmitCancel;
             return this;
         }
 
         public Builder setTitleSize(int textSizeTitle) {
-            mOptions.textSizeTitle = textSizeTitle;
+            mPickerOptions.textSizeTitle = textSizeTitle;
             return this;
         }
 
         public Builder setContentTextSize(int textSizeContent) {
-            mOptions.textSizeContent = textSizeContent;
+            mPickerOptions.textSizeContent = textSizeContent;
             return this;
         }
 
         public Builder setOutSideCancelable(boolean cancelable) {
-            mOptions.cancelable = cancelable;
+            mPickerOptions.cancelable = cancelable;
             return this;
         }
 
 
         public Builder setLabels(String label1, String label2, String label3) {
-            mOptions.label1 = label1;
-            mOptions.label2 = label2;
-            mOptions.label3 = label3;
+            mPickerOptions.label1 = label1;
+            mPickerOptions.label2 = label2;
+            mPickerOptions.label3 = label3;
             return this;
         }
 
         /**
-         * 设置间距倍数,但是只能在1.2-2.0f之间
+         * 设置间距倍数,但是只能在1.2-4.0f之间
          *
          * @param lineSpacingMultiplier
          */
         public Builder setLineSpacingMultiplier(float lineSpacingMultiplier) {
-            mOptions.lineSpacingMultiplier = lineSpacingMultiplier;
+            mPickerOptions.lineSpacingMultiplier = lineSpacingMultiplier;
             return this;
         }
 
@@ -213,7 +191,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
          * @param dividerColor
          */
         public Builder setDividerColor(int dividerColor) {
-            mOptions.dividerColor = dividerColor;
+            mPickerOptions.dividerColor = dividerColor;
             return this;
         }
 
@@ -223,7 +201,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
          * @param dividerType
          */
         public Builder setDividerType(WheelView.DividerType dividerType) {
-            mOptions.dividerType = dividerType;
+            mPickerOptions.dividerType = dividerType;
             return this;
         }
 
@@ -233,7 +211,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
          * @param textColorCenter
          */
         public Builder setTextColorCenter(int textColorCenter) {
-            mOptions.textColorCenter = textColorCenter;
+            mPickerOptions.textColorCenter = textColorCenter;
             return this;
         }
 
@@ -243,65 +221,65 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
          * @param textColorOut
          */
         public Builder setTextColorOut(int textColorOut) {
-            mOptions.textColorOut = textColorOut;
+            mPickerOptions.textColorOut = textColorOut;
             return this;
         }
 
         public Builder setTypeface(Typeface font) {
-            mOptions.font = font;
+            mPickerOptions.font = font;
             return this;
         }
 
         public Builder setCyclic(boolean cyclic1, boolean cyclic2, boolean cyclic3) {
-            mOptions.cyclic1 = cyclic1;
-            mOptions.cyclic2 = cyclic2;
-            mOptions.cyclic3 = cyclic3;
+            mPickerOptions.cyclic1 = cyclic1;
+            mPickerOptions.cyclic2 = cyclic2;
+            mPickerOptions.cyclic3 = cyclic3;
             return this;
         }
 
         public Builder setSelectOptions(int option1) {
-            mOptions.option1 = option1;
+            mPickerOptions.option1 = option1;
             return this;
         }
 
         public Builder setSelectOptions(int option1, int option2) {
-            mOptions.option1 = option1;
-            mOptions.option2 = option2;
+            mPickerOptions.option1 = option1;
+            mPickerOptions.option2 = option2;
             return this;
         }
 
         public Builder setSelectOptions(int option1, int option2, int option3) {
-            mOptions.option1 = option1;
-            mOptions.option2 = option2;
-            mOptions.option3 = option3;
+            mPickerOptions.option1 = option1;
+            mPickerOptions.option2 = option2;
+            mPickerOptions.option3 = option3;
             return this;
         }
 
         public Builder setTextXOffset(int xoffset_one, int xoffset_two, int xoffset_three) {
-            mOptions.xoffset_one = xoffset_one;
-            mOptions.xoffset_two = xoffset_two;
-            mOptions.xoffset_three = xoffset_three;
+            mPickerOptions.xoffset_one = xoffset_one;
+            mPickerOptions.xoffset_two = xoffset_two;
+            mPickerOptions.xoffset_three = xoffset_three;
             return this;
         }
 
         public Builder isCenterLabel(boolean isCenterLabel) {
-            mOptions.isCenterLabel = isCenterLabel;
+            mPickerOptions.isCenterLabel = isCenterLabel;
             return this;
         }
 
         public OptionsPickerView build() {
-            return new OptionsPickerView(mOptions);
+            return new OptionsPickerView(mPickerOptions);
         }
     }
 
 
     private void initView(Context context) {
         setDialogOutSideCancelable();
-        initViews(mOptions.backgroundId);
+        initViews();
         init();
         initEvents();
-        if (mOptions.customListener == null) {
-            LayoutInflater.from(context).inflate(mOptions.layoutRes, contentContainer);
+        if (mPickerOptions.customListener == null) {
+            LayoutInflater.from(context).inflate(mPickerOptions.layoutRes, contentContainer);
 
             //顶部标题
             TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
@@ -317,46 +295,45 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             btnCancel.setOnClickListener(this);
 
             //设置文字
-            btnSubmit.setText(TextUtils.isEmpty(mOptions.textContentConfirm) ? context.getResources().getString(R.string.pickerview_submit) : mOptions.textContentConfirm);
-            btnCancel.setText(TextUtils.isEmpty(mOptions.textContentCancel) ? context.getResources().getString(R.string.pickerview_cancel) : mOptions.textContentCancel);
-            tvTitle.setText(TextUtils.isEmpty(mOptions.textContentTitle) ? "" : mOptions.textContentTitle);//默认为空
+            btnSubmit.setText(TextUtils.isEmpty(mPickerOptions.textContentConfirm) ? context.getResources().getString(R.string.pickerview_submit) : mPickerOptions.textContentConfirm);
+            btnCancel.setText(TextUtils.isEmpty(mPickerOptions.textContentCancel) ? context.getResources().getString(R.string.pickerview_cancel) : mPickerOptions.textContentCancel);
+            tvTitle.setText(TextUtils.isEmpty(mPickerOptions.textContentTitle) ? "" : mPickerOptions.textContentTitle);//默认为空
 
             //设置color
-            btnSubmit.setTextColor(mOptions.textColorConfirm == 0 ? pickerview_timebtn_nor : mOptions.textColorConfirm);
-            btnCancel.setTextColor(mOptions.textColorCancel == 0 ? pickerview_timebtn_nor : mOptions.textColorCancel);
-            tvTitle.setTextColor(mOptions.textColorTitle == 0 ? pickerview_topbar_title : mOptions.textColorTitle);
-            rv_top_bar.setBackgroundColor(mOptions.bgColorTitle == 0 ? pickerview_bg_topbar : mOptions.bgColorTitle);
+            btnSubmit.setTextColor(mPickerOptions.textColorConfirm);
+            btnCancel.setTextColor(mPickerOptions.textColorCancel);
+            tvTitle.setTextColor(mPickerOptions.textColorTitle);
+            rv_top_bar.setBackgroundColor(mPickerOptions.bgColorTitle);
 
             //设置文字大小
-            btnSubmit.setTextSize(mOptions.textSizeSubmitCancel);
-            btnCancel.setTextSize(mOptions.textSizeSubmitCancel);
-            tvTitle.setTextSize(mOptions.textSizeTitle);
-            tvTitle.setText(mOptions.textContentTitle);
+            btnSubmit.setTextSize(mPickerOptions.textSizeSubmitCancel);
+            btnCancel.setTextSize(mPickerOptions.textSizeSubmitCancel);
+            tvTitle.setTextSize(mPickerOptions.textSizeTitle);
         } else {
-            mOptions.customListener.customLayout(LayoutInflater.from(context).inflate(mOptions.layoutRes, contentContainer));
+            mPickerOptions.customListener.customLayout(LayoutInflater.from(context).inflate(mPickerOptions.layoutRes, contentContainer));
         }
 
         // ----滚轮布局
         final LinearLayout optionsPicker = (LinearLayout) findViewById(R.id.optionspicker);
-        optionsPicker.setBackgroundColor(mOptions.bgColorWheel == 0 ? bgColor_default : mOptions.bgColorWheel);
+        optionsPicker.setBackgroundColor(mPickerOptions.bgColorWheel);
 
-        wheelOptions = new WheelOptions(optionsPicker, mOptions.linkage);
-        wheelOptions.setTextContentSize(mOptions.textSizeContent);
-        wheelOptions.setLabels(mOptions.label1, mOptions.label2, mOptions.label3);
-        wheelOptions.setTextXOffset(mOptions.xoffset_one, mOptions.xoffset_two, mOptions.xoffset_three);
+        wheelOptions = new WheelOptions(optionsPicker, mPickerOptions.linkage);
+        wheelOptions.setTextContentSize(mPickerOptions.textSizeContent);
+        wheelOptions.setLabels(mPickerOptions.label1, mPickerOptions.label2, mPickerOptions.label3);
+        wheelOptions.setTextXOffset(mPickerOptions.xoffset_one, mPickerOptions.xoffset_two, mPickerOptions.xoffset_three);
 
-        wheelOptions.setCyclic(mOptions.cyclic1, mOptions.cyclic2, mOptions.cyclic3);
-        wheelOptions.setTypeface(mOptions.font);
+        wheelOptions.setCyclic(mPickerOptions.cyclic1, mPickerOptions.cyclic2, mPickerOptions.cyclic3);
+        wheelOptions.setTypeface(mPickerOptions.font);
 
-        setOutSideCancelable(mOptions.cancelable);
+        setOutSideCancelable(mPickerOptions.cancelable);
 
 
-        wheelOptions.setDividerColor(mOptions.dividerColor);
-        wheelOptions.setDividerType(mOptions.dividerType);
-        wheelOptions.setLineSpacingMultiplier(mOptions.lineSpacingMultiplier);
-        wheelOptions.setTextColorOut(mOptions.textColorOut);
-        wheelOptions.setTextColorCenter(mOptions.textColorCenter);
-        wheelOptions.isCenterLabel(mOptions.isCenterLabel);
+        wheelOptions.setDividerColor(mPickerOptions.dividerColor);
+        wheelOptions.setDividerType(mPickerOptions.dividerType);
+        wheelOptions.setLineSpacingMultiplier(mPickerOptions.lineSpacingMultiplier);
+        wheelOptions.setTextColorOut(mPickerOptions.textColorOut);
+        wheelOptions.setTextColorCenter(mPickerOptions.textColorCenter);
+        wheelOptions.isCenterLabel(mPickerOptions.isCenterLabel);
     }
 
 
@@ -366,27 +343,27 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
      * @param option1
      */
     public void setSelectOptions(int option1) {
-        mOptions.option1 = option1;
+        mPickerOptions.option1 = option1;
         reSetCurrentItems();
     }
 
 
     public void setSelectOptions(int option1, int option2) {
-        mOptions.option1 = option1;
-        mOptions.option2 = option2;
+        mPickerOptions.option1 = option1;
+        mPickerOptions.option2 = option2;
         reSetCurrentItems();
     }
 
     public void setSelectOptions(int option1, int option2, int option3) {
-        mOptions.option1 = option1;
-        mOptions.option2 = option2;
-        mOptions.option3 = option3;
+        mPickerOptions.option1 = option1;
+        mPickerOptions.option2 = option2;
+        mPickerOptions.option3 = option3;
         reSetCurrentItems();
     }
 
     private void reSetCurrentItems() {
         if (wheelOptions != null) {
-            wheelOptions.setCurrentItems(mOptions.option1, mOptions.option2, mOptions.option3);
+            wheelOptions.setCurrentItems(mPickerOptions.option1, mPickerOptions.option2, mPickerOptions.option3);
         }
     }
 
@@ -427,9 +404,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     //抽离接口回调的方法
     public void returnData() {
-        if (mOptions.optionsSelectListener != null) {
+        if (mPickerOptions.optionsSelectListener != null) {
             int[] optionsCurrentItems = wheelOptions.getCurrentItems();
-            mOptions.optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2], clickView);
+            mPickerOptions.optionsSelectListener.onOptionsSelect(optionsCurrentItems[0], optionsCurrentItems[1], optionsCurrentItems[2], clickView);
         }
     }
 
@@ -439,6 +416,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     @Override
     public boolean isDialog() {
-        return mOptions.isDialog;
+        return mPickerOptions.isDialog;
     }
 }

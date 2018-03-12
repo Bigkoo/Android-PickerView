@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.constant.PickerOptions;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.WheelTime;
@@ -28,79 +29,17 @@ import java.util.Date;
 public class TimePickerView extends BasePickerView implements View.OnClickListener {
 
 
-    private int layoutRes;
-    private CustomListener customListener;
-
     private WheelTime wheelTime; //自定义控件
-    private OnTimeSelectListener timeSelectListener;//回调接口
 
-
-    //******* 专有字段  ******//
-    private boolean[] type;// 时间显示类型
-    private boolean isLunarCalendar;//是否显示农历
-    private final boolean cyclic;
-
-    private Calendar date;//当前选中时间
-    private Calendar startDate;//开始时间
-    private Calendar endDate;//终止时间
-    private int startYear;//开始年份
-    private int endYear;//结尾年份
-
-    private String label_year, label_month, label_day, label_hours, label_mins, label_seconds;
-    private int xoffset_year, xoffset_month, xoffset_day, xoffset_hours, xoffset_mins, xoffset_seconds;
 
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
 
     //构造方法
-    public TimePickerView(Builder builder) {
-        super(builder.context);
-        this.timeSelectListener = builder.timeSelectListener;
-        this.gravity = builder.gravity;
-        this.type = builder.type;
-        this.textContentConfirm = builder.Str_Submit;
-        this.textContentCancel = builder.Str_Cancel;
-        this.textContentTitle = builder.Str_Title;
-        this.textColorConfirm = builder.Color_Submit;
-        this.textColorCancel = builder.Color_Cancel;
-        this.textColorTitle = builder.Color_Title;
-        this.bgColorWheel = builder.Color_Background_Wheel;
-        this.bgColorTitle = builder.Color_Background_Title;
-        this.textSizeSubmitCancel = builder.Size_Submit_Cancel;
-        this.textSizeTitle = builder.Size_Title;
-        this.textSizeContent = builder.Size_Content;
-        this.startYear = builder.startYear;
-        this.endYear = builder.endYear;
-        this.startDate = builder.startDate;
-        this.endDate = builder.endDate;
-        this.date = builder.date;
-        this.cyclic = builder.cyclic;
-        this.isCenterLabel = builder.isCenterLabel;
-        this.isLunarCalendar = builder.isLunarCalendar;
-        this.cancelable = builder.cancelable;
-        this.label_year = builder.label_year;
-        this.label_month = builder.label_month;
-        this.label_day = builder.label_day;
-        this.label_hours = builder.label_hours;
-        this.label_mins = builder.label_mins;
-        this.label_seconds = builder.label_seconds;
-        this.xoffset_year = builder.xoffset_year;
-        this.xoffset_month = builder.xoffset_month;
-        this.xoffset_day = builder.xoffset_day;
-        this.xoffset_hours = builder.xoffset_hours;
-        this.xoffset_mins = builder.xoffset_mins;
-        this.xoffset_seconds = builder.xoffset_seconds;
-        this.textColorCenter = builder.textColorCenter;
-        this.textColorOut = builder.textColorOut;
-        this.dividerColor = builder.dividerColor;
-        this.customListener = builder.customListener;
-        this.layoutRes = builder.layoutRes;
-        this.lineSpacingMultiplier = builder.lineSpacingMultiplier;
-        this.isDialog = builder.isDialog;
-        this.dividerType = builder.dividerType;
-        this.backgroundId = builder.backgroundId;
-        this.decorView = builder.decorView;
-        initView(builder.context);
+    public TimePickerView(PickerOptions pickerOptions) {
+        super(pickerOptions.context);
+        mPickerOptions = pickerOptions;
+        initView(pickerOptions.context);
     }
 
 
@@ -139,109 +78,96 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         private float lineSpacingMultiplier = 1.6F; // 条目间距倍数 默认1.6
         private boolean isDialog;//是否是对话框模式
 
-        //专用部分
-        private OnTimeSelectListener timeSelectListener;
-        private boolean[] type = new boolean[]{true, true, true, true, true, true};//显示类型 默认全部显示
 
-        private Calendar date;//当前选中时间
-        private Calendar startDate;//开始时间
-        private Calendar endDate;//终止时间
-        private int startYear;//开始年份
-        private int endYear;//结尾年份
-
-        private boolean cyclic = false;//是否循环
-        private boolean isLunarCalendar = false;//是否显示农历
-
-        private String label_year, label_month, label_day, label_hours, label_mins, label_seconds;//单位
-        private int xoffset_year, xoffset_month, xoffset_day, xoffset_hours, xoffset_mins, xoffset_seconds;//单位
+        //配置类
+        private PickerOptions mPickerOptions;
 
 
         //Required
         public Builder(Context context, OnTimeSelectListener listener) {
-            this.context = context;
-            this.timeSelectListener = listener;
+            mPickerOptions = new PickerOptions(PickerOptions.TYPE_PICKER_TIME);
+            mPickerOptions.context = context;
+            mPickerOptions.timeSelectListener = listener;
         }
 
         //Option
         public Builder setType(boolean[] type) {
-            this.type = type;
+            mPickerOptions.type = type;
             return this;
         }
 
         public Builder gravity(int gravity) {
-            this.gravity = gravity;
+            mPickerOptions.gravity = gravity;
             return this;
         }
 
-        public Builder setSubmitText(String Str_Submit) {
-            this.Str_Submit = Str_Submit;
+        public Builder setSubmitText(String textContentConfirm) {
+            mPickerOptions.textContentConfirm = textContentConfirm;
             return this;
         }
 
         public Builder isDialog(boolean isDialog) {
-            this.isDialog = isDialog;
+            mPickerOptions.isDialog = isDialog;
             return this;
         }
 
-        public Builder setCancelText(String Str_Cancel) {
-            this.Str_Cancel = Str_Cancel;
+        public Builder setCancelText(String textContentCancel) {
+            mPickerOptions.textContentCancel = textContentCancel;
             return this;
         }
 
-        public Builder setTitleText(String Str_Title) {
-            this.Str_Title = Str_Title;
+        public Builder setTitleText(String textContentTitle) {
+            mPickerOptions.textContentTitle = textContentTitle;
             return this;
         }
 
-        public Builder setSubmitColor(int Color_Submit) {
-            this.Color_Submit = Color_Submit;
+        public Builder setSubmitColor(int textColorConfirm) {
+            mPickerOptions.textColorConfirm = textColorConfirm;
             return this;
         }
 
-        public Builder setCancelColor(int Color_Cancel) {
-            this.Color_Cancel = Color_Cancel;
+        public Builder setCancelColor(int textColorCancel) {
+            mPickerOptions.textColorCancel = textColorCancel;
             return this;
         }
 
         /**
-         * 必须是viewgroup
-         * 设置要将pickerview显示到的容器id
-         *
-         * @param decorView
-         * @return
+         * ViewGroup 类型的容器
+         * @param decorView 选择器会被添加到此容器中
+         * @return this
          */
         public Builder setDecorView(ViewGroup decorView) {
-            this.decorView = decorView;
+            mPickerOptions.decorView = decorView;
             return this;
         }
 
-        public Builder setBgColor(int Color_Background_Wheel) {
-            this.Color_Background_Wheel = Color_Background_Wheel;
+        public Builder setBgColor(int bgColorWheel) {
+            mPickerOptions.bgColorWheel = bgColorWheel;
             return this;
         }
 
-        public Builder setTitleBgColor(int Color_Background_Title) {
-            this.Color_Background_Title = Color_Background_Title;
+        public Builder setTitleBgColor(int bgColorTitle) {
+            mPickerOptions.bgColorTitle = bgColorTitle;
             return this;
         }
 
-        public Builder setTitleColor(int Color_Title) {
-            this.Color_Title = Color_Title;
+        public Builder setTitleColor(int textColorTitle) {
+            mPickerOptions.textColorTitle = textColorTitle;
             return this;
         }
 
-        public Builder setSubCalSize(int Size_Submit_Cancel) {
-            this.Size_Submit_Cancel = Size_Submit_Cancel;
+        public Builder setSubCalSize(int textSizeSubmitCancel) {
+            mPickerOptions.textSizeSubmitCancel = textSizeSubmitCancel;
             return this;
         }
 
-        public Builder setTitleSize(int Size_Title) {
-            this.Size_Title = Size_Title;
+        public Builder setTitleSize(int textSizeTitle) {
+            mPickerOptions.textSizeTitle = textSizeTitle;
             return this;
         }
 
-        public Builder setContentSize(int Size_Content) {
-            this.Size_Content = Size_Content;
+        public Builder setContentSize(int textSizeContent) {
+            mPickerOptions.textSizeContent = textSizeContent;
             return this;
         }
 
@@ -252,13 +178,13 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          * @return
          */
         public Builder setDate(Calendar date) {
-            this.date = date;
+            mPickerOptions.date = date;
             return this;
         }
 
         public Builder setLayoutRes(int res, CustomListener customListener) {
-            this.layoutRes = res;
-            this.customListener = customListener;
+            mPickerOptions.layoutRes = res;
+            mPickerOptions.customListener = customListener;
             return this;
         }
 
@@ -269,8 +195,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          */
         @Deprecated
         public Builder setRange(int startYear, int endYear) {
-            this.startYear = startYear;
-            this.endYear = endYear;
+            mPickerOptions.startYear = startYear;
+            mPickerOptions.endYear = endYear;
             return this;
         }
 
@@ -280,8 +206,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          */
 
         public Builder setRangDate(Calendar startDate, Calendar endDate) {
-            this.startDate = startDate;
-            this.endDate = endDate;
+            mPickerOptions.startDate = startDate;
+            mPickerOptions.endDate = endDate;
             return this;
         }
 
@@ -292,7 +218,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          * @param lineSpacingMultiplier
          */
         public Builder setLineSpacingMultiplier(float lineSpacingMultiplier) {
-            this.lineSpacingMultiplier = lineSpacingMultiplier;
+            mPickerOptions.lineSpacingMultiplier = lineSpacingMultiplier;
             return this;
         }
 
@@ -302,7 +228,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          * @param dividerColor
          */
         public Builder setDividerColor(int dividerColor) {
-            this.dividerColor = dividerColor;
+            mPickerOptions.dividerColor = dividerColor;
             return this;
         }
 
@@ -312,7 +238,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          * @param dividerType
          */
         public Builder setDividerType(WheelView.DividerType dividerType) {
-            this.dividerType = dividerType;
+            mPickerOptions.dividerType = dividerType;
             return this;
         }
 
@@ -323,7 +249,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          */
 
         public Builder setBackgroundId(int backgroundId) {
-            this.backgroundId = backgroundId;
+            mPickerOptions.backgroundId = backgroundId;
             return this;
         }
 
@@ -333,7 +259,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          * @param textColorCenter
          */
         public Builder setTextColorCenter(int textColorCenter) {
-            this.textColorCenter = textColorCenter;
+            mPickerOptions.textColorCenter = textColorCenter;
             return this;
         }
 
@@ -343,32 +269,32 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          * @param textColorOut
          */
         public Builder setTextColorOut(int textColorOut) {
-            this.textColorOut = textColorOut;
+            mPickerOptions.textColorOut = textColorOut;
             return this;
         }
 
         public Builder isCyclic(boolean cyclic) {
-            this.cyclic = cyclic;
+            mPickerOptions.cyclic = cyclic;
             return this;
         }
 
         public Builder setOutSideCancelable(boolean cancelable) {
-            this.cancelable = cancelable;
+            mPickerOptions.cancelable = cancelable;
             return this;
         }
 
         public Builder setLunarCalendar(boolean lunarCalendar) {
-            isLunarCalendar = lunarCalendar;
+            mPickerOptions.isLunarCalendar = lunarCalendar;
             return this;
         }
 
         public Builder setLabel(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
-            this.label_year = label_year;
-            this.label_month = label_month;
-            this.label_day = label_day;
-            this.label_hours = label_hours;
-            this.label_mins = label_mins;
-            this.label_seconds = label_seconds;
+            mPickerOptions.label_year = label_year;
+            mPickerOptions.label_month = label_month;
+            mPickerOptions.label_day = label_day;
+            mPickerOptions.label_hours = label_hours;
+            mPickerOptions.label_mins = label_mins;
+            mPickerOptions.label_seconds = label_seconds;
             return this;
         }
 
@@ -384,37 +310,38 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
          * @return
          */
         public Builder setTextXOffset(int xoffset_year, int xoffset_month, int xoffset_day, int xoffset_hours, int xoffset_mins, int xoffset_seconds) {
-            this.xoffset_year = xoffset_year;
-            this.xoffset_month = xoffset_month;
-            this.xoffset_day = xoffset_day;
-            this.xoffset_hours = xoffset_hours;
-            this.xoffset_mins = xoffset_mins;
-            this.xoffset_seconds = xoffset_seconds;
+            mPickerOptions.xoffset_year = xoffset_year;
+            mPickerOptions.xoffset_month = xoffset_month;
+            mPickerOptions.xoffset_day = xoffset_day;
+            mPickerOptions.xoffset_hours = xoffset_hours;
+            mPickerOptions.xoffset_mins = xoffset_mins;
+            mPickerOptions.xoffset_seconds = xoffset_seconds;
             return this;
         }
 
         public Builder isCenterLabel(boolean isCenterLabel) {
-            this.isCenterLabel = isCenterLabel;
+            mPickerOptions.isCenterLabel = isCenterLabel;
             return this;
         }
 
 
         public TimePickerView build() {
-            return new TimePickerView(this);
+            return new TimePickerView(mPickerOptions);
         }
     }
 
 
     private void initView(Context context) {
         setDialogOutSideCancelable();
-        initViews(backgroundId);
+        initViews();
         init();
         initEvents();
-        if (customListener == null) {
+        if (mPickerOptions.customListener == null) {
             LayoutInflater.from(context).inflate(R.layout.pickerview_time, contentContainer);
 
             //顶部标题
             TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+            RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
 
             //确定和取消按钮
             Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
@@ -427,58 +354,62 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             btnCancel.setOnClickListener(this);
 
             //设置文字
-            btnSubmit.setText(TextUtils.isEmpty(textContentConfirm) ? context.getResources().getString(R.string.pickerview_submit) : textContentConfirm);
-            btnCancel.setText(TextUtils.isEmpty(textContentCancel) ? context.getResources().getString(R.string.pickerview_cancel) : textContentCancel);
-            tvTitle.setText(TextUtils.isEmpty(textContentTitle) ? "" : textContentTitle);//默认为空
+            btnSubmit.setText(TextUtils.isEmpty(mPickerOptions.textContentConfirm) ? context.getResources().getString(R.string.pickerview_submit) : mPickerOptions.textContentConfirm);
+            btnCancel.setText(TextUtils.isEmpty(mPickerOptions.textContentCancel) ? context.getResources().getString(R.string.pickerview_cancel) : mPickerOptions.textContentCancel);
+            tvTitle.setText(TextUtils.isEmpty(mPickerOptions.textContentTitle) ? "" : mPickerOptions.textContentTitle);//默认为空
 
-            //设置文字颜色
-            btnSubmit.setTextColor(textColorConfirm == 0 ? pickerview_timebtn_nor : textColorConfirm);
-            btnCancel.setTextColor(textColorCancel == 0 ? pickerview_timebtn_nor : textColorCancel);
-            tvTitle.setTextColor(textColorTitle == 0 ? pickerview_topbar_title : textColorTitle);
+
+            //设置color
+            btnSubmit.setTextColor(mPickerOptions.textColorConfirm);
+            btnCancel.setTextColor(mPickerOptions.textColorCancel);
+            tvTitle.setTextColor(mPickerOptions.textColorTitle);
+            rv_top_bar.setBackgroundColor(mPickerOptions.bgColorTitle);
+
 
             //设置文字大小
-            btnSubmit.setTextSize(textSizeSubmitCancel);
-            btnCancel.setTextSize(textSizeSubmitCancel);
-            tvTitle.setTextSize(textSizeTitle);
-            RelativeLayout rv_top_bar = (RelativeLayout) findViewById(R.id.rv_topbar);
-            rv_top_bar.setBackgroundColor(bgColorTitle == 0 ? pickerview_bg_topbar : bgColorTitle);
+            btnSubmit.setTextSize(mPickerOptions.textSizeSubmitCancel);
+            btnCancel.setTextSize(mPickerOptions.textSizeSubmitCancel);
+            tvTitle.setTextSize(mPickerOptions.textSizeTitle);
+
         } else {
-            customListener.customLayout(LayoutInflater.from(context).inflate(layoutRes, contentContainer));
+            mPickerOptions.customListener.customLayout(LayoutInflater.from(context).inflate(mPickerOptions.layoutRes, contentContainer));
         }
         // 时间转轮 自定义控件
         LinearLayout timePickerView = (LinearLayout) findViewById(R.id.timepicker);
 
-        timePickerView.setBackgroundColor(bgColorWheel == 0 ? bgColor_default : bgColorWheel);
+        timePickerView.setBackgroundColor(mPickerOptions.bgColorWheel);
 
-        wheelTime = new WheelTime(timePickerView, type, gravity, textSizeContent);
-        wheelTime.setLunarCalendar(isLunarCalendar);
+        wheelTime = new WheelTime(timePickerView, mPickerOptions.type, gravity, mPickerOptions.textSizeContent);
+        wheelTime.setLunarCalendar(mPickerOptions.isLunarCalendar);
 
-        if (startYear != 0 && endYear != 0 && startYear <= endYear) {
+        if (mPickerOptions.startYear != 0 && mPickerOptions.endYear != 0 && mPickerOptions.startYear <= mPickerOptions.endYear) {
             setRange();
         }
 
-        if (startDate != null && endDate != null) {
-            if (startDate.getTimeInMillis() <= endDate.getTimeInMillis()) {
+        if (mPickerOptions.startDate != null && mPickerOptions.endDate != null) {
+            if (mPickerOptions.startDate.getTimeInMillis() <= mPickerOptions.endDate.getTimeInMillis()) {
                 setRangDate();
             }
-        } else if (startDate != null) {
+        } else if (mPickerOptions.startDate != null) {
             setRangDate();
-        } else if (endDate != null) {
+        } else if (mPickerOptions.endDate != null) {
             setRangDate();
         }
 
         setTime();
-        wheelTime.setLabels(label_year, label_month, label_day, label_hours, label_mins, label_seconds);
-        wheelTime.setTextXOffset(xoffset_year, xoffset_month, xoffset_day, xoffset_hours, xoffset_mins, xoffset_seconds);
+        wheelTime.setLabels(mPickerOptions.label_year, mPickerOptions.label_month, mPickerOptions.label_day
+                , mPickerOptions.label_hours, mPickerOptions.label_mins, mPickerOptions.label_seconds);
+        wheelTime.setTextXOffset(mPickerOptions.xoffset_year, mPickerOptions.xoffset_month, mPickerOptions.xoffset_day,
+                mPickerOptions.xoffset_hours, mPickerOptions.xoffset_mins, mPickerOptions.xoffset_seconds);
 
-        setOutSideCancelable(cancelable);
-        wheelTime.setCyclic(cyclic);
-        wheelTime.setDividerColor(dividerColor);
-        wheelTime.setDividerType(dividerType);
-        wheelTime.setLineSpacingMultiplier(lineSpacingMultiplier);
-        wheelTime.setTextColorOut(textColorOut);
-        wheelTime.setTextColorCenter(textColorCenter);
-        wheelTime.isCenterLabel(isCenterLabel);
+        setOutSideCancelable(mPickerOptions.cancelable);
+        wheelTime.setCyclic(mPickerOptions.cyclic);
+        wheelTime.setDividerColor(mPickerOptions.dividerColor);
+        wheelTime.setDividerType(mPickerOptions.dividerType);
+        wheelTime.setLineSpacingMultiplier(mPickerOptions.lineSpacingMultiplier);
+        wheelTime.setTextColorOut(mPickerOptions.textColorOut);
+        wheelTime.setTextColorCenter(mPickerOptions.textColorCenter);
+        wheelTime.isCenterLabel(mPickerOptions.isCenterLabel);
     }
 
 
@@ -486,7 +417,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
      * 设置默认时间
      */
     public void setDate(Calendar date) {
-        this.date = date;
+        mPickerOptions.date = date;
         setTime();
     }
 
@@ -494,8 +425,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
      * 设置可以选择的时间范围, 要在setTime之前调用才有效果
      */
     private void setRange() {
-        wheelTime.setStartYear(startYear);
-        wheelTime.setEndYear(endYear);
+        wheelTime.setStartYear(mPickerOptions.startYear);
+        wheelTime.setEndYear(mPickerOptions.endYear);
 
     }
 
@@ -503,19 +434,19 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
      * 设置可以选择的时间范围, 要在setTime之前调用才有效果
      */
     private void setRangDate() {
-        wheelTime.setRangDate(startDate, endDate);
+        wheelTime.setRangDate(mPickerOptions.startDate, mPickerOptions.endDate);
         //如果设置了时间范围
-        if (startDate != null && endDate != null) {
+        if (mPickerOptions.startDate != null && mPickerOptions.endDate != null) {
             //判断一下默认时间是否设置了，或者是否在起始终止时间范围内
-            if (date == null || date.getTimeInMillis() < startDate.getTimeInMillis()
-                    || date.getTimeInMillis() > endDate.getTimeInMillis()) {
-                date = startDate;
+            if (mPickerOptions.date == null || mPickerOptions.date.getTimeInMillis() < mPickerOptions.startDate.getTimeInMillis()
+                    || mPickerOptions.date.getTimeInMillis() > mPickerOptions.endDate.getTimeInMillis()) {
+                mPickerOptions.date = mPickerOptions.startDate;
             }
-        } else if (startDate != null) {
+        } else if (mPickerOptions.startDate != null) {
             //没有设置默认选中时间,那就拿开始时间当默认时间
-            date = startDate;
-        } else if (endDate != null) {
-            date = endDate;
+            mPickerOptions.date = mPickerOptions.startDate;
+        } else if (mPickerOptions.endDate != null) {
+            mPickerOptions.date = mPickerOptions.endDate;
         }
     }
 
@@ -527,7 +458,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         Calendar calendar = Calendar.getInstance();
 
-        if (date == null) {
+        if (mPickerOptions.date == null) {
             calendar.setTimeInMillis(System.currentTimeMillis());
             year = calendar.get(Calendar.YEAR);
             month = calendar.get(Calendar.MONTH);
@@ -536,12 +467,12 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             minute = calendar.get(Calendar.MINUTE);
             seconds = calendar.get(Calendar.SECOND);
         } else {
-            year = date.get(Calendar.YEAR);
-            month = date.get(Calendar.MONTH);
-            day = date.get(Calendar.DAY_OF_MONTH);
-            hours = date.get(Calendar.HOUR_OF_DAY);
-            minute = date.get(Calendar.MINUTE);
-            seconds = date.get(Calendar.SECOND);
+            year = mPickerOptions.date.get(Calendar.YEAR);
+            month = mPickerOptions.date.get(Calendar.MONTH);
+            day = mPickerOptions.date.get(Calendar.DAY_OF_MONTH);
+            hours = mPickerOptions.date.get(Calendar.HOUR_OF_DAY);
+            minute = mPickerOptions.date.get(Calendar.MINUTE);
+            seconds = mPickerOptions.date.get(Calendar.SECOND);
         }
 
         wheelTime.setPicker(year, month, day, hours, minute, seconds);
@@ -558,11 +489,10 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     }
 
     public void returnData() {
-        if (timeSelectListener != null) {
+        if (mPickerOptions.timeSelectListener != null) {
             try {
                 Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
-
-                timeSelectListener.onTimeSelect(date, clickView);
+                mPickerOptions.timeSelectListener.onTimeSelect(date, clickView);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -583,7 +513,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             seconds = calendar.get(Calendar.SECOND);
 
             wheelTime.setLunarCalendar(lunar);
-            wheelTime.setLabels(label_year, label_month, label_day, label_hours, label_mins, label_seconds);
+            wheelTime.setLabels(mPickerOptions.label_year, mPickerOptions.label_month, mPickerOptions.label_day,
+                    mPickerOptions.label_hours, mPickerOptions.label_mins, mPickerOptions.label_seconds);
             wheelTime.setPicker(year, month, day, hours, minute, seconds);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -601,6 +532,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
     @Override
     public boolean isDialog() {
-        return isDialog;
+        return mPickerOptions.isDialog;
     }
 }
