@@ -722,7 +722,7 @@ public class WheelView extends View {
         this.label = label;
     }
 
-    public void isCenterLabel(Boolean isCenterLabel) {
+    public void isCenterLabel(boolean isCenterLabel) {
         this.isCenterLabel = isCenterLabel;
     }
 

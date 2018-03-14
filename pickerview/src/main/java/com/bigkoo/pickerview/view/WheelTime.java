@@ -24,7 +24,7 @@ public class WheelTime {
     private WheelView wv_month;
     private WheelView wv_day;
     private WheelView wv_hours;
-    private WheelView wv_mins;
+    private WheelView wv_minutes;
     private WheelView wv_seconds;
     private int gravity;
 
@@ -44,15 +44,14 @@ public class WheelTime {
     private int endDay = DEFAULT_END_DAY; //表示31天的
     private int currentYear;
 
-
-    // 根据屏幕密度来指定选择器字体的大小(不同屏幕可能不同)
     private int textSize = 18;
+
     //文字的颜色和分割线的颜色
-    int textColorOut;
-    int textColorCenter;
-    int dividerColor;
-    // 条目间距倍数
-    float lineSpacingMultiplier = 1.6F;
+    private int textColorOut;
+    private int textColorCenter;
+    private int dividerColor;
+
+    private float lineSpacingMultiplier;
 
     private WheelView.DividerType dividerType;
 
@@ -139,11 +138,11 @@ public class WheelTime {
         wv_hours.setCurrentItem(h);
         wv_hours.setGravity(gravity);
 
-        wv_mins = (WheelView) view.findViewById(R.id.min);
-        wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
-        //wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
-        wv_mins.setCurrentItem(m);
-        wv_mins.setGravity(gravity);
+        wv_minutes = (WheelView) view.findViewById(R.id.min);
+        wv_minutes.setAdapter(new NumericWheelAdapter(0, 59));
+        //wv_minutes.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
+        wv_minutes.setCurrentItem(m);
+        wv_minutes.setGravity(gravity);
 
         wv_seconds = (WheelView) view.findViewById(R.id.second);
         wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
@@ -220,7 +219,7 @@ public class WheelTime {
         wv_month.setVisibility(type[1] ? View.VISIBLE : View.GONE);
         wv_day.setVisibility(type[2] ? View.VISIBLE : View.GONE);
         wv_hours.setVisibility(type[3] ? View.VISIBLE : View.GONE);
-        wv_mins.setVisibility(type[4] ? View.VISIBLE : View.GONE);
+        wv_minutes.setVisibility(type[4] ? View.VISIBLE : View.GONE);
         wv_seconds.setVisibility(type[5] ? View.VISIBLE : View.GONE);
         setContentTextSize();
     }
@@ -373,11 +372,11 @@ public class WheelTime {
         wv_hours.setCurrentItem(h);
         wv_hours.setGravity(gravity);
         //分
-        wv_mins = (WheelView) view.findViewById(R.id.min);
-        wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
+        wv_minutes = (WheelView) view.findViewById(R.id.min);
+        wv_minutes.setAdapter(new NumericWheelAdapter(0, 59));
 
-        wv_mins.setCurrentItem(m);
-        wv_mins.setGravity(gravity);
+        wv_minutes.setCurrentItem(m);
+        wv_minutes.setGravity(gravity);
         //秒
         wv_seconds = (WheelView) view.findViewById(R.id.second);
         wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
@@ -512,7 +511,7 @@ public class WheelTime {
         wv_month.setVisibility(type[1] ? View.VISIBLE : View.GONE);
         wv_day.setVisibility(type[2] ? View.VISIBLE : View.GONE);
         wv_hours.setVisibility(type[3] ? View.VISIBLE : View.GONE);
-        wv_mins.setVisibility(type[4] ? View.VISIBLE : View.GONE);
+        wv_minutes.setVisibility(type[4] ? View.VISIBLE : View.GONE);
         wv_seconds.setVisibility(type[5] ? View.VISIBLE : View.GONE);
         setContentTextSize();
     }
@@ -563,7 +562,7 @@ public class WheelTime {
         wv_month.setTextSize(textSize);
         wv_year.setTextSize(textSize);
         wv_hours.setTextSize(textSize);
-        wv_mins.setTextSize(textSize);
+        wv_minutes.setTextSize(textSize);
         wv_seconds.setTextSize(textSize);
     }
 
@@ -572,7 +571,7 @@ public class WheelTime {
         wv_month.setTextColorOut(textColorOut);
         wv_year.setTextColorOut(textColorOut);
         wv_hours.setTextColorOut(textColorOut);
-        wv_mins.setTextColorOut(textColorOut);
+        wv_minutes.setTextColorOut(textColorOut);
         wv_seconds.setTextColorOut(textColorOut);
     }
 
@@ -581,7 +580,7 @@ public class WheelTime {
         wv_month.setTextColorCenter(textColorCenter);
         wv_year.setTextColorCenter(textColorCenter);
         wv_hours.setTextColorCenter(textColorCenter);
-        wv_mins.setTextColorCenter(textColorCenter);
+        wv_minutes.setTextColorCenter(textColorCenter);
         wv_seconds.setTextColorCenter(textColorCenter);
     }
 
@@ -590,7 +589,7 @@ public class WheelTime {
         wv_month.setDividerColor(dividerColor);
         wv_year.setDividerColor(dividerColor);
         wv_hours.setDividerColor(dividerColor);
-        wv_mins.setDividerColor(dividerColor);
+        wv_minutes.setDividerColor(dividerColor);
         wv_seconds.setDividerColor(dividerColor);
     }
 
@@ -600,7 +599,7 @@ public class WheelTime {
         wv_month.setDividerType(dividerType);
         wv_year.setDividerType(dividerType);
         wv_hours.setDividerType(dividerType);
-        wv_mins.setDividerType(dividerType);
+        wv_minutes.setDividerType(dividerType);
         wv_seconds.setDividerType(dividerType);
 
     }
@@ -610,7 +609,7 @@ public class WheelTime {
         wv_month.setLineSpacingMultiplier(lineSpacingMultiplier);
         wv_year.setLineSpacingMultiplier(lineSpacingMultiplier);
         wv_hours.setLineSpacingMultiplier(lineSpacingMultiplier);
-        wv_mins.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wv_minutes.setLineSpacingMultiplier(lineSpacingMultiplier);
         wv_seconds.setLineSpacingMultiplier(lineSpacingMultiplier);
     }
 
@@ -640,9 +639,9 @@ public class WheelTime {
             wv_hours.setLabel(view.getContext().getString(R.string.pickerview_hours));
         }
         if (label_mins != null) {
-            wv_mins.setLabel(label_mins);
+            wv_minutes.setLabel(label_mins);
         } else {
-            wv_mins.setLabel(view.getContext().getString(R.string.pickerview_minutes));
+            wv_minutes.setLabel(view.getContext().getString(R.string.pickerview_minutes));
         }
         if (label_seconds != null) {
             wv_seconds.setLabel(label_seconds);
@@ -652,13 +651,14 @@ public class WheelTime {
 
     }
 
-    public void setTextXOffset(int xoffset_year, int xoffset_month, int xoffset_day, int xoffset_hours, int xoffset_mins, int xoffset_seconds) {
-        wv_day.setTextXOffset(xoffset_year);
-        wv_month.setTextXOffset(xoffset_month);
-        wv_year.setTextXOffset(xoffset_day);
-        wv_hours.setTextXOffset(xoffset_hours);
-        wv_mins.setTextXOffset(xoffset_mins);
-        wv_seconds.setTextXOffset(xoffset_seconds);
+    public void setTextXOffset(int x_offset_year, int x_offset_month, int x_offset_day,
+                               int x_offset_hours, int x_offset_minutes, int x_offset_seconds) {
+        wv_day.setTextXOffset(x_offset_year);
+        wv_month.setTextXOffset(x_offset_month);
+        wv_year.setTextXOffset(x_offset_day);
+        wv_hours.setTextXOffset(x_offset_hours);
+        wv_minutes.setTextXOffset(x_offset_minutes);
+        wv_seconds.setTextXOffset(x_offset_seconds);
     }
 
     /**
@@ -671,7 +671,7 @@ public class WheelTime {
         wv_month.setCyclic(cyclic);
         wv_day.setCyclic(cyclic);
         wv_hours.setCyclic(cyclic);
-        wv_mins.setCyclic(cyclic);
+        wv_minutes.setCyclic(cyclic);
         wv_seconds.setCyclic(cyclic);
     }
 
@@ -680,7 +680,7 @@ public class WheelTime {
             //如果是农历 返回对应的公历时间
             return getLunarTime();
         }
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (currentYear == startYear) {
            /* int i = wv_month.getCurrentItem() + startMonth;
             System.out.println("i:" + i);*/
@@ -689,25 +689,23 @@ public class WheelTime {
                         .append((wv_month.getCurrentItem() + startMonth)).append("-")
                         .append((wv_day.getCurrentItem() + startDay)).append(" ")
                         .append(wv_hours.getCurrentItem()).append(":")
-                        .append(wv_mins.getCurrentItem()).append(":")
+                        .append(wv_minutes.getCurrentItem()).append(":")
                         .append(wv_seconds.getCurrentItem());
             } else {
                 sb.append((wv_year.getCurrentItem() + startYear)).append("-")
                         .append((wv_month.getCurrentItem() + startMonth)).append("-")
                         .append((wv_day.getCurrentItem() + 1)).append(" ")
                         .append(wv_hours.getCurrentItem()).append(":")
-                        .append(wv_mins.getCurrentItem()).append(":")
+                        .append(wv_minutes.getCurrentItem()).append(":")
                         .append(wv_seconds.getCurrentItem());
             }
 
-
         } else {
-
             sb.append((wv_year.getCurrentItem() + startYear)).append("-")
                     .append((wv_month.getCurrentItem() + 1)).append("-")
                     .append((wv_day.getCurrentItem() + 1)).append(" ")
                     .append(wv_hours.getCurrentItem()).append(":")
-                    .append(wv_mins.getCurrentItem()).append(":")
+                    .append(wv_minutes.getCurrentItem()).append(":")
                     .append(wv_seconds.getCurrentItem());
         }
 
@@ -721,7 +719,7 @@ public class WheelTime {
      * @return
      */
     private String getLunarTime() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         int year = wv_year.getCurrentItem() + startYear;
         int month = 1;
         boolean isLeapMonth = false;
@@ -744,7 +742,7 @@ public class WheelTime {
                 .append(solar[1]).append("-")
                 .append(solar[2]).append(" ")
                 .append(wv_hours.getCurrentItem()).append(":")
-                .append(wv_mins.getCurrentItem()).append(":")
+                .append(wv_minutes.getCurrentItem()).append(":")
                 .append(wv_seconds.getCurrentItem());
         return sb.toString();
     }
@@ -827,13 +825,9 @@ public class WheelTime {
             this.endMonth = endDate.get(Calendar.MONTH) + 1;
             this.startDay = startDate.get(Calendar.DAY_OF_MONTH);
             this.endDay = endDate.get(Calendar.DAY_OF_MONTH);
-
-
         }
 
-
     }
-
 
     /**
      * 设置间距倍数,但是只能在1.0-4.0f之间
@@ -886,18 +880,14 @@ public class WheelTime {
     }
 
     /**
-     * Label 是否只显示中间选中项的
-     *
-     * @param isCenterLabel
+     * @param isCenterLabel 是否只显示中间选中项的
      */
-
-    public void isCenterLabel(Boolean isCenterLabel) {
-
+    public void isCenterLabel(boolean isCenterLabel) {
         wv_day.isCenterLabel(isCenterLabel);
         wv_month.isCenterLabel(isCenterLabel);
         wv_year.isCenterLabel(isCenterLabel);
         wv_hours.isCenterLabel(isCenterLabel);
-        wv_mins.isCenterLabel(isCenterLabel);
+        wv_minutes.isCenterLabel(isCenterLabel);
         wv_seconds.isCenterLabel(isCenterLabel);
     }
 }

@@ -365,7 +365,7 @@ public class WheelOptions<T> {
      * @param isCenterLabel
      */
 
-    public void isCenterLabel(Boolean isCenterLabel) {
+    public void isCenterLabel(boolean isCenterLabel) {
         wv_option1.isCenterLabel(isCenterLabel);
         wv_option2.isCenterLabel(isCenterLabel);
         wv_option3.isCenterLabel(isCenterLabel);
