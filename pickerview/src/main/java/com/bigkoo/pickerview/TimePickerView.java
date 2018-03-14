@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.constant.PickerOptions;
+import com.bigkoo.pickerview.configure.PickerOptions;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.WheelTime;
@@ -268,21 +268,22 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         /**
          * 设置X轴倾斜角度[ -90 , 90°]
          *
-         * @param xoffset_year    年
-         * @param xoffset_month   月
-         * @param xoffset_day     日
-         * @param xoffset_hours   时
-         * @param xoffset_mins    分
-         * @param xoffset_seconds 秒
+         * @param x_offset_year    年
+         * @param x_offset_month   月
+         * @param x_offset_day     日
+         * @param x_offset_hours   时
+         * @param x_offset_minutes 分
+         * @param x_offset_seconds 秒
          * @return
          */
-        public Builder setTextXOffset(int xoffset_year, int xoffset_month, int xoffset_day, int xoffset_hours, int xoffset_mins, int xoffset_seconds) {
-            mPickerOptions.xoffset_year = xoffset_year;
-            mPickerOptions.xoffset_month = xoffset_month;
-            mPickerOptions.xoffset_day = xoffset_day;
-            mPickerOptions.xoffset_hours = xoffset_hours;
-            mPickerOptions.xoffset_mins = xoffset_mins;
-            mPickerOptions.xoffset_seconds = xoffset_seconds;
+        public Builder setTextXOffset(int x_offset_year, int x_offset_month, int x_offset_day,
+                                      int x_offset_hours, int x_offset_minutes, int x_offset_seconds) {
+            mPickerOptions.x_offset_year = x_offset_year;
+            mPickerOptions.x_offset_month = x_offset_month;
+            mPickerOptions.x_offset_day = x_offset_day;
+            mPickerOptions.x_offset_hours = x_offset_hours;
+            mPickerOptions.x_offset_minutes = x_offset_minutes;
+            mPickerOptions.x_offset_seconds = x_offset_seconds;
             return this;
         }
 
@@ -366,8 +367,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         setTime();
         wheelTime.setLabels(mPickerOptions.label_year, mPickerOptions.label_month, mPickerOptions.label_day
                 , mPickerOptions.label_hours, mPickerOptions.label_mins, mPickerOptions.label_seconds);
-        wheelTime.setTextXOffset(mPickerOptions.xoffset_year, mPickerOptions.xoffset_month, mPickerOptions.xoffset_day,
-                mPickerOptions.xoffset_hours, mPickerOptions.xoffset_mins, mPickerOptions.xoffset_seconds);
+        wheelTime.setTextXOffset(mPickerOptions.x_offset_year, mPickerOptions.x_offset_month, mPickerOptions.x_offset_day,
+                mPickerOptions.x_offset_hours, mPickerOptions.x_offset_minutes, mPickerOptions.x_offset_seconds);
 
         setOutSideCancelable(mPickerOptions.cancelable);
         wheelTime.setCyclic(mPickerOptions.cyclic);

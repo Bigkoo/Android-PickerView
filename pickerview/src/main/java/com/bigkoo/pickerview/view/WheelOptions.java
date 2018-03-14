@@ -18,22 +18,21 @@ public class WheelOptions<T> {
 
     private List<T> mOptions1Items;
     private List<List<T>> mOptions2Items;
-    private List<T> N_mOptions2Items;
     private List<List<List<T>>> mOptions3Items;
-    private List<T> N_mOptions3Items;
+
     private boolean linkage;
     private OnItemSelectedListener wheelListener_option1;
     private OnItemSelectedListener wheelListener_option2;
 
     //文字的颜色和分割线的颜色
-    int textColorOut;
-    int textColorCenter;
-    int dividerColor;
+    private int textColorOut;
+    private int textColorCenter;
+    private int dividerColor;
 
     private WheelView.DividerType dividerType;
 
     // 条目间距倍数
-    float lineSpacingMultiplier = 1.6F;
+    private float lineSpacingMultiplier;
 
     public View getView() {
         return view;
@@ -43,7 +42,7 @@ public class WheelOptions<T> {
         this.view = view;
     }
 
-    public WheelOptions(View view, Boolean linkage) {
+    public WheelOptions(View view, boolean linkage) {
         super();
         this.linkage = linkage;
         this.view = view;
@@ -133,34 +132,29 @@ public class WheelOptions<T> {
 
 
     //不联动情况下
-    public void setNPicker(List<T> options1Items,
-                           List<T> options2Items,
-                           List<T> options3Items) {
-        this.mOptions1Items = options1Items;
-        this.N_mOptions2Items = options2Items;
-        this.N_mOptions3Items = options3Items;
+    public void setNPicker(List<T> options1Items, List<T> options2Items, List<T> options3Items) {
 
         // 选项1
-        wv_option1.setAdapter(new ArrayWheelAdapter(mOptions1Items));// 设置显示数据
+        wv_option1.setAdapter(new ArrayWheelAdapter(options1Items));// 设置显示数据
         wv_option1.setCurrentItem(0);// 初始化时显示的数据
         // 选项2
-        if (N_mOptions2Items != null)
-            wv_option2.setAdapter(new ArrayWheelAdapter(N_mOptions2Items));// 设置显示数据
+        if (options2Items != null)
+            wv_option2.setAdapter(new ArrayWheelAdapter(options2Items));// 设置显示数据
         wv_option2.setCurrentItem(wv_option1.getCurrentItem());// 初始化时显示的数据
         // 选项3
-        if (N_mOptions3Items != null)
-            wv_option3.setAdapter(new ArrayWheelAdapter(N_mOptions3Items));// 设置显示数据
+        if (options3Items != null)
+            wv_option3.setAdapter(new ArrayWheelAdapter(options3Items));// 设置显示数据
         wv_option3.setCurrentItem(wv_option3.getCurrentItem());
         wv_option1.setIsOptions(true);
         wv_option2.setIsOptions(true);
         wv_option3.setIsOptions(true);
 
-        if (this.N_mOptions2Items == null) {
+        if (options2Items == null) {
             wv_option2.setVisibility(View.GONE);
         } else {
             wv_option2.setVisibility(View.VISIBLE);
         }
-        if (this.N_mOptions3Items == null) {
+        if (options3Items == null) {
             wv_option3.setVisibility(View.GONE);
         } else {
             wv_option3.setVisibility(View.VISIBLE);
@@ -226,10 +220,10 @@ public class WheelOptions<T> {
     /**
      * 设置x轴偏移量
      */
-    public void setTextXOffset(int xoffset_one, int xoffset_two, int xoffset_three){
-        wv_option1.setTextXOffset(xoffset_one);
-        wv_option2.setTextXOffset(xoffset_two);
-        wv_option3.setTextXOffset(xoffset_three);
+    public void setTextXOffset(int x_offset_one, int x_offset_two, int x_offset_three) {
+        wv_option1.setTextXOffset(x_offset_one);
+        wv_option2.setTextXOffset(x_offset_two);
+        wv_option3.setTextXOffset(x_offset_three);
     }
 
     /**
@@ -294,13 +288,17 @@ public class WheelOptions<T> {
     public void setCurrentItems(int option1, int option2, int option3) {
         if (linkage) {
             itemSelected(option1, option2, option3);
+        } else {
+            wv_option1.setCurrentItem(option1);
+            wv_option2.setCurrentItem(option2);
+            wv_option3.setCurrentItem(option3);
         }
-        wv_option1.setCurrentItem(option1);
-        wv_option2.setCurrentItem(option2);
-        wv_option3.setCurrentItem(option3);
     }
 
     private void itemSelected(int opt1Select, int opt2Select, int opt3Select) {
+        if (mOptions1Items != null) {
+            wv_option1.setCurrentItem(opt1Select);
+        }
         if (mOptions2Items != null) {
             wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(opt1Select)));
             wv_option2.setCurrentItem(opt2Select);
@@ -312,7 +310,7 @@ public class WheelOptions<T> {
     }
 
     /**
-     * 设置间距倍数,但是只能在1.2-2.0f之间
+     * 设置间距倍数,但是只能在1.2-4.0f之间
      *
      * @param lineSpacingMultiplier
      */

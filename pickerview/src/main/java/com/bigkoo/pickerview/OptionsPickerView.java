@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.constant.PickerOptions;
+import com.bigkoo.pickerview.configure.PickerOptions;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.view.BasePickerView;
 import com.bigkoo.pickerview.view.WheelOptions;
@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class OptionsPickerView<T> extends BasePickerView implements View.OnClickListener {
 
-    private WheelOptions<T> wheelOptions;
+    private WheelOptions wheelOptions;
 
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
@@ -237,9 +237,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         }
 
         public Builder setTextXOffset(int xoffset_one, int xoffset_two, int xoffset_three) {
-            mPickerOptions.xoffset_one = xoffset_one;
-            mPickerOptions.xoffset_two = xoffset_two;
-            mPickerOptions.xoffset_three = xoffset_three;
+            mPickerOptions.x_offset_one = xoffset_one;
+            mPickerOptions.x_offset_two = xoffset_two;
+            mPickerOptions.x_offset_three = xoffset_three;
             return this;
         }
 
@@ -301,7 +301,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions = new WheelOptions(optionsPicker, mPickerOptions.linkage);
         wheelOptions.setTextContentSize(mPickerOptions.textSizeContent);
         wheelOptions.setLabels(mPickerOptions.label1, mPickerOptions.label2, mPickerOptions.label3);
-        wheelOptions.setTextXOffset(mPickerOptions.xoffset_one, mPickerOptions.xoffset_two, mPickerOptions.xoffset_three);
+        wheelOptions.setTextXOffset(mPickerOptions.x_offset_one, mPickerOptions.x_offset_two, mPickerOptions.x_offset_three);
 
         wheelOptions.setCyclic(mPickerOptions.cyclic1, mPickerOptions.cyclic2, mPickerOptions.cyclic3);
         wheelOptions.setTypeface(mPickerOptions.font);

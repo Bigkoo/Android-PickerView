@@ -1,4 +1,4 @@
-package com.bigkoo.pickerview.constant;
+package com.bigkoo.pickerview.configure;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -14,17 +14,17 @@ import com.contrarywind.view.WheelView;
 import java.util.Calendar;
 
 /**
- * Created by xiaosongzeem on 2018/3/8.
+ * 配置类
+ * Created by XiaoSong on 2018/3/8.
  */
 
 public class PickerOptions {
 
     //常量
-    public static final int PICKERVIEW_BTN_NORMAL = 0xFF057dff;
-    public static final int PICKERVIEW_BTN_PRESS = 0xFFc2daf5;
-    public static final int PICKERVIEW_BG_TOPBAR = 0xFFf5f5f5;
-    public static final int PICKERVIEW_TOPBAR_TITLE = 0xFF000000;
-    public static final int PICKERVIEW_BG_COLOR_DEFAULT = 0xFFFFFFFF;
+    private static final int PICKERVIEW_BTN_NORMAL = 0xFF057dff;
+    private static final int PICKERVIEW_BG_TOPBAR = 0xFFf5f5f5;
+    private static final int PICKERVIEW_TOPBAR_TITLE = 0xFF000000;
+    private static final int PICKERVIEW_BG_COLOR_DEFAULT = 0xFFFFFFFF;
 
     public static final int TYPE_PICKER_OPTIONS = 1;
     public static final int TYPE_PICKER_TIME = 2;
@@ -33,11 +33,6 @@ public class PickerOptions {
     public OptionsPickerView.OnOptionsSelectListener optionsSelectListener;
     public TimePickerView.OnTimeSelectListener timeSelectListener;
     public CustomListener customListener;
-
-    public int layoutRes;
-    public ViewGroup decorView;
-    public int textGravity = Gravity.CENTER;
-    public Context context;
 
 
     //options picker
@@ -53,10 +48,10 @@ public class PickerOptions {
     public int option2;
     public int option3;
 
-    public int xoffset_one;//x轴偏移量
-    public int xoffset_two;
-    public int xoffset_three;
-    public boolean linkage;
+    public int x_offset_one;//x轴偏移量
+    public int x_offset_two;
+    public int x_offset_three;
+    public boolean linkage = true;
 
 
     //time picker
@@ -72,8 +67,7 @@ public class PickerOptions {
     public boolean isLunarCalendar = false;//是否显示农历
 
     public String label_year, label_month, label_day, label_hours, label_mins, label_seconds;//单位
-    public int xoffset_year, xoffset_month, xoffset_day, xoffset_hours, xoffset_mins, xoffset_seconds;//单位
-
+    public int x_offset_year, x_offset_month, x_offset_day, x_offset_hours, x_offset_minutes, x_offset_seconds;//单位
 
 
     public PickerOptions(int buildType) {
@@ -84,7 +78,12 @@ public class PickerOptions {
         }
     }
 
-    //******* 公有字段，抽取到BasePickerView里  ******//
+    //******* 公有字段  ******//
+    public int layoutRes;
+    public ViewGroup decorView;
+    public int textGravity = Gravity.CENTER;
+    public Context context;
+
     public String textContentConfirm;//确定按钮文字
     public String textContentCancel;//取消按钮文字
     public String textContentTitle;//标题文字
@@ -105,8 +104,7 @@ public class PickerOptions {
     public int dividerColor = 0xFFd5d5d5; //分割线的颜色
     public int backgroundId = -1; //显示时的外部背景色颜色,默认是灰色
 
-    // 条目间距倍数 默认1.6
-    public float lineSpacingMultiplier = 1.6f;
+    public float lineSpacingMultiplier = 1.6f; // 条目间距倍数 默认1.6
     public boolean isDialog;//是否是对话框模式
 
     public boolean cancelable = true;//是否能取消

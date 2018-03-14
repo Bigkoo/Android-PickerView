@@ -17,7 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
 import com.bigkoo.pickerview.R;
-import com.bigkoo.pickerview.constant.PickerOptions;
+import com.bigkoo.pickerview.configure.PickerOptions;
 import com.bigkoo.pickerview.listener.OnDismissListener;
 import com.bigkoo.pickerview.utils.PickerViewAnimateUtil;
 
@@ -32,13 +32,11 @@ public class BasePickerView {
 
     private Context context;
     protected ViewGroup contentContainer;
-    private ViewGroup decorView;//显示的根View,默认是activity的根view
     private ViewGroup rootView;//附加View 的 根View
     private ViewGroup dialogView;//附加Dialog 的 根View
 
 
     protected PickerOptions mPickerOptions;
-
     private OnDismissListener onDismissListener;
     private boolean dismissing;
 
@@ -83,11 +81,11 @@ public class BasePickerView {
         } else {
             //如果只是要显示在屏幕的下方
             //decorView是activity的根View
-            if (decorView == null) {
-                decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
+            if (mPickerOptions.decorView == null) {
+                mPickerOptions.decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
             }
             //将控件添加到decorView中
-            rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, decorView, false);
+            rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, mPickerOptions.decorView, false);
             rootView.setLayoutParams(new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
             ));
@@ -154,7 +152,7 @@ public class BasePickerView {
      * @param view 这个View
      */
     private void onAttached(View view) {
-        decorView.addView(view);
+        mPickerOptions.decorView.addView(view);
         if (isAnim) {
             contentContainer.startAnimation(inAnim);
         }
@@ -213,11 +211,11 @@ public class BasePickerView {
 
     public void dismissImmediately() {
 
-        decorView.post(new Runnable() {
+        mPickerOptions.decorView.post(new Runnable() {
             @Override
             public void run() {
                 //从根视图移除
-                decorView.removeView(rootView);
+                mPickerOptions.decorView.removeView(rootView);
                 isShowing = false;
                 dismissing = false;
                 if (onDismissListener != null) {
