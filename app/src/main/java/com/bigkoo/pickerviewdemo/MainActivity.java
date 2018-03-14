@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setLabel("", "", "", "", "", "")
                 .isCenterLabel(false)
                 .setDividerColor(Color.DKGRAY)
-                .setContentSize(21)
+                .setContentTextSize(21)
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
 //                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 /*.setType(TimePickerView.Type.ALL)//default is all
                 .setCancelText("Cancel")
                 .setSubmitText("Sure")
-                .setContentSize(18)
+                .setContentTextSize(18)
                 .setTitleSize(20)
                 .setTitleText("Title")
                 .setTitleColor(Color.BLACK)
@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         });
                     }
                 })
-                .setContentSize(18)
+                .setContentTextSize(18)
                 .setType(new boolean[]{false, false, false, true, true, true})
                 .setLabel("年", "月", "日", "时", "分", "秒")
                 .setLineSpacingMultiplier(1.2f)

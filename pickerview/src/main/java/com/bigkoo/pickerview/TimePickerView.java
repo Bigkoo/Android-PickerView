@@ -132,7 +132,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             return this;
         }
 
-        public Builder setContentSize(int textSizeContent) {
+        public Builder setContentTextSize(int textSizeContent) {
             mPickerOptions.textSizeContent = textSizeContent;
             return this;
         }

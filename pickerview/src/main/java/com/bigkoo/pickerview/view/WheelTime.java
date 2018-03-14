@@ -243,13 +243,11 @@ public class WheelTime {
         final List<String> list_big = Arrays.asList(months_big);
         final List<String> list_little = Arrays.asList(months_little);
 
-      /*  final Context context = view.getContext();*/
         currentYear = year;
         // 年
         wv_year = (WheelView) view.findViewById(R.id.year);
         wv_year.setAdapter(new NumericWheelAdapter(startYear, endYear));// 设置"年"的显示数据
-        /*wv_year.setLabel(context.getString(R.string.pickerview_year));// 添加文字*/
-        int yea = year - startYear;
+
 
         wv_year.setCurrentItem(year - startYear);// 初始化时显示的数据
         wv_year.setGravity(gravity);
@@ -270,8 +268,6 @@ public class WheelTime {
             wv_month.setAdapter(new NumericWheelAdapter(1, 12));
             wv_month.setCurrentItem(month);
         }
-     /*   wv_month.setLabel(context.getString(R.string.pickerview_month));*/
-
         wv_month.setGravity(gravity);
         // 日
         wv_day = (WheelView) view.findViewById(R.id.day);
@@ -369,25 +365,23 @@ public class WheelTime {
             wv_day.setCurrentItem(day - 1);
         }
 
-       /* wv_day.setLabel(context.getString(R.string.pickerview_day));*/
-
         wv_day.setGravity(gravity);
         //时
         wv_hours = (WheelView) view.findViewById(R.id.hour);
         wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
-      /*  wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字*/
+
         wv_hours.setCurrentItem(h);
         wv_hours.setGravity(gravity);
         //分
         wv_mins = (WheelView) view.findViewById(R.id.min);
         wv_mins.setAdapter(new NumericWheelAdapter(0, 59));
-       /* wv_mins.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字*/
+
         wv_mins.setCurrentItem(m);
         wv_mins.setGravity(gravity);
         //秒
         wv_seconds = (WheelView) view.findViewById(R.id.second);
         wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
-       /* wv_seconds.setLabel(context.getString(R.string.pickerview_seconds));// 添加文字*/
+
         wv_seconds.setCurrentItem(s);
         wv_seconds.setGravity(gravity);
 
@@ -461,9 +455,7 @@ public class WheelTime {
                     wv_month.setAdapter(new NumericWheelAdapter(1, 12));
                     //重新设置日
                     setReDay(year_num, wv_month.getCurrentItem() + 1, 1, 31, list_big, list_little);
-
                 }
-
             }
         };
         // 添加"月"监听
@@ -507,9 +499,7 @@ public class WheelTime {
                 } else {
                     //重新设置日
                     setReDay(currentYear, month_num, 1, 31, list_big, list_little);
-
                 }
-
 
             }
         };
