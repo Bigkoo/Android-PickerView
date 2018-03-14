@@ -26,15 +26,11 @@ import com.bigkoo.pickerview.utils.PickerViewAnimateUtil;
  * 精仿iOSPickerViewController控件
  */
 public class BasePickerView {
-    private final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM
-    );
 
     private Context context;
     protected ViewGroup contentContainer;
     private ViewGroup rootView;//附加View 的 根View
     private ViewGroup dialogView;//附加Dialog 的 根View
-
 
     protected PickerOptions mPickerOptions;
     private OnDismissListener onDismissListener;
@@ -46,7 +42,6 @@ public class BasePickerView {
 
     protected int animGravity = Gravity.BOTTOM;
 
-
     private Dialog mDialog;
     protected View clickView;//是通过哪个View弹出的
     private boolean isAnim = true;
@@ -57,18 +52,22 @@ public class BasePickerView {
 
 
     protected void initViews() {
+
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM);
+
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         if (isDialog()) {
             //如果是对话框模式
             dialogView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, null, false);
             //设置界面的背景为透明
             dialogView.setBackgroundColor(Color.TRANSPARENT);
-            //这个是真正要加载时间选取器的父布局
+            //这个是真正要加载选择器的父布局
             contentContainer = (ViewGroup) dialogView.findViewById(R.id.content_container);
-            //设置对话框 左右间距屏幕30
-            this.params.leftMargin = 30;
-            this.params.rightMargin = 30;
-            contentContainer.setLayoutParams(this.params);
+            //设置对话框 默认左右间距屏幕30
+            params.leftMargin = 30;
+            params.rightMargin = 30;
+            contentContainer.setLayoutParams(params);
             //创建对话框
             createDialog();
             //给背景设置点击事件,这样当点击内容以外的地方会关闭界面
@@ -80,15 +79,13 @@ public class BasePickerView {
             });
         } else {
             //如果只是要显示在屏幕的下方
-            //decorView是activity的根View
+            //decorView是activity的根View,包含 contentView 和 titleView
             if (mPickerOptions.decorView == null) {
-                mPickerOptions.decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
+                mPickerOptions.decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView();
             }
             //将控件添加到decorView中
             rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, mPickerOptions.decorView, false);
-            rootView.setLayoutParams(new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
-            ));
+            rootView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             if (mPickerOptions.backgroundId != -1) {
                 rootView.setBackgroundColor(mPickerOptions.backgroundId);
             }
@@ -263,8 +260,7 @@ public class BasePickerView {
     private View.OnKeyListener onKeyBackListener = new View.OnKeyListener() {
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event) {
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_DOWN
-                    && isShowing()) {
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_DOWN && isShowing()) {
                 dismiss();
                 return true;
             }
@@ -298,7 +294,7 @@ public class BasePickerView {
 
 
     /**
-     * Called when the user touch on black overlay in order to dismiss the dialog
+     * Called when the user touch on black overlay, in order to dismiss the dialog.
      */
     private final View.OnTouchListener onCancelableTouchListener = new View.OnTouchListener() {
         @Override
@@ -335,7 +331,6 @@ public class BasePickerView {
                 }
             });
         }
-
     }
 
     public void showDialog() {

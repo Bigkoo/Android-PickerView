@@ -468,6 +468,10 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     }
 
 
+    /**
+     *  目前暂时只支持设置1900 - 2100年
+     * @param lunar 农历的开关
+     */
     public void setLunarCalendar(boolean lunar) {
         try {
             int year, month, day, hours, minute, seconds;

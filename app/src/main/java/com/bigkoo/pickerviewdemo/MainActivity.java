@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -100,12 +101,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    /**
+     * 农历时间已扩展至 ： 1900 - 2100年
+     */
     private void initLunarPicker() {
         Calendar selectedDate = Calendar.getInstance();//系统当前时间
         Calendar startDate = Calendar.getInstance();
         startDate.set(2014, 1, 23);
         Calendar endDate = Calendar.getInstance();
-        endDate.set(2087, 2, 28);
+        endDate.set(2069, 2, 28);
         //时间选择器 ，自定义布局
         pvCustomLunar = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
@@ -141,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                                 pvCustomLunar.setLunarCalendar(!pvCustomLunar.isLunarCalendar());
                                 //自适应宽
-                                setTimePickerChildWeight(v, 0.8f, isChecked ? 1f : 1.1f);
+                                setTimePickerChildWeight(v, isChecked ? 0.8f : 1f, isChecked ? 1f : 1.1f);
                             }
                         });
 
@@ -201,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
 //                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
-                .setDecorView(null)
+//                .setDecorView(null)
                 .build();
     }
 
@@ -304,6 +309,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setCancelColor(Color.YELLOW)
                 .setSubmitColor(Color.YELLOW)
                 .setTextColorCenter(Color.LTGRAY)
+                .isRestoreItem(true)//切换时是否还原，设置默认选中第一项。
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setLabels("省", "市", "区")
                 .setBackgroundId(0x00000000) //设置外部遮罩颜色
@@ -367,6 +373,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         pvCustomOptions.setPicker(cardItem);//添加数据
 
+
     }
 
     private void initNoLinkOptionsPicker() {// 不联动的多级选项
@@ -386,7 +393,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
-        Log.d("getTime()","choice date millis: " + date.getTime());
+        Log.d("getTime()", "choice date millis: " + date.getTime());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(date);
     }

@@ -87,7 +87,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         /**
          * 显示时的外部背景色颜色,默认是灰色
          *
-         * @param backgroundId
+         * @param backgroundId  color res
          * @return
          */
         public Builder setBackgroundId(int backgroundId) {
@@ -96,10 +96,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         }
 
         /**
-         * 必须是viewgroup
-         * 设置要将pickerview显示到的容器
+         * ViewGroup 类型
+         * 设置PickerView的显示容器
          *
-         * @param decorView
+         * @param decorView  Parent View
          * @return
          */
         public Builder setDecorView(ViewGroup decorView) {
@@ -157,9 +157,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         }
 
         /**
-         * 设置间距倍数,但是只能在1.2-4.0f之间
+         * 设置Item 的间距倍数，用于控制 Item 高度间隔
          *
-         * @param lineSpacingMultiplier
+         * @param lineSpacingMultiplier  浮点型，1.2-4.0f 之间有效,超过则取极值。
          */
         public Builder setLineSpacingMultiplier(float lineSpacingMultiplier) {
             mPickerOptions.lineSpacingMultiplier = lineSpacingMultiplier;
@@ -167,9 +167,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         }
 
         /**
-         * 设置分割线的颜色
+         * Set item divider line type color.
          *
-         * @param dividerColor
+         * @param dividerColor color res.
          */
         public Builder setDividerColor(int dividerColor) {
             mPickerOptions.dividerColor = dividerColor;
@@ -177,9 +177,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         }
 
         /**
-         * 设置分割线的类型
+         * Set item divider line type.
          *
-         * @param dividerType
+         * @param dividerType enum Type {@link WheelView.DividerType}
          */
         public Builder setDividerType(WheelView.DividerType dividerType) {
             mPickerOptions.dividerType = dividerType;
@@ -187,9 +187,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         }
 
         /**
-         * 设置分割线之间的文字的颜色
+         * Set the textColor of selected item.
          *
-         * @param textColorCenter
+         * @param textColorCenter color res.
          */
         public Builder setTextColorCenter(int textColorCenter) {
             mPickerOptions.textColorCenter = textColorCenter;
@@ -197,9 +197,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         }
 
         /**
-         * 设置分割线以外文字的颜色
+         * Set the textColor of outside item
          *
-         * @param textColorOut
+         * @param textColorOut color res
          */
         public Builder setTextColorOut(int textColorOut) {
             mPickerOptions.textColorOut = textColorOut;
@@ -245,6 +245,16 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
         public Builder isCenterLabel(boolean isCenterLabel) {
             mPickerOptions.isCenterLabel = isCenterLabel;
+            return this;
+        }
+
+        /**
+         *  切换选项时，是否还原第一项
+         * @param isRestoreItem true：还原； false: 保持上一个选项
+         * @return Builder
+         */
+        public Builder isRestoreItem(boolean isRestoreItem) {
+            mPickerOptions.isRestoreItem = isRestoreItem;
             return this;
         }
 
@@ -298,7 +308,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         final LinearLayout optionsPicker = (LinearLayout) findViewById(R.id.optionspicker);
         optionsPicker.setBackgroundColor(mPickerOptions.bgColorWheel);
 
-        wheelOptions = new WheelOptions(optionsPicker, mPickerOptions.linkage);
+        wheelOptions = new WheelOptions(optionsPicker, mPickerOptions.linkage, mPickerOptions.isRestoreItem);
         wheelOptions.setTextContentSize(mPickerOptions.textSizeContent);
         wheelOptions.setLabels(mPickerOptions.label1, mPickerOptions.label2, mPickerOptions.label3);
         wheelOptions.setTextXOffset(mPickerOptions.x_offset_one, mPickerOptions.x_offset_two, mPickerOptions.x_offset_three);

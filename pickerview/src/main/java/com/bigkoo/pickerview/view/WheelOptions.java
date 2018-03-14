@@ -21,6 +21,7 @@ public class WheelOptions<T> {
     private List<List<List<T>>> mOptions3Items;
 
     private boolean linkage;
+    private boolean isRestoreItem; //切换时，还原第一项
     private OnItemSelectedListener wheelListener_option1;
     private OnItemSelectedListener wheelListener_option2;
 
@@ -42,8 +43,9 @@ public class WheelOptions<T> {
         this.view = view;
     }
 
-    public WheelOptions(View view, boolean linkage) {
+    public WheelOptions(View view, boolean linkage, boolean isRestoreItem) {
         super();
+        this.isRestoreItem = isRestoreItem;
         this.linkage = linkage;
         this.view = view;
         wv_option1 = (WheelView) view.findViewById(R.id.options1);// 初始化时显示的数据
@@ -92,10 +94,11 @@ public class WheelOptions<T> {
             public void onItemSelected(int index) {
                 int opt2Select = 0;
                 if (mOptions2Items != null) {
-                    opt2Select = wv_option2.getCurrentItem();//上一个opt2的选中位置
-                    //新opt2的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
-                    opt2Select = opt2Select >= mOptions2Items.get(index).size() - 1 ? mOptions2Items.get(index).size() - 1 : opt2Select;
-
+                    if (!isRestoreItem) {
+                        opt2Select = wv_option2.getCurrentItem();//上一个opt2的选中位置
+                        //新opt2的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
+                        opt2Select = opt2Select >= mOptions2Items.get(index).size() - 1 ? mOptions2Items.get(index).size() - 1 : opt2Select;
+                    }
                     wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(index)));
                     wv_option2.setCurrentItem(opt2Select);
                 }
@@ -112,10 +115,13 @@ public class WheelOptions<T> {
                     int opt1Select = wv_option1.getCurrentItem();
                     opt1Select = opt1Select >= mOptions3Items.size() - 1 ? mOptions3Items.size() - 1 : opt1Select;
                     index = index >= mOptions2Items.get(opt1Select).size() - 1 ? mOptions2Items.get(opt1Select).size() - 1 : index;
-                    int opt3 = wv_option3.getCurrentItem();//上一个opt3的选中位置
-                    //新opt3的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
-                    opt3 = opt3 >= mOptions3Items.get(opt1Select).get(index).size() - 1 ? mOptions3Items.get(opt1Select).get(index).size() - 1 : opt3;
-
+                    int opt3 = 0;
+                    if (!isRestoreItem) {
+                         // wv_option3.getCurrentItem() 上一个opt3的选中位置
+                        //新opt3的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
+                        opt3 = wv_option3.getCurrentItem() >= mOptions3Items.get(opt1Select).get(index).size() - 1 ?
+                                mOptions3Items.get(opt1Select).get(index).size() - 1 : wv_option3.getCurrentItem();
+                    }
                     wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(wv_option1.getCurrentItem()).get(index)));
                     wv_option3.setCurrentItem(opt3);
 

@@ -52,7 +52,7 @@ public class PickerOptions {
     public int x_offset_two;
     public int x_offset_three;
     public boolean linkage = true;
-
+    public boolean isRestoreItem = false; //切换时，还原第一项
 
     //time picker
     public boolean[] type = new boolean[]{true, true, true, true, true, true};//显示类型 默认全部显示
