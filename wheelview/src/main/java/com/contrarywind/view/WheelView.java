@@ -353,12 +353,8 @@ public class WheelView extends View {
             return;
         }
         //initPosition越界会造成preCurrentIndex的值不正确
-        if (initPosition < 0) {
-            initPosition = 0;
-        }
-        if (initPosition >= adapter.getItemsCount()) {
-            initPosition = adapter.getItemsCount() - 1;
-        }
+        initPosition = Math.min(Math.max(0, initPosition), adapter.getItemsCount() - 1);
+
         //可见的item数组
         @SuppressLint("DrawAllocation")
         Object visibles[] = new Object[itemsVisible];

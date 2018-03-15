@@ -87,7 +87,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         /**
          * 显示时的外部背景色颜色,默认是灰色
          *
-         * @param backgroundId  color res
+         * @param backgroundId  color resId.
          * @return
          */
         public Builder setBackgroundId(int backgroundId) {
@@ -99,7 +99,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
          * ViewGroup 类型
          * 设置PickerView的显示容器
          *
-         * @param decorView  Parent View
+         * @param decorView  Parent View.
          * @return
          */
         public Builder setDecorView(ViewGroup decorView) {
@@ -169,7 +169,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         /**
          * Set item divider line type color.
          *
-         * @param dividerColor color res.
+         * @param dividerColor color resId.
          */
         public Builder setDividerColor(int dividerColor) {
             mPickerOptions.dividerColor = dividerColor;
@@ -197,9 +197,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         }
 
         /**
-         * Set the textColor of outside item
+         * Set the textColor of outside item.
          *
-         * @param textColorOut color res
+         * @param textColorOut color resId.
          */
         public Builder setTextColorOut(int textColorOut) {
             mPickerOptions.textColorOut = textColorOut;
