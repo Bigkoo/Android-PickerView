@@ -1,5 +1,6 @@
 package com.bigkoo.pickerviewdemo;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,6 +45,7 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
         initView();
     }
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -190,5 +192,14 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
             mHandler.sendEmptyMessage(MSG_LOAD_FAILED);
         }
         return detail;
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
     }
 }

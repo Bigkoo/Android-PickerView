@@ -27,6 +27,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
     private Button btnShow;
     private TimePickerView pvTime;
     private FrameLayout mFrameLayout;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,10 +51,10 @@ public class TestFragment extends Fragment implements View.OnClickListener {
         Calendar selectedDate = Calendar.getInstance();
 
         Calendar startDate = Calendar.getInstance();
-        startDate.set(2013,0,23);
+        startDate.set(2013, 0, 23);
 
         Calendar endDate = Calendar.getInstance();
-        endDate.set(2019,11,28);
+        endDate.set(2019, 11, 28);
         //时间选择器
         pvTime = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
             @Override
@@ -90,7 +91,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
                 .setDividerColor(Color.DKGRAY)
                 .setContentTextSize(20)
                 .setDate(selectedDate)
-                .setRangDate(startDate,selectedDate)
+                .setRangDate(startDate, selectedDate)
                 .setDecorView(mFrameLayout)//非dialog模式下,设置ViewGroup, pickerView将会添加到这个ViewGroup中
                 .setBackgroundId(0x00000000)
                 .setOutSideCancelable(false)
@@ -101,7 +102,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        pvTime.show(v,false);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
+        pvTime.show(v, false);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
