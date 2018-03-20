@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerviewdemo.bean.JsonBean;
 import com.google.gson.Gson;
 
@@ -96,7 +98,7 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
 
     private void showPickerView() {// 弹出选择器
 
-        OptionsPickerView pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 //返回的分别是三个级别的选中位置

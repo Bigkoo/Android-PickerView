@@ -13,8 +13,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.CustomListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -53,7 +55,7 @@ public class TestFragment extends Fragment implements View.OnClickListener {
         Calendar endDate = Calendar.getInstance();
         endDate.set(2019,11,28);
         //时间选择器
-        pvTime = new TimePickerView.Builder(getActivity(), new TimePickerView.OnTimeSelectListener() {
+        pvTime = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
