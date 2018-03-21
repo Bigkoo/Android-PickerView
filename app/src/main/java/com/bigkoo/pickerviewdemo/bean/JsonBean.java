@@ -1,6 +1,7 @@
 package com.bigkoo.pickerviewdemo.bean;
 
-import com.bigkoo.pickerview.model.IPickerViewData;
+
+import com.contrarywind.interfaces.IPickerViewData;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @date: 2017/3/16 15:36
  */
 
-public class JsonBean  implements IPickerViewData{
+public class JsonBean implements IPickerViewData {
 
 
     /**
@@ -45,7 +46,6 @@ public class JsonBean  implements IPickerViewData{
     public String getPickerViewText() {
         return this.name;
     }
-
 
 
     public static class CityBean {

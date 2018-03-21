@@ -1,5 +1,7 @@
 package com.bigkoo.pickerview.adapter;
 
+import com.contrarywind.adapter.WheelAdapter;
+
 import java.util.List;
 
 /**
@@ -8,32 +10,19 @@ import java.util.List;
  */
 public class ArrayWheelAdapter<T> implements WheelAdapter {
 	
-	/** The default items length */
-	public static final int DEFAULT_LENGTH = 4;
-	
+
 	// items
 	private List<T> items;
-	// length
-	private int length;
 
 	/**
 	 * Constructor
 	 * @param items the items
-	 * @param length the max items length
-	 */
-	public ArrayWheelAdapter(List<T> items, int length) {
-		this.items = items;
-		this.length = length;
-	}
-	
-	/**
-	 * Contructor
-	 * @param items the items
 	 */
 	public ArrayWheelAdapter(List<T> items) {
-		this(items, DEFAULT_LENGTH);
-	}
+		this.items = items;
 
+	}
+	
 	@Override
 	public Object getItem(int index) {
 		if (index >= 0 && index < items.size()) {

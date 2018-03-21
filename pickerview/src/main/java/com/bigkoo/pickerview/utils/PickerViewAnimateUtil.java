@@ -12,7 +12,7 @@ public class PickerViewAnimateUtil {
     /**
      * Get default animation resource when not defined by the user
      *
-     * @param gravity       the gravity of the dialog
+     * @param gravity       the animGravity of the dialog
      * @param isInAnimation determine if is in or out animation. true when is is
      * @return the id of the animation resource
      */

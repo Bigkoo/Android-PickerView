@@ -1,6 +1,7 @@
 package com.bigkoo.pickerviewdemo.bean;
 
-import com.bigkoo.pickerview.model.IPickerViewData;
+
+import com.contrarywind.interfaces.IPickerViewData;
 
 /**
  * Created by Sai on 15/11/22.
