@@ -5,6 +5,7 @@ import android.view.View;
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
 import com.bigkoo.pickerview.adapter.NumericWheelAdapter;
+import com.bigkoo.pickerview.listener.ISelectTimeCallback;
 import com.bigkoo.pickerview.utils.ChinaDate;
 import com.bigkoo.pickerview.utils.LunarCalendar;
 import com.contrarywind.listener.OnItemSelectedListener;
@@ -54,7 +55,7 @@ public class WheelTime {
     private float lineSpacingMultiplier;
     private WheelView.DividerType dividerType;
     private boolean isLunarCalendar = false;
-
+    private ISelectTimeCallback mSelectChangeCallback;
 
     public WheelTime(View view, boolean[] type, int gravity, int textSize) {
         super();
@@ -66,11 +67,11 @@ public class WheelTime {
     }
 
 
-    public void setLunarCalendar(boolean isLunarCalendar) {
+    public void setLunarMode(boolean isLunarCalendar) {
         this.isLunarCalendar = isLunarCalendar;
     }
 
-    public boolean isLunarCalendar() {
+    public boolean isLunarMode() {
         return isLunarCalendar;
     }
 
@@ -143,7 +144,7 @@ public class WheelTime {
         wv_seconds.setGravity(gravity);
 
         // 添加"年"监听
-        OnItemSelectedListener wheelListener_year = new OnItemSelectedListener() {
+        wv_year.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
                 int year_num = index + startYear;
@@ -172,10 +173,15 @@ public class WheelTime {
                 if (wv_day.getCurrentItem() > maxItem - 1) {
                     wv_day.setCurrentItem(maxItem - 1);
                 }
+
+                if (mSelectChangeCallback != null) {
+                    mSelectChangeCallback.onTimeSelectChanged();
+                }
             }
-        };
+        });
+
         // 添加"月"监听
-        OnItemSelectedListener wheelListener_month = new OnItemSelectedListener() {
+        wv_month.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
                 int month_num = index;
@@ -198,11 +204,16 @@ public class WheelTime {
                     wv_day.setCurrentItem(maxItem - 1);
                 }
 
+                if (mSelectChangeCallback != null) {
+                    mSelectChangeCallback.onTimeSelectChanged();
+                }
             }
-        };
-        wv_year.setOnItemSelectedListener(wheelListener_year);
-        wv_month.setOnItemSelectedListener(wheelListener_month);
+        });
 
+        setChangedListener(wv_day);
+        setChangedListener(wv_hours);
+        setChangedListener(wv_minutes);
+        setChangedListener(wv_seconds);
 
         if (type.length != 6) {
             throw new RuntimeException("type[] length is not 6");
@@ -377,7 +388,7 @@ public class WheelTime {
         wv_seconds.setGravity(gravity);
 
         // 添加"年"监听
-        OnItemSelectedListener wheelListener_year = new OnItemSelectedListener() {
+        wv_year.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
                 int year_num = index + startYear;
@@ -447,10 +458,16 @@ public class WheelTime {
                     //重新设置日
                     setReDay(year_num, wv_month.getCurrentItem() + 1, 1, 31, list_big, list_little);
                 }
+
+                if (mSelectChangeCallback != null) {
+                    mSelectChangeCallback.onTimeSelectChanged();
+                }
             }
-        };
+        });
+
+
         // 添加"月"监听
-        OnItemSelectedListener wheelListener_month = new OnItemSelectedListener() {
+        wv_month.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
                 int month_num = index + 1;
@@ -492,13 +509,20 @@ public class WheelTime {
                     setReDay(currentYear, month_num, 1, 31, list_big, list_little);
                 }
 
+                if (mSelectChangeCallback != null) {
+                    mSelectChangeCallback.onTimeSelectChanged();
+                }
             }
-        };
-        wv_year.setOnItemSelectedListener(wheelListener_year);
-        wv_month.setOnItemSelectedListener(wheelListener_month);
+        });
+
+        setChangedListener(wv_day);
+        setChangedListener(wv_hours);
+        setChangedListener(wv_minutes);
+        setChangedListener(wv_seconds);
+
         if (type.length != 6) {
             throw new IllegalArgumentException("type[] length is not 6");
-    }
+        }
         wv_year.setVisibility(type[0] ? View.VISIBLE : View.GONE);
         wv_month.setVisibility(type[1] ? View.VISIBLE : View.GONE);
         wv_day.setVisibility(type[2] ? View.VISIBLE : View.GONE);
@@ -506,6 +530,18 @@ public class WheelTime {
         wv_minutes.setVisibility(type[4] ? View.VISIBLE : View.GONE);
         wv_seconds.setVisibility(type[5] ? View.VISIBLE : View.GONE);
         setContentTextSize();
+    }
+
+    private void setChangedListener(WheelView wheelView) {
+        if (mSelectChangeCallback != null) {
+            wheelView.setOnItemSelectedListener(new OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(int index) {
+                    mSelectChangeCallback.onTimeSelectChanged();
+                }
+            });
+        }
+
     }
 
 
@@ -881,5 +917,9 @@ public class WheelTime {
         wv_hours.isCenterLabel(isCenterLabel);
         wv_minutes.isCenterLabel(isCenterLabel);
         wv_seconds.isCenterLabel(isCenterLabel);
+    }
+
+    public void setSelectChangeCallback(ISelectTimeCallback mSelectChangeCallback) {
+        this.mSelectChangeCallback = mSelectChangeCallback;
     }
 }

@@ -27,20 +27,23 @@ public class TimePickerBuilder {
         mPickerOptions.timeSelectListener = listener;
     }
 
-    public TimePickerBuilder(Context context, OnTimeSelectChangeListener listener) {
-        mPickerOptions = new PickerOptions(PickerOptions.TYPE_PICKER_TIME);
-        mPickerOptions.context = context;
-        mPickerOptions.timeSelectChangeListener = listener;
-    }
-
     //Option
-    public TimePickerBuilder setType(boolean[] type) {
-        mPickerOptions.type = type;
+    public TimePickerBuilder setGravity(int gravity) {
+        mPickerOptions.textGravity = gravity;
         return this;
     }
 
-    public TimePickerBuilder setGravity(int gravity) {
-        mPickerOptions.textGravity = gravity;
+
+    /**
+     *  new boolean[]{true, true, true, false, false, false}
+     *  control the "year","month","day","hours","minutes","seconds " display or hide.
+     *  分别控制“年”“月”“日”“时”“分”“秒”的显示或隐藏。
+     *
+     * @param type 布尔型数组，长度需要设置为6。
+     * @return TimePickerBuilder
+     */
+    public TimePickerBuilder setType(boolean[] type) {
+        mPickerOptions.type = type;
         return this;
     }
 

@@ -96,7 +96,7 @@ public class BasePickerView {
         setKeyBackCancelable(true);
     }
 
-    protected void init() {
+    protected void initAnim() {
         inAnim = getInAnimation();
         outAnim = getOutAnimation();
     }

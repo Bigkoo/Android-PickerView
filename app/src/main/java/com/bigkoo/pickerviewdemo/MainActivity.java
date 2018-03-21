@@ -19,6 +19,7 @@ import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
@@ -105,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             pvCustomLunar.show();
         }
     }
-
 
     /**
      * 农历时间已扩展至 ： 1900 - 2100年
@@ -220,9 +220,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
-
+                Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
             }
-        }).build();
+        })
+                .setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
+                    @Override
+                    public void onTimeSelectChanged(Date date) {
+                        Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setType(new boolean[]{true, true, true, true, true, true})
+                .build();
 
     }
 
@@ -333,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
                     @Override
                     public void onOptionsSelectChanged(int options1, int options2, int options3) {
-                        String str ="options1: "+ options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
+                        String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
                         Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -416,7 +424,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
                     @Override
                     public void onOptionsSelectChanged(int options1, int options2, int options3) {
-                        String str ="options1: "+ options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
+                        String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
                         Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
                     }
                 })
