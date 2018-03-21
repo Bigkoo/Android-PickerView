@@ -97,6 +97,17 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions.isCenterLabel(mPickerOptions.isCenterLabel);
     }
 
+    /**
+     * 动态设置标题
+     *
+     * @param text 标题文本内容
+     */
+    public void setTitleText(String text) {
+        TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+        if (tvTitle != null) {
+            tvTitle.setText(text);
+        }
+    }
 
     /**
      * 设置默认选中项

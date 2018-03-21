@@ -234,6 +234,17 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         }
     }
 
+    /**
+     * 动态设置标题
+     *
+     * @param text 标题文本内容
+     */
+    public void setTitleText(String text) {
+        TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+        if (tvTitle != null) {
+            tvTitle.setText(text);
+        }
+    }
 
     /**
      * 目前暂时只支持设置1900 - 2100年
