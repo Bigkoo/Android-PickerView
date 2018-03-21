@@ -44,7 +44,7 @@ public class WheelTime {
     private int endDay = DEFAULT_END_DAY; //表示31天的
     private int currentYear;
 
-    private int textSize = 18;
+    private int textSize;
 
     //文字的颜色和分割线的颜色
     private int textColorOut;
@@ -52,17 +52,9 @@ public class WheelTime {
     private int dividerColor;
 
     private float lineSpacingMultiplier;
-
     private WheelView.DividerType dividerType;
-
     private boolean isLunarCalendar = false;
 
-    public WheelTime(View view) {
-        super();
-        this.view = view;
-        type = new boolean[]{true, true, true, true, true, true};
-        setView(view);
-    }
 
     public WheelTime(View view, boolean[] type, int gravity, int textSize) {
         super();
