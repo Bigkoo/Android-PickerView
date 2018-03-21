@@ -82,15 +82,17 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         optionsPicker.setBackgroundColor(mPickerOptions.bgColorWheel);
 
         wheelOptions = new WheelOptions(optionsPicker, mPickerOptions.linkage, mPickerOptions.isRestoreItem);
+        if (mPickerOptions.optionsSelectChangeListener != null) {
+            wheelOptions.setOptionsSelectChangeListener(mPickerOptions.optionsSelectChangeListener);
+        }
+
         wheelOptions.setTextContentSize(mPickerOptions.textSizeContent);
         wheelOptions.setLabels(mPickerOptions.label1, mPickerOptions.label2, mPickerOptions.label3);
         wheelOptions.setTextXOffset(mPickerOptions.x_offset_one, mPickerOptions.x_offset_two, mPickerOptions.x_offset_three);
-
         wheelOptions.setCyclic(mPickerOptions.cyclic1, mPickerOptions.cyclic2, mPickerOptions.cyclic3);
         wheelOptions.setTypeface(mPickerOptions.font);
 
         setOutSideCancelable(mPickerOptions.cancelable);
-
 
         wheelOptions.setDividerColor(mPickerOptions.dividerColor);
         wheelOptions.setDividerType(mPickerOptions.dividerType);

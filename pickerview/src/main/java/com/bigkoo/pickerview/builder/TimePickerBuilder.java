@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 import com.bigkoo.pickerview.configure.PickerOptions;
+import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
@@ -24,6 +25,12 @@ public class TimePickerBuilder {
         mPickerOptions = new PickerOptions(PickerOptions.TYPE_PICKER_TIME);
         mPickerOptions.context = context;
         mPickerOptions.timeSelectListener = listener;
+    }
+
+    public TimePickerBuilder(Context context, OnTimeSelectChangeListener listener) {
+        mPickerOptions = new PickerOptions(PickerOptions.TYPE_PICKER_TIME);
+        mPickerOptions.context = context;
+        mPickerOptions.timeSelectChangeListener = listener;
     }
 
     //Option
@@ -252,6 +259,15 @@ public class TimePickerBuilder {
         return this;
     }
 
+    /**
+     *
+     * @param listener 切换item项滚动停止时，实时回调监听。
+     * @return
+     */
+    public TimePickerBuilder setTimeSelectChangeListener(OnTimeSelectChangeListener listener) {
+        mPickerOptions.timeSelectChangeListener = listener;
+        return this;
+    }
 
     public TimePickerView build() {
         return new TimePickerView(mPickerOptions);

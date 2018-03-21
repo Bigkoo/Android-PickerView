@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.bigkoo.pickerview.configure.PickerOptions;
 import com.bigkoo.pickerview.listener.CustomListener;
+import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.contrarywind.view.WheelView;
@@ -232,6 +233,17 @@ public class OptionsPickerBuilder {
         mPickerOptions.isRestoreItem = isRestoreItem;
         return this;
     }
+
+    /**
+     *
+     * @param listener 切换item项滚动停止时，实时回调监听。
+     * @return
+     */
+    public OptionsPickerBuilder setOptionsSelectChangeListener(OnOptionsSelectChangeListener listener) {
+        mPickerOptions.optionsSelectChangeListener = listener;
+        return this;
+    }
+
 
     public OptionsPickerView build() {
         return new OptionsPickerView(mPickerOptions);

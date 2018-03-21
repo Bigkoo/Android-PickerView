@@ -498,7 +498,7 @@ public class WheelTime {
         wv_month.setOnItemSelectedListener(wheelListener_month);
         if (type.length != 6) {
             throw new IllegalArgumentException("type[] length is not 6");
-        }
+    }
         wv_year.setVisibility(type[0] ? View.VISIBLE : View.GONE);
         wv_month.setVisibility(type[1] ? View.VISIBLE : View.GONE);
         wv_day.setVisibility(type[2] ? View.VISIBLE : View.GONE);

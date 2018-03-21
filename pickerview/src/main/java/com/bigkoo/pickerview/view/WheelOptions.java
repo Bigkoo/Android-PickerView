@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
+import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.contrarywind.listener.OnItemSelectedListener;
 import com.contrarywind.view.WheelView;
 
@@ -24,6 +25,8 @@ public class WheelOptions<T> {
     private boolean isRestoreItem; //切换时，还原第一项
     private OnItemSelectedListener wheelListener_option1;
     private OnItemSelectedListener wheelListener_option2;
+
+    private OnOptionsSelectChangeListener optionsSelectChangeListener;
 
     //文字的颜色和分割线的颜色
     private int textColorOut;
@@ -67,7 +70,7 @@ public class WheelOptions<T> {
         // 选项2
         if (mOptions2Items != null)
             wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(0)));// 设置显示数据
-        wv_option2.setCurrentItem(wv_option1.getCurrentItem());// 初始化时显示的数据
+        wv_option2.setCurrentItem(wv_option2.getCurrentItem());// 初始化时显示的数据
         // 选项3
         if (mOptions3Items != null)
             wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(0).get(0)));// 设置显示数据
@@ -93,7 +96,11 @@ public class WheelOptions<T> {
             @Override
             public void onItemSelected(int index) {
                 int opt2Select = 0;
-                if (mOptions2Items != null) {
+                if (mOptions2Items == null) {//只有1级联动数据
+                    if (optionsSelectChangeListener != null) {
+                        optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), 0, 0);
+                    }
+                } else {
                     if (!isRestoreItem) {
                         opt2Select = wv_option2.getCurrentItem();//上一个opt2的选中位置
                         //新opt2的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
@@ -101,12 +108,18 @@ public class WheelOptions<T> {
                     }
                     wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(index)));
                     wv_option2.setCurrentItem(opt2Select);
-                }
-                if (mOptions3Items != null) {
-                    wheelListener_option2.onItemSelected(opt2Select);
+
+                    if (mOptions3Items != null) {
+                        wheelListener_option2.onItemSelected(opt2Select);
+                    } else {//只有2级联动数据，滑动第1项回调
+                        if (optionsSelectChangeListener != null) {
+                            optionsSelectChangeListener.onOptionsSelectChanged(index, opt2Select, 0);
+                        }
+                    }
                 }
             }
         };
+
         wheelListener_option2 = new OnItemSelectedListener() {
 
             @Override
@@ -117,7 +130,7 @@ public class WheelOptions<T> {
                     index = index >= mOptions2Items.get(opt1Select).size() - 1 ? mOptions2Items.get(opt1Select).size() - 1 : index;
                     int opt3 = 0;
                     if (!isRestoreItem) {
-                         // wv_option3.getCurrentItem() 上一个opt3的选中位置
+                        // wv_option3.getCurrentItem() 上一个opt3的选中位置
                         //新opt3的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
                         opt3 = wv_option3.getCurrentItem() >= mOptions3Items.get(opt1Select).get(index).size() - 1 ?
                                 mOptions3Items.get(opt1Select).get(index).size() - 1 : wv_option3.getCurrentItem();
@@ -125,15 +138,30 @@ public class WheelOptions<T> {
                     wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(wv_option1.getCurrentItem()).get(index)));
                     wv_option3.setCurrentItem(opt3);
 
+                    //3级联动数据实时回调
+                    if (optionsSelectChangeListener != null)
+                        optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), index, opt3);
+                } else {//只有2级联动数据，滑动第2项回调
+                    if (optionsSelectChangeListener != null) {
+                        optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), index, 0);
+                    }
                 }
             }
         };
 
         // 添加联动监听
-        if (options2Items != null && linkage)
+        if (options1Items != null && linkage)
             wv_option1.setOnItemSelectedListener(wheelListener_option1);
-        if (options3Items != null && linkage)
+        if (options2Items != null && linkage)
             wv_option2.setOnItemSelectedListener(wheelListener_option2);
+        if (options3Items != null && linkage && optionsSelectChangeListener != null) {
+            wv_option3.setOnItemSelectedListener(new OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(int index) {
+                    optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), wv_option2.getCurrentItem(), index);
+                }
+            });
+        }
     }
 
 
@@ -146,7 +174,7 @@ public class WheelOptions<T> {
         // 选项2
         if (options2Items != null)
             wv_option2.setAdapter(new ArrayWheelAdapter(options2Items));// 设置显示数据
-        wv_option2.setCurrentItem(wv_option1.getCurrentItem());// 初始化时显示的数据
+        wv_option2.setCurrentItem(wv_option2.getCurrentItem());// 初始化时显示的数据
         // 选项3
         if (options3Items != null)
             wv_option3.setAdapter(new ArrayWheelAdapter(options3Items));// 设置显示数据
@@ -155,18 +183,42 @@ public class WheelOptions<T> {
         wv_option2.setIsOptions(true);
         wv_option3.setIsOptions(true);
 
+        if (optionsSelectChangeListener != null) {
+            wv_option1.setOnItemSelectedListener(new OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(int index) {
+                    optionsSelectChangeListener.onOptionsSelectChanged(index, wv_option2.getCurrentItem(), wv_option3.getCurrentItem());
+                }
+            });
+        }
+
         if (options2Items == null) {
             wv_option2.setVisibility(View.GONE);
         } else {
             wv_option2.setVisibility(View.VISIBLE);
+            if (optionsSelectChangeListener != null) {
+                wv_option2.setOnItemSelectedListener(new OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(int index) {
+                        optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), index, wv_option3.getCurrentItem());
+                    }
+                });
+            }
         }
         if (options3Items == null) {
             wv_option3.setVisibility(View.GONE);
         } else {
             wv_option3.setVisibility(View.VISIBLE);
+            if (optionsSelectChangeListener != null) {
+                wv_option3.setOnItemSelectedListener(new OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(int index) {
+                        optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), wv_option2.getCurrentItem(), index);
+                    }
+                });
+            }
         }
     }
-
 
     public void setTextContentSize(int textSize) {
         wv_option1.setTextSize(textSize);
@@ -178,14 +230,12 @@ public class WheelOptions<T> {
         wv_option1.setTextColorOut(textColorOut);
         wv_option2.setTextColorOut(textColorOut);
         wv_option3.setTextColorOut(textColorOut);
-
     }
 
     private void setTextColorCenter() {
         wv_option1.setTextColorCenter(textColorCenter);
         wv_option2.setTextColorCenter(textColorCenter);
         wv_option3.setTextColorCenter(textColorCenter);
-
     }
 
     private void setDividerColor() {
@@ -375,6 +425,10 @@ public class WheelOptions<T> {
         wv_option1.isCenterLabel(isCenterLabel);
         wv_option2.isCenterLabel(isCenterLabel);
         wv_option3.isCenterLabel(isCenterLabel);
+    }
+
+    public void setOptionsSelectChangeListener(OnOptionsSelectChangeListener optionsSelectChangeListener) {
+        this.optionsSelectChangeListener = optionsSelectChangeListener;
     }
 
 }

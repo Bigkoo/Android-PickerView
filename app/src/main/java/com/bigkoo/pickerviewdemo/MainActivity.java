@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
@@ -329,9 +330,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setLabels("省", "市", "区")
                 .setBackgroundId(0x00000000) //设置外部遮罩颜色
+                .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
+                    @Override
+                    public void onOptionsSelectChanged(int options1, int options2, int options3) {
+                        String str ="options1: "+ options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
+                        Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
+                    }
+                })
                 .build();
 
-        //pvOptions.setSelectOptions(1,1);
+//        pvOptions.setSelectOptions(1,1);
         /*pvOptions.setPicker(options1Items);//一级选择器*/
         pvOptions.setPicker(options1Items, options2Items);//二级选择器
         /*pvOptions.setPicker(options1Items, options2Items,options3Items);//三级选择器*/
@@ -404,8 +412,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
             }
-        }).build();
+        })
+                .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
+                    @Override
+                    public void onOptionsSelectChanged(int options1, int options2, int options3) {
+                        String str ="options1: "+ options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
+                        Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .build();
         pvNoLinkOptions.setNPicker(food, clothes, computer);
+
+
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
