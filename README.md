@@ -74,7 +74,9 @@
 
 </br>
 
-### **使用步骤：**
+### **如何使用：**
+
+#### Android-PickerView 库使用示例：
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
@@ -91,6 +93,7 @@ compile 'com.contrarywind:Android-PickerView:4.0.1'
 <type>pom</type>
 </dependency>
 ```
+
 #### 2.在项目中添加如下代码：
 
 ```java
@@ -246,9 +249,46 @@ pvOptions = new  OptionsPickerBuilder(this, new OptionsPickerView.OnOptionsSelec
         pvCustomOptions.setPicker(cardItem);//添加数据
 ```
 
-#### 5.对使用还有疑问的话，可参考Demo代码
+#### 5.对使用还有疑问的话，可参考demo代码
 [请戳我查看demo代码](https://github.com/Bigkoo/Android-PickerView/blob/master/app/src/main/java/com/bigkoo/pickerviewdemo/MainActivity.java)
 
+
+
+#### 6.若只需要WheelView基础控件自行扩展实现逻辑，可直接添加基础控件库，Gradle 依赖：
+ 
+```java
+compile 'com.contrarywind:wheelview:4.0.1'
+```
+
+#### WheelView 使用代码示例：
+
+xml布局：
+```xml
+ <com.contrarywind.view.WheelView
+            android:id="@+id/wheelview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+```
+
+Java 代码：
+```java
+WheelView wheelView = findViewById(R.id.wheelview);
+
+        wheelView.setCyclic(false);
+
+        final List<String> mOptionsItems = new ArrayList<>();
+        mOptionsItems.add("item0");
+        mOptionsItems.add("item1");
+        mOptionsItems.add("item2");
+  
+        wheelView.setAdapter(new ArrayWheelAdapter(mOptionsItems));
+        wheelView.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int index) {
+                Toast.makeText(MainActivity.this, "" + mOptionsItems.get(index), Toast.LENGTH_SHORT).show();
+            }
+        });
+```
 
 
 ### 效果图（招行信用卡的“掌上生活”里面条件选择器他们用的就是我这个库，大家可以当实际项目参考）
