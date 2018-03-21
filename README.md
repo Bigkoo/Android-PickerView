@@ -9,7 +9,8 @@
 ### [English Document](https://github.com/Bigkoo/Android-PickerView/blob/master/README-en.md)
 </br>
 
-#### 更多详请及注意事项，请查看 [Wiki文档](https://github.com/Bigkoo/Android-PickerView/wiki)
+### 更多详请及注意事项，请查看 [Wiki文档](https://github.com/Bigkoo/Android-PickerView/wiki)
+Wiki文档，Wiki文档，Wiki文档 ~ 重要的事情说三遍 ~
 
 #### 对于使用上有任何疑问或优化建议等，欢迎加入QQ群讨论交流技术问题。
 
