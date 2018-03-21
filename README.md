@@ -36,6 +36,7 @@
 * Item的文字长度过长时，文字会自适应缩放到Item的长度，避免显示不完全的问题
 * 支持Dialog 模式。
 * 支持自定义设置容器。
+* 实时回调。
 
 
 ![TimePicker.gif](https://github.com/Bigkoo/Android-PickerView/blob/master/preview/timepicker.gif)
@@ -59,12 +60,14 @@
   startDate.set(2013,0,1);
   endDate.set(2020,11,1);
   
-#### V3.2.7版本更新说明（2017-11-15）
-* 修复dialog模式中，在build之后，重新设定cancelable不生效的问题。
-* 优化时间选择器，修复startYear= endYear时，滑动年份导致日期设置限制失效问题。
-* 新增X偏移量设定，优化视觉效果。
-* 新增农历模式。
-
+#### V4.0.1版本更新说明（2018-3-21）
+- [x] 优化项：WheelView 抽离成独立Module。
+- [x] 优化项：dialog 容器由contentView替换成DecorView，避免toolbar 没有被遮盖的问题。
+- [x] 新增功能：滑动停止时,实时回调当前选中项的数据）。
+- [x] 新增功能：切换选项还原第一项（可选配置）。
+- [x] BUG 修复：判断时间选择器起始终止的时间范围是否超过边界。
+- [x] 优化项：setLineSpacingMultiplier 取消1.2 -2.0倍的限制。改成1.0-4.0f。
+- [x] 优化项：代码重构优化。
 #### 更多历史版本详情，请查阅：[更新说明（3.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E%EF%BC%883.x%E7%89%88%E6%9C%AC%EF%BC%89) 
 
 #### 方法名与参数请查阅：[方法名与参数说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%96%B9%E6%B3%95%E5%90%8D%E4%B8%8E%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E%EF%BC%883.x%E7%89%88%E6%9C%AC%EF%BC%89)
@@ -75,7 +78,7 @@
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:3.2.7'
+compile 'com.contrarywind:Android-PickerView:4.0.1'
 ```
 或者
 
@@ -84,28 +87,25 @@ compile 'com.contrarywind:Android-PickerView:3.2.7'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>3.2.7</version>
+<version>4.0.1</version>
 <type>pom</type>
 </dependency>
 ```
-#### 2.在Activity中添加如下代码：
+#### 2.在项目中添加如下代码：
 
 ```java
 //时间选择器
-TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date,View v) {//选中事件回调
-                tvTime.setText(getTime(date));
-            }
-        })
-             .build();
- pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
- pvTime.show();
+TimePickerView pvTime = new TimePickerBuilder(MainActivity.this, new OnTimeSelectListener() {
+                           @Override
+                           public void onTimeSelect(Date date, View v) {
+                               Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
+                           }
+                       }).build();
 ```
 
 ```java
 //条件选择器
- OptionsPickerView pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+ OptionsPickerView pvOptions = new OptionsPickerBuilder(MainActivity.this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3 ,View v) {
                 //返回的分别是三个级别的选中位置
@@ -132,7 +132,7 @@ TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTi
   startDate.set(2013,0,1);
   endDate.set(2020,11,31);
 
- pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+ pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date,View v) {//选中事件回调
                 tvTime.setText(getTime(date));
@@ -160,7 +160,7 @@ TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTi
 ```
 
 ```java
-pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+pvOptions = new  OptionsPickerBuilder(this, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3 ,View v) {
                 //返回的分别是三个级别的选中位置
@@ -169,7 +169,13 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
                         + options3Items.get(options1).get(option2).get(options3).getPickerViewText();
                 tvOptions.setText(tx);
             }
-        })
+        }) .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
+                              @Override
+                              public void onOptionsSelectChanged(int options1, int options2, int options3) {
+                                  String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
+                                  Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
+                              }
+                          })
                 .setSubmitText("确定")//确定按钮文字
                 .setCancelText("取消")//取消按钮文字
                 .setTitleText("城市选择")//标题
@@ -188,6 +194,7 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
                 .setSelectOptions(1, 1, 1)  //设置默认选中项
                 .setOutSideCancelable(false)//点击外部dismiss default true
                 .isDialog(true)//是否显示为对话框样式
+                .isRestoreItem(true)//切换时是否还原，设置默认选中第一项。
                 .build();
 
         pvOptions.setPicker(options1Items, options2Items, options3Items);//添加数据源
@@ -197,7 +204,7 @@ pvOptions = new  OptionsPickerView.Builder(this, new OptionsPickerView.OnOptions
 ```java
         // 注意：自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针
         // 具体可参考demo 里面的两个自定义布局
-        pvCustomOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+        pvCustomOptions = new OptionsPickerBuilder(this, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
