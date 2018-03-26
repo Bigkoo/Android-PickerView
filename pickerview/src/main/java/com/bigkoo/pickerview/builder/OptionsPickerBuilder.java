@@ -134,7 +134,7 @@ public class OptionsPickerBuilder {
     /**
      * 设置Item 的间距倍数，用于控制 Item 高度间隔
      *
-     * @param lineSpacingMultiplier 浮点型，1.2-4.0f 之间有效,超过则取极值。
+     * @param lineSpacingMultiplier 浮点型，1.0-4.0f 之间有效,超过则取极值。
      */
     public OptionsPickerBuilder setLineSpacingMultiplier(float lineSpacingMultiplier) {
         mPickerOptions.lineSpacingMultiplier = lineSpacingMultiplier;
