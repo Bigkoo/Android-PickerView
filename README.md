@@ -61,14 +61,13 @@ Wiki文档，Wiki文档，Wiki文档 ~ 重要的事情说三遍 ~
   startDate.set(2013,0,1);
   endDate.set(2020,11,1);
   
-#### V4.0.1版本更新说明（2018-3-21）
-- [x] 优化项：WheelView 抽离成独立Module。
-- [x] 优化项：dialog 容器由contentView替换成DecorView，避免toolbar 没有被遮盖的问题。
-- [x] 新增功能：滑动停止时,实时回调当前选中项的数据）。
-- [x] 新增功能：切换选项还原第一项（可选配置）。
-- [x] BUG 修复：判断时间选择器起始终止的时间范围是否超过边界。
-- [x] 优化项：setLineSpacingMultiplier 取消1.2 -2.0倍的限制。改成1.0-4.0f。
-- [x] 优化项：代码重构优化。
+#### V4.0.2版本更新说明（2018-3-26）
+- 新增setTitleText方法，动态设置标题。
+
+- BUG修复，修复OptionsPickerBuilder 中 setSubmitText方法赋值错误问题。
+
+- 优化 kotlin 中，OptionsPickerBuilder build 方法泛型转换。
+
 #### 更多历史版本详情，请查阅：[更新说明（3.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E%EF%BC%883.x%E7%89%88%E6%9C%AC%EF%BC%89) 
 
 #### 方法名与参数请查阅：[方法名与参数说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%96%B9%E6%B3%95%E5%90%8D%E4%B8%8E%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E%EF%BC%883.x%E7%89%88%E6%9C%AC%EF%BC%89)
@@ -81,7 +80,7 @@ Wiki文档，Wiki文档，Wiki文档 ~ 重要的事情说三遍 ~
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:4.0.1'
+compile 'com.contrarywind:Android-PickerView:4.0.2'
 ```
 或者
 
@@ -90,7 +89,7 @@ compile 'com.contrarywind:Android-PickerView:4.0.1'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>4.0.1</version>
+<version>4.0.2</version>
 <type>pom</type>
 </dependency>
 ```

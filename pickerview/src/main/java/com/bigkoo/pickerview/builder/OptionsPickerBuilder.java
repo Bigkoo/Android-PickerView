@@ -235,7 +235,6 @@ public class OptionsPickerBuilder {
     }
 
     /**
-     *
      * @param listener 切换item项滚动停止时，实时回调监听。
      * @return
      */
@@ -245,7 +244,7 @@ public class OptionsPickerBuilder {
     }
 
 
-    public  <T> OptionsPickerView<T> build() {
+    public <T> OptionsPickerView<T> build() {
         return new OptionsPickerView<>(mPickerOptions);
     }
 }

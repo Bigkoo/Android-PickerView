@@ -35,9 +35,9 @@ public class TimePickerBuilder {
 
 
     /**
-     *  new boolean[]{true, true, true, false, false, false}
-     *  control the "year","month","day","hours","minutes","seconds " display or hide.
-     *  分别控制“年”“月”“日”“时”“分”“秒”的显示或隐藏。
+     * new boolean[]{true, true, true, false, false, false}
+     * control the "year","month","day","hours","minutes","seconds " display or hide.
+     * 分别控制“年”“月”“日”“时”“分”“秒”的显示或隐藏。
      *
      * @param type 布尔型数组，长度需要设置为6。
      * @return TimePickerBuilder
@@ -263,7 +263,6 @@ public class TimePickerBuilder {
     }
 
     /**
-     *
      * @param listener 切换item项滚动停止时，实时回调监听。
      * @return
      */
