@@ -29,8 +29,8 @@ public class OptionsPickerBuilder {
     }
 
     //Option
-    public OptionsPickerBuilder setSubmitText(String textContentCancel) {
-        mPickerOptions.textContentCancel = textContentCancel;
+    public OptionsPickerBuilder setSubmitText(String textContentConfirm) {
+        mPickerOptions.textContentConfirm = textContentConfirm;
         return this;
     }
 
@@ -245,7 +245,7 @@ public class OptionsPickerBuilder {
     }
 
 
-    public OptionsPickerView build() {
-        return new OptionsPickerView(mPickerOptions);
+    public  <T> OptionsPickerView<T> build() {
+        return new OptionsPickerView<>(mPickerOptions);
     }
 }
