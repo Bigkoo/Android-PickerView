@@ -61,7 +61,7 @@ Wiki文档，Wiki文档，Wiki文档 ~ 重要的事情说三遍 ~
   startDate.set(2013,0,1);
   endDate.set(2020,11,1);
   
-#### V4.0.2版本更新说明（2018-3-26）
+#### V4.1.0版本更新说明（2018-3-27）
 - 新增setTitleText方法，动态设置标题。
 
 - BUG修复，修复OptionsPickerBuilder 中 setSubmitText方法赋值错误问题。
@@ -80,7 +80,7 @@ Wiki文档，Wiki文档，Wiki文档 ~ 重要的事情说三遍 ~
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:4.0.2'
+compile 'com.contrarywind:Android-PickerView:4.1.0'
 ```
 或者
 
@@ -89,7 +89,7 @@ compile 'com.contrarywind:Android-PickerView:4.0.2'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>4.0.2</version>
+<version>4.1.0</version>
 <type>pom</type>
 </dependency>
 ```
