@@ -76,7 +76,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         final LinearLayout optionsPicker = (LinearLayout) findViewById(R.id.optionspicker);
         optionsPicker.setBackgroundColor(mPickerOptions.bgColorWheel);
 
-        wheelOptions = new WheelOptions(optionsPicker, mPickerOptions.linkage, mPickerOptions.isRestoreItem);
+        wheelOptions = new WheelOptions(optionsPicker, mPickerOptions.isRestoreItem);
         if (mPickerOptions.optionsSelectChangeListener != null) {
             wheelOptions.setOptionsSelectChangeListener(mPickerOptions.optionsSelectChangeListener);
         }
@@ -161,6 +161,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
                            List<T> options2Items,
                            List<T> options3Items) {
 
+        wheelOptions.setLinkage(false);
         wheelOptions.setNPicker(options1Items, options2Items, options3Items);
         reSetCurrentItems();
     }

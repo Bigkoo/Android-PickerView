@@ -50,7 +50,6 @@ public class PickerOptions {
     public boolean cyclic2 = false;
     public boolean cyclic3 = false;
 
-    public boolean linkage = true;
     public boolean isRestoreItem = false; //切换时，还原第一项
 
 

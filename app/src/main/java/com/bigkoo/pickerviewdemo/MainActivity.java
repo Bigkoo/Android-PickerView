@@ -221,12 +221,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTimeSelect(Date date, View v) {
                 Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
+                Log.i("pvTime", "onTimeSelect");
+
             }
         })
                 .setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
                     @Override
                     public void onTimeSelectChanged(Date date) {
-                        Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
+                        Log.i("pvTime", "onTimeSelectChanged");
                     }
                 })
                 .setType(new boolean[]{true, true, true, true, true, true})
@@ -428,8 +430,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
                     }
                 })
+                // .setSelectOptions(0, 1, 1)
                 .build();
         pvNoLinkOptions.setNPicker(food, clothes, computer);
+        pvNoLinkOptions.setSelectOptions(0, 1, 1);
 
 
     }

@@ -21,7 +21,7 @@ public class WheelOptions<T> {
     private List<List<T>> mOptions2Items;
     private List<List<List<T>>> mOptions3Items;
 
-    private boolean linkage;
+    private boolean linkage = true;//默认联动
     private boolean isRestoreItem; //切换时，还原第一项
     private OnItemSelectedListener wheelListener_option1;
     private OnItemSelectedListener wheelListener_option2;
@@ -46,10 +46,9 @@ public class WheelOptions<T> {
         this.view = view;
     }
 
-    public WheelOptions(View view, boolean linkage, boolean isRestoreItem) {
+    public WheelOptions(View view, boolean isRestoreItem) {
         super();
         this.isRestoreItem = isRestoreItem;
-        this.linkage = linkage;
         this.view = view;
         wv_option1 = (WheelView) view.findViewById(R.id.options1);// 初始化时显示的数据
         wv_option2 = (WheelView) view.findViewById(R.id.options2);
@@ -68,12 +67,14 @@ public class WheelOptions<T> {
         wv_option1.setAdapter(new ArrayWheelAdapter(mOptions1Items));// 设置显示数据
         wv_option1.setCurrentItem(0);// 初始化时显示的数据
         // 选项2
-        if (mOptions2Items != null)
+        if (mOptions2Items != null) {
             wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(0)));// 设置显示数据
+        }
         wv_option2.setCurrentItem(wv_option2.getCurrentItem());// 初始化时显示的数据
         // 选项3
-        if (mOptions3Items != null)
+        if (mOptions3Items != null) {
             wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(0).get(0)));// 设置显示数据
+        }
         wv_option3.setCurrentItem(wv_option3.getCurrentItem());
         wv_option1.setIsOptions(true);
         wv_option2.setIsOptions(true);
@@ -139,8 +140,9 @@ public class WheelOptions<T> {
                     wv_option3.setCurrentItem(opt3);
 
                     //3级联动数据实时回调
-                    if (optionsSelectChangeListener != null)
+                    if (optionsSelectChangeListener != null) {
                         optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), index, opt3);
+                    }
                 } else {//只有2级联动数据，滑动第2项回调
                     if (optionsSelectChangeListener != null) {
                         optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), index, 0);
@@ -150,10 +152,12 @@ public class WheelOptions<T> {
         };
 
         // 添加联动监听
-        if (options1Items != null && linkage)
+        if (options1Items != null && linkage) {
             wv_option1.setOnItemSelectedListener(wheelListener_option1);
-        if (options2Items != null && linkage)
+        }
+        if (options2Items != null && linkage) {
             wv_option2.setOnItemSelectedListener(wheelListener_option2);
+        }
         if (options3Items != null && linkage && optionsSelectChangeListener != null) {
             wv_option3.setOnItemSelectedListener(new OnItemSelectedListener() {
                 @Override
@@ -172,12 +176,14 @@ public class WheelOptions<T> {
         wv_option1.setAdapter(new ArrayWheelAdapter(options1Items));// 设置显示数据
         wv_option1.setCurrentItem(0);// 初始化时显示的数据
         // 选项2
-        if (options2Items != null)
+        if (options2Items != null) {
             wv_option2.setAdapter(new ArrayWheelAdapter(options2Items));// 设置显示数据
+        }
         wv_option2.setCurrentItem(wv_option2.getCurrentItem());// 初始化时显示的数据
         // 选项3
-        if (options3Items != null)
+        if (options3Items != null) {
             wv_option3.setAdapter(new ArrayWheelAdapter(options3Items));// 设置显示数据
+        }
         wv_option3.setCurrentItem(wv_option3.getCurrentItem());
         wv_option1.setIsOptions(true);
         wv_option2.setIsOptions(true);
@@ -265,12 +271,15 @@ public class WheelOptions<T> {
      * @param label3 单位
      */
     public void setLabels(String label1, String label2, String label3) {
-        if (label1 != null)
+        if (label1 != null) {
             wv_option1.setLabel(label1);
-        if (label2 != null)
+        }
+        if (label2 != null) {
             wv_option2.setLabel(label2);
-        if (label3 != null)
+        }
+        if (label3 != null) {
             wv_option3.setLabel(label3);
+        }
     }
 
     /**
@@ -431,4 +440,7 @@ public class WheelOptions<T> {
         this.optionsSelectChangeListener = optionsSelectChangeListener;
     }
 
+    public void setLinkage(boolean linkage) {
+        this.linkage = linkage;
+    }
 }
