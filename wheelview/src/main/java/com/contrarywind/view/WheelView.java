@@ -495,14 +495,13 @@ public class WheelView extends View {
                     canvas.restore();
                 } else if (translateY >= firstLineY && maxTextHeight + translateY <= secondLineY) {
                     // 中间条目
-                    //canvas.clipRect(0, 0, measuredWidth,   maxTextHeight);
+                    canvas.clipRect(0, 0, measuredWidth, maxTextHeight);
                     //让文字居中
                     float Y = maxTextHeight - CENTER_CONTENT_OFFSET;//因为圆弧角换算的向下取值，导致角度稍微有点偏差，加上画笔的基线会偏上，因此需要偏移量修正一下
                     canvas.drawText(contentText, drawCenterContentStart, Y, paintCenterText);
 
-                    int preSelectedItem = adapter.indexOf(visibles[counter]);
-
-                    selectedItem = preSelectedItem;
+                    //设置选中项
+                    selectedItem = preCurrentIndex - (itemsVisible / 2 - counter);
 
                 } else {
                     // 其他条目
@@ -525,9 +524,9 @@ public class WheelView extends View {
     }
 
     /**
-     * 根据文字的长度 重新设置文字的大小 让其能完全显示
+     * reset the size of the text Let it can fully display
      *
-     * @param contentText
+     * @param contentText item text content.
      */
     private void reMeasureTextSize(String contentText) {
         Rect rect = new Rect();
@@ -559,9 +558,9 @@ public class WheelView extends View {
     }
 
     /**
-     * 根据传进来的对象获取getPickerViewText()方法，来获取需要显示的值
+     * 获取所显示的数据源
      *
-     * @param item 数据源的item
+     * @param item data resource
      * @return 对应显示的字符串
      */
     private String getContentText(Object item) {
