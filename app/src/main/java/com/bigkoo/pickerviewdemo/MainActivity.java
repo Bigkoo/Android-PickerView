@@ -500,7 +500,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         clothes.add("Nike");
         clothes.add("Adidas");
-        clothes.add("Anima");
+        clothes.add("Armani");
 
         computer.add("ASUS");
         computer.add("Lenovo");
