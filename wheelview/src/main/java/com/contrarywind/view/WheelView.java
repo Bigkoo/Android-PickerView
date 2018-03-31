@@ -625,6 +625,8 @@ public class WheelView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         boolean eventConsumed = gestureDetector.onTouchEvent(event);
+        boolean isIgnore = false;//超过边界滑动时，不再绘制UI。
+
         switch (event.getAction()) {
             //按下
             case MotionEvent.ACTION_DOWN:
@@ -654,8 +656,10 @@ public class WheelView extends View {
 
                     if (totalScrollY < top) {
                         totalScrollY = (int) top;
+                        isIgnore = true;
                     } else if (totalScrollY > bottom) {
                         totalScrollY = (int) bottom;
+                        isIgnore = true;
                     }
                 }
                 break;
@@ -694,8 +698,9 @@ public class WheelView extends View {
                 }
                 break;
         }
-
-        invalidate();
+        if (!isIgnore) {
+            invalidate();
+        }
         return true;
     }
 
