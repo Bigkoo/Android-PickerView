@@ -61,12 +61,13 @@ Wiki文档，Wiki文档，Wiki文档 ~ 重要的事情说三遍 ~
   startDate.set(2013,0,1);
   endDate.set(2020,11,1);
   
-#### V4.1.0版本更新说明（2018-3-27）
-- 新增setTitleText方法，动态设置标题。
+ 
+#### V4.1.1 版本更新说明（2018-4-02）
+- 修复不联动选项，初始默认选中项设置无效的问题。
 
-- BUG修复，修复OptionsPickerBuilder 中 setSubmitText方法赋值错误问题。
+- 修复Item 的值重名时，回调的position始终为第一个item的问题。
 
-- 优化 kotlin 中，OptionsPickerBuilder build 方法泛型转换。
+- 修复WheelView 偶现滑动越界逻辑问题。
 
 #### 更多历史版本详情，请查阅：[更新说明（3.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E%EF%BC%883.x%E7%89%88%E6%9C%AC%EF%BC%89) 
 
