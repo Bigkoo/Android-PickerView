@@ -360,6 +360,7 @@ public class WheelView extends View {
         Object visibles[] = new Object[itemsVisible];
         //滚动的Y值高度除去每行Item的高度，得到滚动了多少个item，即change数
         change = (int) (totalScrollY / itemHeight);
+        // Log.d("change", "" + change);
 
         try {
             //滚动中实际的预选中的item(即经过了中间位置的item) ＝ 滑动前的位置 ＋ 滑动相对位置
@@ -627,6 +628,10 @@ public class WheelView extends View {
         boolean eventConsumed = gestureDetector.onTouchEvent(event);
         boolean isIgnore = false;//超过边界滑动时，不再绘制UI。
 
+        float top = -initPosition * itemHeight;
+        float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
+        float ratio = 0.25f;
+
         switch (event.getAction()) {
             //按下
             case MotionEvent.ACTION_DOWN:
@@ -641,24 +646,12 @@ public class WheelView extends View {
                 previousY = event.getRawY();
                 totalScrollY = totalScrollY + dy;
 
-                float ratio = 0.5f;
-                // 边界处理。
+                // 非循环模式下，边界处理。
                 if (!isLoop) {
-                    float top = -initPosition * itemHeight;
-                    float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
-
-                    if (totalScrollY + itemHeight * ratio < top) {
-                        top = totalScrollY - dy;
-
-                    } else if (totalScrollY - itemHeight * ratio > bottom) {
-                        bottom = totalScrollY - dy;
-                    }
-
-                    if (totalScrollY < top) {
-                        totalScrollY = (int) top;
-                        isIgnore = true;
-                    } else if (totalScrollY > bottom) {
-                        totalScrollY = (int) bottom;
+                    if (totalScrollY - itemHeight * ratio < top
+                            || totalScrollY + itemHeight * ratio > bottom) {
+                        //快滑动到边界了，设置已滑动到边界的标志
+                        totalScrollY -= dy;
                         isIgnore = true;
                     }
                 }
@@ -666,7 +659,15 @@ public class WheelView extends View {
 
             case MotionEvent.ACTION_UP:
             default:
+
+                if (totalScrollY - itemHeight * ratio < top
+                        || totalScrollY + itemHeight * ratio > bottom) {//设置已滑动到边界的标志
+                    isIgnore = true;
+                    break;
+                }
+
                 if (!eventConsumed) {//未消费掉事件
+                    // Log.e("eventConsumed", "eventConsumed...");
 
                     /**
                      *@describe <关于弧长的计算>
@@ -698,7 +699,7 @@ public class WheelView extends View {
                 }
                 break;
         }
-        if (!isIgnore) {
+        if (!isIgnore && event.getAction() != MotionEvent.ACTION_DOWN) {
             invalidate();
         }
         return true;

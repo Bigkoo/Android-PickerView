@@ -61,13 +61,15 @@ Wiki文档，Wiki文档，Wiki文档 ~ 重要的事情说三遍 ~
   startDate.set(2013,0,1);
   endDate.set(2020,11,1);
   
+ #### V4.1.2 版本更新说明（2018-4-02）
+ - 修复WheelView 偶现滑动item越界问题。
  
 #### V4.1.1 版本更新说明（2018-4-02）
 - 修复不联动选项，初始默认选中项设置无效的问题。
 
 - 修复Item 的值重名时，回调的position始终为第一个item的问题。
 
-- 修复WheelView 偶现滑动越界逻辑问题。
+
 
 #### 更多历史版本详情，请查阅：[更新说明（3.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E%EF%BC%883.x%E7%89%88%E6%9C%AC%EF%BC%89) 
 
@@ -81,7 +83,7 @@ Wiki文档，Wiki文档，Wiki文档 ~ 重要的事情说三遍 ~
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:4.1.1'
+compile 'com.contrarywind:Android-PickerView:4.1.2'
 ```
 或者
 
@@ -90,7 +92,7 @@ compile 'com.contrarywind:Android-PickerView:4.1.1'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>4.1.1</version>
+<version>4.1.2</version>
 <type>pom</type>
 </dependency>
 ```

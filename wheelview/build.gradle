@@ -11,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 25
-        versionName "4.0.2"
+        versionCode 27
+        versionName "4.0.4"
     }
     buildTypes {
         release {
@@ -38,7 +38,7 @@ publish {
     userOrg = 'contrarywind'//bintray.com 用户名/组织名 user/org name
     groupId = 'com.contrarywind'//JCenter上显示的路径 path
     artifactId = 'wheelview'//项目名称 project name
-    publishVersion = '4.0.2'//版本号 version code
+    publishVersion = '4.0.4'//版本号 version code
     desc = 'this is a wheelview for android'//项目描述 description
     website = 'https://github.com/Bigkoo/Android-PickerView' //项目网址链接 link
 }
