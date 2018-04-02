@@ -260,7 +260,7 @@ pvOptions = new  OptionsPickerBuilder(this, new OptionsPickerView.OnOptionsSelec
 #### 6.若只需要WheelView基础控件自行扩展实现逻辑，可直接添加基础控件库，Gradle 依赖：
  
 ```java
-compile 'com.contrarywind:wheelview:4.0.3'
+compile 'com.contrarywind:wheelview:4.0.4'
 ```
 
 #### WheelView 使用代码示例：
