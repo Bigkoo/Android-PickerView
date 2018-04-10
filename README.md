@@ -10,7 +10,7 @@
 </br>
 
 ### 注意事项、详请使用方式、更新日志等，请查看 [Wiki文档](https://github.com/Bigkoo/Android-PickerView/wiki)
-Wiki文档，Wiki文档，Wiki文档 ~ 重要的事情说三遍 ~
+**Wiki文档，Wiki文档，Wiki文档 !~ 重要的事情说三遍 ~**
 
 #### 对于使用上有任何疑问或优化建议等，欢迎加入QQ群讨论交流技术问题。
 
@@ -20,7 +20,7 @@ Wiki文档，Wiki文档，Wiki文档 ~ 重要的事情说三遍 ~
 
 ## 介绍
 
-这是一款仿iOS的PickerView控件，有时间选择器和选项选择器，3.x新版本的详细特性如下：
+这是一款仿iOS的PickerView控件，有时间选择器和选项选择器，新版本的详细特性如下：
  
 ——TimePickerView  时间选择器，支持年月日时分，年月日，年月，时分等格式。   
 ——OptionsPickerView  选项选择器，支持一，二，三级选项选择，并且可以设置是否联动 。
@@ -71,7 +71,7 @@ Wiki文档，Wiki文档，Wiki文档 ~ 重要的事情说三遍 ~
 
 
 
-#### 更多历史版本详情，请查阅：[更新说明（3.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%9B%B4%E6%96%B0%E8%AF%B4%E6%98%8E%EF%BC%883.x%E7%89%88%E6%9C%AC%EF%BC%89) 
+#### 更多历史版本详情，请查阅：[更新日志（4.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/更新日志（4.x版本）) 
 
 #### 方法名与参数请查阅：[方法名与参数说明文档](https://github.com/Bigkoo/Android-PickerView/wiki/%E6%96%B9%E6%B3%95%E5%90%8D%E4%B8%8E%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E%EF%BC%883.x%E7%89%88%E6%9C%AC%EF%BC%89)
 
