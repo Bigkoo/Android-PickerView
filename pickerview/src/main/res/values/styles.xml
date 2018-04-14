@@ -17,9 +17,15 @@
         <item name="android:backgroundDimAmount">0.3</item>
     </style>
 
-    <style name="pickerview_dialogAnim" mce_bogus="1" parent="android:Animation">
+    <style name="picker_view_scale_anim" mce_bogus="1" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/pickerview_dialog_scale_in</item>
         <item name="android:windowExitAnimation">@anim/pickerview_dialog_scale_out</item>
+    </style>
+
+
+    <style name="picker_view_slide_anim" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pickerview_slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/pickerview_slide_out_bottom</item>
     </style>
 
 </resources>

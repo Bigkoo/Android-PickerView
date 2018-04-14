@@ -39,7 +39,7 @@ and support for the linkage, dialog . It's very easy to use ,  you also can cust
 ### Gradle
 
 ```java
-compile 'com.contrarywind:Android-PickerView:4.1.2'
+compile 'com.contrarywind:Android-PickerView:4.1.3'
 ```
 
 ### Maven

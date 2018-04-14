@@ -62,15 +62,11 @@
   startDate.set(2013,0,1);
   endDate.set(2020,11,1);
   
- #### V4.1.2 版本更新说明（2018-4-02）
- - 修复WheelView 偶现滑动item越界问题。
  
-#### V4.1.1 版本更新说明（2018-4-02）
-- 修复不联动选项，初始默认选中项设置无效的问题。
-
-- 修复Item 的值重名时，回调的position始终为第一个item的问题。
-
-
+ #### V4.1.3 版本更新说明（2018-4-14）
+ -  新增getDialog()方法，在设置.isDialog(true)即Dialog模式下，通过它获取Dialog对象。
+ -  新增getDialogContainerLayout()方法，用于设置dialog模式下选择器的显示宽度。
+ -  优化WheelView代码以及弹出动画效果。
 
 #### 更多历史版本详情，请查阅：[更新日志（4.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/更新日志（4.x版本）) 
 
@@ -84,7 +80,7 @@
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:4.1.2'
+compile 'com.contrarywind:Android-PickerView:4.1.3'
 ```
 或者
 
@@ -261,7 +257,7 @@ pvOptions = new  OptionsPickerBuilder(this, new OptionsPickerView.OnOptionsSelec
 #### 6.若只需要WheelView基础控件自行扩展实现逻辑，可直接添加基础控件库，Gradle 依赖：
  
 ```java
-compile 'com.contrarywind:wheelview:4.0.4'
+compile 'com.contrarywind:wheelview:4.0.5'
 ```
 
 #### WheelView 使用代码示例：

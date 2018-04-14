@@ -648,11 +648,16 @@ public class WheelView extends View {
 
                 // 非循环模式下，边界处理。
                 if (!isLoop) {
-                    if (totalScrollY - itemHeight * ratio < top
-                            || totalScrollY + itemHeight * ratio > bottom) {
+                    if ((totalScrollY - itemHeight * ratio < top && dy < 0)
+                            || (totalScrollY + itemHeight * ratio > bottom && dy > 0)) {
                         //快滑动到边界了，设置已滑动到边界的标志
                         totalScrollY -= dy;
                         isIgnore = true;
+                    }/* else if (totalScrollY + itemHeight * ratio > bottom && dy > 0) {
+                        totalScrollY -= dy;
+                        isIgnore = true;
+                    } */else {
+                        isIgnore = false;
                     }
                 }
                 break;
@@ -660,14 +665,7 @@ public class WheelView extends View {
             case MotionEvent.ACTION_UP:
             default:
 
-                if (totalScrollY - itemHeight * ratio < top
-                        || totalScrollY + itemHeight * ratio > bottom) {//设置已滑动到边界的标志
-                    isIgnore = true;
-                    break;
-                }
-
                 if (!eventConsumed) {//未消费掉事件
-                    // Log.e("eventConsumed", "eventConsumed...");
 
                     /**
                      *@describe <关于弧长的计算>
