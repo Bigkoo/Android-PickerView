@@ -11,7 +11,7 @@
 </br>
 
 ### 注意事项、详请使用方式、更新日志等，请查看 [Wiki文档](https://github.com/Bigkoo/Android-PickerView/wiki)
-**Wiki文档，Wiki文档，Wiki文档 !~ 重要的事情说三遍 ~**
+**Wiki文档，Wiki文档，Wiki文档 !~ 重要的事情说三遍**
 
 #### 对于使用上有任何疑问或优化建议等，欢迎加入QQ群讨论交流技术问题。
 
@@ -63,10 +63,9 @@
   endDate.set(2020,11,1);
   
  
- #### V4.1.3 版本更新说明（2018-4-14）
- -  新增getDialog()方法，在设置.isDialog(true)即Dialog模式下，通过它获取Dialog对象。
- -  新增getDialogContainerLayout()方法，用于设置dialog模式下选择器的显示宽度。
- -  优化WheelView代码以及弹出动画效果。
+ #### V4.1.5 版本更新说明（2018-7-12）
+ -  优化循环模式下的index计算逻辑。
+ -  修复农历模式下，切换公农历月份的问题。
 
 #### 更多历史版本详情，请查阅：[更新日志（4.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/更新日志（4.x版本）) 
 
@@ -80,7 +79,7 @@
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:4.1.4'
+compile 'com.contrarywind:Android-PickerView:4.1.5'
 ```
 或者
 
@@ -257,7 +256,7 @@ pvOptions = new  OptionsPickerBuilder(this, new OptionsPickerView.OnOptionsSelec
 #### 6.若只需要WheelView基础控件自行扩展实现逻辑，可直接添加基础控件库，Gradle 依赖：
  
 ```java
-compile 'com.contrarywind:wheelview:4.0.6'
+compile 'com.contrarywind:wheelview:4.0.7'
 ```
 
 #### WheelView 使用代码示例：
