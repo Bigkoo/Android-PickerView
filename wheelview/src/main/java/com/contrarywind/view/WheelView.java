@@ -436,12 +436,6 @@ public class WheelView extends View {
             canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintIndicator);
         }
 
-        //只显示选中项Label文字的模式，并且Label文字不为空，则进行绘制
-        if (!TextUtils.isEmpty(label) && isCenterLabel) {
-            //绘制文字，靠右并留出空隙
-            int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
-            canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
-        }
 
         counter = 0;
         while (counter < itemsVisible) {
@@ -460,19 +454,22 @@ public class WheelView extends View {
                 // 根据当前角度计算出偏差系数，用以在绘制时控制文字的 水平移动 透明度 倾斜程度
                 float offsetCoefficient = (float) Math.pow(Math.abs(angle) / 90f, 2.2);
                 //获取内容文字
-                String contentText;
+                String outerText;
 
                 //如果是label每项都显示的模式，并且item内容不为空、label 也不为空
                 if (!isCenterLabel && !TextUtils.isEmpty(label) && !TextUtils.isEmpty(getContentText(visibles[counter]))) {
-                    contentText = getContentText(visibles[counter]) + label;
+                    outerText = getContentText(visibles[counter]) + label;
                 } else {
-                    contentText = getContentText(visibles[counter]);
+                    outerText = getContentText(visibles[counter]);
                 }
 
-                reMeasureTextSize(contentText);
+                //中间项文本内容
+                String centerText = getContentText(visibles[counter]) + label;
+
+                reMeasureTextSize(centerText);
                 //计算开始绘制的位置
-                measuredCenterContentStart(contentText);
-                measuredOutContentStart(contentText);
+                measuredCenterContentStart();
+                measuredOutContentStart();
                 float translateY = (float) (radius - Math.cos(radian) * radius - (Math.sin(radian) * maxTextHeight) / 2D);
                 //根据Math.sin(radian)来更改canvas坐标系原点，然后缩放画布，使得文字高度进行缩放，形成弧形3d视觉差
                 canvas.translate(0.0F, translateY);
@@ -482,31 +479,31 @@ public class WheelView extends View {
                     canvas.save();
                     canvas.clipRect(0, 0, measuredWidth, firstLineY - translateY);
                     canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
-                    canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
+                    canvas.drawText(outerText, drawOutContentStart, maxTextHeight, paintOuterText);
                     canvas.restore();
                     canvas.save();
                     canvas.clipRect(0, firstLineY - translateY, measuredWidth, (int) (itemHeight));
                     canvas.scale(1.0F, (float) Math.sin(radian) * 1.0F);
-                    canvas.drawText(contentText, drawCenterContentStart, maxTextHeight - CENTER_CONTENT_OFFSET, paintCenterText);
+                    canvas.drawText(centerText, drawCenterContentStart, maxTextHeight - CENTER_CONTENT_OFFSET, paintCenterText);
                     canvas.restore();
                 } else if (translateY <= secondLineY && maxTextHeight + translateY >= secondLineY) {
                     // 条目经过第二条线
                     canvas.save();
                     canvas.clipRect(0, 0, measuredWidth, secondLineY - translateY);
                     canvas.scale(1.0F, (float) Math.sin(radian) * 1.0F);
-                    canvas.drawText(contentText, drawCenterContentStart, maxTextHeight - CENTER_CONTENT_OFFSET, paintCenterText);
+                    canvas.drawText(centerText, drawCenterContentStart, maxTextHeight - CENTER_CONTENT_OFFSET, paintCenterText);
                     canvas.restore();
                     canvas.save();
                     canvas.clipRect(0, secondLineY - translateY, measuredWidth, (int) (itemHeight));
                     canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
-                    canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
+                    canvas.drawText(outerText, drawOutContentStart, maxTextHeight, paintOuterText);
                     canvas.restore();
                 } else if (translateY >= firstLineY && maxTextHeight + translateY <= secondLineY) {
                     // 中间条目
                     canvas.clipRect(0, 0, measuredWidth, maxTextHeight);
                     //让文字居中
                     float Y = maxTextHeight - CENTER_CONTENT_OFFSET;//因为圆弧角换算的向下取值，导致角度稍微有点偏差，加上画笔的基线会偏上，因此需要偏移量修正一下
-                    canvas.drawText(contentText, drawCenterContentStart, Y, paintCenterText);
+                    canvas.drawText(centerText, drawCenterContentStart, Y, paintCenterText);
 
                     //设置选中项
                     selectedItem = preCurrentIndex - (itemsVisible / 2 - counter);
@@ -521,7 +518,7 @@ public class WheelView extends View {
                     // 控制透明度
                     paintOuterText.setAlpha((int) ((1 - offsetCoefficient) * 255));
                     // 控制文字水平偏移距离
-                    canvas.drawText(contentText, drawOutContentStart + textXOffset * offsetCoefficient, maxTextHeight, paintOuterText);
+                    canvas.drawText(outerText, drawOutContentStart + textXOffset * offsetCoefficient, maxTextHeight, paintOuterText);
                     canvas.restore();
                 }
                 canvas.restore();
@@ -583,42 +580,36 @@ public class WheelView extends View {
         return item.toString();
     }
 
-    private void measuredCenterContentStart(String content) {
-        Rect rect = new Rect();
-        paintCenterText.getTextBounds(content, 0, content.length(), rect);
+    private void measuredCenterContentStart() {
         switch (mGravity) {
             case Gravity.CENTER://显示内容居中
-                if (isOptions || label == null || label.equals("") || !isCenterLabel) {
-                    drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
-                } else {//只显示中间label时，时间选择器内容偏左一点，留出空间绘制单位标签
-                    drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
-                }
+                drawCenterContentStart = (int) (measuredWidth * 0.5);
+                paintCenterText.setTextAlign(Paint.Align.CENTER);
                 break;
             case Gravity.LEFT:
                 drawCenterContentStart = 0;
+                paintCenterText.setTextAlign(Paint.Align.LEFT);
                 break;
-            case Gravity.RIGHT://添加偏移量
-                drawCenterContentStart = measuredWidth - rect.width() - (int) CENTER_CONTENT_OFFSET;
+            case Gravity.RIGHT:
+                drawCenterContentStart = measuredWidth;
+                paintCenterText.setTextAlign(Paint.Align.RIGHT);
                 break;
         }
     }
 
-    private void measuredOutContentStart(String content) {
-        Rect rect = new Rect();
-        paintOuterText.getTextBounds(content, 0, content.length(), rect);
+    private void measuredOutContentStart() {
         switch (mGravity) {
             case Gravity.CENTER:
-                if (isOptions || label == null || label.equals("") || !isCenterLabel) {
-                    drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
-                } else {//只显示中间label时，时间选择器内容偏左一点，留出空间绘制单位标签
-                    drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
-                }
+                drawOutContentStart = (int) (measuredWidth * 0.5);
+                paintOuterText.setTextAlign(Paint.Align.CENTER);
                 break;
             case Gravity.LEFT:
                 drawOutContentStart = 0;
+                paintOuterText.setTextAlign(Paint.Align.LEFT);
                 break;
             case Gravity.RIGHT:
-                drawOutContentStart = measuredWidth - rect.width() - (int) CENTER_CONTENT_OFFSET;
+                drawOutContentStart = measuredWidth;
+                paintOuterText.setTextAlign(Paint.Align.RIGHT);
                 break;
         }
     }
@@ -760,7 +751,6 @@ public class WheelView extends View {
 
     public void setTextColorCenter(int textColorCenter) {
         if (textColorCenter != 0) {
-
             this.textColorCenter = textColorCenter;
             paintCenterText.setColor(this.textColorCenter);
         }
