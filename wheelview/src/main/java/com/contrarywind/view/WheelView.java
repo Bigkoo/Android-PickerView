@@ -365,7 +365,14 @@ public class WheelView extends View {
     }
 
     public final int getCurrentItem() {
-        return selectedItem;
+        // return selectedItem;
+        if (adapter == null) {
+            return 0;
+        }
+        if (isLoop && (selectedItem < 0 || selectedItem >= adapter.getItemsCount())) {
+            return Math.max(0, Math.min(Math.abs(Math.abs(selectedItem) - adapter.getItemsCount()), adapter.getItemsCount() - 1));
+        }
+        return Math.max(0, Math.min(selectedItem, adapter.getItemsCount() - 1));
     }
 
     public final void onItemSelected() {
@@ -702,10 +709,7 @@ public class WheelView extends View {
                         //快滑动到边界了，设置已滑动到边界的标志
                         totalScrollY -= dy;
                         isIgnore = true;
-                    }/* else if (totalScrollY + itemHeight * ratio > bottom && dy > 0) {
-                        totalScrollY -= dy;
-                        isIgnore = true;
-                    } */else {
+                    } else {
                         isIgnore = false;
                     }
                 }
@@ -880,13 +884,9 @@ public class WheelView extends View {
     public void setLabelGravity(LabelGravity mLabelGravity) {
         this.mLabelGravity = mLabelGravity;
     }
-
+  
     public int getInitPosition() {
         return initPosition;
-    }
-
-    public void setInitPosition(int initPosition) {
-        this.initPosition = initPosition;
     }
 
     @Override

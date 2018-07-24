@@ -14,11 +14,11 @@ public class ChinaDate {
      *
      * 0x代表十六进制，后面的五位数是十六进制数。
      * 举个例子: 1980年的数据是 0x095b0
-     * 二进制: 0000 1001 0101 1011 0000
-     * 1-4:   表示当年有无闰年，有的话，为闰月的月份，没有的话，为0。
-     * 5-16:  为除了闰月外的正常月份是大月还是小月，1为30天，0为29天。
+     * 二进制:  0000 1001 0101 1011 0000
+     * 1-4:   表示当年是否为闰年，是的话为1，否则为0。
+     * 5-16: 为除了闰月外的正常月份是大月还是小月，1为30天，0为29天。
      * 注意:  从1月到12月对应的是第16位到第5位。
-     * 17-20: 表示闰月是大月还是小月，仅当存在闰月的情况下有意义。
+     * 17-20: 非闰年为0，大于0表示闰月月份，仅当存在闰月的情况下有意义。
      */
     final private static long[] lunarInfo = new long[]{
             0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2,//1900-1909
@@ -43,10 +43,7 @@ public class ChinaDate {
             0x0e968, 0x0d520, 0x0daa0, 0x16aa6, 0x056d0, 0x04ae0, 0x0a9d4, 0x0a2d0, 0x0d150, 0x0f252,//2090-2099
             0x0d520};//2100
 
-    final private static int[] year20 = new int[]{1, 4, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1};
-    final private static int[] year19 = new int[]{0, 3, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0};
-    final private static int[] year2000 = new int[]{0, 3, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1};
-    public final static String[] nStr1 = new String[]{"", "正", "二", "三", "四",
+    private final static String[] nStr1 = new String[]{"", "正", "二", "三", "四",
             "五", "六", "七", "八", "九", "十", "冬", "腊"};
     private final static String[] Gan = new String[]{"甲", "乙", "丙", "丁", "戊",
             "己", "庚", "辛", "壬", "癸"};
@@ -141,75 +138,6 @@ public class ChinaDate {
         return (cyclicalm(num));
     }
 
-    /**
-     * 传出农历.year0 .month1 .day2 .yearCyl3 .monCyl4 .dayCyl5 .isLeap6
-     *
-     * @param y 年
-     * @param m 月
-     * @return 传出农历
-     */
-    final private long[] Lunar(int y, int m) {
-        long[] nongDate = new long[7];
-        int i = 0, temp = 0, leap = 0;
-        Date baseDate = new GregorianCalendar(1900 + 1900, 1, 31).getTime();
-        Date objDate = new GregorianCalendar(y + 1900, m, 1).getTime();
-        long offset = (objDate.getTime() - baseDate.getTime()) / 86400000L;
-        if (y < 2000)
-            offset += year19[m - 1];
-        if (y > 2000)
-            offset += year20[m - 1];
-        if (y == 2000)
-            offset += year2000[m - 1];
-        nongDate[5] = offset + 40;
-        nongDate[4] = 14;
-        for (i = 1900; i < 2050 && offset > 0; i++) {
-            temp = lYearDays(i);
-            offset -= temp;
-            nongDate[4] += 12;
-        }
-        if (offset < 0) {
-            offset += temp;
-            i--;
-            nongDate[4] -= 12;
-        }
-        nongDate[0] = i;
-        nongDate[3] = i - 1864;
-        leap = leapMonth(i); // 闰哪个月
-        nongDate[6] = 0;
-        for (i = 1; i < 13 && offset > 0; i++) {
-            // 闰月
-            if (leap > 0 && i == (leap + 1) && nongDate[6] == 0) {
-                --i;
-                nongDate[6] = 1;
-                temp = leapDays((int) nongDate[0]);
-            } else {
-                temp = monthDays((int) nongDate[0], i);
-            }
-            // 解除闰月
-            if (nongDate[6] == 1 && i == (leap + 1))
-                nongDate[6] = 0;
-            offset -= temp;
-            if (nongDate[6] == 0)
-                nongDate[4]++;
-        }
-        if (offset == 0 && leap > 0 && i == leap + 1) {
-            if (nongDate[6] == 1) {
-                nongDate[6] = 0;
-            } else {
-                nongDate[6] = 1;
-                --i;
-                --nongDate[4];
-            }
-        }
-        if (offset < 0) {
-            offset += temp;
-            --i;
-            --nongDate[4];
-        }
-        nongDate[1] = i;
-        nongDate[2] = offset + 1;
-        return nongDate;
-    }
 
     /**
      * 传出y年m月d日对应的农历.year0 .month1 .day2 .yearCyl3 .monCyl4 .dayCyl5 .isLeap6
@@ -227,7 +155,7 @@ public class ChinaDate {
         long offset = (objDate.getTime() - baseDate.getTime()) / 86400000L;
         nongDate[5] = offset + 40;
         nongDate[4] = 14;
-        for (i = 1900; i < 2050 && offset > 0; i++) {
+        for (i = 1900; i < 2100 && offset > 0; i++) {
             temp = lYearDays(i);
             offset -= temp;
             nongDate[4] += 12;
@@ -326,7 +254,7 @@ public class ChinaDate {
         return a;
     }
 
-    public static String today() {
+    public static String getCurrentLunarDate() {
         Calendar today = Calendar.getInstance(Locale.SIMPLIFIED_CHINESE);
         int year = today.get(Calendar.YEAR);
         int month = today.get(Calendar.MONTH) + 1;
