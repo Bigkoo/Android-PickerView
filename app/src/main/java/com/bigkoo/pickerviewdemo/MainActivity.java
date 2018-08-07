@@ -168,13 +168,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                      * @param weight
                      */
                     private void setTimePickerChildWeight(View v, float yearWeight, float weight) {
-                        ViewGroup timepicker = (ViewGroup) v.findViewById(R.id.timepicker);
-                        View year = timepicker.getChildAt(0);
+                        ViewGroup timePicker = (ViewGroup) v.findViewById(R.id.timepicker);
+                        View year = timePicker.getChildAt(0);
                         LinearLayout.LayoutParams lp = ((LinearLayout.LayoutParams) year.getLayoutParams());
                         lp.weight = yearWeight;
                         year.setLayoutParams(lp);
-                        for (int i = 1; i < timepicker.getChildCount(); i++) {
-                            View childAt = timepicker.getChildAt(i);
+                        for (int i = 1; i < timePicker.getChildCount(); i++) {
+                            View childAt = timePicker.getChildAt(i);
                             LinearLayout.LayoutParams childLp = ((LinearLayout.LayoutParams) childAt.getLayoutParams());
                             childLp.weight = weight;
                             childAt.setLayoutParams(childLp);
@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 .setType(new boolean[]{true, true, true, true, true, true})
-                .isDialog(true)
+                .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
                 .build();
 
         Dialog mDialog = pvTime.getDialog();
