@@ -8,7 +8,6 @@
 [![GitHub stars](https://img.shields.io/github/stars/Bigkoo/Android-PickerView.svg?style=social)](https://github.com/Bigkoo/Android-PickerView/stargazers) [![GitHub forks](https://img.shields.io/github/forks/Bigkoo/Android-PickerView.svg?style=social)](https://github.com/Bigkoo/Android-PickerView/network) [![GitHub watchers](https://img.shields.io/github/watchers/Bigkoo/Android-PickerView.svg?style=social)](https://github.com/Bigkoo/Android-PickerView/watchers)
 
 ### [English Document](https://github.com/Bigkoo/Android-PickerView/blob/master/README-en.md)
-</br>
 
 ### 注意事项、详请使用方式、更新日志等，请查看 [Wiki文档](https://github.com/Bigkoo/Android-PickerView/wiki)
 **Wiki文档，Wiki文档，Wiki文档 !~ 重要的事情说三遍**
@@ -63,9 +62,9 @@
   endDate.set(2020,11,1);
   
  
- #### V4.1.5 版本更新说明（2018-7-12）
- -  优化循环模式下的index计算逻辑。
- -  修复农历模式下，切换公农历月份的问题。
+ #### V4.1.6 版本更新说明（2018-7-24）
+ -  优化wheelview 分割线设置 0x00000000 透明色不生效的问题。
+ -  优化部分文字基线位置偏低，导致选中项文字显示不全问题，如 "g" 字母。
 
 #### 更多历史版本详情，请查阅：[更新日志（4.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/更新日志（4.x版本）) 
 
@@ -79,7 +78,7 @@
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:4.1.5'
+compile 'com.contrarywind:Android-PickerView:4.1.6'
 ```
 或者
 
@@ -256,7 +255,7 @@ pvOptions = new  OptionsPickerBuilder(this, new OptionsPickerView.OnOptionsSelec
 #### 6.若只需要WheelView基础控件自行扩展实现逻辑，可直接添加基础控件库，Gradle 依赖：
  
 ```java
-compile 'com.contrarywind:wheelview:4.0.7'
+compile 'com.contrarywind:wheelview:4.0.8'
 ```
 
 #### WheelView 使用代码示例：
