@@ -503,7 +503,7 @@ public class WheelView extends View {
                     canvas.restore();
                 } else if (translateY >= firstLineY && maxTextHeight + translateY <= secondLineY) {
                     // 中间条目
-                    canvas.clipRect(0, 0, measuredWidth, maxTextHeight);
+                    // canvas.clipRect(0, 0, measuredWidth, maxTextHeight);
                     //让文字居中
                     float Y = maxTextHeight - CENTER_CONTENT_OFFSET;//因为圆弧角换算的向下取值，导致角度稍微有点偏差，加上画笔的基线会偏上，因此需要偏移量修正一下
                     canvas.drawText(contentText, drawCenterContentStart, Y, paintCenterText);
@@ -640,20 +640,18 @@ public class WheelView extends View {
         float ratio = 0.25f;
 
         switch (event.getAction()) {
-            //按下
             case MotionEvent.ACTION_DOWN:
                 startTime = System.currentTimeMillis();
                 cancelFuture();
                 previousY = event.getRawY();
                 break;
-            //滑动中
-            case MotionEvent.ACTION_MOVE:
 
+            case MotionEvent.ACTION_MOVE:
                 float dy = previousY - event.getRawY();
                 previousY = event.getRawY();
                 totalScrollY = totalScrollY + dy;
 
-                // 非循环模式下，边界处理。
+                // normal mode。
                 if (!isLoop) {
                     if ((totalScrollY - itemHeight * ratio < top && dy < 0)
                             || (totalScrollY + itemHeight * ratio > bottom && dy > 0)) {
@@ -668,7 +666,6 @@ public class WheelView extends View {
 
             case MotionEvent.ACTION_UP:
             default:
-
                 if (!eventConsumed) {//未消费掉事件
 
                     /**
@@ -707,20 +704,10 @@ public class WheelView extends View {
         return true;
     }
 
-    /**
-     * 获取Item个数
-     *
-     * @return item个数
-     */
     public int getItemsCount() {
         return adapter != null ? adapter.getItemsCount() : 0;
     }
 
-    /**
-     * 附加在右边的单位字符串
-     *
-     * @param label 单位
-     */
     public void setLabel(String label) {
         this.label = label;
     }
@@ -733,7 +720,7 @@ public class WheelView extends View {
         this.mGravity = gravity;
     }
 
-    public int getTextWidth(Paint paint, String str) {//计算文字宽度
+    public int getTextWidth(Paint paint, String str) { //calculate text width
         int iRet = 0;
         if (str != null && str.length() > 0) {
             int len = str.length();
@@ -750,20 +737,15 @@ public class WheelView extends View {
         isOptions = options;
     }
 
-
     public void setTextColorOut(int textColorOut) {
-        if (textColorOut != 0) {
-            this.textColorOut = textColorOut;
-            paintOuterText.setColor(this.textColorOut);
-        }
+
+        this.textColorOut = textColorOut;
+        paintOuterText.setColor(this.textColorOut);
     }
 
     public void setTextColorCenter(int textColorCenter) {
-        if (textColorCenter != 0) {
-
-            this.textColorCenter = textColorCenter;
-            paintCenterText.setColor(this.textColorCenter);
-        }
+        this.textColorCenter = textColorCenter;
+        paintCenterText.setColor(this.textColorCenter);
     }
 
     public void setTextXOffset(int textXOffset) {
@@ -774,10 +756,8 @@ public class WheelView extends View {
     }
 
     public void setDividerColor(int dividerColor) {
-        if (dividerColor != 0) {
-            this.dividerColor = dividerColor;
-            paintIndicator.setColor(this.dividerColor);
-        }
+        this.dividerColor = dividerColor;
+        paintIndicator.setColor(dividerColor);
     }
 
     public void setDividerType(DividerType dividerType) {
