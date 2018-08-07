@@ -34,7 +34,7 @@ public class LunarCalendar {
      * <p>
      * 以2014年的数据0x955ABF为例说明：
      * 1001 0101 0101 1010 1011 1111
-     * 闰九月                                  农历正月初一对应公历1月31号
+     * 闰九月  农历正月初一对应公历1月31号
      */
     private static final int LUNAR_INFO[] = {
             0x84B6BF,/*1900*/

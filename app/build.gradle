@@ -26,7 +26,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':pickerview')
-//    compile project(':wheelview')
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.google.code.gson:gson:2.7'
 }

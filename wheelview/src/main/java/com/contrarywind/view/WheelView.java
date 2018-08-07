@@ -333,7 +333,14 @@ public class WheelView extends View {
     }
 
     public final int getCurrentItem() {
-        return selectedItem;
+        // return selectedItem;
+        if (adapter == null) {
+            return 0;
+        }
+        if (isLoop && (selectedItem < 0 || selectedItem >= adapter.getItemsCount())) {
+            return Math.max(0, Math.min(Math.abs(Math.abs(selectedItem) - adapter.getItemsCount()), adapter.getItemsCount() - 1));
+        }
+        return Math.max(0, Math.min(selectedItem, adapter.getItemsCount() - 1));
     }
 
     public final void onItemSelected() {
@@ -360,6 +367,7 @@ public class WheelView extends View {
         Object visibles[] = new Object[itemsVisible];
         //滚动的Y值高度除去每行Item的高度，得到滚动了多少个item，即change数
         change = (int) (totalScrollY / itemHeight);
+        // Log.d("change", "" + change);
 
         try {
             //滚动中实际的预选中的item(即经过了中间位置的item) ＝ 滑动前的位置 ＋ 滑动相对位置
@@ -495,14 +503,13 @@ public class WheelView extends View {
                     canvas.restore();
                 } else if (translateY >= firstLineY && maxTextHeight + translateY <= secondLineY) {
                     // 中间条目
-                    //canvas.clipRect(0, 0, measuredWidth,   maxTextHeight);
+                    // canvas.clipRect(0, 0, measuredWidth, maxTextHeight);
                     //让文字居中
                     float Y = maxTextHeight - CENTER_CONTENT_OFFSET;//因为圆弧角换算的向下取值，导致角度稍微有点偏差，加上画笔的基线会偏上，因此需要偏移量修正一下
                     canvas.drawText(contentText, drawCenterContentStart, Y, paintCenterText);
 
-                    int preSelectedItem = adapter.indexOf(visibles[counter]);
-
-                    selectedItem = preSelectedItem;
+                    //设置选中项
+                    selectedItem = preCurrentIndex - (itemsVisible / 2 - counter);
 
                 } else {
                     // 其他条目
@@ -525,9 +532,9 @@ public class WheelView extends View {
     }
 
     /**
-     * 根据文字的长度 重新设置文字的大小 让其能完全显示
+     * reset the size of the text Let it can fully display
      *
-     * @param contentText
+     * @param contentText item text content.
      */
     private void reMeasureTextSize(String contentText) {
         Rect rect = new Rect();
@@ -559,9 +566,9 @@ public class WheelView extends View {
     }
 
     /**
-     * 根据传进来的对象获取getPickerViewText()方法，来获取需要显示的值
+     * 获取所显示的数据源
      *
-     * @param item 数据源的item
+     * @param item data resource
      * @return 对应显示的字符串
      */
     private String getContentText(Object item) {
@@ -626,37 +633,33 @@ public class WheelView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         boolean eventConsumed = gestureDetector.onTouchEvent(event);
+        boolean isIgnore = false;//超过边界滑动时，不再绘制UI。
+
+        float top = -initPosition * itemHeight;
+        float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
+        float ratio = 0.25f;
+
         switch (event.getAction()) {
-            //按下
             case MotionEvent.ACTION_DOWN:
                 startTime = System.currentTimeMillis();
                 cancelFuture();
                 previousY = event.getRawY();
                 break;
-            //滑动中
-            case MotionEvent.ACTION_MOVE:
 
+            case MotionEvent.ACTION_MOVE:
                 float dy = previousY - event.getRawY();
                 previousY = event.getRawY();
                 totalScrollY = totalScrollY + dy;
 
-                float ratio = 0.5f;
-                // 边界处理。
+                // normal mode。
                 if (!isLoop) {
-                    float top = -initPosition * itemHeight;
-                    float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
-
-                    if (totalScrollY + itemHeight * ratio < top) {
-                        top = totalScrollY - dy;
-
-                    } else if (totalScrollY - itemHeight * ratio > bottom) {
-                        bottom = totalScrollY - dy;
-                    }
-
-                    if (totalScrollY < top) {
-                        totalScrollY = (int) top;
-                    } else if (totalScrollY > bottom) {
-                        totalScrollY = (int) bottom;
+                    if ((totalScrollY - itemHeight * ratio < top && dy < 0)
+                            || (totalScrollY + itemHeight * ratio > bottom && dy > 0)) {
+                        //快滑动到边界了，设置已滑动到边界的标志
+                        totalScrollY -= dy;
+                        isIgnore = true;
+                    } else {
+                        isIgnore = false;
                     }
                 }
                 break;
@@ -695,25 +698,16 @@ public class WheelView extends View {
                 }
                 break;
         }
-
-        invalidate();
+        if (!isIgnore && event.getAction() != MotionEvent.ACTION_DOWN) {
+            invalidate();
+        }
         return true;
     }
 
-    /**
-     * 获取Item个数
-     *
-     * @return item个数
-     */
     public int getItemsCount() {
         return adapter != null ? adapter.getItemsCount() : 0;
     }
 
-    /**
-     * 附加在右边的单位字符串
-     *
-     * @param label 单位
-     */
     public void setLabel(String label) {
         this.label = label;
     }
@@ -726,7 +720,7 @@ public class WheelView extends View {
         this.mGravity = gravity;
     }
 
-    public int getTextWidth(Paint paint, String str) {//计算文字宽度
+    public int getTextWidth(Paint paint, String str) { //calculate text width
         int iRet = 0;
         if (str != null && str.length() > 0) {
             int len = str.length();
@@ -743,20 +737,15 @@ public class WheelView extends View {
         isOptions = options;
     }
 
-
     public void setTextColorOut(int textColorOut) {
-        if (textColorOut != 0) {
-            this.textColorOut = textColorOut;
-            paintOuterText.setColor(this.textColorOut);
-        }
+
+        this.textColorOut = textColorOut;
+        paintOuterText.setColor(this.textColorOut);
     }
 
     public void setTextColorCenter(int textColorCenter) {
-        if (textColorCenter != 0) {
-
-            this.textColorCenter = textColorCenter;
-            paintCenterText.setColor(this.textColorCenter);
-        }
+        this.textColorCenter = textColorCenter;
+        paintCenterText.setColor(this.textColorCenter);
     }
 
     public void setTextXOffset(int textXOffset) {
@@ -767,10 +756,8 @@ public class WheelView extends View {
     }
 
     public void setDividerColor(int dividerColor) {
-        if (dividerColor != 0) {
-            this.dividerColor = dividerColor;
-            paintIndicator.setColor(this.dividerColor);
-        }
+        this.dividerColor = dividerColor;
+        paintIndicator.setColor(dividerColor);
     }
 
     public void setDividerType(DividerType dividerType) {
@@ -800,16 +787,8 @@ public class WheelView extends View {
         return itemHeight;
     }
 
-    public void setItemHeight(float itemHeight) {
-        this.itemHeight = itemHeight;
-    }
-
     public int getInitPosition() {
         return initPosition;
-    }
-
-    public void setInitPosition(int initPosition) {
-        this.initPosition = initPosition;
     }
 
     @Override

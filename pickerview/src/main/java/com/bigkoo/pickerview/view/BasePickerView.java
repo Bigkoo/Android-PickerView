@@ -224,12 +224,12 @@ public class BasePickerView {
 
     }
 
-    public Animation getInAnimation() {
+    private Animation getInAnimation() {
         int res = PickerViewAnimateUtil.getAnimationResource(this.animGravity, true);
         return AnimationUtils.loadAnimation(context, res);
     }
 
-    public Animation getOutAnimation() {
+    private Animation getOutAnimation() {
         int res = PickerViewAnimateUtil.getAnimationResource(this.animGravity, false);
         return AnimationUtils.loadAnimation(context, res);
     }
@@ -318,7 +318,7 @@ public class BasePickerView {
 
             Window dialogWindow = mDialog.getWindow();
             if (dialogWindow != null) {
-                dialogWindow.setWindowAnimations(R.style.pickerview_dialogAnim);
+                dialogWindow.setWindowAnimations(R.style.picker_view_scale_anim);
                 dialogWindow.setGravity(Gravity.CENTER);//可以改成Bottom
             }
 
@@ -333,17 +333,28 @@ public class BasePickerView {
         }
     }
 
-    public void showDialog() {
+    private void showDialog() {
         if (mDialog != null) {
             mDialog.show();
         }
     }
 
-    public void dismissDialog() {
+    private void dismissDialog() {
         if (mDialog != null) {
             mDialog.dismiss();
         }
     }
+
+    public ViewGroup getDialogContainerLayout() {
+        return contentContainer;
+    }
+
+
+    public Dialog getDialog() {
+        return mDialog;
+    }
+
+
 
     public boolean isDialog() {
         return false;

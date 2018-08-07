@@ -1,15 +1,19 @@
 package com.bigkoo.pickerviewdemo;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -164,13 +168,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                      * @param weight
                      */
                     private void setTimePickerChildWeight(View v, float yearWeight, float weight) {
-                        ViewGroup timepicker = (ViewGroup) v.findViewById(R.id.timepicker);
-                        View year = timepicker.getChildAt(0);
+                        ViewGroup timePicker = (ViewGroup) v.findViewById(R.id.timepicker);
+                        View year = timePicker.getChildAt(0);
                         LinearLayout.LayoutParams lp = ((LinearLayout.LayoutParams) year.getLayoutParams());
                         lp.weight = yearWeight;
                         year.setLayoutParams(lp);
-                        for (int i = 1; i < timepicker.getChildCount(); i++) {
-                            View childAt = timepicker.getChildAt(i);
+                        for (int i = 1; i < timePicker.getChildCount(); i++) {
+                            View childAt = timePicker.getChildAt(i);
                             LinearLayout.LayoutParams childLp = ((LinearLayout.LayoutParams) childAt.getLayoutParams());
                             childLp.weight = weight;
                             childAt.setLayoutParams(childLp);
@@ -184,54 +188,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    /*private void initTimePicker() {
-        //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
-        //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
-        Calendar selectedDate = Calendar.getInstance();
-        Calendar startDate = Calendar.getInstance();
-        startDate.set(2013, 0, 23);
-        Calendar endDate = Calendar.getInstance();
-        endDate.set(2019, 11, 28);
-        //时间选择器
-        pvTime = new TimePickerView.Builder(this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
-                btn_Time.setText(getTime(date));
-                Button btn = (Button) v;
-                btn.setText(getTime(date));
-            }
-        })
-                //年月日时分秒 的显示与否，不设置则默认全部显示
-                .setType(new boolean[]{true, true, true, false, false, false})
-                .setLabel("", "", "", "", "", "")
-                .isCenterLabel(false)
-                .setDividerColor(Color.DKGRAY)
-                .setContentTextSize(21)
-                .setDate(selectedDate)
-                .setRangDate(startDate, endDate)
-//                .setBackgroundId(0x00FFFFFF) //设置外部遮罩颜色
-//                .setDecorView(null)
-                .build();
-    }*/
-
-    private void initTimePicker() {
+    private void initTimePicker() {//Dialog 模式下，在底部弹出
 
         pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
                 Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
+                Log.i("pvTime", "onTimeSelect");
+
             }
         })
                 .setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
                     @Override
                     public void onTimeSelectChanged(Date date) {
-                        Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
+                        Log.i("pvTime", "onTimeSelectChanged");
                     }
                 })
                 .setType(new boolean[]{true, true, true, true, true, true})
+                .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
                 .build();
 
+        Dialog mDialog = pvTime.getDialog();
+        if (mDialog != null) {
+
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    Gravity.BOTTOM);
+
+            params.leftMargin = 0;
+            params.rightMargin = 0;
+            pvTime.getDialogContainerLayout().setLayoutParams(params);
+
+            Window dialogWindow = mDialog.getWindow();
+            if (dialogWindow != null) {
+                dialogWindow.setWindowAnimations(com.bigkoo.pickerview.R.style.picker_view_slide_anim);//修改动画样式
+                dialogWindow.setGravity(Gravity.BOTTOM);//改成Bottom,底部显示
+            }
+        }
     }
 
 
@@ -428,8 +422,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
                     }
                 })
+                // .setSelectOptions(0, 1, 1)
                 .build();
         pvNoLinkOptions.setNPicker(food, clothes, computer);
+        pvNoLinkOptions.setSelectOptions(0, 1, 1);
 
 
     }
@@ -496,7 +492,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         clothes.add("Nike");
         clothes.add("Adidas");
-        clothes.add("Anima");
+        clothes.add("Armani");
 
         computer.add("ASUS");
         computer.add("Lenovo");
