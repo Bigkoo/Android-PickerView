@@ -44,6 +44,8 @@ public class WheelView extends View {
         FILL, WRAP
     }
 
+    private static final String[] TIME_NUM = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09"};
+
     private DividerType dividerType;//分隔线类型
 
     private Context context;
@@ -578,9 +580,13 @@ public class WheelView extends View {
             return ((IPickerViewData) item).getPickerViewText();
         } else if (item instanceof Integer) {
             //如果为整形则最少保留两位数.
-            return String.format(Locale.getDefault(), "%02d", (int) item);
+            return getFixNum((int) item);
         }
         return item.toString();
+    }
+
+    private String getFixNum(int timeNum) {
+        return timeNum >= 0 && timeNum < 10 ? TIME_NUM[timeNum] : String.valueOf(timeNum);
     }
 
     private void measuredCenterContentStart(String content) {
