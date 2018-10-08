@@ -293,7 +293,7 @@ public class WheelView extends View {
      * @param cyclic 是否循环
      */
     public final void setCyclic(boolean cyclic) {
-        isLoop = cyclic;
+        isLoop = true;
     }
 
     public final void setTypeface(Typeface font) {

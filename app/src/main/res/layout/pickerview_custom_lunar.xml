@@ -6,32 +6,39 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#EEEEEE">
+        android:layout_height="44dp"
+        android:background="@drawable/title_background">
 
         <View
             android:layout_width="match_parent"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:layout_height="0.5dp"
             android:background="#aaa" />
 
-        <ImageView
+        <TextView
             android:id="@+id/iv_cancel"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="17dp"
-            android:padding="8dp"
-            android:src="@drawable/to_down" />
-
-        <CheckBox
-            android:layout_centerInParent="true"
-            android:id="@+id/cb_lunar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="17dp"
-            android:text="农历"
-            android:textColor="#24AD9D"
-            android:textSize="18sp" />
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="取消"
+            android:visibility="gone"
+            android:textColor="#999999"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:visibility="visible"
+            android:text="订单时间为变身时间吗？"
+            android:textColor="#999999"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tv_finish"
@@ -39,13 +46,22 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="17dp"
-            android:padding="8dp"
-            android:text="完成"
-            android:textColor="#24AD9D"
-            android:textSize="18sp" />
-
+            android:layout_marginRight="12dp"
+            android:text="确定"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tv_no_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/tv_finish"
+            android:text="暂不确定"
+            android:textColor="#999999"
+            android:textSize="15sp" />
         <View
+            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="#aaa" />
@@ -67,7 +83,6 @@
             android:layout_weight="1" />
 
         <com.contrarywind.view.WheelView
-
             android:id="@+id/month"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
