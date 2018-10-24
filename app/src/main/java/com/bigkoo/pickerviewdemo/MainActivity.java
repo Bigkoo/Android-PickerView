@@ -224,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (dialogWindow != null) {
                 dialogWindow.setWindowAnimations(com.bigkoo.pickerview.R.style.picker_view_slide_anim);//修改动画样式
                 dialogWindow.setGravity(Gravity.BOTTOM);//改成Bottom,底部显示
+                dialogWindow.setDimAmount(0.1f);
             }
         }
     }
@@ -395,6 +396,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 .isDialog(true)
+                .setOutSideCancelable(false)
                 .build();
 
         pvCustomOptions.setPicker(cardItem);//添加数据
