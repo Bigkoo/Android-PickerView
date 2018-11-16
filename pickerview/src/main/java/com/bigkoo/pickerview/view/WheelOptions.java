@@ -128,6 +128,7 @@ public class WheelOptions<T> {
                 if (mOptions3Items != null) {
                     int opt1Select = wv_option1.getCurrentItem();
                     opt1Select = opt1Select >= mOptions3Items.size() - 1 ? mOptions3Items.size() - 1 : opt1Select;
+                    //新增 ： 当二级数据长度不为0时，才进行后续的操作
                     if (mOptions2Items.get(opt1Select).size() != 0){
                         index = index >= mOptions2Items.get(opt1Select).size() - 1 ? mOptions2Items.get(opt1Select).size() - 1 : index;
 
@@ -337,14 +338,16 @@ public class WheelOptions<T> {
     public int[] getCurrentItems() {
         int[] currentItems = new int[3];
         currentItems[0] = wv_option1.getCurrentItem();
-
-        if (mOptions2Items != null && mOptions2Items.size() > 0) {//非空判断
+        //新增 ：  mOptions2Items.get(currentItems[0]).size() > 0
+        //一级对应二级数据长度不为0
+        if (mOptions2Items != null && mOptions2Items.size() > 0 && mOptions2Items.get(currentItems[0]).size() > 0) {//非空判断
             currentItems[1] = wv_option2.getCurrentItem() > (mOptions2Items.get(currentItems[0]).size() - 1) ? 0 : wv_option2.getCurrentItem();
         } else {
             currentItems[1] = wv_option2.getCurrentItem();
         }
-
-        if (mOptions3Items != null && mOptions3Items.size() > 0) {//非空判断
+        //新增 ：  mOptions3Items.get(currentItems[1]).size() > 0
+        //一级对应二级数据长度不为0
+        if (mOptions3Items != null && mOptions3Items.size() > 0 && mOptions3Items.get( currentItems[1]).size() > 0) {//非空判断
             currentItems[2] = wv_option3.getCurrentItem() > (mOptions3Items.get(currentItems[0]).get(currentItems[1]).size() - 1) ? 0 : wv_option3.getCurrentItem();
         } else {
             currentItems[2] = wv_option3.getCurrentItem();
