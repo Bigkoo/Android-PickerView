@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ArrayList<ProvinceBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
+    private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
 
     private Button btn_Options;
     private Button btn_CustomOptions;
@@ -321,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setTitleText("城市选择")
                 .setContentTextSize(20)//设置滚轮文字大小
                 .setDividerColor(Color.LTGRAY)//设置分割线的颜色
-                .setSelectOptions(0, 1)//默认选中项
+                .setSelectOptions(0,0,0)//默认选中项
                 .setBgColor(Color.BLACK)
                 .setTitleBgColor(Color.DKGRAY)
                 .setTitleColor(Color.LTGRAY)
@@ -343,8 +344,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        pvOptions.setSelectOptions(1,1);
         /*pvOptions.setPicker(options1Items);//一级选择器*/
-        pvOptions.setPicker(options1Items, options2Items);//二级选择器
-        /*pvOptions.setPicker(options1Items, options2Items,options3Items);//三级选择器*/
+        //pvOptions.setPicker(options1Items, options2Items);//二级选择器
+        pvOptions.setPicker(options1Items, options2Items,options3Items);//三级选择器*/
     }
 
     private void initCustomOptionPicker() {//条件选择器初始化，自定义布局
@@ -453,10 +454,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //选项2
         ArrayList<String> options2Items_01 = new ArrayList<>();
-        options2Items_01.add("广州");
-        options2Items_01.add("佛山");
-        options2Items_01.add("东莞");
-        options2Items_01.add("珠海");
+//        options2Items_01.add("广州");
+//        options2Items_01.add("佛山");
+//        options2Items_01.add("东莞");
+//        options2Items_01.add("珠海");
         ArrayList<String> options2Items_02 = new ArrayList<>();
         options2Items_02.add("长沙");
         options2Items_02.add("岳阳");
@@ -469,6 +470,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         options2Items.add(options2Items_02);
         options2Items.add(options2Items_03);
 
+        //选项3
+        ArrayList<ArrayList<String>> options3Items_01 = new ArrayList<>();
+        ArrayList<String> options3Items_01_01 = new ArrayList<>();
+//        options3Items_01_01.add("福州");
+//        options3Items_01_01.add("福州");
+//        options3Items_01_01.add("福州");
+        ArrayList<String> options3Items_01_02 = new ArrayList<>();
+        options3Items_01_02.add("德化");
+        options3Items_01_02.add("德化");
+        options3Items_01_02.add("德化");
+        options3Items_01.add(options3Items_01_01);
+        options3Items_01.add(options3Items_01_02);
+        ArrayList<ArrayList<String>> options3Items_02 = new ArrayList<>();
+        ArrayList<String> options3Items_02_01 = new ArrayList<>();
+        options3Items_02_01.add("福州");
+        options3Items_02_01.add("厦门");
+        options3Items_02_01.add("厦门");
+        options3Items_02.add(options3Items_02_01);
+        ArrayList<ArrayList<String>> options3Items_03 = new ArrayList<>();
+        ArrayList<String> options3Items_03_01 = new ArrayList<>();
+        options3Items_03_01.add("福州");
+        options3Items_03_01.add("厦门");
+        options3Items_03_01.add("泉州");
+        options3Items_03.add(options3Items_03_01);
+
+        options3Items.add(options3Items_01);
+        options3Items.add(options3Items_02);
+        options3Items.add(options3Items_03);
         /*--------数据源添加完毕---------*/
     }
 
@@ -486,7 +515,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getNoLinkData() {
-        food.add("KFC");
+        food.add("KFCMacDonaldMacDonaldMacDonaldMacDonaldMacDonaldMacDonaldMacDonaldMacDonaldMacDonaldMacDonald");
         food.add("MacDonald");
         food.add("Pizza hut");
 

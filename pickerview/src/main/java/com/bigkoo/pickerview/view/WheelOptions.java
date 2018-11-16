@@ -128,7 +128,11 @@ public class WheelOptions<T> {
                 if (mOptions3Items != null) {
                     int opt1Select = wv_option1.getCurrentItem();
                     opt1Select = opt1Select >= mOptions3Items.size() - 1 ? mOptions3Items.size() - 1 : opt1Select;
-                    index = index >= mOptions2Items.get(opt1Select).size() - 1 ? mOptions2Items.get(opt1Select).size() - 1 : index;
+                    if (mOptions2Items.get(opt1Select).size() == 0){
+                        index = 0;
+                    }else{
+                        index = index >= mOptions2Items.get(opt1Select).size() - 1 ? mOptions2Items.get(opt1Select).size() - 1 : index;
+                    }
                     int opt3 = 0;
                     if (!isRestoreItem) {
                         // wv_option3.getCurrentItem() 上一个opt3的选中位置

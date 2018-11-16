@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Handler;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -35,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  * 3d滚轮控件
  */
 public class WheelView extends View {
-
+    protected final String TAG = this.getClass().getSimpleName();
     public enum ACTION { // 点击，滑翔(滑到尽头)，拖拽事件
         CLICK, FLING, DAGGLE
     }
@@ -44,7 +45,10 @@ public class WheelView extends View {
         FILL, WRAP
     }
 
-    private DividerType dividerType;//分隔线类型
+    /**
+     * 分隔线类型
+     */
+    private DividerType dividerType;
 
     private Context context;
     private Handler handler;
@@ -439,6 +443,11 @@ public class WheelView extends View {
         //只显示选中项Label文字的模式，并且Label文字不为空，则进行绘制
         if (!TextUtils.isEmpty(label) && isCenterLabel) {
             //绘制文字，靠右并留出空隙
+            final int availableTitleWidth = measuredWidth ;
+            Log.d(TAG, "onDraw: " + availableTitleWidth);
+            label = TextUtils.ellipsize(label, new TextPaint(paintCenterText), availableTitleWidth,
+                    TextUtils.TruncateAt.END).toString();
+
             int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
             canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
         }
@@ -541,19 +550,24 @@ public class WheelView extends View {
         paintCenterText.getTextBounds(contentText, 0, contentText.length(), rect);
         int width = rect.width();
         int size = textSize;
-        while (width > measuredWidth) {
-            size--;
-            //设置2条横线中间的文字大小
-            paintCenterText.setTextSize(size);
-            paintCenterText.getTextBounds(contentText, 0, contentText.length(), rect);
-            width = rect.width();
-        }
+//        while (width > measuredWidth) {
+//            size--;
+//            //设置2条横线中间的文字大小
+//            paintCenterText.setTextSize(size);
+//            paintCenterText.getTextBounds(contentText, 0, contentText.length(), rect);
+//            width = rect.width();
+//        }
         //设置2条横线外面的文字大小
         paintOuterText.setTextSize(size);
+        paintCenterText.setTextSize(size);
     }
 
 
-    //递归计算出对应的index
+    /**
+     * 递归计算出对应的index
+     * @param index
+     * @return
+     */
     private int getLoopMappingIndex(int index) {
         if (index < 0) {
             index = index + adapter.getItemsCount();
@@ -587,7 +601,8 @@ public class WheelView extends View {
         Rect rect = new Rect();
         paintCenterText.getTextBounds(content, 0, content.length(), rect);
         switch (mGravity) {
-            case Gravity.CENTER://显示内容居中
+            //显示内容居中
+            case Gravity.CENTER:
                 if (isOptions || label == null || label.equals("") || !isCenterLabel) {
                     drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
                 } else {//只显示中间label时，时间选择器内容偏左一点，留出空间绘制单位标签
@@ -597,7 +612,8 @@ public class WheelView extends View {
             case Gravity.LEFT:
                 drawCenterContentStart = 0;
                 break;
-            case Gravity.RIGHT://添加偏移量
+            //添加偏移量
+            case Gravity.RIGHT:
                 drawCenterContentStart = measuredWidth - rect.width() - (int) CENTER_CONTENT_OFFSET;
                 break;
         }
