@@ -128,24 +128,23 @@ public class WheelOptions<T> {
                 if (mOptions3Items != null) {
                     int opt1Select = wv_option1.getCurrentItem();
                     opt1Select = opt1Select >= mOptions3Items.size() - 1 ? mOptions3Items.size() - 1 : opt1Select;
-                    if (mOptions2Items.get(opt1Select).size() == 0){
-                        index = 0;
-                    }else{
+                    if (mOptions2Items.get(opt1Select).size() != 0){
                         index = index >= mOptions2Items.get(opt1Select).size() - 1 ? mOptions2Items.get(opt1Select).size() - 1 : index;
-                    }
-                    int opt3 = 0;
-                    if (!isRestoreItem) {
-                        // wv_option3.getCurrentItem() 上一个opt3的选中位置
-                        //新opt3的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
-                        opt3 = wv_option3.getCurrentItem() >= mOptions3Items.get(opt1Select).get(index).size() - 1 ?
-                                mOptions3Items.get(opt1Select).get(index).size() - 1 : wv_option3.getCurrentItem();
-                    }
-                    wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(wv_option1.getCurrentItem()).get(index)));
-                    wv_option3.setCurrentItem(opt3);
 
-                    //3级联动数据实时回调
-                    if (optionsSelectChangeListener != null) {
-                        optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), index, opt3);
+                        int opt3 = 0;
+                        if (!isRestoreItem) {
+                            // wv_option3.getCurrentItem() 上一个opt3的选中位置
+                            //新opt3的位置，判断如果旧位置没有超过数据范围，则沿用旧位置，否则选中最后一项
+                            opt3 = wv_option3.getCurrentItem() >= mOptions3Items.get(opt1Select).get(index).size() - 1 ?
+                                    mOptions3Items.get(opt1Select).get(index).size() - 1 : wv_option3.getCurrentItem();
+                        }
+                        wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(wv_option1.getCurrentItem()).get(index)));
+                        wv_option3.setCurrentItem(opt3);
+
+                        //3级联动数据实时回调
+                        if (optionsSelectChangeListener != null) {
+                            optionsSelectChangeListener.onOptionsSelectChanged(wv_option1.getCurrentItem(), index, opt3);
+                        }
                     }
                 } else {//只有2级联动数据，滑动第2项回调
                     if (optionsSelectChangeListener != null) {
