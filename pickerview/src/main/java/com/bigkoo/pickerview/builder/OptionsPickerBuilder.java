@@ -2,6 +2,7 @@ package com.bigkoo.pickerview.builder;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.bigkoo.pickerview.configure.PickerOptions;
@@ -48,6 +49,12 @@ public class OptionsPickerBuilder {
         mPickerOptions.isDialog = isDialog;
         return this;
     }
+
+    public OptionsPickerBuilder setOnCancelClickListener(View.OnClickListener cancelListener) {
+        mPickerOptions.cancelListener = cancelListener;
+        return this;
+    }
+
 
     public OptionsPickerBuilder setSubmitColor(int textColorConfirm) {
         mPickerOptions.textColorConfirm = textColorConfirm;

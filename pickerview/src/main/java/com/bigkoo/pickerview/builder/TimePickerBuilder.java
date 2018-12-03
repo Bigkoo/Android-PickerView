@@ -1,13 +1,14 @@
 package com.bigkoo.pickerview.builder;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.bigkoo.pickerview.configure.PickerOptions;
-import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
-import com.bigkoo.pickerview.view.TimePickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.contrarywind.view.WheelView;
 
 import java.util.Calendar;
@@ -33,6 +34,10 @@ public class TimePickerBuilder {
         return this;
     }
 
+    public TimePickerBuilder addOnCancelClickListener(View.OnClickListener cancelListener) {
+        mPickerOptions.cancelListener = cancelListener;
+        return this;
+    }
 
     /**
      * new boolean[]{true, true, true, false, false, false}

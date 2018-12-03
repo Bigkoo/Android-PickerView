@@ -63,9 +63,7 @@ public class WheelTime {
         this.type = type;
         this.gravity = gravity;
         this.textSize = textSize;
-        setView(view);
     }
-
 
     public void setLunarMode(boolean isLunarCalendar) {
         this.isLunarCalendar = isLunarCalendar;
@@ -784,10 +782,6 @@ public class WheelTime {
 
     public View getView() {
         return view;
-    }
-
-    public void setView(View view) {
-        this.view = view;
     }
 
     public int getStartYear() {

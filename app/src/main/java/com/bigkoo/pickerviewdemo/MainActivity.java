@@ -206,6 +206,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 })
                 .setType(new boolean[]{true, true, true, true, true, true})
                 .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
+                .addOnCancelClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.i("pvTime", "onCancelClickListener");
+                    }
+                })
                 .build();
 
         Dialog mDialog = pvTime.getDialog();
