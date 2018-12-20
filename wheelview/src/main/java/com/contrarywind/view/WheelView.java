@@ -44,6 +44,10 @@ public class WheelView extends View {
         FILL, WRAP
     }
 
+    public enum LabelGravity{ // label
+        RIGHT/*最右边*/, AFTER_CONTENT/*文字后面*/
+    }
+
     private DividerType dividerType;//分隔线类型
 
     private Context context;
@@ -61,6 +65,7 @@ public class WheelView extends View {
     private Paint paintOuterText;
     private Paint paintCenterText;
     private Paint paintIndicator;
+    private Paint paintCenterBg;
 
     private WheelAdapter adapter;
 
@@ -76,6 +81,7 @@ public class WheelView extends View {
     private int textColorOut;
     private int textColorCenter;
     private int dividerColor;
+    private int centerItemBgColor;
 
     // 条目间距倍数
     private float lineSpacingMultiplier = 1.6F;
@@ -118,10 +124,15 @@ public class WheelView extends View {
     private int widthMeasureSpec;
 
     private int mGravity = Gravity.CENTER;
+    private LabelGravity mLabelGravity = LabelGravity.RIGHT;
     private int drawCenterContentStart = 0;//中间选中文字开始绘制位置
     private int drawOutContentStart = 0;//非中间文字开始绘制位置
     private static final float SCALE_CONTENT = 0.8F;//非中间文字则用此控制高度，压扁形成3d错觉
     private float CENTER_CONTENT_OFFSET;//偏移量
+
+    //item内容的最大宽度
+    private int maxItemContentWidth;
+    private String maxItemContent = "";
 
     private final float DEFAULT_TEXT_TARGET_SKEWX = 0.5f;
 
@@ -154,6 +165,7 @@ public class WheelView extends View {
             mGravity = a.getInt(R.styleable.pickerview_wheelview_gravity, Gravity.CENTER);
             textColorOut = a.getColor(R.styleable.pickerview_wheelview_textColorOut, 0xFFa8a8a8);
             textColorCenter = a.getColor(R.styleable.pickerview_wheelview_textColorCenter, 0xFF2a2a2a);
+            centerItemBgColor = a.getColor(R.styleable.pickerview_wheelview_centerItemBgColor, 0x00000000);
             dividerColor = a.getColor(R.styleable.pickerview_wheelview_dividerColor, 0xFFd5d5d5);
             textSize = a.getDimensionPixelOffset(R.styleable.pickerview_wheelview_textSize, textSize);
             lineSpacingMultiplier = a.getFloat(R.styleable.pickerview_wheelview_lineSpacingMultiplier, lineSpacingMultiplier);
@@ -204,6 +216,10 @@ public class WheelView extends View {
         paintIndicator = new Paint();
         paintIndicator.setColor(dividerColor);
         paintIndicator.setAntiAlias(true);
+
+        paintCenterBg = new Paint();
+        paintCenterBg.setColor(centerItemBgColor);
+        paintCenterBg.setAntiAlias(true);
 
         setLayerType(LAYER_TYPE_SOFTWARE, null);
     }
@@ -324,8 +340,24 @@ public class WheelView extends View {
 
     public final void setAdapter(WheelAdapter adapter) {
         this.adapter = adapter;
+        measureMaxItemContentWidth();
         remeasure();
         invalidate();
+    }
+
+    private void measureMaxItemContentWidth(){
+        if(adapter != null){
+            int maxWidth = 0;
+            for (int i = 0; i < adapter.getItemsCount(); i++) {
+                String content = adapter.getItem(i).toString();
+                int width = getTextWidth(paintCenterText, content);
+                if(width > maxWidth){
+                    maxWidth = width;
+                    maxItemContent = content;
+                }
+            }
+            maxItemContentWidth = maxWidth;
+        }
     }
 
     public final WheelAdapter getAdapter() {
@@ -414,6 +446,9 @@ public class WheelView extends View {
 
         }
 
+        //绘制中间item背景颜色
+        canvas.drawRect(0.0f, firstLineY, measuredWidth, secondLineY, paintCenterBg);
+
         //绘制中间两条横线
         if (dividerType == DividerType.WRAP) {//横线长度仅包裹内容
             float startX;
@@ -438,9 +473,15 @@ public class WheelView extends View {
 
         //只显示选中项Label文字的模式，并且Label文字不为空，则进行绘制
         if (!TextUtils.isEmpty(label) && isCenterLabel) {
-            //绘制文字，靠右并留出空隙
-            int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
-            canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
+            if(mLabelGravity == LabelGravity.RIGHT){
+                //绘制文字，靠右并留出空隙
+                int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
+                canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
+            }else {
+                measuredCenterContentStart(maxItemContent);
+                int drawRightContentStart = drawCenterContentStart + maxItemContentWidth;
+                canvas.drawText(label, drawRightContentStart + CENTER_CONTENT_OFFSET, centerY, paintCenterText);
+            }
         }
 
         counter = 0;
@@ -591,7 +632,11 @@ public class WheelView extends View {
                 if (isOptions || label == null || label.equals("") || !isCenterLabel) {
                     drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
                 } else {//只显示中间label时，时间选择器内容偏左一点，留出空间绘制单位标签
-                    drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
+                    if(mLabelGravity == LabelGravity.RIGHT){
+                        drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
+                    }else {
+                        drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
+                    }
                 }
                 break;
             case Gravity.LEFT:
@@ -611,7 +656,11 @@ public class WheelView extends View {
                 if (isOptions || label == null || label.equals("") || !isCenterLabel) {
                     drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
                 } else {//只显示中间label时，时间选择器内容偏左一点，留出空间绘制单位标签
-                    drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
+                    if(mLabelGravity == LabelGravity.RIGHT){
+                        drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
+                    }else {
+                        drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
+                    }
                 }
                 break;
             case Gravity.LEFT:
@@ -787,6 +836,35 @@ public class WheelView extends View {
         return itemHeight;
     }
 
+    public void setItemHeight(float itemHeight) {
+        this.itemHeight = itemHeight;
+    }
+
+    public int getItemsVisibleNum() {
+        return itemsVisible;
+    }
+
+    public void setItemsVisibleNum(int itemsVisible) {
+        this.itemsVisible = itemsVisible;
+    }
+
+    public int getCenterItemBgColor() {
+        return centerItemBgColor;
+    }
+
+    public void setCenterItemBgColor(int centerItemBgColor) {
+        this.centerItemBgColor = centerItemBgColor;
+        paintCenterBg.setColor(centerItemBgColor);
+    }
+
+    public LabelGravity getLabelGravity() {
+        return mLabelGravity;
+    }
+
+    public void setLabelGravity(LabelGravity mLabelGravity) {
+        this.mLabelGravity = mLabelGravity;
+    }
+  
     public int getInitPosition() {
         return initPosition;
     }

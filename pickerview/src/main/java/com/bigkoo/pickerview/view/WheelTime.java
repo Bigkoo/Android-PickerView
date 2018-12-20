@@ -710,6 +710,33 @@ public class WheelTime {
         wv_seconds.setCyclic(cyclic);
     }
 
+    public void setItemsVisibleNum(int visibleNum){
+        wv_year.setItemsVisibleNum(visibleNum);
+        wv_month.setItemsVisibleNum(visibleNum);
+        wv_day.setItemsVisibleNum(visibleNum);
+        wv_hours.setItemsVisibleNum(visibleNum);
+        wv_minutes.setItemsVisibleNum(visibleNum);
+        wv_seconds.setItemsVisibleNum(visibleNum);
+    }
+
+    public void setCenterItemBgColor(int color){
+        wv_year.setCenterItemBgColor(color);
+        wv_month.setCenterItemBgColor(color);
+        wv_day.setCenterItemBgColor(color);
+        wv_hours.setCenterItemBgColor(color);
+        wv_minutes.setCenterItemBgColor(color);
+        wv_seconds.setCenterItemBgColor(color);
+    }
+
+    public void setLabelGravity(WheelView.LabelGravity gravity){
+        wv_year.setLabelGravity(gravity);
+        wv_month.setLabelGravity(gravity);
+        wv_day.setLabelGravity(gravity);
+        wv_hours.setLabelGravity(gravity);
+        wv_minutes.setLabelGravity(gravity);
+        wv_seconds.setLabelGravity(gravity);
+    }
+
     public String getTime() {
         if (isLunarCalendar) {
             //如果是农历 返回对应的公历时间
