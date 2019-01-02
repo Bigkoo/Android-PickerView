@@ -61,6 +61,9 @@ public class PickerOptions {
     public Calendar endDate;//终止时间
     public int startYear;//开始年份
     public int endYear;//结尾年份
+    public int hoursStep;//时钟间隔
+    public int minutesStep;//分钟间隔
+    public int secondsStep;//秒钟间隔
 
     public boolean cyclic = false;//是否循环
     public boolean isLunarCalendar = false;//是否显示农历
