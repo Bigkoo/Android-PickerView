@@ -1,19 +1,15 @@
 package com.bigkoo.pickerviewdemo;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,13 +17,13 @@ import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
-import com.bigkoo.pickerview.listener.CustomListener;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerviewdemo.bean.CardBean;
 import com.bigkoo.pickerviewdemo.bean.ProvinceBean;
 
@@ -204,11 +200,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.i("pvTime", "onTimeSelectChanged");
                     }
                 })
-                .setType(new boolean[]{true, true, true, true, true, true})
-                .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
+                // .setRangDate(Calendar.getInstance(), null)
+                .setType(new boolean[]{true, true, true, true, true, false})
+                .setDate(Calendar.getInstance())
+                .setStepHours(2) // 时钟间隔
+                .setStepMinutes(5) // 分钟间隔
+                .setStepSeconds(15) // 秒钟间隔
+                .isCyclic(true)
+                .isCenterLabel(true)
+                // .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
+                .setDecorView((ViewGroup) getWindow().getDecorView().findViewById(android.R.id.content))
                 .build();
 
-        Dialog mDialog = pvTime.getDialog();
+        /*Dialog mDialog = pvTime.getDialog();
         if (mDialog != null) {
 
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
@@ -225,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 dialogWindow.setWindowAnimations(com.bigkoo.pickerview.R.style.picker_view_slide_anim);//修改动画样式
                 dialogWindow.setGravity(Gravity.BOTTOM);//改成Bottom,底部显示
             }
-        }
+        }*/
     }
 
 

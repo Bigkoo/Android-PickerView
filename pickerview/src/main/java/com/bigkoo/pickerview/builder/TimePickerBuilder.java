@@ -147,6 +147,35 @@ public class TimePickerBuilder {
         return this;
     }
 
+    /**
+     * 设置时钟间隔
+     *
+     * @param hoursStep
+     */
+    public TimePickerBuilder setStepHours(int hoursStep) {
+        mPickerOptions.hoursStep = hoursStep;
+        return this;
+    }
+
+    /**
+     * 设置分钟间隔
+     *
+     * @param minutesStep
+     */
+    public TimePickerBuilder setStepMinutes(int minutesStep) {
+        mPickerOptions.minutesStep = minutesStep;
+        return this;
+    }
+
+    /**
+     * 设置秒钟间隔
+     *
+     * @param secondsStep
+     */
+    public TimePickerBuilder setStepSeconds(int secondsStep) {
+        mPickerOptions.secondsStep = secondsStep;
+        return this;
+    }
 
     /**
      * 设置间距倍数,但是只能在1.0-4.0f之间

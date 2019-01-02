@@ -128,6 +128,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             setRangDate();
         }
 
+        setSteps();
         setTime();
         wheelTime.setLabels(mPickerOptions.label_year, mPickerOptions.label_month, mPickerOptions.label_day
                 , mPickerOptions.label_hours, mPickerOptions.label_minutes, mPickerOptions.label_seconds);
@@ -184,6 +185,13 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         } else if (mPickerOptions.endDate != null) {
             mPickerOptions.date = mPickerOptions.endDate;
         }
+    }
+
+    /**
+     * 设置时分秒的间隔, 要在setTime之前调用才有效果
+     */
+    private void setSteps() {
+        wheelTime.setSteps(mPickerOptions.hoursStep, mPickerOptions.minutesStep, mPickerOptions.secondsStep);
     }
 
     /**
