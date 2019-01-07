@@ -312,8 +312,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                String tx = options1Items.get(options1).getPickerViewText()
-                        + options2Items.get(options1).get(options2)
+                String opt1tx = options1Items.size() > 0 ? options1Items.get(options1).getPickerViewText() : "";
+                String opt2tx = options2Items.size() > 0 && options2Items.get(options1).size() > 0 ? options2Items.get(options1).get(options2) : "";
+                String tx = opt1tx + opt2tx
                        /* + options3Items.get(options1).get(options2).get(options3).getPickerViewText()*/;
                 btn_Options.setText(tx);
             }

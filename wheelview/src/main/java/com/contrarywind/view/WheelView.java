@@ -244,7 +244,7 @@ public class WheelView extends View {
      */
     private void measureTextWidthHeight() {
         Rect rect = new Rect();
-        for (int i = 0; i < adapter.getItemsCount(); i++) {
+        for (int i = 0; i <= adapter.getItemsCount(); i++) {
             String s1 = getContentText(adapter.getItem(i));
             paintCenterText.getTextBounds(s1, 0, s1.length(), rect);
 
