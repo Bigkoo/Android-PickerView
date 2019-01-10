@@ -105,10 +105,19 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                String tx = options1Items.get(options1).getPickerViewText() +
-                        options2Items.get(options1).get(options2) +
-                        options3Items.get(options1).get(options2).get(options3);
+                String opt1tx = options1Items.size() > 0 ?
+                        options1Items.get(options1).getPickerViewText() : "";
 
+                String opt2tx = options2Items.size() > 0
+                        && options2Items.get(options1).size() > 0 ?
+                        options2Items.get(options1).get(options2) : "";
+
+                String opt3tx = options2Items.size() > 0
+                        && options3Items.get(options1).size() > 0
+                        && options3Items.get(options1).get(options2).size() > 0 ?
+                        options3Items.get(options1).get(options2).get(options3) : "";
+
+                String tx = opt1tx + opt2tx + opt3tx;
                 Toast.makeText(JsonDataActivity.this, tx, Toast.LENGTH_SHORT).show();
             }
         })
@@ -154,12 +163,13 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 ArrayList<String> city_AreaList = new ArrayList<>();//该城市的所有地区列表
 
                 //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
-                if (jsonBean.get(i).getCityList().get(c).getArea() == null
+                /*if (jsonBean.get(i).getCityList().get(c).getArea() == null
                         || jsonBean.get(i).getCityList().get(c).getArea().size() == 0) {
                     city_AreaList.add("");
                 } else {
                     city_AreaList.addAll(jsonBean.get(i).getCityList().get(c).getArea());
-                }
+                }*/
+                city_AreaList.addAll(jsonBean.get(i).getCityList().get(c).getArea());
                 province_AreaList.add(city_AreaList);//添加该省所有地区数据
             }
 
