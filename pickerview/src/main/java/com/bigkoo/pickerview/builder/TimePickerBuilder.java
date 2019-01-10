@@ -1,6 +1,7 @@
 package com.bigkoo.pickerview.builder;
 
 import android.content.Context;
+import android.support.annotation.ColorInt;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -168,7 +169,8 @@ public class TimePickerBuilder {
      *
      * @param dividerColor
      */
-    public TimePickerBuilder setDividerColor(int dividerColor) {
+
+    public TimePickerBuilder setDividerColor(@ColorInt int dividerColor) {
         mPickerOptions.dividerColor = dividerColor;
         return this;
     }
@@ -184,13 +186,23 @@ public class TimePickerBuilder {
     }
 
     /**
-     * //显示时的外部背景色颜色,默认是灰色
+     * {@link #setOutSideColor} instead.
      *
-     * @param backgroundId
+     * @param backgroundId color resId.
      */
-
+    @Deprecated
     public TimePickerBuilder setBackgroundId(int backgroundId) {
-        mPickerOptions.backgroundId = backgroundId;
+        mPickerOptions.outSideColor = backgroundId;
+        return this;
+    }
+
+    /**
+     * 显示时的外部背景色颜色,默认是灰色
+     *
+     * @param outSideColor
+     */
+    public TimePickerBuilder setOutSideColor(@ColorInt int outSideColor) {
+        mPickerOptions.outSideColor = outSideColor;
         return this;
     }
 
@@ -199,7 +211,7 @@ public class TimePickerBuilder {
      *
      * @param textColorCenter
      */
-    public TimePickerBuilder setTextColorCenter(int textColorCenter) {
+    public TimePickerBuilder setTextColorCenter(@ColorInt int textColorCenter) {
         mPickerOptions.textColorCenter = textColorCenter;
         return this;
     }
@@ -209,7 +221,7 @@ public class TimePickerBuilder {
      *
      * @param textColorOut
      */
-    public TimePickerBuilder setTextColorOut(int textColorOut) {
+    public TimePickerBuilder setTextColorOut(@ColorInt int textColorOut) {
         mPickerOptions.textColorOut = textColorOut;
         return this;
     }
