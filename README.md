@@ -61,6 +61,11 @@
   startDate.set(2013,0,1);
   endDate.set(2020,11,1);
   
+ #### V4.1.7 版本更新说明（2019-1-10）
+ -  修复 WheelView在初始化时，数据为空导致height=0，造成一直显示不出来的问题。
+ -  新增取消按钮的点击事件监听入口。
+ -  参数注解添加，规范数据类型。
+ -  废弃setBackgroundId方法， 更新方法命名为 setOutSideColor。
  
  #### V4.1.6 版本更新说明（2018-7-24）
  -  优化wheelview 分割线设置 0x00000000 透明色不生效的问题。
@@ -78,7 +83,7 @@
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:4.1.6'
+compile 'com.contrarywind:Android-PickerView:4.1.7'
 ```
 或者
 
@@ -87,7 +92,7 @@ compile 'com.contrarywind:Android-PickerView:4.1.6'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>4.1.2</version>
+<version>4.1.7</version>
 <type>pom</type>
 </dependency>
 ```
@@ -255,7 +260,7 @@ pvOptions = new  OptionsPickerBuilder(this, new OptionsPickerView.OnOptionsSelec
 #### 6.若只需要WheelView基础控件自行扩展实现逻辑，可直接添加基础控件库，Gradle 依赖：
  
 ```java
-compile 'com.contrarywind:wheelview:4.0.8'
+compile 'com.contrarywind:wheelview:4.0.9'
 ```
 
 #### WheelView 使用代码示例：
