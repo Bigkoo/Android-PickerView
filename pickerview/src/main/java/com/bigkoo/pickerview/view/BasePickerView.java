@@ -86,8 +86,8 @@ public class BasePickerView {
             //将控件添加到decorView中
             rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, mPickerOptions.decorView, false);
             rootView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            if (mPickerOptions.backgroundId != -1) {
-                rootView.setBackgroundColor(mPickerOptions.backgroundId);
+            if (mPickerOptions.outSideColor != -1) {
+                rootView.setBackgroundColor(mPickerOptions.outSideColor);
             }
             //这个是真正要加载时间选取器的父布局
             contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
@@ -116,8 +116,7 @@ public class BasePickerView {
     }
 
     public void show(boolean isAnim) {
-        this.isAnim = isAnim;
-        show();
+        show(null, isAnim);
     }
 
     public void show(View v) {
@@ -353,7 +352,6 @@ public class BasePickerView {
     public Dialog getDialog() {
         return mDialog;
     }
-
 
 
     public boolean isDialog() {
