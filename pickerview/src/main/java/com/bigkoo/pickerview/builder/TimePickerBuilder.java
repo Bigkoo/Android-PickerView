@@ -5,6 +5,7 @@ import android.support.annotation.ColorInt;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bigkoo.pickerview.adapter.IMonthNameResolver;
 import com.bigkoo.pickerview.configure.PickerOptions;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
@@ -285,6 +286,11 @@ public class TimePickerBuilder {
      */
     public TimePickerBuilder setTimeSelectChangeListener(OnTimeSelectChangeListener listener) {
         mPickerOptions.timeSelectChangeListener = listener;
+        return this;
+    }
+
+    public TimePickerBuilder setMonthNameResolver(IMonthNameResolver resolver) {
+        mPickerOptions.mMonthNameResolver = resolver;
         return this;
     }
 

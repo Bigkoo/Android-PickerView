@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.bigkoo.pickerview.R;
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
+import com.bigkoo.pickerview.adapter.IMonthNameResolver;
 import com.bigkoo.pickerview.adapter.NumericWheelAdapter;
 import com.bigkoo.pickerview.listener.ISelectTimeCallback;
 import com.bigkoo.pickerview.utils.ChinaDate;
@@ -56,6 +57,7 @@ public class WheelTime {
     private WheelView.DividerType dividerType;
     private boolean isLunarCalendar = false;
     private ISelectTimeCallback mSelectChangeCallback;
+    private IMonthNameResolver mMonthNameResolver;
 
     public WheelTime(View view, boolean[] type, int gravity, int textSize) {
         super();
@@ -63,6 +65,11 @@ public class WheelTime {
         this.type = type;
         this.gravity = gravity;
         this.textSize = textSize;
+    }
+
+    public WheelTime set(IMonthNameResolver resolver){
+        mMonthNameResolver = resolver;
+        return this;
     }
 
     public void setLunarMode(boolean isLunarCalendar) {
@@ -261,18 +268,18 @@ public class WheelTime {
         // 月
         wv_month = (WheelView) view.findViewById(R.id.month);
         if (startYear == endYear) {//开始年等于终止年
-            wv_month.setAdapter(new NumericWheelAdapter(startMonth, endMonth));
+            wv_month.setAdapter(new NumericWheelAdapter(startMonth, endMonth).setMonthNameResolver(mMonthNameResolver));
             wv_month.setCurrentItem(month + 1 - startMonth);
         } else if (year == startYear) {
             //起始日期的月份控制
-            wv_month.setAdapter(new NumericWheelAdapter(startMonth, 12));
+            wv_month.setAdapter(new NumericWheelAdapter(startMonth, 12).setMonthNameResolver(mMonthNameResolver));
             wv_month.setCurrentItem(month + 1 - startMonth);
         } else if (year == endYear) {
             //终止日期的月份控制
-            wv_month.setAdapter(new NumericWheelAdapter(1, endMonth));
+            wv_month.setAdapter(new NumericWheelAdapter(1, endMonth).setMonthNameResolver(mMonthNameResolver));
             wv_month.setCurrentItem(month);
         } else {
-            wv_month.setAdapter(new NumericWheelAdapter(1, 12));
+            wv_month.setAdapter(new NumericWheelAdapter(1, 12).setMonthNameResolver(mMonthNameResolver));
             wv_month.setCurrentItem(month);
         }
         wv_month.setGravity(gravity);
@@ -424,7 +431,7 @@ public class WheelTime {
                     }
                 } else if (year_num == startYear) {//等于开始的年
                     //重新设置月份
-                    wv_month.setAdapter(new NumericWheelAdapter(startMonth, 12));
+                    wv_month.setAdapter(new NumericWheelAdapter(startMonth, 12).setMonthNameResolver(mMonthNameResolver));
 
                     if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
                         currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
@@ -442,7 +449,7 @@ public class WheelTime {
 
                 } else if (year_num == endYear) {
                     //重新设置月份
-                    wv_month.setAdapter(new NumericWheelAdapter(1, endMonth));
+                    wv_month.setAdapter(new NumericWheelAdapter(1, endMonth).setMonthNameResolver(mMonthNameResolver));
                     if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
                         currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
                         wv_month.setCurrentItem(currentMonthItem);
@@ -459,7 +466,7 @@ public class WheelTime {
 
                 } else {
                     //重新设置月份
-                    wv_month.setAdapter(new NumericWheelAdapter(1, 12));
+                    wv_month.setAdapter(new NumericWheelAdapter(1, 12).setMonthNameResolver(mMonthNameResolver));
                     //重新设置日
                     setReDay(year_num, wv_month.getCurrentItem() + 1, 1, 31, list_big, list_little);
                 }
