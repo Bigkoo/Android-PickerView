@@ -686,9 +686,9 @@ public class WheelTime {
 
     public void setTextXOffset(int x_offset_year, int x_offset_month, int x_offset_day,
                                int x_offset_hours, int x_offset_minutes, int x_offset_seconds) {
-        wv_day.setTextXOffset(x_offset_year);
+        wv_year.setTextXOffset(x_offset_year);
         wv_month.setTextXOffset(x_offset_month);
-        wv_year.setTextXOffset(x_offset_day);
+        wv_day.setTextXOffset(x_offset_day);
         wv_hours.setTextXOffset(x_offset_hours);
         wv_minutes.setTextXOffset(x_offset_minutes);
         wv_seconds.setTextXOffset(x_offset_seconds);
