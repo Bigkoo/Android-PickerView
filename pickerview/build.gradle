@@ -6,7 +6,6 @@ apply plugin: 'com.novoda.bintray-release'//添加JCenter插件
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
 
     defaultConfig {
         minSdkVersion 14
@@ -44,7 +43,7 @@ publish {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(path: ':wheelview')
-    compile 'com.android.support:support-annotations:28.0.0'
+//    compile fileTree(include: ['*.jar'], dir: 'libs')
+    api project(path: ':wheelview')
+    implementation 'com.android.support:support-annotations:28.0.0'
 }
