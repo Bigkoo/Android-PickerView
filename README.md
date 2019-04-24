@@ -61,6 +61,10 @@
   startDate.set(2013,0,1);
   endDate.set(2020,11,1);
   
+ #### V4.1.8 版本更新说明（2019-4-24）
+ -  更新gradle版本， wheelview基础库由 compile 改为 api 依赖，避免gradle 5.0+版本无法引入。
+ -  修复 setTextXOffset 赋值问题。
+  
  #### V4.1.7 版本更新说明（2019-1-10）
  -  修复 WheelView在初始化时，数据为空导致height=0，造成一直显示不出来的问题。
  -  新增取消按钮的点击事件监听入口。
@@ -83,7 +87,7 @@
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:4.1.7'
+compile 'com.contrarywind:Android-PickerView:4.1.8'
 ```
 或者
 
@@ -92,7 +96,7 @@ compile 'com.contrarywind:Android-PickerView:4.1.7'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>4.1.7</version>
+<version>4.1.8</version>
 <type>pom</type>
 </dependency>
 ```
