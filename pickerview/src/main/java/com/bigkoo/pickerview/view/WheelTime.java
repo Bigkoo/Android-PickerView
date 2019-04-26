@@ -47,10 +47,12 @@ public class WheelTime {
 
     private int textSize;
 
-    //文字的颜色和分割线的颜色
+    //文字的颜色和分割线的颜色、宽度、选中条目背景色
     private int textColorOut;
     private int textColorCenter;
     private int dividerColor;
+    private int dividerWidth;
+    private int selectItemBgColor;
 
     private float lineSpacingMultiplier;
     private WheelView.DividerType dividerType;
@@ -628,6 +630,24 @@ public class WheelTime {
         wv_seconds.setDividerColor(dividerColor);
     }
 
+    private void setDividerWidth() {
+        wv_day.setDividerWidth(dividerWidth);
+        wv_month.setDividerWidth(dividerWidth);
+        wv_year.setDividerWidth(dividerWidth);
+        wv_hours.setDividerWidth(dividerWidth);
+        wv_minutes.setDividerWidth(dividerWidth);
+        wv_seconds.setDividerWidth(dividerWidth);
+    }
+
+    private void setSelectItemBgColor() {
+        wv_day.setSelectItemBgColor(selectItemBgColor);
+        wv_month.setSelectItemBgColor(selectItemBgColor);
+        wv_year.setSelectItemBgColor(selectItemBgColor);
+        wv_hours.setSelectItemBgColor(selectItemBgColor);
+        wv_minutes.setSelectItemBgColor(selectItemBgColor);
+        wv_seconds.setSelectItemBgColor(selectItemBgColor);
+    }
+
     private void setDividerType() {
 
         wv_day.setDividerType(dividerType);
@@ -882,6 +902,26 @@ public class WheelTime {
     public void setDividerColor(int dividerColor) {
         this.dividerColor = dividerColor;
         setDividerColor();
+    }
+
+    /**
+     * 设置分割线的宽度
+     *
+     * @param dividerWidth
+     */
+    public void setDividerWidth(int dividerWidth) {
+        this.dividerWidth = dividerWidth;
+        setDividerWidth();
+    }
+
+    /**
+     * 设置选中条目的背景色
+     *
+     * @param selectItemBgColor
+     */
+    public void setSelectItemBgColor(int selectItemBgColor) {
+        this.selectItemBgColor = selectItemBgColor;
+        setSelectItemBgColor();
     }
 
     /**

@@ -169,6 +169,26 @@ public class TimePickerBuilder {
     }
 
     /**
+     * 设置分割线的宽度
+     *
+     * @param dividerWidth
+     */
+    public TimePickerBuilder setDividerWidth(int dividerWidth) {
+        mPickerOptions.dividerWidth = dividerWidth;
+        return this;
+    }
+
+    /**
+     * 设置选中条目的颜色
+     *
+     * @param selectItemBgColor
+     */
+    public TimePickerBuilder setSelectItemBgColor(int selectItemBgColor) {
+        mPickerOptions.selectItemBgColor = selectItemBgColor;
+        return this;
+    }
+
+    /**
      * 设置分割线的类型
      *
      * @param dividerType

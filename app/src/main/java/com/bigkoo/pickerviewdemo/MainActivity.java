@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -206,6 +207,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 })
                 .setType(new boolean[]{true, true, true, true, true, true})
                 .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
+                .setDividerWidth(5)//设置选中条目分割线的线宽，单位px，若不设置默认为1
+                .setDividerColor(Color.RED)
+                .setSelectItemBgColor(Color.GREEN)//设置选中条目的背景色，若不设置默认为0xFFe7e7e7
                 .build();
 
         Dialog mDialog = pvTime.getDialog();
