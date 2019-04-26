@@ -1,13 +1,15 @@
 package com.bigkoo.pickerview.builder;
 
 import android.content.Context;
+import android.support.annotation.ColorInt;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.bigkoo.pickerview.configure.PickerOptions;
-import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
-import com.bigkoo.pickerview.view.TimePickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.contrarywind.view.WheelView;
 
 import java.util.Calendar;
@@ -33,6 +35,10 @@ public class TimePickerBuilder {
         return this;
     }
 
+    public TimePickerBuilder addOnCancelClickListener(View.OnClickListener cancelListener) {
+        mPickerOptions.cancelListener = cancelListener;
+        return this;
+    }
 
     /**
      * new boolean[]{true, true, true, false, false, false}
@@ -163,7 +169,8 @@ public class TimePickerBuilder {
      *
      * @param dividerColor
      */
-    public TimePickerBuilder setDividerColor(int dividerColor) {
+
+    public TimePickerBuilder setDividerColor(@ColorInt int dividerColor) {
         mPickerOptions.dividerColor = dividerColor;
         return this;
     }
@@ -199,13 +206,23 @@ public class TimePickerBuilder {
     }
 
     /**
-     * //显示时的外部背景色颜色,默认是灰色
+     * {@link #setOutSideColor} instead.
      *
-     * @param backgroundId
+     * @param backgroundId color resId.
      */
-
+    @Deprecated
     public TimePickerBuilder setBackgroundId(int backgroundId) {
-        mPickerOptions.backgroundId = backgroundId;
+        mPickerOptions.outSideColor = backgroundId;
+        return this;
+    }
+
+    /**
+     * 显示时的外部背景色颜色,默认是灰色
+     *
+     * @param outSideColor
+     */
+    public TimePickerBuilder setOutSideColor(@ColorInt int outSideColor) {
+        mPickerOptions.outSideColor = outSideColor;
         return this;
     }
 
@@ -214,7 +231,7 @@ public class TimePickerBuilder {
      *
      * @param textColorCenter
      */
-    public TimePickerBuilder setTextColorCenter(int textColorCenter) {
+    public TimePickerBuilder setTextColorCenter(@ColorInt int textColorCenter) {
         mPickerOptions.textColorCenter = textColorCenter;
         return this;
     }
@@ -224,7 +241,7 @@ public class TimePickerBuilder {
      *
      * @param textColorOut
      */
-    public TimePickerBuilder setTextColorOut(int textColorOut) {
+    public TimePickerBuilder setTextColorOut(@ColorInt int textColorOut) {
         mPickerOptions.textColorOut = textColorOut;
         return this;
     }

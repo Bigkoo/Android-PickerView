@@ -25,7 +25,6 @@ import com.contrarywind.timer.InertiaTimerTask;
 import com.contrarywind.timer.MessageHandler;
 import com.contrarywind.timer.SmoothScrollTimerTask;
 
-import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -43,6 +42,8 @@ public class WheelView extends View {
     public enum DividerType { // 分隔线类型
         FILL, WRAP
     }
+
+    private static final String[] TIME_NUM = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09"};
 
     private DividerType dividerType;//分隔线类型
 
@@ -126,7 +127,7 @@ public class WheelView extends View {
     private static final float SCALE_CONTENT = 0.8F;//非中间文字则用此控制高度，压扁形成3d错觉
     private float CENTER_CONTENT_OFFSET;//偏移量
 
-    private final float DEFAULT_TEXT_TARGET_SKEWX = 0.5f;
+    private final float DEFAULT_TEXT_TARGET_SKEW_X = 0.5f;
 
     public WheelView(Context context) {
         this(context, null);
@@ -219,7 +220,7 @@ public class WheelView extends View {
         setLayerType(LAYER_TYPE_SOFTWARE, null);
     }
 
-    private void remeasure() {//重新测量
+    private void reMeasure() {//重新测量
         if (adapter == null) {
             return;
         }
@@ -260,15 +261,12 @@ public class WheelView extends View {
             paintCenterText.getTextBounds(s1, 0, s1.length(), rect);
 
             int textWidth = rect.width();
-
             if (textWidth > maxTextWidth) {
                 maxTextWidth = textWidth;
             }
-            paintCenterText.getTextBounds("\u661F\u671F", 0, 2, rect); // 星期的字符编码（以它为标准高度）
-
-            maxTextHeight = rect.height() + 2;
-
         }
+        paintCenterText.getTextBounds("\u661F\u671F", 0, 2, rect); // 星期的字符编码（以它为标准高度）
+        maxTextHeight = rect.height() + 2;
         itemHeight = lineSpacingMultiplier * maxTextHeight;
     }
 
@@ -335,7 +333,7 @@ public class WheelView extends View {
 
     public final void setAdapter(WheelAdapter adapter) {
         this.adapter = adapter;
-        remeasure();
+        reMeasure();
         invalidate();
     }
 
@@ -528,7 +526,7 @@ public class WheelView extends View {
                     canvas.clipRect(0, 0, measuredWidth, (int) (itemHeight));
                     canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
                     // 控制文字倾斜角度
-                    paintOuterText.setTextSkewX((textXOffset == 0 ? 0 : (textXOffset > 0 ? 1 : -1)) * (angle > 0 ? -1 : 1) * DEFAULT_TEXT_TARGET_SKEWX * offsetCoefficient);
+                    paintOuterText.setTextSkewX((textXOffset == 0 ? 0 : (textXOffset > 0 ? 1 : -1)) * (angle > 0 ? -1 : 1) * DEFAULT_TEXT_TARGET_SKEW_X * offsetCoefficient);
                     // 控制透明度
                     paintOuterText.setAlpha((int) ((1 - offsetCoefficient) * 255));
                     // 控制文字水平偏移距离
@@ -589,9 +587,13 @@ public class WheelView extends View {
             return ((IPickerViewData) item).getPickerViewText();
         } else if (item instanceof Integer) {
             //如果为整形则最少保留两位数.
-            return String.format(Locale.getDefault(), "%02d", (int) item);
+            return getFixNum((int) item);
         }
         return item.toString();
+    }
+
+    private String getFixNum(int timeNum) {
+        return timeNum >= 0 && timeNum < 10 ? TIME_NUM[timeNum] : String.valueOf(timeNum);
     }
 
     private void measuredCenterContentStart(String content) {
@@ -637,7 +639,7 @@ public class WheelView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         this.widthMeasureSpec = widthMeasureSpec;
-        remeasure();
+        reMeasure();
         setMeasuredDimension(measuredWidth, measuredHeight);
     }
 
