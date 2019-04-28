@@ -161,6 +161,7 @@ public class WheelTime {
                     wv_month.setCurrentItem(wv_month.getCurrentItem());
                 }
 
+                int currentIndex = wv_day.getCurrentItem();
                 int maxItem = 29;
                 if (ChinaDate.leapMonth(year_num) != 0 && wv_month.getCurrentItem() > ChinaDate.leapMonth(year_num) - 1) {
                     if (wv_month.getCurrentItem() == ChinaDate.leapMonth(year_num) + 1) {
@@ -175,7 +176,7 @@ public class WheelTime {
                     maxItem = ChinaDate.monthDays(year_num, wv_month.getCurrentItem() + 1);
                 }
 
-                if (wv_day.getCurrentItem() > maxItem - 1) {
+                if (currentIndex > maxItem - 1) {
                     wv_day.setCurrentItem(maxItem - 1);
                 }
 
@@ -191,6 +192,7 @@ public class WheelTime {
             public void onItemSelected(int index) {
                 int month_num = index;
                 int year_num = wv_year.getCurrentItem() + startYear;
+                int currentIndex = wv_day.getCurrentItem();
                 int maxItem = 29;
                 if (ChinaDate.leapMonth(year_num) != 0 && month_num > ChinaDate.leapMonth(year_num) - 1) {
                     if (wv_month.getCurrentItem() == ChinaDate.leapMonth(year_num) + 1) {
@@ -205,7 +207,7 @@ public class WheelTime {
                     maxItem = ChinaDate.monthDays(year_num, month_num + 1);
                 }
 
-                if (wv_day.getCurrentItem() > maxItem - 1) {
+                if (currentIndex > maxItem - 1) {
                     wv_day.setCurrentItem(maxItem - 1);
                 }
 
