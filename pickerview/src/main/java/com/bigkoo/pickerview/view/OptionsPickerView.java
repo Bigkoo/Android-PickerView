@@ -53,6 +53,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             btnSubmit.setOnClickListener(this);
             btnCancel.setOnClickListener(this);
 
+            //设置 top bar 的显示状态
+            rv_top_bar.setVisibility(mPickerOptions.topBarVisible);
+
             //设置文字
             btnSubmit.setText(TextUtils.isEmpty(mPickerOptions.textContentConfirm) ? context.getResources().getString(R.string.pickerview_submit) : mPickerOptions.textContentConfirm);
             btnCancel.setText(TextUtils.isEmpty(mPickerOptions.textContentCancel) ? context.getResources().getString(R.string.pickerview_cancel) : mPickerOptions.textContentCancel);

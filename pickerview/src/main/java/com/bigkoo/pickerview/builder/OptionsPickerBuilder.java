@@ -263,6 +263,10 @@ public class OptionsPickerBuilder {
         return this;
     }
 
+    public OptionsPickerBuilder setTopBarVisible(int topBarVisible) {
+        mPickerOptions.topBarVisible = topBarVisible;
+        return this;
+    }
 
     public <T> OptionsPickerView<T> build() {
         return new OptionsPickerView<>(mPickerOptions);

@@ -12,6 +12,7 @@
 
     <string name="picker_custom_lunar">公农历切换</string>
     <string name="picker_time">时间选择器</string>
+    <string name="picker_time_gone_top_bar">隐藏 TopBar 的时间选择器</string>
     <string name="picker_province">条件选择器</string>
 
     <string name="picker_custom_time">时间选择器自定义布局</string>
