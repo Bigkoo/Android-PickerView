@@ -51,7 +51,7 @@ public class OptionsPickerBuilder {
         return this;
     }
 
-    public OptionsPickerBuilder setOnCancelClickListener(View.OnClickListener cancelListener) {
+    public OptionsPickerBuilder addOnCancelClickListener(View.OnClickListener cancelListener) {
         mPickerOptions.cancelListener = cancelListener;
         return this;
     }
