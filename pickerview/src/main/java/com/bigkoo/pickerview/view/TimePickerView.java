@@ -56,6 +56,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             btnSubmit.setOnClickListener(this);
             btnCancel.setOnClickListener(this);
 
+            //设置 top bar 的显示状态
+            rv_top_bar.setVisibility(mPickerOptions.topBarVisible);
+
             //设置文字
             btnSubmit.setText(TextUtils.isEmpty(mPickerOptions.textContentConfirm) ? context.getResources().getString(R.string.pickerview_submit) : mPickerOptions.textContentConfirm);
             btnCancel.setText(TextUtils.isEmpty(mPickerOptions.textContentCancel) ? context.getResources().getString(R.string.pickerview_cancel) : mPickerOptions.textContentCancel);
@@ -132,7 +135,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         wheelTime.setLabels(mPickerOptions.label_year, mPickerOptions.label_month, mPickerOptions.label_day
                 , mPickerOptions.label_hours, mPickerOptions.label_minutes, mPickerOptions.label_seconds);
         wheelTime.setTextXOffset(mPickerOptions.x_offset_year, mPickerOptions.x_offset_month, mPickerOptions.x_offset_day,
-                mPickerOptions.x_offset_hours, mPickerOptions.x_offset_minutes, mPickerOptions.x_offset_seconds);
+                                 mPickerOptions.x_offset_hours, mPickerOptions.x_offset_minutes, mPickerOptions.x_offset_seconds);
 
         setOutSideCancelable(mPickerOptions.cancelable);
         wheelTime.setCyclic(mPickerOptions.cyclic);
@@ -269,7 +272,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
             wheelTime.setLunarMode(lunar);
             wheelTime.setLabels(mPickerOptions.label_year, mPickerOptions.label_month, mPickerOptions.label_day,
-                    mPickerOptions.label_hours, mPickerOptions.label_minutes, mPickerOptions.label_seconds);
+                                mPickerOptions.label_hours, mPickerOptions.label_minutes, mPickerOptions.label_seconds);
             wheelTime.setPicker(year, month, day, hours, minute, seconds);
         } catch (ParseException e) {
             e.printStackTrace();

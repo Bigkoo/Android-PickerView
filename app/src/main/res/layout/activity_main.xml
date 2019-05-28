@@ -30,6 +30,13 @@
                 android:text="@string/picker_time" />
 
             <Button
+                android:id="@+id/btn_time_gone_top_bar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:text="@string/picker_time_gone_top_bar" />
+
+            <Button
                 android:id="@+id/btn_Options"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

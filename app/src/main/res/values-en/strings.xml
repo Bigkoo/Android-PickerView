@@ -3,6 +3,7 @@
     <string name="picker_custom_lunar">LunarTimePicker</string>
 
     <string name="picker_time">TimePicker</string>
+    <string name="picker_time_gone_top_bar">TimePicker Gone TopBar</string>
     <string name="picker_province">OptionsPicker</string>
 
     <string name="picker_custom_time">CustomLayoutTimePicker</string>

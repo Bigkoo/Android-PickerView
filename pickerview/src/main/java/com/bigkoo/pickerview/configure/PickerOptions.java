@@ -83,6 +83,7 @@ public class PickerOptions {
     public int textGravity = Gravity.CENTER;
     public Context context;
 
+    public int topBarVisible = View.VISIBLE;//是否显示标题栏? 默认 VISIBLE
     public String textContentConfirm;//确定按钮文字
     public String textContentCancel;//取消按钮文字
     public String textContentTitle;//标题文字

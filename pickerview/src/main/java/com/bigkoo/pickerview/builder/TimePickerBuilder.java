@@ -288,6 +288,11 @@ public class TimePickerBuilder {
         return this;
     }
 
+    public TimePickerBuilder setTopBarVisible(int topBarVisible) {
+        mPickerOptions.topBarVisible = topBarVisible;
+        return this;
+    }
+
     public TimePickerView build() {
         return new TimePickerView(mPickerOptions);
     }
