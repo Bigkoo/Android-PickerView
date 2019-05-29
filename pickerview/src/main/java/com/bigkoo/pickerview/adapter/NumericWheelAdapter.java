@@ -11,6 +11,13 @@ public class NumericWheelAdapter implements WheelAdapter {
 	private int minValue;
 	private int maxValue;
 
+	public NumericWheelAdapter setMonthNameResolver(IMonthNameResolver resolver){
+		mMonthNameResolver = resolver;
+		return this;
+	}
+
+	private IMonthNameResolver mMonthNameResolver;
+
 	/**
 	 * Constructor
 	 * @param minValue the wheel min value
@@ -25,6 +32,7 @@ public class NumericWheelAdapter implements WheelAdapter {
 	public Object getItem(int index) {
 		if (index >= 0 && index < getItemsCount()) {
 			int value = minValue + index;
+			if (mMonthNameResolver != null) return mMonthNameResolver.resolveName(value);
 			return value;
 		}
 		return 0;
@@ -44,4 +52,5 @@ public class NumericWheelAdapter implements WheelAdapter {
 		}
 
 	}
+
 }
