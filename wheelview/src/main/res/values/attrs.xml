@@ -10,6 +10,7 @@
         <attr name="wheelview_textColorOut" format="color"/>
         <attr name="wheelview_textColorCenter" format="color"/>
         <attr name="wheelview_dividerColor" format="color"/>
+        <attr name="wheelview_dividerWidth" format="dimension"/>
         <attr name="wheelview_lineSpacingMultiplier" format="float"/>
     </declare-styleable>
 </resources>
