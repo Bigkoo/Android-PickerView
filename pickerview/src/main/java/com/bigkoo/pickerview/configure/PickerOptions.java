@@ -40,7 +40,6 @@ public class PickerOptions {
     public OnOptionsSelectChangeListener optionsSelectChangeListener;
     public CustomListener customListener;
 
-
     //options picker
     public String label1, label2, label3;//单位字符
     public int option1, option2, option3;//默认选中项
@@ -110,5 +109,6 @@ public class PickerOptions {
     public boolean isCenterLabel = false;//是否只显示中间的label,默认每个item都显示
     public Typeface font = Typeface.MONOSPACE;//字体样式
     public WheelView.DividerType dividerType = WheelView.DividerType.FILL;//分隔线类型
-
+    public int itemsVisibleCount = 9; //最大可见条目数
+    public boolean isAlphaGradient = false; //透明度渐变
 }

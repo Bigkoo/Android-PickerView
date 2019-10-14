@@ -82,6 +82,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         }
 
         wheelOptions.setTextContentSize(mPickerOptions.textSizeContent);
+        wheelOptions.setItemsVisible(mPickerOptions.itemsVisibleCount);
+        wheelOptions.setAlphaGradient(mPickerOptions.isAlphaGradient);
         wheelOptions.setLabels(mPickerOptions.label1, mPickerOptions.label2, mPickerOptions.label3);
         wheelOptions.setTextXOffset(mPickerOptions.x_offset_one, mPickerOptions.x_offset_two, mPickerOptions.x_offset_three);
         wheelOptions.setCyclic(mPickerOptions.cyclic1, mPickerOptions.cyclic2, mPickerOptions.cyclic3);

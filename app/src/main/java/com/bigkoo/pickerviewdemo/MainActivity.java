@@ -212,6 +212,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.i("pvTime", "onCancelClickListener");
                     }
                 })
+                .setItemVisibleCount(5)
+                .isAlphaGradient(true)
                 .build();
 
         Dialog mDialog = pvTime.getDialog();
