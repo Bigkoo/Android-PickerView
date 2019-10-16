@@ -39,7 +39,7 @@ public class WheelView extends View {
     }
 
     public enum DividerType { // 分隔线类型
-        FILL, WRAP
+        FILL, WRAP, CIRCLE
     }
 
     private static final String[] TIME_NUM = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09"};
@@ -76,6 +76,7 @@ public class WheelView extends View {
     private int textColorOut;
     private int textColorCenter;
     private int dividerColor;
+    private int dividerWidth;
 
     // 条目间距倍数
     private float lineSpacingMultiplier = 1.6F;
@@ -151,6 +152,7 @@ public class WheelView extends View {
             textColorOut = a.getColor(R.styleable.pickerview_wheelview_textColorOut, 0xFFa8a8a8);
             textColorCenter = a.getColor(R.styleable.pickerview_wheelview_textColorCenter, 0xFF2a2a2a);
             dividerColor = a.getColor(R.styleable.pickerview_wheelview_dividerColor, 0xFFd5d5d5);
+            dividerWidth = a.getColor(R.styleable.pickerview_wheelview_dividerWidth, 2);
             textSize = a.getDimensionPixelOffset(R.styleable.pickerview_wheelview_textSize, textSize);
             lineSpacingMultiplier = a.getFloat(R.styleable.pickerview_wheelview_lineSpacingMultiplier, lineSpacingMultiplier);
             a.recycle();//回收内存
@@ -414,6 +416,24 @@ public class WheelView extends View {
             endX = measuredWidth - startX;
             canvas.drawLine(startX, firstLineY, endX, firstLineY, paintIndicator);
             canvas.drawLine(startX, secondLineY, endX, secondLineY, paintIndicator);
+        } else if (dividerType == DividerType.CIRCLE) {
+            //分割线为圆圈形状
+            paintIndicator.setStyle(Paint.Style.STROKE);
+            paintIndicator.setStrokeWidth(dividerWidth);
+            float startX;
+            float endX;
+            if (TextUtils.isEmpty(label)) {//隐藏Label的情况
+                startX = (measuredWidth - maxTextWidth) / 2f - 12;
+            } else {
+                startX = (measuredWidth - maxTextWidth) / 4f - 12;
+            }
+            if (startX <= 0) {//如果超过了WheelView的边缘
+                startX = 10;
+            }
+            endX = measuredWidth - startX;
+            //半径始终以宽高中最大的来算
+            float radius = Math.max((endX - startX), itemHeight) / 1.8f;
+            canvas.drawCircle(measuredWidth / 2f, measuredHeight / 2f, radius, paintIndicator);
         } else {
             canvas.drawLine(0.0F, firstLineY, measuredWidth, firstLineY, paintIndicator);
             canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintIndicator);
@@ -770,6 +790,11 @@ public class WheelView extends View {
         if (textXOffset != 0) {
             paintCenterText.setTextScaleX(1.0f);
         }
+    }
+
+    public void setDividerWidth(int dividerWidth) {
+        this.dividerWidth = dividerWidth;
+        paintIndicator.setStrokeWidth(dividerWidth);
     }
 
     public void setDividerColor(int dividerColor) {
