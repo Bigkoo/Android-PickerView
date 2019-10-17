@@ -127,7 +127,7 @@ public class TimePickerBuilder {
     /**
      * 设置最大可见数目
      *
-     * @param count 建议设置为 3 ~ 9之间。
+     * @param count suggest value: 3, 5, 7, 9
      */
     public TimePickerBuilder setItemVisibleCount(int count) {
         mPickerOptions.itemsVisibleCount = count;
