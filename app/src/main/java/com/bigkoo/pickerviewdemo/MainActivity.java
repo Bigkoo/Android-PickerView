@@ -21,13 +21,13 @@ import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
-import com.bigkoo.pickerview.listener.CustomListener;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerviewdemo.bean.CardBean;
 import com.bigkoo.pickerviewdemo.bean.ProvinceBean;
 
@@ -194,7 +194,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void initTimePicker() {//Dialog 模式下，在底部弹出
-
         pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
@@ -217,7 +216,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.i("pvTime", "onCancelClickListener");
                     }
                 })
-                .setItemVisibleCount(5)
+                .setItemVisibleCount(5) //若设置偶数，实际值会加1（比如设置6，则最大可见条目为7）
+                .setLineSpacingMultiplier(2.0f)
                 .isAlphaGradient(true)
                 .build();
 
@@ -237,14 +237,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (dialogWindow != null) {
                 dialogWindow.setWindowAnimations(com.bigkoo.pickerview.R.style.picker_view_slide_anim);//修改动画样式
                 dialogWindow.setGravity(Gravity.BOTTOM);//改成Bottom,底部显示
-                dialogWindow.setDimAmount(0.1f);
+                dialogWindow.setDimAmount(0.3f);
             }
         }
     }
 
-
     private void initCustomTimePicker() {
-
         /**
          * @description
          *
@@ -312,9 +310,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(0xFF24AD9D)
                 .build();
-
     }
-
 
     private void initOptionPicker() {//条件选择器初始化
 
@@ -452,12 +448,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getOptionData() {
-
-        /**
+        /*
          * 注意：如果是添加JavaBean实体数据，则实体类需要实现 IPickerViewData 接口，
          * PickerView会通过getPickerViewText方法获取字符串显示出来。
          */
-
         getCardData();
         getNoLinkData();
 
@@ -483,7 +477,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         options2Items.add(options2Items_01);
         options2Items.add(options2Items_02);
         options2Items.add(options2Items_03);
-
         /*--------数据源添加完毕---------*/
     }
 
@@ -514,6 +507,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         computer.add("Apple");
         computer.add("HP");
     }
-
 
 }
