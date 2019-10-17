@@ -163,16 +163,16 @@ public class WheelOptions<T> {
     public void setNPicker(List<T> options1Items, List<T> options2Items, List<T> options3Items) {
 
         // 选项1
-        wv_option1.setAdapter(new ArrayWheelAdapter(options1Items));// 设置显示数据
+        wv_option1.setAdapter(new ArrayWheelAdapter<>(options1Items));// 设置显示数据
         wv_option1.setCurrentItem(0);// 初始化时显示的数据
         // 选项2
         if (options2Items != null) {
-            wv_option2.setAdapter(new ArrayWheelAdapter(options2Items));// 设置显示数据
+            wv_option2.setAdapter(new ArrayWheelAdapter<>(options2Items));// 设置显示数据
         }
         wv_option2.setCurrentItem(wv_option2.getCurrentItem());// 初始化时显示的数据
         // 选项3
         if (options3Items != null) {
-            wv_option3.setAdapter(new ArrayWheelAdapter(options3Items));// 设置显示数据
+            wv_option3.setAdapter(new ArrayWheelAdapter<>(options3Items));// 设置显示数据
         }
         wv_option3.setCurrentItem(wv_option3.getCurrentItem());
         wv_option1.setIsOptions(true);
