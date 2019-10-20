@@ -46,25 +46,27 @@
         android:id="@+id/optionspicker"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:minHeight="150dp"
+        android:gravity="center"
         android:background="@android:color/white"
         android:orientation="horizontal">
 
         <com.contrarywind.view.WheelView
             android:id="@+id/options1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <com.contrarywind.view.WheelView
             android:id="@+id/options2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <com.contrarywind.view.WheelView
             android:id="@+id/options3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
     </LinearLayout>
 

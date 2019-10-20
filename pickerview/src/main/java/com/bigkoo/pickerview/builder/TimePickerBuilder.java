@@ -125,6 +125,26 @@ public class TimePickerBuilder {
     }
 
     /**
+     * 设置最大可见数目
+     *
+     * @param count suggest value: 3, 5, 7, 9
+     */
+    public TimePickerBuilder setItemVisibleCount(int count) {
+        mPickerOptions.itemsVisibleCount = count;
+        return this;
+    }
+
+    /**
+     * 透明度是否渐变
+     *
+     * @param isAlphaGradient true of false
+     */
+    public TimePickerBuilder isAlphaGradient(boolean isAlphaGradient) {
+        mPickerOptions.isAlphaGradient = isAlphaGradient;
+        return this;
+    }
+
+    /**
      * 因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
      *
      * @param date
