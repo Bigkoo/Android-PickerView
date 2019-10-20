@@ -60,7 +60,14 @@
 * 正确使用案例：
   startDate.set(2013,0,1);
   endDate.set(2020,11,1);
-  
+
+ #### V4.1.9 版本更新说明（2019-10-20）
+   - 修复: 农历 day 偶现越界的问题。
+   - 优化: 显示布局中英文默认大写问题。
+   - 新增: 最大可见项的数目提供API给开发者设置。(setItemVisibleCount())
+   - 新增: 滚轮从中间到两边透明度渐变，提供开关API设置。（isAlphaGradient(true)）
+   - 新增: 选中项圆形分割线样式。（DividerType.CIRCLE）
+
  #### V4.1.8 版本更新说明（2019-4-24）
  -  更新gradle版本， wheelview基础库由 compile 改为 api 依赖，避免gradle 5.0+版本无法引入。
  -  修复 setTextXOffset 赋值问题。
@@ -70,10 +77,7 @@
  -  新增取消按钮的点击事件监听入口。
  -  参数注解添加，规范数据类型。
  -  废弃setBackgroundId方法， 更新方法命名为 setOutSideColor。
- 
- #### V4.1.6 版本更新说明（2018-7-24）
- -  优化wheelview 分割线设置 0x00000000 透明色不生效的问题。
- -  优化部分文字基线位置偏低，导致选中项文字显示不全问题，如 "g" 字母。
+
 
 #### 更多历史版本详情，请查阅：[更新日志（4.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/更新日志（4.x版本）) 
 
