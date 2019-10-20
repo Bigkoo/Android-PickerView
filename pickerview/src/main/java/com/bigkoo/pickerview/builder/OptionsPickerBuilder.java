@@ -243,6 +243,27 @@ public class OptionsPickerBuilder {
         return this;
     }
 
+
+    /**
+     * 设置最大可见数目
+     *
+     * @param count 建议设置为 3 ~ 9之间。
+     */
+    public OptionsPickerBuilder setItemVisibleCount(int count) {
+        mPickerOptions.itemsVisibleCount = count;
+        return this;
+    }
+
+    /**
+     * 透明度是否渐变
+     *
+     * @param isAlphaGradient true of false
+     */
+    public OptionsPickerBuilder isAlphaGradient(boolean isAlphaGradient) {
+        mPickerOptions.isAlphaGradient = isAlphaGradient;
+        return this;
+    }
+
     /**
      * 切换选项时，是否还原第一项
      *
