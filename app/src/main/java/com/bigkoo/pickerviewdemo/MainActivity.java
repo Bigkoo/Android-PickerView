@@ -433,6 +433,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
                     }
                 })
+                .setItemVisibleCount(5)
                 // .setSelectOptions(0, 1, 1)
                 .build();
         pvNoLinkOptions.setNPicker(food, clothes, computer);
