@@ -308,7 +308,7 @@ WheelView wheelView = findViewById(R.id.wheelview);
 
 ### Thanks
 
-- [WheelView](https://github.com/venshine/WheelView)
+- WheelView
 - [androidWheelView](https://github.com/weidongjian/androidWheelView/)
 
 ## License
