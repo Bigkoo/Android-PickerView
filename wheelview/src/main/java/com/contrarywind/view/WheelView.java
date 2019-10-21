@@ -123,6 +123,10 @@ public class WheelView extends View {
     private float CENTER_CONTENT_OFFSET;//偏移量
 
     private boolean isAlphaGradient = false; //透明度渐变
+    private Rect reMeasureRect = new Rect();
+    private Rect centerContentRect = new Rect();
+    private Rect outContentRect = new Rect();
+    private Rect mTextRect = new Rect();
 
     public WheelView(Context context) {
         this(context, null);
@@ -241,18 +245,16 @@ public class WheelView extends View {
      * 计算最大length的Text的宽高度
      */
     private void measureTextWidthHeight() {
-        Rect rect = new Rect();
         for (int i = 0; i < adapter.getItemsCount(); i++) {
             String s1 = getContentText(adapter.getItem(i));
-            paintCenterText.getTextBounds(s1, 0, s1.length(), rect);
-
-            int textWidth = rect.width();
+            paintCenterText.getTextBounds(s1, 0, s1.length(), mTextRect);
+            int textWidth = mTextRect.width();
             if (textWidth > maxTextWidth) {
                 maxTextWidth = textWidth;
             }
         }
-        paintCenterText.getTextBounds("\u661F\u671F", 0, 2, rect); // 星期的字符编码（以它为标准高度）
-        maxTextHeight = rect.height() + 2;
+        paintCenterText.getTextBounds("\u661F\u671F", 0, 2, mTextRect); // 星期的字符编码（以它为标准高度）
+        maxTextHeight = mTextRect.height() + 2;
         itemHeight = lineSpacingMultiplier * maxTextHeight;
     }
 
@@ -570,16 +572,15 @@ public class WheelView extends View {
      * @param contentText item text content.
      */
     private void reMeasureTextSize(String contentText) {
-        Rect rect = new Rect();
-        paintCenterText.getTextBounds(contentText, 0, contentText.length(), rect);
-        int width = rect.width();
+        paintCenterText.getTextBounds(contentText, 0, contentText.length(), reMeasureRect);
+        int width = reMeasureRect.width();
         int size = textSize;
         while (width > measuredWidth) {
             size--;
             //设置2条横线中间的文字大小
             paintCenterText.setTextSize(size);
-            paintCenterText.getTextBounds(contentText, 0, contentText.length(), rect);
-            width = rect.width();
+            paintCenterText.getTextBounds(contentText, 0, contentText.length(), reMeasureRect);
+            width = reMeasureRect.width();
         }
         //设置2条横线外面的文字大小
         paintOuterText.setTextSize(size);
@@ -621,41 +622,39 @@ public class WheelView extends View {
     }
 
     private void measuredCenterContentStart(String content) {
-        Rect rect = new Rect();
-        paintCenterText.getTextBounds(content, 0, content.length(), rect);
+        paintCenterText.getTextBounds(content, 0, content.length(), centerContentRect);
         switch (mGravity) {
             case Gravity.CENTER://显示内容居中
                 if (isOptions || label == null || label.equals("") || !isCenterLabel) {
-                    drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
+                    drawCenterContentStart = (int) ((measuredWidth - centerContentRect.width()) * 0.5);
                 } else {//只显示中间label时，时间选择器内容偏左一点，留出空间绘制单位标签
-                    drawCenterContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
+                    drawCenterContentStart = (int) ((measuredWidth - centerContentRect.width()) * 0.25);
                 }
                 break;
-            case Gravity.LEFT:
+            case Gravity.START:
                 drawCenterContentStart = 0;
                 break;
-            case Gravity.RIGHT://添加偏移量
-                drawCenterContentStart = measuredWidth - rect.width() - (int) CENTER_CONTENT_OFFSET;
+            case Gravity.END: //添加偏移量
+                drawCenterContentStart = measuredWidth - centerContentRect.width() - (int) CENTER_CONTENT_OFFSET;
                 break;
         }
     }
 
     private void measuredOutContentStart(String content) {
-        Rect rect = new Rect();
-        paintOuterText.getTextBounds(content, 0, content.length(), rect);
+        paintOuterText.getTextBounds(content, 0, content.length(), outContentRect);
         switch (mGravity) {
             case Gravity.CENTER:
                 if (isOptions || label == null || label.equals("") || !isCenterLabel) {
-                    drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
+                    drawOutContentStart = (int) ((measuredWidth - outContentRect.width()) * 0.5);
                 } else {//只显示中间label时，时间选择器内容偏左一点，留出空间绘制单位标签
-                    drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
+                    drawOutContentStart = (int) ((measuredWidth - outContentRect.width()) * 0.25);
                 }
                 break;
-            case Gravity.LEFT:
+            case Gravity.START:
                 drawOutContentStart = 0;
                 break;
-            case Gravity.RIGHT:
-                drawOutContentStart = measuredWidth - rect.width() - (int) CENTER_CONTENT_OFFSET;
+            case Gravity.END:
+                drawOutContentStart = measuredWidth - outContentRect.width() - (int) CENTER_CONTENT_OFFSET;
                 break;
         }
     }
