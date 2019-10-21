@@ -125,6 +125,17 @@ public class TimePickerBuilder {
     }
 
     /**
+     * 是否将Integer 格式化最少显示两位数（如 1 显示为 “01”）
+     * default true: Will format Integer shows at least 2 digits.
+     *
+     * @param isNeedFormatInt default: true
+     */
+    public TimePickerBuilder isNeedFormatInt(boolean isNeedFormatInt) {
+        mPickerOptions.isNeedFormatInt = isNeedFormatInt;
+        return this;
+    }
+
+    /**
      * 设置最大可见数目
      *
      * @param count suggest value: 3, 5, 7, 9

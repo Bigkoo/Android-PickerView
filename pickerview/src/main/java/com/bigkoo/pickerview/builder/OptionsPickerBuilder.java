@@ -143,6 +143,17 @@ public class OptionsPickerBuilder {
         return this;
     }
 
+    /**
+     * 是否将Integer 格式化最少显示两位数（如 1 显示为 “01”）
+     * default true: Will format Integer shows at least 2 digits.
+     *
+     * @param isNeedFormatInt default: true
+     */
+    public OptionsPickerBuilder isNeedFormatInt(boolean isNeedFormatInt) {
+        mPickerOptions.isNeedFormatInt = isNeedFormatInt;
+        return this;
+    }
+
 
     public OptionsPickerBuilder setLabels(String label1, String label2, String label3) {
         mPickerOptions.label1 = label1;

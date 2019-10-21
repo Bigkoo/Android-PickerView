@@ -876,6 +876,15 @@ public class WheelTime {
         wv_seconds.isCenterLabel(isCenterLabel);
     }
 
+    public void isNeedFormatInt(boolean isNeedFormatInt) {
+        wv_day.isNeedFormatInt(isNeedFormatInt);
+        wv_month.isNeedFormatInt(isNeedFormatInt);
+        wv_year.isNeedFormatInt(isNeedFormatInt);
+        wv_hours.isNeedFormatInt(isNeedFormatInt);
+        wv_minutes.isNeedFormatInt(isNeedFormatInt);
+        wv_seconds.isNeedFormatInt(isNeedFormatInt);
+    }
+
     public void setSelectChangeCallback(ISelectTimeCallback mSelectChangeCallback) {
         this.mSelectChangeCallback = mSelectChangeCallback;
     }

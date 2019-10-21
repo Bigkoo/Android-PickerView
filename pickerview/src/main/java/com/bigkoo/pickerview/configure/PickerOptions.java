@@ -106,6 +106,7 @@ public class PickerOptions {
     public boolean isDialog;//是否是对话框模式
 
     public boolean cancelable = true;//是否能取消
+    public boolean isNeedFormatInt = true;//是否格式化int 类型数据，默认true
     public boolean isCenterLabel = false;//是否只显示中间的label,默认每个item都显示
     public Typeface font = Typeface.MONOSPACE;//字体样式
     public WheelView.DividerType dividerType = WheelView.DividerType.FILL;//分隔线类型

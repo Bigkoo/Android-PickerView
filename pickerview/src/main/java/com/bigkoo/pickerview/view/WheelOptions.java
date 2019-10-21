@@ -426,4 +426,10 @@ public class WheelOptions<T> {
         wv_option2.setAlphaGradient(isAlphaGradient);
         wv_option3.setAlphaGradient(isAlphaGradient);
     }
+
+    public void isNeedFormatInt(boolean isNeedFormatInt) {
+        wv_option1.isNeedFormatInt(isNeedFormatInt);
+        wv_option2.isNeedFormatInt(isNeedFormatInt);
+        wv_option3.isNeedFormatInt(isNeedFormatInt);
+    }
 }

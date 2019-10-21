@@ -78,6 +78,9 @@ public class WheelView extends View {
     private int dividerColor;
     private int dividerWidth;
 
+    // Integer 是否需要格式化至少显示两位
+    private boolean isNeedFormatInt = true;
+
     // 条目间距倍数
     private float lineSpacingMultiplier = 1.6F;
     private boolean isLoop;
@@ -618,7 +621,12 @@ public class WheelView extends View {
     }
 
     private String getFixNum(int timeNum) {
-        return timeNum >= 0 && timeNum < 10 ? TIME_NUM[timeNum] : String.valueOf(timeNum);
+        if (isNeedFormatInt) {
+            return timeNum >= 0 && timeNum < 10 ? TIME_NUM[timeNum] : String.valueOf(timeNum);
+        } else {
+            return String.valueOf(timeNum);
+        }
+
     }
 
     private void measuredCenterContentStart(String content) {
@@ -799,6 +807,10 @@ public class WheelView extends View {
     public void setDividerColor(int dividerColor) {
         this.dividerColor = dividerColor;
         paintIndicator.setColor(dividerColor);
+    }
+
+    public void isNeedFormatInt(boolean needFormatInt) {
+        isNeedFormatInt = needFormatInt;
     }
 
     public void setDividerType(DividerType dividerType) {
