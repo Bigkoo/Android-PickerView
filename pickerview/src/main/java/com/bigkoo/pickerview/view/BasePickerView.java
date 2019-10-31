@@ -81,7 +81,7 @@ public class BasePickerView {
             //如果只是要显示在屏幕的下方
             //decorView是activity的根View,包含 contentView 和 titleView
             if (mPickerOptions.decorView == null) {
-                mPickerOptions.decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView();
+                mPickerOptions.decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
             }
             //将控件添加到decorView中
             rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_basepickerview, mPickerOptions.decorView, false);
