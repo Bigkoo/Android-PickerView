@@ -1,5 +1,7 @@
 package com.bigkoo.pickerview.adapter;
 
+import android.support.annotation.NonNull;
+
 import com.contrarywind.adapter.WheelAdapter;
 
 import java.util.List;
@@ -9,7 +11,6 @@ import java.util.List;
  * @param <T> the element type
  */
 public class ArrayWheelAdapter<T> implements WheelAdapter {
-	
 
 	// items
 	private List<T> items;
@@ -18,11 +19,11 @@ public class ArrayWheelAdapter<T> implements WheelAdapter {
 	 * Constructor
 	 * @param items the items
 	 */
-	public ArrayWheelAdapter(List<T> items) {
+	public ArrayWheelAdapter(@NonNull List<T> items) {
 		this.items = items;
 
 	}
-	
+
 	@Override
 	public Object getItem(int index) {
 		if (index >= 0 && index < items.size()) {
@@ -33,7 +34,7 @@ public class ArrayWheelAdapter<T> implements WheelAdapter {
 
 	@Override
 	public int getItemsCount() {
-		return items.size();
+		return items == null ? 0 : items.size();
 	}
 
 	@Override
