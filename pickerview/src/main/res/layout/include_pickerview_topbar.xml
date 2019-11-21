@@ -13,17 +13,18 @@
         android:gravity="left|center_vertical"
         android:paddingLeft="@dimen/pickerview_topbar_padding"
         android:text="@string/pickerview_cancel"
+        android:textAllCaps="false"
         android:textColor="@drawable/selector_pickerview_btn"
         android:textSize="@dimen/pickerview_topbar_btn_textsize" />
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/btnSubmit"
         android:layout_toRightOf="@+id/btnCancel"
+        android:gravity="center"
         android:textColor="@color/pickerview_topbar_title"
         android:textSize="@dimen/pickerview_topbar_title_textsize" />
 
@@ -36,6 +37,7 @@
         android:gravity="right|center_vertical"
         android:paddingRight="@dimen/pickerview_topbar_padding"
         android:text="@string/pickerview_submit"
+        android:textAllCaps="false"
         android:textColor="@drawable/selector_pickerview_btn"
         android:textSize="@dimen/pickerview_topbar_btn_textsize" />
 </RelativeLayout>

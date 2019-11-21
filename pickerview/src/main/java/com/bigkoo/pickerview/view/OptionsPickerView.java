@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class OptionsPickerView<T> extends BasePickerView implements View.OnClickListener {
 
-    private WheelOptions wheelOptions;
+    private WheelOptions<T> wheelOptions;
 
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
@@ -76,12 +76,14 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         final LinearLayout optionsPicker = (LinearLayout) findViewById(R.id.optionspicker);
         optionsPicker.setBackgroundColor(mPickerOptions.bgColorWheel);
 
-        wheelOptions = new WheelOptions(optionsPicker, mPickerOptions.isRestoreItem);
+        wheelOptions = new WheelOptions<>(optionsPicker, mPickerOptions.isRestoreItem);
         if (mPickerOptions.optionsSelectChangeListener != null) {
             wheelOptions.setOptionsSelectChangeListener(mPickerOptions.optionsSelectChangeListener);
         }
 
         wheelOptions.setTextContentSize(mPickerOptions.textSizeContent);
+        wheelOptions.setItemsVisible(mPickerOptions.itemsVisibleCount);
+        wheelOptions.setAlphaGradient(mPickerOptions.isAlphaGradient);
         wheelOptions.setLabels(mPickerOptions.label1, mPickerOptions.label2, mPickerOptions.label3);
         wheelOptions.setTextXOffset(mPickerOptions.x_offset_one, mPickerOptions.x_offset_two, mPickerOptions.x_offset_three);
         wheelOptions.setCyclic(mPickerOptions.cyclic1, mPickerOptions.cyclic2, mPickerOptions.cyclic3);

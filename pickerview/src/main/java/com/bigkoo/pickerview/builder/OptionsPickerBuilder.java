@@ -51,7 +51,7 @@ public class OptionsPickerBuilder {
         return this;
     }
 
-    public OptionsPickerBuilder setOnCancelClickListener(View.OnClickListener cancelListener) {
+    public OptionsPickerBuilder addOnCancelClickListener(View.OnClickListener cancelListener) {
         mPickerOptions.cancelListener = cancelListener;
         return this;
     }
@@ -240,6 +240,27 @@ public class OptionsPickerBuilder {
 
     public OptionsPickerBuilder isCenterLabel(boolean isCenterLabel) {
         mPickerOptions.isCenterLabel = isCenterLabel;
+        return this;
+    }
+
+
+    /**
+     * 设置最大可见数目
+     *
+     * @param count 建议设置为 3 ~ 9之间。
+     */
+    public OptionsPickerBuilder setItemVisibleCount(int count) {
+        mPickerOptions.itemsVisibleCount = count;
+        return this;
+    }
+
+    /**
+     * 透明度是否渐变
+     *
+     * @param isAlphaGradient true of false
+     */
+    public OptionsPickerBuilder isAlphaGradient(boolean isAlphaGradient) {
+        mPickerOptions.isAlphaGradient = isAlphaGradient;
         return this;
     }
 
