@@ -100,6 +100,9 @@ public class PickerOptions {
     public int textColorOut = 0xFFa8a8a8; //分割线以外的文字颜色
     public int textColorCenter = 0xFF2a2a2a; //分割线之间的文字颜色
     public int dividerColor = 0xFFd5d5d5; //分割线的颜色
+    public int dividerWidth = 1; //分割线的宽度
+    public int selectItemBgColor = 0xFFe7e7e7; //选中条目的背景色
+    public int backgroundId = -1; //显示时的外部背景色颜色,默认是灰色
     public int outSideColor = -1; //显示时的外部背景色颜色,默认是灰色
 
     public float lineSpacingMultiplier = 1.6f; // 条目间距倍数 默认1.6
