@@ -19,7 +19,15 @@ import java.util.List;
 
 
 public class WheelTime {
+    private static final int DEFAULT_START_YEAR = 1900;
+    private static final int DEFAULT_END_YEAR = 2100;
+    private static final int DEFAULT_START_MONTH = 1;
+    private static final int DEFAULT_END_MONTH = 12;
+    private static final int DEFAULT_START_DAY = 1;
+    private static final int DEFAULT_END_DAY = 31;
+
     public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     private View view;
     private WheelView wv_year;
     private WheelView wv_month;
@@ -28,15 +36,7 @@ public class WheelTime {
     private WheelView wv_minutes;
     private WheelView wv_seconds;
     private int gravity;
-
     private boolean[] type;
-    private static final int DEFAULT_START_YEAR = 1900;
-    private static final int DEFAULT_END_YEAR = 2100;
-    private static final int DEFAULT_START_MONTH = 1;
-    private static final int DEFAULT_END_MONTH = 12;
-    private static final int DEFAULT_START_DAY = 1;
-    private static final int DEFAULT_END_DAY = 31;
-
     private int startYear = DEFAULT_START_YEAR;
     private int endYear = DEFAULT_END_YEAR;
     private int startMonth = DEFAULT_START_MONTH;
@@ -58,12 +58,12 @@ public class WheelTime {
         this.textSize = textSize;
     }
 
-    public void setLunarMode(boolean isLunarCalendar) {
-        this.isLunarCalendar = isLunarCalendar;
-    }
-
     public boolean isLunarMode() {
         return isLunarCalendar;
+    }
+
+    public void setLunarMode(boolean isLunarCalendar) {
+        this.isLunarCalendar = isLunarCalendar;
     }
 
     public void setPicker(int year, int month, int day) {
