@@ -100,11 +100,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
         wheelTime.setLunarMode(mPickerOptions.isLunarCalendar);
 
-        if (mPickerOptions.startYear != 0 && mPickerOptions.endYear != 0
-                && mPickerOptions.startYear <= mPickerOptions.endYear) {
-            setRange();
-        }
-
         //若手动设置了时间范围限制
         if (mPickerOptions.startDate != null && mPickerOptions.endDate != null) {
             if (mPickerOptions.startDate.getTimeInMillis() > mPickerOptions.endDate.getTimeInMillis()) {
@@ -153,15 +148,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     public void setDate(Calendar date) {
         mPickerOptions.date = date;
         setTime();
-    }
-
-    /**
-     * 设置可以选择的时间范围, 要在setTime之前调用才有效果
-     */
-    private void setRange() {
-        wheelTime.setStartYear(mPickerOptions.startYear);
-        wheelTime.setEndYear(mPickerOptions.endYear);
-
     }
 
     /**
