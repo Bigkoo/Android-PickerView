@@ -167,37 +167,7 @@ public class WheelTime {
         wv_year.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
-                int year_num = index + getStartYear();
-                // 判断是不是闰年,来确定月和日的选择
-                wv_month.setAdapter(new ArrayWheelAdapter(ChinaDate.getMonths(year_num)));
-                if (ChinaDate.leapMonth(year_num) != 0 && wv_month.getCurrentItem() > ChinaDate.leapMonth(year_num) - 1) {
-                    wv_month.setCurrentItem(wv_month.getCurrentItem() + 1);
-                } else {
-                    wv_month.setCurrentItem(wv_month.getCurrentItem());
-                }
-
-                int currentIndex = wv_day.getCurrentItem();
-                int maxItem = 29;
-                if (ChinaDate.leapMonth(year_num) != 0 && wv_month.getCurrentItem() > ChinaDate.leapMonth(year_num) - 1) {
-                    if (wv_month.getCurrentItem() == ChinaDate.leapMonth(year_num) + 1) {
-                        wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.leapDays(year_num))));
-                        maxItem = ChinaDate.leapDays(year_num);
-                    } else {
-                        wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year_num, wv_month.getCurrentItem()))));
-                        maxItem = ChinaDate.monthDays(year_num, wv_month.getCurrentItem());
-                    }
-                } else {
-                    wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year_num, wv_month.getCurrentItem() + 1))));
-                    maxItem = ChinaDate.monthDays(year_num, wv_month.getCurrentItem() + 1);
-                }
-
-                if (currentIndex > maxItem - 1) {
-                    wv_day.setCurrentItem(maxItem - 1);
-                }
-
-                if (mSelectChangeCallback != null) {
-                    mSelectChangeCallback.onTimeSelectChanged();
-                }
+                handleLunarYearItemSelected(index);
             }
         });
 
@@ -205,30 +175,7 @@ public class WheelTime {
         wv_month.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
-                int month_num = index;
-                int year_num = wv_year.getCurrentItem() + getStartYear();
-                int currentIndex = wv_day.getCurrentItem();
-                int maxItem = 29;
-                if (ChinaDate.leapMonth(year_num) != 0 && month_num > ChinaDate.leapMonth(year_num) - 1) {
-                    if (wv_month.getCurrentItem() == ChinaDate.leapMonth(year_num) + 1) {
-                        wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.leapDays(year_num))));
-                        maxItem = ChinaDate.leapDays(year_num);
-                    } else {
-                        wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year_num, month_num))));
-                        maxItem = ChinaDate.monthDays(year_num, month_num);
-                    }
-                } else {
-                    wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year_num, month_num + 1))));
-                    maxItem = ChinaDate.monthDays(year_num, month_num + 1);
-                }
-
-                if (currentIndex > maxItem - 1) {
-                    wv_day.setCurrentItem(maxItem - 1);
-                }
-
-                if (mSelectChangeCallback != null) {
-                    mSelectChangeCallback.onTimeSelectChanged();
-                }
+                handleLunarMonthItemSelected(index);
             }
         });
 
@@ -247,6 +194,67 @@ public class WheelTime {
         wv_minutes.setVisibility(type[4] ? View.VISIBLE : View.GONE);
         wv_seconds.setVisibility(type[5] ? View.VISIBLE : View.GONE);
         setContentTextSize();
+    }
+
+    private void handleLunarYearItemSelected(int index) {
+        int year_num = index + getStartYear();
+        // 判断是不是闰年,来确定月和日的选择
+        wv_month.setAdapter(new ArrayWheelAdapter(ChinaDate.getMonths(year_num)));
+        if (ChinaDate.leapMonth(year_num) != 0 && wv_month.getCurrentItem() > ChinaDate.leapMonth(year_num) - 1) {
+            wv_month.setCurrentItem(wv_month.getCurrentItem() + 1);
+        } else {
+            wv_month.setCurrentItem(wv_month.getCurrentItem());
+        }
+
+        int currentIndex = wv_day.getCurrentItem();
+        int maxItem = 29;
+        if (ChinaDate.leapMonth(year_num) != 0 && wv_month.getCurrentItem() > ChinaDate.leapMonth(year_num) - 1) {
+            if (wv_month.getCurrentItem() == ChinaDate.leapMonth(year_num) + 1) {
+                wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.leapDays(year_num))));
+                maxItem = ChinaDate.leapDays(year_num);
+            } else {
+                wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year_num, wv_month.getCurrentItem()))));
+                maxItem = ChinaDate.monthDays(year_num, wv_month.getCurrentItem());
+            }
+        } else {
+            wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year_num, wv_month.getCurrentItem() + 1))));
+            maxItem = ChinaDate.monthDays(year_num, wv_month.getCurrentItem() + 1);
+        }
+
+        if (currentIndex > maxItem - 1) {
+            wv_day.setCurrentItem(maxItem - 1);
+        }
+
+        if (mSelectChangeCallback != null) {
+            mSelectChangeCallback.onTimeSelectChanged();
+        }
+    }
+
+    private void handleLunarMonthItemSelected(int index) {
+        int month_num = index;
+        int year_num = wv_year.getCurrentItem() + getStartYear();
+        int currentIndex = wv_day.getCurrentItem();
+        int maxItem = 29;
+        if (ChinaDate.leapMonth(year_num) != 0 && month_num > ChinaDate.leapMonth(year_num) - 1) {
+            if (wv_month.getCurrentItem() == ChinaDate.leapMonth(year_num) + 1) {
+                wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.leapDays(year_num))));
+                maxItem = ChinaDate.leapDays(year_num);
+            } else {
+                wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year_num, month_num))));
+                maxItem = ChinaDate.monthDays(year_num, month_num);
+            }
+        } else {
+            wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year_num, month_num + 1))));
+            maxItem = ChinaDate.monthDays(year_num, month_num + 1);
+        }
+
+        if (currentIndex > maxItem - 1) {
+            wv_day.setCurrentItem(maxItem - 1);
+        }
+
+        if (mSelectChangeCallback != null) {
+            mSelectChangeCallback.onTimeSelectChanged();
+        }
     }
 
     /**
@@ -393,77 +401,7 @@ public class WheelTime {
         wv_year.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
-                int year_num = index + getStartYear();
-                currentYear = year_num;
-                int currentMonthItem = wv_month.getCurrentItem();//记录上一次的item位置
-                // 判断大小月及是否闰年,用来确定"日"的数据
-                if (getStartYear() == getEndYear()) {
-                    //重新设置月份
-                    wv_month.setAdapter(new NumericWheelAdapter(getStartMonth(), getEndMonth()));
-
-                    if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
-                        currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
-                        wv_month.setCurrentItem(currentMonthItem);
-                    }
-
-                    int monthNum = currentMonthItem + getStartMonth();
-
-                    if (getStartMonth() == getEndMonth()) {
-                        //重新设置日
-                        setReDay(year_num, monthNum, getStartDay(), getEndDay());
-                    } else if (monthNum == getStartMonth()) {
-                        //重新设置日
-                        setReDay(year_num, monthNum, getStartDay(), 31);
-                    } else if (monthNum == getEndMonth()) {
-                        setReDay(year_num, monthNum, 1, getEndDay());
-                    } else {//重新设置日
-                        setReDay(year_num, monthNum, 1, 31);
-                    }
-                } else if (year_num == getStartYear()) {//等于开始的年
-                    //重新设置月份
-                    wv_month.setAdapter(new NumericWheelAdapter(getStartMonth(), 12));
-
-                    if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
-                        currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
-                        wv_month.setCurrentItem(currentMonthItem);
-                    }
-
-                    int month = currentMonthItem + getStartMonth();
-                    if (month == getStartMonth()) {
-                        //重新设置日
-                        setReDay(year_num, month, getStartDay(), 31);
-                    } else {
-                        //重新设置日
-                        setReDay(year_num, month, 1, 31);
-                    }
-
-                } else if (year_num == getEndYear()) {
-                    //重新设置月份
-                    wv_month.setAdapter(new NumericWheelAdapter(1, getEndMonth()));
-                    if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
-                        currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
-                        wv_month.setCurrentItem(currentMonthItem);
-                    }
-                    int monthNum = currentMonthItem + 1;
-
-                    if (monthNum == getEndMonth()) {
-                        //重新设置日
-                        setReDay(year_num, monthNum, 1, getEndDay());
-                    } else {
-                        //重新设置日
-                        setReDay(year_num, monthNum, 1, 31);
-                    }
-
-                } else {
-                    //重新设置月份
-                    wv_month.setAdapter(new NumericWheelAdapter(1, 12));
-                    //重新设置日
-                    setReDay(year_num, wv_month.getCurrentItem() + 1, 1, 31);
-                }
-
-                if (mSelectChangeCallback != null) {
-                    mSelectChangeCallback.onTimeSelectChanged();
-                }
+                handleSolarYearItemSelected(index);
             }
         });
 
@@ -472,48 +410,7 @@ public class WheelTime {
         wv_month.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(int index) {
-                int month_num = index + 1;
-
-                if (getStartYear() == getEndYear()) {
-                    month_num = month_num + getStartMonth() - 1;
-                    if (getStartMonth() == getEndMonth()) {
-                        //重新设置日
-                        setReDay(currentYear, month_num, getStartDay(), getEndDay());
-                    } else if (getStartMonth() == month_num) {
-
-                        //重新设置日
-                        setReDay(currentYear, month_num, getStartDay(), 31);
-                    } else if (getEndMonth() == month_num) {
-                        setReDay(currentYear, month_num, 1, getEndDay());
-                    } else {
-                        setReDay(currentYear, month_num, 1, 31);
-                    }
-                } else if (currentYear == getStartYear()) {
-                    month_num = month_num + getStartMonth() - 1;
-                    if (month_num == getStartMonth()) {
-                        //重新设置日
-                        setReDay(currentYear, month_num, getStartDay(), 31);
-                    } else {
-                        //重新设置日
-                        setReDay(currentYear, month_num, 1, 31);
-                    }
-
-                } else if (currentYear == getEndYear()) {
-                    if (month_num == getEndMonth()) {
-                        //重新设置日
-                        setReDay(currentYear, wv_month.getCurrentItem() + 1, 1, getEndDay());
-                    } else {
-                        setReDay(currentYear, wv_month.getCurrentItem() + 1, 1, 31);
-                    }
-
-                } else {
-                    //重新设置日
-                    setReDay(currentYear, month_num, 1, 31);
-                }
-
-                if (mSelectChangeCallback != null) {
-                    mSelectChangeCallback.onTimeSelectChanged();
-                }
+                handleSolarMonthItemSelected(index);
             }
         });
 
@@ -532,6 +429,125 @@ public class WheelTime {
         wv_minutes.setVisibility(type[4] ? View.VISIBLE : View.GONE);
         wv_seconds.setVisibility(type[5] ? View.VISIBLE : View.GONE);
         setContentTextSize();
+    }
+
+    private void handleSolarYearItemSelected(int index) {
+        int year_num = index + getStartYear();
+        currentYear = year_num;
+        int currentMonthItem = wv_month.getCurrentItem();//记录上一次的item位置
+        // 判断大小月及是否闰年,用来确定"日"的数据
+        if (getStartYear() == getEndYear()) {
+            //重新设置月份
+            wv_month.setAdapter(new NumericWheelAdapter(getStartMonth(), getEndMonth()));
+
+            if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
+                currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
+                wv_month.setCurrentItem(currentMonthItem);
+            }
+
+            int monthNum = currentMonthItem + getStartMonth();
+
+            if (getStartMonth() == getEndMonth()) {
+                //重新设置日
+                setReDay(year_num, monthNum, getStartDay(), getEndDay());
+            } else if (monthNum == getStartMonth()) {
+                //重新设置日
+                setReDay(year_num, monthNum, getStartDay(), 31);
+            } else if (monthNum == getEndMonth()) {
+                setReDay(year_num, monthNum, 1, getEndDay());
+            } else {//重新设置日
+                setReDay(year_num, monthNum, 1, 31);
+            }
+        } else if (year_num == getStartYear()) {//等于开始的年
+            //重新设置月份
+            wv_month.setAdapter(new NumericWheelAdapter(getStartMonth(), 12));
+
+            if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
+                currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
+                wv_month.setCurrentItem(currentMonthItem);
+            }
+
+            int month = currentMonthItem + getStartMonth();
+            if (month == getStartMonth()) {
+                //重新设置日
+                setReDay(year_num, month, getStartDay(), 31);
+            } else {
+                //重新设置日
+                setReDay(year_num, month, 1, 31);
+            }
+
+        } else if (year_num == getEndYear()) {
+            //重新设置月份
+            wv_month.setAdapter(new NumericWheelAdapter(1, getEndMonth()));
+            if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
+                currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
+                wv_month.setCurrentItem(currentMonthItem);
+            }
+            int monthNum = currentMonthItem + 1;
+
+            if (monthNum == getEndMonth()) {
+                //重新设置日
+                setReDay(year_num, monthNum, 1, getEndDay());
+            } else {
+                //重新设置日
+                setReDay(year_num, monthNum, 1, 31);
+            }
+
+        } else {
+            //重新设置月份
+            wv_month.setAdapter(new NumericWheelAdapter(1, 12));
+            //重新设置日
+            setReDay(year_num, wv_month.getCurrentItem() + 1, 1, 31);
+        }
+
+        if (mSelectChangeCallback != null) {
+            mSelectChangeCallback.onTimeSelectChanged();
+        }
+    }
+
+    private void handleSolarMonthItemSelected(int index) {
+        int month_num = index + 1;
+
+        if (getStartYear() == getEndYear()) {
+            month_num = month_num + getStartMonth() - 1;
+            if (getStartMonth() == getEndMonth()) {
+                //重新设置日
+                setReDay(currentYear, month_num, getStartDay(), getEndDay());
+            } else if (getStartMonth() == month_num) {
+
+                //重新设置日
+                setReDay(currentYear, month_num, getStartDay(), 31);
+            } else if (getEndMonth() == month_num) {
+                setReDay(currentYear, month_num, 1, getEndDay());
+            } else {
+                setReDay(currentYear, month_num, 1, 31);
+            }
+        } else if (currentYear == getStartYear()) {
+            month_num = month_num + getStartMonth() - 1;
+            if (month_num == getStartMonth()) {
+                //重新设置日
+                setReDay(currentYear, month_num, getStartDay(), 31);
+            } else {
+                //重新设置日
+                setReDay(currentYear, month_num, 1, 31);
+            }
+
+        } else if (currentYear == getEndYear()) {
+            if (month_num == getEndMonth()) {
+                //重新设置日
+                setReDay(currentYear, wv_month.getCurrentItem() + 1, 1, getEndDay());
+            } else {
+                setReDay(currentYear, wv_month.getCurrentItem() + 1, 1, 31);
+            }
+
+        } else {
+            //重新设置日
+            setReDay(currentYear, month_num, 1, 31);
+        }
+
+        if (mSelectChangeCallback != null) {
+            mSelectChangeCallback.onTimeSelectChanged();
+        }
     }
 
     private void setChangedListener(WheelView wheelView) {
