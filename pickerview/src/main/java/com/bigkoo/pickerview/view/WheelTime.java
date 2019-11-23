@@ -32,6 +32,15 @@ public class WheelTime {
     private static final int DEFAULT_START_DAY = 1;
     private static final int DEFAULT_END_DAY = 31;
 
+    /**
+     * 大月月份
+     */
+    private static final List<String> LIST_BIG_MONTH = Arrays.asList("1", "3", "5", "7", "8", "10", "12");
+    /**
+     * 小月月份（2月需单独处理，故不计在内）
+     */
+    private static final List<String> LIST_LITTLE_MONTH = Arrays.asList("4", "6", "9", "11");
+
     public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private View view;
@@ -251,13 +260,6 @@ public class WheelTime {
      * @param s
      */
     private void setSolar(int year, final int month, int day, int h, int m, int s) {
-        // 添加大小月月份并将其转换为list,方便之后的判断
-        String[] months_big = {"1", "3", "5", "7", "8", "10", "12"};
-        String[] months_little = {"4", "6", "9", "11"};
-
-        final List<String> list_big = Arrays.asList(months_big);
-        final List<String> list_little = Arrays.asList(months_little);
-
         currentYear = year;
         // 年
         wv_year = (WheelView) view.findViewById(R.id.year);
@@ -289,12 +291,12 @@ public class WheelTime {
 
         boolean leapYear = (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
         if (getStartYear() == getEndYear() && getStartMonth() == getEndMonth()) {
-            if (list_big.contains(String.valueOf(month + 1))) {
+            if (LIST_BIG_MONTH.contains(String.valueOf(month + 1))) {
                 if (getEndDay() > 31) {
                     setEndDay(31);
                 }
                 wv_day.setAdapter(new NumericWheelAdapter(getStartDay(), getEndDay()));
-            } else if (list_little.contains(String.valueOf(month + 1))) {
+            } else if (LIST_LITTLE_MONTH.contains(String.valueOf(month + 1))) {
                 if (getEndDay() > 30) {
                     setEndDay(30);
                 }
@@ -316,10 +318,10 @@ public class WheelTime {
             wv_day.setCurrentItem(day - getStartDay());
         } else if (year == getStartYear() && month + 1 == getStartMonth()) {
             // 起始日期的天数控制
-            if (list_big.contains(String.valueOf(month + 1))) {
+            if (LIST_BIG_MONTH.contains(String.valueOf(month + 1))) {
 
                 wv_day.setAdapter(new NumericWheelAdapter(getStartDay(), 31));
-            } else if (list_little.contains(String.valueOf(month + 1))) {
+            } else if (LIST_LITTLE_MONTH.contains(String.valueOf(month + 1))) {
 
                 wv_day.setAdapter(new NumericWheelAdapter(getStartDay(), 30));
             } else {
@@ -329,12 +331,12 @@ public class WheelTime {
             wv_day.setCurrentItem(day - getStartDay());
         } else if (year == getEndYear() && month + 1 == getEndMonth()) {
             // 终止日期的天数控制
-            if (list_big.contains(String.valueOf(month + 1))) {
+            if (LIST_BIG_MONTH.contains(String.valueOf(month + 1))) {
                 if (getEndDay() > 31) {
                     setEndDay(31);
                 }
                 wv_day.setAdapter(new NumericWheelAdapter(1, getEndDay()));
-            } else if (list_little.contains(String.valueOf(month + 1))) {
+            } else if (LIST_LITTLE_MONTH.contains(String.valueOf(month + 1))) {
                 if (getEndDay() > 30) {
                     setEndDay(30);
                 }
@@ -356,9 +358,9 @@ public class WheelTime {
             wv_day.setCurrentItem(day - 1);
         } else {
             // 判断大小月及是否闰年,用来确定"日"的数据
-            if (list_big.contains(String.valueOf(month + 1))) {
+            if (LIST_BIG_MONTH.contains(String.valueOf(month + 1))) {
                 wv_day.setAdapter(new NumericWheelAdapter(1, 31));
-            } else if (list_little.contains(String.valueOf(month + 1))) {
+            } else if (LIST_LITTLE_MONTH.contains(String.valueOf(month + 1))) {
                 wv_day.setAdapter(new NumericWheelAdapter(1, 30));
             } else {
                 // 闰年 29，平年 28
@@ -408,14 +410,14 @@ public class WheelTime {
 
                     if (getStartMonth() == getEndMonth()) {
                         //重新设置日
-                        setReDay(year_num, monthNum, getStartDay(), getEndDay(), list_big, list_little);
+                        setReDay(year_num, monthNum, getStartDay(), getEndDay());
                     } else if (monthNum == getStartMonth()) {
                         //重新设置日
-                        setReDay(year_num, monthNum, getStartDay(), 31, list_big, list_little);
+                        setReDay(year_num, monthNum, getStartDay(), 31);
                     } else if (monthNum == getEndMonth()) {
-                        setReDay(year_num, monthNum, 1, getEndDay(), list_big, list_little);
+                        setReDay(year_num, monthNum, 1, getEndDay());
                     } else {//重新设置日
-                        setReDay(year_num, monthNum, 1, 31, list_big, list_little);
+                        setReDay(year_num, monthNum, 1, 31);
                     }
                 } else if (year_num == getStartYear()) {//等于开始的年
                     //重新设置月份
@@ -429,10 +431,10 @@ public class WheelTime {
                     int month = currentMonthItem + getStartMonth();
                     if (month == getStartMonth()) {
                         //重新设置日
-                        setReDay(year_num, month, getStartDay(), 31, list_big, list_little);
+                        setReDay(year_num, month, getStartDay(), 31);
                     } else {
                         //重新设置日
-                        setReDay(year_num, month, 1, 31, list_big, list_little);
+                        setReDay(year_num, month, 1, 31);
                     }
 
                 } else if (year_num == getEndYear()) {
@@ -446,17 +448,17 @@ public class WheelTime {
 
                     if (monthNum == getEndMonth()) {
                         //重新设置日
-                        setReDay(year_num, monthNum, 1, getEndDay(), list_big, list_little);
+                        setReDay(year_num, monthNum, 1, getEndDay());
                     } else {
                         //重新设置日
-                        setReDay(year_num, monthNum, 1, 31, list_big, list_little);
+                        setReDay(year_num, monthNum, 1, 31);
                     }
 
                 } else {
                     //重新设置月份
                     wv_month.setAdapter(new NumericWheelAdapter(1, 12));
                     //重新设置日
-                    setReDay(year_num, wv_month.getCurrentItem() + 1, 1, 31, list_big, list_little);
+                    setReDay(year_num, wv_month.getCurrentItem() + 1, 1, 31);
                 }
 
                 if (mSelectChangeCallback != null) {
@@ -476,37 +478,37 @@ public class WheelTime {
                     month_num = month_num + getStartMonth() - 1;
                     if (getStartMonth() == getEndMonth()) {
                         //重新设置日
-                        setReDay(currentYear, month_num, getStartDay(), getEndDay(), list_big, list_little);
+                        setReDay(currentYear, month_num, getStartDay(), getEndDay());
                     } else if (getStartMonth() == month_num) {
 
                         //重新设置日
-                        setReDay(currentYear, month_num, getStartDay(), 31, list_big, list_little);
+                        setReDay(currentYear, month_num, getStartDay(), 31);
                     } else if (getEndMonth() == month_num) {
-                        setReDay(currentYear, month_num, 1, getEndDay(), list_big, list_little);
+                        setReDay(currentYear, month_num, 1, getEndDay());
                     } else {
-                        setReDay(currentYear, month_num, 1, 31, list_big, list_little);
+                        setReDay(currentYear, month_num, 1, 31);
                     }
                 } else if (currentYear == getStartYear()) {
                     month_num = month_num + getStartMonth() - 1;
                     if (month_num == getStartMonth()) {
                         //重新设置日
-                        setReDay(currentYear, month_num, getStartDay(), 31, list_big, list_little);
+                        setReDay(currentYear, month_num, getStartDay(), 31);
                     } else {
                         //重新设置日
-                        setReDay(currentYear, month_num, 1, 31, list_big, list_little);
+                        setReDay(currentYear, month_num, 1, 31);
                     }
 
                 } else if (currentYear == getEndYear()) {
                     if (month_num == getEndMonth()) {
                         //重新设置日
-                        setReDay(currentYear, wv_month.getCurrentItem() + 1, 1, getEndDay(), list_big, list_little);
+                        setReDay(currentYear, wv_month.getCurrentItem() + 1, 1, getEndDay());
                     } else {
-                        setReDay(currentYear, wv_month.getCurrentItem() + 1, 1, 31, list_big, list_little);
+                        setReDay(currentYear, wv_month.getCurrentItem() + 1, 1, 31);
                     }
 
                 } else {
                     //重新设置日
-                    setReDay(currentYear, month_num, 1, 31, list_big, list_little);
+                    setReDay(currentYear, month_num, 1, 31);
                 }
 
                 if (mSelectChangeCallback != null) {
@@ -545,17 +547,17 @@ public class WheelTime {
     }
 
 
-    private void setReDay(int year_num, int monthNum, int startD, int endD, List<String> list_big, List<String> list_little) {
+    private void setReDay(int year_num, int monthNum, int startD, int endD) {
         int currentItem = wv_day.getCurrentItem();
 
 //        int maxItem;
-        if (list_big.contains(String.valueOf(monthNum))) {
+        if (LIST_BIG_MONTH.contains(String.valueOf(monthNum))) {
             if (endD > 31) {
                 endD = 31;
             }
             wv_day.setAdapter(new NumericWheelAdapter(startD, endD));
 //            maxItem = endD;
-        } else if (list_little.contains(String.valueOf(monthNum))) {
+        } else if (LIST_LITTLE_MONTH.contains(String.valueOf(monthNum))) {
             if (endD > 30) {
                 endD = 30;
             }
