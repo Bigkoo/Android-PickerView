@@ -88,30 +88,33 @@ public class WheelTime {
         this.isLunarCalendar = isLunarCalendar;
     }
 
-    public void setPicker(int year, int month, int day) {
-        this.setPicker(year, month, day, 0, 0, 0);
-    }
-
-    public void setPicker(int year, final int month, int day, int h, int m, int s) {
+    public void setPicker(Calendar date) {
         if (isLunarCalendar) {
-            int[] lunar = LunarCalendar.solarToLunar(year, month + 1, day);
-            setLunar(lunar[0], lunar[1] - 1, lunar[2], lunar[3] == 1, h, m, s);
+            int[] lunar = LunarCalendar.solarToLunar(
+                    date.get(Calendar.YEAR),
+                    date.get(Calendar.MONTH) + 1,
+                    date.get(Calendar.DAY_OF_MONTH));
+            Calendar lunarDate = (Calendar) date.clone();
+            lunarDate.set(lunar[0], lunar[1] - 1, lunar[2]);
+            setLunar(lunarDate, lunar[3] == 1);
         } else {
-            setSolar(year, month, day, h, m, s);
+            setSolar(date);
         }
     }
 
     /**
      * 设置农历
      *
-     * @param year
-     * @param month
-     * @param day
-     * @param h
-     * @param m
-     * @param s
+     * @param date
+     * @param isLeap
      */
-    private void setLunar(int year, final int month, int day, boolean isLeap, int h, int m, int s) {
+    private void setLunar(Calendar date, boolean isLeap) {
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int h = date.get(Calendar.HOUR_OF_DAY);
+        int m = date.get(Calendar.MINUTE);
+        int s = date.get(Calendar.SECOND);
         // 年
         wv_year = (WheelView) view.findViewById(R.id.year);
         wv_year.setAdapter(new ArrayWheelAdapter(ChinaDate.getYears(getStartYear(), getEndYear())));// 设置"年"的显示数据
@@ -243,14 +246,16 @@ public class WheelTime {
     /**
      * 设置公历
      *
-     * @param year
-     * @param month
-     * @param day
-     * @param h
-     * @param m
-     * @param s
+     * @param date
      */
-    private void setSolar(int year, final int month, int day, int h, int m, int s) {
+    private void setSolar(Calendar date) {
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int h = date.get(Calendar.HOUR_OF_DAY);
+        int m = date.get(Calendar.MINUTE);
+        int s = date.get(Calendar.SECOND);
+
         currentYear = year;
         // 年
         wv_year = (WheelView) view.findViewById(R.id.year);

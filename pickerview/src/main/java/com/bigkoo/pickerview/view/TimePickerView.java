@@ -178,27 +178,14 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
      * 设置选中时间,默认选中当前时间
      */
     private void setTime() {
-        int year, month, day, hours, minute, seconds;
-        Calendar calendar = Calendar.getInstance();
-
+        Calendar calendar;
         if (mPickerOptions.date == null) {
+            calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
-            year = calendar.get(Calendar.YEAR);
-            month = calendar.get(Calendar.MONTH);
-            day = calendar.get(Calendar.DAY_OF_MONTH);
-            hours = calendar.get(Calendar.HOUR_OF_DAY);
-            minute = calendar.get(Calendar.MINUTE);
-            seconds = calendar.get(Calendar.SECOND);
         } else {
-            year = mPickerOptions.date.get(Calendar.YEAR);
-            month = mPickerOptions.date.get(Calendar.MONTH);
-            day = mPickerOptions.date.get(Calendar.DAY_OF_MONTH);
-            hours = mPickerOptions.date.get(Calendar.HOUR_OF_DAY);
-            minute = mPickerOptions.date.get(Calendar.MINUTE);
-            seconds = mPickerOptions.date.get(Calendar.SECOND);
+            calendar = mPickerOptions.date;
         }
-
-        wheelTime.setPicker(year, month, day, hours, minute, seconds);
+        wheelTime.setPicker(calendar);
     }
 
 
@@ -245,20 +232,13 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
      */
     public void setLunarCalendar(boolean lunar) {
         try {
-            int year, month, day, hours, minute, seconds;
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(WheelTime.dateFormat.parse(wheelTime.getTime()));
-            year = calendar.get(Calendar.YEAR);
-            month = calendar.get(Calendar.MONTH);
-            day = calendar.get(Calendar.DAY_OF_MONTH);
-            hours = calendar.get(Calendar.HOUR_OF_DAY);
-            minute = calendar.get(Calendar.MINUTE);
-            seconds = calendar.get(Calendar.SECOND);
 
             wheelTime.setLunarMode(lunar);
             wheelTime.setLabels(mPickerOptions.label_year, mPickerOptions.label_month, mPickerOptions.label_day,
                     mPickerOptions.label_hours, mPickerOptions.label_minutes, mPickerOptions.label_seconds);
-            wheelTime.setPicker(year, month, day, hours, minute, seconds);
+            wheelTime.setPicker(calendar);
         } catch (ParseException e) {
             e.printStackTrace();
         }
