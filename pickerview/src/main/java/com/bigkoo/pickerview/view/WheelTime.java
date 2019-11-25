@@ -265,6 +265,66 @@ public class WheelTime {
         wv_year.setCurrentItem(year - getStartYear());// 初始化时显示的数据
         wv_year.setGravity(gravity);
         // 月
+        setSolarMonth(date);
+        // 日
+        setSolarDay(date);
+        //时
+        wv_hours = (WheelView) view.findViewById(R.id.hour);
+        wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
+
+        wv_hours.setCurrentItem(h);
+        wv_hours.setGravity(gravity);
+        //分
+        wv_minutes = (WheelView) view.findViewById(R.id.min);
+        wv_minutes.setAdapter(new NumericWheelAdapter(0, 59));
+
+        wv_minutes.setCurrentItem(m);
+        wv_minutes.setGravity(gravity);
+        //秒
+        wv_seconds = (WheelView) view.findViewById(R.id.second);
+        wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
+
+        wv_seconds.setCurrentItem(s);
+        wv_seconds.setGravity(gravity);
+
+        // 添加"年"监听
+        wv_year.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int index) {
+                handleSolarYearItemSelected(index);
+            }
+        });
+
+
+        // 添加"月"监听
+        wv_month.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int index) {
+                handleSolarMonthItemSelected(index);
+            }
+        });
+
+        setChangedListener(wv_day);
+        setChangedListener(wv_hours);
+        setChangedListener(wv_minutes);
+        setChangedListener(wv_seconds);
+
+        if (type.length != 6) {
+            throw new IllegalArgumentException("type[] length is not 6");
+        }
+        wv_year.setVisibility(type[0] ? View.VISIBLE : View.GONE);
+        wv_month.setVisibility(type[1] ? View.VISIBLE : View.GONE);
+        wv_day.setVisibility(type[2] ? View.VISIBLE : View.GONE);
+        wv_hours.setVisibility(type[3] ? View.VISIBLE : View.GONE);
+        wv_minutes.setVisibility(type[4] ? View.VISIBLE : View.GONE);
+        wv_seconds.setVisibility(type[5] ? View.VISIBLE : View.GONE);
+        setContentTextSize();
+    }
+
+    private void setSolarMonth(Calendar date) {
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+
         wv_month = (WheelView) view.findViewById(R.id.month);
         if (getStartYear() == getEndYear()) {//开始年等于终止年
             wv_month.setAdapter(new NumericWheelAdapter(getStartMonth(), getEndMonth()));
@@ -282,7 +342,13 @@ public class WheelTime {
             wv_month.setCurrentItem(month);
         }
         wv_month.setGravity(gravity);
-        // 日
+    }
+
+    private void setSolarDay(Calendar date) {
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+        int day = date.get(Calendar.DAY_OF_MONTH);
+
         wv_day = (WheelView) view.findViewById(R.id.day);
 
         boolean leapYear = (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
@@ -366,57 +432,6 @@ public class WheelTime {
         }
 
         wv_day.setGravity(gravity);
-        //时
-        wv_hours = (WheelView) view.findViewById(R.id.hour);
-        wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
-
-        wv_hours.setCurrentItem(h);
-        wv_hours.setGravity(gravity);
-        //分
-        wv_minutes = (WheelView) view.findViewById(R.id.min);
-        wv_minutes.setAdapter(new NumericWheelAdapter(0, 59));
-
-        wv_minutes.setCurrentItem(m);
-        wv_minutes.setGravity(gravity);
-        //秒
-        wv_seconds = (WheelView) view.findViewById(R.id.second);
-        wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
-
-        wv_seconds.setCurrentItem(s);
-        wv_seconds.setGravity(gravity);
-
-        // 添加"年"监听
-        wv_year.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                handleSolarYearItemSelected(index);
-            }
-        });
-
-
-        // 添加"月"监听
-        wv_month.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                handleSolarMonthItemSelected(index);
-            }
-        });
-
-        setChangedListener(wv_day);
-        setChangedListener(wv_hours);
-        setChangedListener(wv_minutes);
-        setChangedListener(wv_seconds);
-
-        if (type.length != 6) {
-            throw new IllegalArgumentException("type[] length is not 6");
-        }
-        wv_year.setVisibility(type[0] ? View.VISIBLE : View.GONE);
-        wv_month.setVisibility(type[1] ? View.VISIBLE : View.GONE);
-        wv_day.setVisibility(type[2] ? View.VISIBLE : View.GONE);
-        wv_hours.setVisibility(type[3] ? View.VISIBLE : View.GONE);
-        wv_minutes.setVisibility(type[4] ? View.VISIBLE : View.GONE);
-        wv_seconds.setVisibility(type[5] ? View.VISIBLE : View.GONE);
-        setContentTextSize();
     }
 
     private void handleSolarYearItemSelected(int index) {
