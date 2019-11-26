@@ -588,35 +588,14 @@ public class WheelTime {
             //如果是农历 返回对应的公历时间
             return getLunarTime();
         }
+
         StringBuilder sb = new StringBuilder();
-        if (currentYear == getStartYear()) {
-           /* int i = wv_month.getCurrentItem() + startMonth;
-            System.out.println("i:" + i);*/
-            if ((wv_month.getCurrentItem() + getStartMonth()) == getStartMonth()) {
-                sb.append((wv_year.getCurrentItem() + getStartYear())).append("-")
-                        .append((wv_month.getCurrentItem() + getStartMonth())).append("-")
-                        .append((wv_day.getCurrentItem() + getStartDay())).append(" ")
-                        .append(wv_hours.getCurrentItem()).append(":")
-                        .append(wv_minutes.getCurrentItem()).append(":")
-                        .append(wv_seconds.getCurrentItem());
-            } else {
-                sb.append((wv_year.getCurrentItem() + getStartYear())).append("-")
-                        .append((wv_month.getCurrentItem() + getStartMonth())).append("-")
-                        .append((wv_day.getCurrentItem() + 1)).append(" ")
-                        .append(wv_hours.getCurrentItem()).append(":")
-                        .append(wv_minutes.getCurrentItem()).append(":")
-                        .append(wv_seconds.getCurrentItem());
-            }
-
-        } else {
-            sb.append((wv_year.getCurrentItem() + getStartYear())).append("-")
-                    .append((wv_month.getCurrentItem() + 1)).append("-")
-                    .append((wv_day.getCurrentItem() + 1)).append(" ")
-                    .append(wv_hours.getCurrentItem()).append(":")
-                    .append(wv_minutes.getCurrentItem()).append(":")
-                    .append(wv_seconds.getCurrentItem());
-        }
-
+        sb.append(getCurrentItemValue(wv_year)).append("-")
+                .append(getCurrentItemValue(wv_month)).append("-")
+                .append(getCurrentItemValue(wv_day)).append(" ")
+                .append(getCurrentItemValue(wv_hours)).append(":")
+                .append(getCurrentItemValue(wv_minutes)).append(":")
+                .append(getCurrentItemValue(wv_seconds));
         return sb.toString();
     }
 
@@ -649,9 +628,9 @@ public class WheelTime {
         sb.append(solar[0]).append("-")
                 .append(solar[1]).append("-")
                 .append(solar[2]).append(" ")
-                .append(wv_hours.getCurrentItem()).append(":")
-                .append(wv_minutes.getCurrentItem()).append(":")
-                .append(wv_seconds.getCurrentItem());
+                .append(getCurrentItemValue(wv_hours)).append(":")
+                .append(getCurrentItemValue(wv_minutes)).append(":")
+                .append(getCurrentItemValue(wv_seconds));
         return sb.toString();
     }
 
@@ -813,5 +792,10 @@ public class WheelTime {
 
     private void setEndDay(int endDay) {
         endDate.set(Calendar.DAY_OF_MONTH, endDay);
+    }
+
+    private Object getCurrentItemValue(WheelView wv) {
+        int currentItem = wv.getCurrentItem();
+        return wv.getAdapter().getItem(currentItem);
     }
 }
