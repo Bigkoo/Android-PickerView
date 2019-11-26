@@ -31,6 +31,12 @@ public class WheelTime {
     private static final int DEFAULT_END_MONTH = 11;
     private static final int DEFAULT_START_DAY = 1;
     private static final int DEFAULT_END_DAY = 31;
+    private static final int DEFAULT_START_HOUR = 0;
+    private static final int DEFAULT_END_HOUR = 23;
+    private static final int DEFAULT_START_MINUTE = 0;
+    private static final int DEFAULT_END_MINUTE = 59;
+    private static final int DEFAULT_START_SECOND = 0;
+    private static final int DEFAULT_END_SECOND = 59;
 
     /**
      * 大月月份
@@ -53,6 +59,9 @@ public class WheelTime {
     private int gravity;
     private boolean[] type;
     private int currentYear;
+    private int currentMonth;
+    private int currentDay;
+    private int currentHour;
 
     private Calendar startDate = Calendar.getInstance();
     private Calendar endDate = Calendar.getInstance();
@@ -74,10 +83,16 @@ public class WheelTime {
     private void initRangeDate() {
         startDate.set(DEFAULT_START_YEAR,
                 DEFAULT_START_MONTH,
-                DEFAULT_START_DAY);
+                DEFAULT_START_DAY,
+                DEFAULT_START_HOUR,
+                DEFAULT_START_MINUTE,
+                DEFAULT_START_SECOND);
         endDate.set(DEFAULT_END_YEAR,
                 DEFAULT_END_MONTH,
-                DEFAULT_END_DAY);
+                DEFAULT_END_DAY,
+                DEFAULT_END_HOUR,
+                DEFAULT_END_MINUTE,
+                DEFAULT_END_SECOND);
     }
 
     public boolean isLunarMode() {
@@ -253,10 +268,12 @@ public class WheelTime {
         int month = date.get(Calendar.MONTH);
         int day = date.get(Calendar.DAY_OF_MONTH);
         int h = date.get(Calendar.HOUR_OF_DAY);
-        int m = date.get(Calendar.MINUTE);
-        int s = date.get(Calendar.SECOND);
 
         currentYear = year;
+        currentMonth = month + 1;
+        currentDay = day;
+        currentHour = h;
+
         // 年
         wv_year = (WheelView) view.findViewById(R.id.year);
         wv_year.setAdapter(new NumericWheelAdapter(getStartYear(), getEndYear()));// 设置"年"的显示数据
@@ -268,24 +285,12 @@ public class WheelTime {
         setSolarMonth(date);
         // 日
         setSolarDay(date);
-        //时
-        wv_hours = (WheelView) view.findViewById(R.id.hour);
-        wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
-
-        wv_hours.setCurrentItem(h);
-        wv_hours.setGravity(gravity);
-        //分
-        wv_minutes = (WheelView) view.findViewById(R.id.min);
-        wv_minutes.setAdapter(new NumericWheelAdapter(0, 59));
-
-        wv_minutes.setCurrentItem(m);
-        wv_minutes.setGravity(gravity);
-        //秒
-        wv_seconds = (WheelView) view.findViewById(R.id.second);
-        wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
-
-        wv_seconds.setCurrentItem(s);
-        wv_seconds.setGravity(gravity);
+        // 时
+        setSolarHour(date);
+        // 分
+        setSolarMinute(date);
+        // 秒
+        setSolarSecond(date);
 
         // 添加"年"监听
         wv_year.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -295,7 +300,6 @@ public class WheelTime {
             }
         });
 
-
         // 添加"月"监听
         wv_month.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -304,9 +308,30 @@ public class WheelTime {
             }
         });
 
-        setChangedListener(wv_day);
-        setChangedListener(wv_hours);
-        setChangedListener(wv_minutes);
+        // 添加"日"监听
+        wv_day.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int index) {
+                handleSolarDayItemSelected(index);
+            }
+        });
+
+        // 添加"时"监听
+        wv_hours.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int index) {
+                handleSolarHourItemSelected(index);
+            }
+        });
+
+        // 添加"分"监听
+        wv_minutes.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int index) {
+                handleSolarMinuteItemSelected(index);
+            }
+        });
+
         setChangedListener(wv_seconds);
 
         if (type.length != 6) {
@@ -434,6 +459,105 @@ public class WheelTime {
         wv_day.setGravity(gravity);
     }
 
+    private void setSolarHour(Calendar date) {
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int h = date.get(Calendar.HOUR_OF_DAY);
+
+        int startHour = DEFAULT_START_HOUR;
+        int endHour = DEFAULT_END_HOUR;
+        int currentItem = h;
+
+        if (year == getStartYear()
+                && month + 1 == getStartMonth()
+                && day == getStartDay()) {
+            // 起始日期的小时控制
+            startHour = getStartHour();
+            currentItem = h - getStartHour();
+        }
+        if (year == getEndYear()
+                && month + 1 == getEndMonth()
+                && day == getEndDay()) {
+            // 终止日期的小时控制
+            endHour = getEndHour();
+        }
+
+        wv_hours = (WheelView) view.findViewById(R.id.hour);
+        wv_hours.setAdapter(new NumericWheelAdapter(startHour, endHour));
+        wv_hours.setCurrentItem(currentItem);
+        wv_hours.setGravity(gravity);
+    }
+
+    private void setSolarMinute(Calendar date) {
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int h = date.get(Calendar.HOUR_OF_DAY);
+        int m = date.get(Calendar.MINUTE);
+
+        int startMinute = DEFAULT_START_MINUTE;
+        int endMinute = DEFAULT_END_MINUTE;
+        int currentItem = m;
+
+        if (year == getStartYear()
+                && month + 1 == getStartMonth()
+                && day == getStartDay()
+                && h == getStartHour()) {
+            // 起始日期的分钟控制
+            startMinute = getStartMinute();
+            currentItem = m - getStartMinute();
+        }
+        if (year == getEndYear()
+                && month + 1 == getEndMonth()
+                && day == getEndDay()
+                && h == getEndHour()) {
+            // 终止日期的分钟控制
+            endMinute = getEndMinute();
+        }
+
+        wv_minutes = (WheelView) view.findViewById(R.id.min);
+        wv_minutes.setAdapter(new NumericWheelAdapter(startMinute, endMinute));
+        wv_minutes.setCurrentItem(currentItem);
+        wv_minutes.setGravity(gravity);
+    }
+
+    private void setSolarSecond(Calendar date) {
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int h = date.get(Calendar.HOUR_OF_DAY);
+        int m = date.get(Calendar.MINUTE);
+        int s = date.get(Calendar.SECOND);
+
+        int startSecond = DEFAULT_START_SECOND;
+        int endSecond = DEFAULT_END_SECOND;
+        int currentItem = s;
+
+        if (year == getStartYear()
+                && month + 1 == getStartMonth()
+                && day == getStartDay()
+                && h == getStartHour()
+                && m == getStartMinute()) {
+            // 起始日期的秒控制
+            startSecond = getStartSecond();
+            currentItem = s - getStartSecond();
+        }
+        if (year == getEndYear()
+                && month + 1 == getEndMonth()
+                && day == getEndDay()
+                && h == getEndHour()
+                && m == getEndMinute()) {
+            // 终止日期的秒控制
+            endSecond = getEndSecond();
+        }
+
+        wv_seconds = (WheelView) view.findViewById(R.id.second);
+        wv_seconds.setAdapter(new NumericWheelAdapter(startSecond, endSecond));
+        wv_seconds.setCurrentItem(currentItem);
+        wv_seconds.setGravity(gravity);
+    }
+
     private void handleSolarYearItemSelected(int index) {
         int year = (int) wv_year.getAdapter().getItem(index);
         currentYear = year;
@@ -461,6 +585,7 @@ public class WheelTime {
 
     private void handleSolarMonthItemSelected(int index) {
         int month = (int) wv_month.getAdapter().getItem(index);
+        currentMonth = month;
         int startDay = DEFAULT_START_DAY;
         int endDay = DEFAULT_END_DAY;
 
@@ -493,6 +618,98 @@ public class WheelTime {
         currentDayItem = Math.min(currentDayItem,
                 wv_day.getAdapter().getItemsCount() - 1);
         wv_day.setCurrentItem(currentDayItem);
+
+        handleSolarDayItemSelected(currentDayItem);
+    }
+
+    private void handleSolarDayItemSelected(int index) {
+        int day = (int) wv_day.getAdapter().getItem(index);
+        currentDay = day;
+        int startHour = DEFAULT_START_HOUR;
+        int endHour = DEFAULT_END_HOUR;
+        if (currentYear == getStartYear()
+                && currentMonth == getStartMonth()
+                && day == getStartDay()) {
+            // 重新设置起始小时
+            startHour = getStartHour();
+        }
+        if (currentYear == getEndYear()
+                && currentMonth == getEndMonth()
+                && day == getEndDay()) {
+            // 重新设置终止小时
+            endHour = getEndHour();
+        }
+
+        // 记录上一次的item位置
+        int currentHourItem = wv_hours.getCurrentItem();
+        wv_hours.setAdapter(new NumericWheelAdapter(startHour, endHour));
+        // 值域变化可能导致选中项越界
+        currentHourItem = Math.min(currentHourItem,
+                wv_hours.getAdapter().getItemsCount() - 1);
+        wv_hours.setCurrentItem(currentHourItem);
+
+        handleSolarHourItemSelected(currentHourItem);
+    }
+
+    private void handleSolarHourItemSelected(int index) {
+        int hour = (int) wv_hours.getAdapter().getItem(index);
+        currentHour = hour;
+        int startMinute = DEFAULT_START_MINUTE;
+        int endMinute = DEFAULT_END_MINUTE;
+        if (currentYear == getStartYear()
+                && currentMonth == getStartMonth()
+                && currentDay == getStartDay()
+                && hour == getStartHour()) {
+            // 重新设置起始分钟
+            startMinute = getStartMinute();
+        }
+        if (currentYear == getEndYear()
+                && currentMonth == getEndMonth()
+                && currentDay == getEndDay()
+                && hour == getEndHour()) {
+            // 重新设置终止分钟
+            endMinute = getEndMinute();
+        }
+
+        // 记录上一次的item位置
+        int currentMinuteItem = wv_minutes.getCurrentItem();
+        wv_minutes.setAdapter(new NumericWheelAdapter(startMinute, endMinute));
+        // 值域变化可能导致选中项越界
+        currentMinuteItem = Math.min(currentMinuteItem,
+                wv_minutes.getAdapter().getItemsCount() - 1);
+        wv_minutes.setCurrentItem(currentMinuteItem);
+
+        handleSolarMinuteItemSelected(currentMinuteItem);
+    }
+
+    private void handleSolarMinuteItemSelected(int index) {
+        int minute = (int) wv_minutes.getAdapter().getItem(index);
+        int startSecond = DEFAULT_START_SECOND;
+        int endSecond = DEFAULT_END_SECOND;
+        if (currentYear == getStartYear()
+                && currentMonth == getStartMonth()
+                && currentDay == getStartDay()
+                && currentHour == getStartHour()
+                && minute == getStartMinute()) {
+            // 重新设置起始秒
+            startSecond = getStartSecond();
+        }
+        if (currentYear == getEndYear()
+                && currentMonth == getEndMonth()
+                && currentDay == getEndDay()
+                && currentHour == getEndHour()
+                && minute == getEndMinute()) {
+            // 重新设置终止秒
+            endSecond = getEndSecond();
+        }
+
+        // 记录上一次的item位置
+        int currentSecondItem = wv_seconds.getCurrentItem();
+        wv_seconds.setAdapter(new NumericWheelAdapter(startSecond, endSecond));
+        // 值域变化可能导致选中项越界
+        currentSecondItem = Math.min(currentSecondItem,
+                wv_seconds.getAdapter().getItemsCount() - 1);
+        wv_seconds.setCurrentItem(currentSecondItem);
 
         if (mSelectChangeCallback != null) {
             mSelectChangeCallback.onTimeSelectChanged();
@@ -792,6 +1009,30 @@ public class WheelTime {
 
     private void setEndDay(int endDay) {
         endDate.set(Calendar.DAY_OF_MONTH, endDay);
+    }
+
+    private int getStartHour() {
+        return startDate.get(Calendar.HOUR_OF_DAY);
+    }
+
+    private int getEndHour() {
+        return endDate.get(Calendar.HOUR_OF_DAY);
+    }
+
+    private int getStartMinute() {
+        return startDate.get(Calendar.MINUTE);
+    }
+
+    private int getEndMinute() {
+        return endDate.get(Calendar.MINUTE);
+    }
+
+    private int getStartSecond() {
+        return startDate.get(Calendar.SECOND);
+    }
+
+    private int getEndSecond() {
+        return endDate.get(Calendar.SECOND);
     }
 
     private Object getCurrentItemValue(WheelView wv) {
