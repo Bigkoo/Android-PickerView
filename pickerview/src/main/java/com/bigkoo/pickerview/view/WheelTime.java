@@ -350,22 +350,21 @@ public class WheelTime {
         int year = date.get(Calendar.YEAR);
         int month = date.get(Calendar.MONTH);
 
-        wv_month = (WheelView) view.findViewById(R.id.month);
-        if (getStartYear() == getEndYear()) {//开始年等于终止年
-            wv_month.setAdapter(new NumericWheelAdapter(getStartMonth(), getEndMonth()));
-            wv_month.setCurrentItem(month + 1 - getStartMonth());
-        } else if (year == getStartYear()) {
-            //起始日期的月份控制
-            wv_month.setAdapter(new NumericWheelAdapter(getStartMonth(), 12));
-            wv_month.setCurrentItem(month + 1 - getStartMonth());
-        } else if (year == getEndYear()) {
-            //终止日期的月份控制
-            wv_month.setAdapter(new NumericWheelAdapter(1, getEndMonth()));
-            wv_month.setCurrentItem(month);
-        } else {
-            wv_month.setAdapter(new NumericWheelAdapter(1, 12));
-            wv_month.setCurrentItem(month);
+        int startMonth = DEFAULT_START_MONTH + 1;
+        int endMonth = DEFAULT_END_MONTH + 1;
+        int currentItem = month;
+
+        if (year == getStartYear()) {
+            startMonth = getStartMonth();
+            currentItem = month + 1 - getStartMonth();
         }
+        if (year == getEndYear()) {
+            endMonth = getEndMonth();
+        }
+
+        wv_month = (WheelView) view.findViewById(R.id.month);
+        wv_month.setAdapter(new NumericWheelAdapter(startMonth, endMonth));
+        wv_month.setCurrentItem(currentItem);
         wv_month.setGravity(gravity);
     }
 
