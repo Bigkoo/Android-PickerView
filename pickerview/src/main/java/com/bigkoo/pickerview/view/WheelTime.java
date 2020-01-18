@@ -49,6 +49,11 @@ public class WheelTime {
 
     private boolean isLunarCalendar = false;
     private ISelectTimeCallback mSelectChangeCallback;
+    private int minuteInterval=1;
+
+    public void setMinuteInterval(int minuteInterval) {
+        this.minuteInterval = minuteInterval;
+    }
 
     public WheelTime(View view, boolean[] type, int gravity, int textSize) {
         super();
@@ -363,10 +368,22 @@ public class WheelTime {
         wv_hours.setGravity(gravity);
         //分
         wv_minutes = (WheelView) view.findViewById(R.id.min);
-        wv_minutes.setAdapter(new NumericWheelAdapter(0, 59));
-
-        wv_minutes.setCurrentItem(m);
+        NumericWheelAdapter adapter=new NumericWheelAdapter(0, 59);
+        adapter.setInterval(minuteInterval);
+        wv_minutes.setAdapter(adapter);
+        if(minuteInterval!=1){
+            int index=m/minuteInterval;
+            int value=m%minuteInterval;
+            if(value>0){
+                wv_minutes.setCurrentItem(index+1);
+            }else {
+                wv_minutes.setCurrentItem(index);
+            }
+        }else {
+            wv_minutes.setCurrentItem(m);
+        }
         wv_minutes.setGravity(gravity);
+
         //秒
         wv_seconds = (WheelView) view.findViewById(R.id.second);
         wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));

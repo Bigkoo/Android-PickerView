@@ -81,6 +81,7 @@ public class PickerOptions {
     public ViewGroup decorView;
     public int textGravity = Gravity.CENTER;
     public Context context;
+    public int minuteInterval=1;//分钟间隔
 
     public String textContentConfirm;//确定按钮文字
     public String textContentCancel;//取消按钮文字

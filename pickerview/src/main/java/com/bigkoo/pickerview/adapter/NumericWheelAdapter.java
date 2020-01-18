@@ -10,6 +10,11 @@ public class NumericWheelAdapter implements WheelAdapter {
 	
 	private int minValue;
 	private int maxValue;
+	private int interval=1;
+
+	public void setInterval(int interval) {
+		this.interval = interval;
+	}
 
 	/**
 	 * Constructor
@@ -23,22 +28,37 @@ public class NumericWheelAdapter implements WheelAdapter {
 
 	@Override
 	public Object getItem(int index) {
-		if (index >= 0 && index < getItemsCount()) {
-			int value = minValue + index;
-			return value;
+		if(interval==1) {
+			if (index >= 0 && index < getItemsCount()) {
+				int value = minValue + index;
+				return value;
+			}
+		}else {
+			if (index >= 0 && index < getItemsCount()) {
+				int value = minValue + index*interval;
+				return value;
+			}
 		}
 		return 0;
 	}
 
 	@Override
 	public int getItemsCount() {
-		return maxValue - minValue + 1;
+		if(interval==1) {
+			return maxValue - minValue + 1;
+		}else {
+			return (maxValue-minValue+1)/interval;
+		}
 	}
 	
 	@Override
 	public int indexOf(Object o){
 		try {
-			return (int)o - minValue;
+			if(interval==1) {
+				return (int) o - minValue;
+			}else {
+				return (int)o/interval-minValue;
+			}
 		} catch (Exception e) {
 			return -1;
 		}

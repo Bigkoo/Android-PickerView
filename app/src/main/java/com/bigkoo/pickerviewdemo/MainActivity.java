@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void initTimePicker() {//Dialog 模式下，在底部弹出
-        pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
+        pvTime = new TimePickerBuilder(this,30, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
                 Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();

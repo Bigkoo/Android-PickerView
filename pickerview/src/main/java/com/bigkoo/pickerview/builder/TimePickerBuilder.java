@@ -29,6 +29,13 @@ public class TimePickerBuilder {
         mPickerOptions.timeSelectListener = listener;
     }
 
+    public TimePickerBuilder(Context context, int minuteInterval,OnTimeSelectListener listener) {
+        mPickerOptions = new PickerOptions(PickerOptions.TYPE_PICKER_TIME);
+        mPickerOptions.minuteInterval=minuteInterval;
+        mPickerOptions.context = context;
+        mPickerOptions.timeSelectListener = listener;
+    }
+
     //Option
     public TimePickerBuilder setGravity(int gravity) {
         mPickerOptions.textGravity = gravity;
@@ -305,6 +312,14 @@ public class TimePickerBuilder {
      */
     public TimePickerBuilder setTimeSelectChangeListener(OnTimeSelectChangeListener listener) {
         mPickerOptions.timeSelectChangeListener = listener;
+        return this;
+    }
+    /***
+     * 需要在setDate之前使用，推荐通过构造器方法设置分钟间隔
+     */
+    @Deprecated
+    public TimePickerBuilder setMinuteInterval(int interval){
+        mPickerOptions.minuteInterval=interval;
         return this;
     }
 
