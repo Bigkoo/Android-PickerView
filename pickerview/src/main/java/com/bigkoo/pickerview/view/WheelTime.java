@@ -389,9 +389,9 @@ public class WheelTime {
         }
 
         // 调整终止日为合法值
-        if (LIST_BIG_MONTH.contains(String.valueOf(month))) {
+        if (LIST_BIG_MONTH.contains(String.valueOf(month + 1))) {
             endDay = Math.min(endDay, 31);
-        } else if (LIST_LITTLE_MONTH.contains(String.valueOf(month))) {
+        } else if (LIST_LITTLE_MONTH.contains(String.valueOf(month + 1))) {
             endDay = Math.min(endDay, 30);
         } else {
             boolean leapYear = (year % 4 == 0
