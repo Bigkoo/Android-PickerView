@@ -61,6 +61,7 @@ public class WheelView extends View {
     private Paint paintOuterText;
     private Paint paintCenterText;
     private Paint paintIndicator;
+    private Paint paintSelectArea;
 
     private WheelAdapter adapter;
 
@@ -77,6 +78,7 @@ public class WheelView extends View {
     private int textColorCenter;
     private int dividerColor;
     private int dividerWidth;
+    private int selectAreaColor;
 
     // 条目间距倍数
     private float lineSpacingMultiplier = 1.6F;
@@ -152,6 +154,7 @@ public class WheelView extends View {
             textColorOut = a.getColor(R.styleable.pickerview_wheelview_textColorOut, 0xFFa8a8a8);
             textColorCenter = a.getColor(R.styleable.pickerview_wheelview_textColorCenter, 0xFF2a2a2a);
             dividerColor = a.getColor(R.styleable.pickerview_wheelview_dividerColor, 0xFFd5d5d5);
+            selectAreaColor = a.getColor(R.styleable.pickerview_wheelview_selectAreaColor, 0xFFFFFFFF);
             dividerWidth = a.getDimensionPixelSize(R.styleable.pickerview_wheelview_dividerWidth, 2);
             textSize = a.getDimensionPixelOffset(R.styleable.pickerview_wheelview_textSize, textSize);
             lineSpacingMultiplier = a.getFloat(R.styleable.pickerview_wheelview_lineSpacingMultiplier, lineSpacingMultiplier);
@@ -202,6 +205,10 @@ public class WheelView extends View {
         paintIndicator = new Paint();
         paintIndicator.setColor(dividerColor);
         paintIndicator.setAntiAlias(true);
+
+        paintSelectArea = new Paint();
+        paintSelectArea.setColor(selectAreaColor);
+        paintSelectArea.setAntiAlias(true);
 
         setLayerType(LAYER_TYPE_SOFTWARE, null);
     }
@@ -416,6 +423,7 @@ public class WheelView extends View {
             endX = measuredWidth - startX;
             canvas.drawLine(startX, firstLineY, endX, firstLineY, paintIndicator);
             canvas.drawLine(startX, secondLineY, endX, secondLineY, paintIndicator);
+            canvas.drawRect(startX,firstLineY,endX,secondLineY, paintSelectArea);
         } else if (dividerType == DividerType.CIRCLE) {
             //分割线为圆圈形状
             paintIndicator.setStyle(Paint.Style.STROKE);
@@ -433,10 +441,16 @@ public class WheelView extends View {
             endX = measuredWidth - startX;
             //半径始终以宽高中最大的来算
             float radius = Math.max((endX - startX), itemHeight) / 1.8f;
-            canvas.drawCircle(measuredWidth / 2f, measuredHeight / 2f, radius, paintIndicator);
+
+            Paint paint = new Paint();
+            paint.setColor(selectAreaColor);
+            paint.setStrokeWidth(radius);
+            canvas.drawCircle(measuredWidth / 2f, measuredHeight / 2f, radius, paint);
+			canvas.drawCircle(measuredWidth / 2f, measuredHeight / 2f, radius, paintIndicator);
         } else {
             canvas.drawLine(0.0F, firstLineY, measuredWidth, firstLineY, paintIndicator);
             canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintIndicator);
+            canvas.drawRect(0.0F,firstLineY,measuredWidth,secondLineY, paintSelectArea);
         }
 
         //只显示选中项Label文字的模式，并且Label文字不为空，则进行绘制
@@ -800,6 +814,11 @@ public class WheelView extends View {
     public void setDividerColor(int dividerColor) {
         this.dividerColor = dividerColor;
         paintIndicator.setColor(dividerColor);
+    }
+
+    public void setSelectAreaColor(int selectAreaColor){
+        this.selectAreaColor = selectAreaColor;
+        paintSelectArea.setColor(selectAreaColor);
     }
 
     public void setDividerType(DividerType dividerType) {

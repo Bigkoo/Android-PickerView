@@ -67,6 +67,11 @@ public class OptionsPickerBuilder {
         return this;
     }
 
+    public OptionsPickerBuilder setSelectAreaColor(int selectAreaColor){
+        mPickerOptions.selectAreaColor = selectAreaColor;
+        return this;
+    }
+
 
     /**
      * {@link #setOutSideColor} instead.
