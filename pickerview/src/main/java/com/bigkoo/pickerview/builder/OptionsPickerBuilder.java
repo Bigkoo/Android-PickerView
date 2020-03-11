@@ -2,6 +2,8 @@ package com.bigkoo.pickerview.builder;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.annotation.ColorInt;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.bigkoo.pickerview.configure.PickerOptions;
@@ -49,6 +51,12 @@ public class OptionsPickerBuilder {
         return this;
     }
 
+    public OptionsPickerBuilder addOnCancelClickListener(View.OnClickListener cancelListener) {
+        mPickerOptions.cancelListener = cancelListener;
+        return this;
+    }
+
+
     public OptionsPickerBuilder setSubmitColor(int textColorConfirm) {
         mPickerOptions.textColorConfirm = textColorConfirm;
         return this;
@@ -59,14 +67,26 @@ public class OptionsPickerBuilder {
         return this;
     }
 
+
+    /**
+     * {@link #setOutSideColor} instead.
+     *
+     * @param backgroundId color resId.
+     */
+    @Deprecated
+    public OptionsPickerBuilder setBackgroundId(int backgroundId) {
+        mPickerOptions.outSideColor = backgroundId;
+        return this;
+    }
+
     /**
      * 显示时的外部背景色颜色,默认是灰色
      *
-     * @param backgroundId color resId.
+     * @param outSideColor color resId.
      * @return
      */
-    public OptionsPickerBuilder setBackgroundId(int backgroundId) {
-        mPickerOptions.backgroundId = backgroundId;
+    public OptionsPickerBuilder setOutSideColor(int outSideColor) {
+        mPickerOptions.outSideColor = outSideColor;
         return this;
     }
 
@@ -146,7 +166,7 @@ public class OptionsPickerBuilder {
      *
      * @param dividerColor color resId.
      */
-    public OptionsPickerBuilder setDividerColor(int dividerColor) {
+    public OptionsPickerBuilder setDividerColor(@ColorInt int dividerColor) {
         mPickerOptions.dividerColor = dividerColor;
         return this;
     }
@@ -176,7 +196,7 @@ public class OptionsPickerBuilder {
      *
      * @param textColorOut color resId.
      */
-    public OptionsPickerBuilder setTextColorOut(int textColorOut) {
+    public OptionsPickerBuilder setTextColorOut(@ColorInt int textColorOut) {
         mPickerOptions.textColorOut = textColorOut;
         return this;
     }
@@ -220,6 +240,27 @@ public class OptionsPickerBuilder {
 
     public OptionsPickerBuilder isCenterLabel(boolean isCenterLabel) {
         mPickerOptions.isCenterLabel = isCenterLabel;
+        return this;
+    }
+
+
+    /**
+     * 设置最大可见数目
+     *
+     * @param count 建议设置为 3 ~ 9之间。
+     */
+    public OptionsPickerBuilder setItemVisibleCount(int count) {
+        mPickerOptions.itemsVisibleCount = count;
+        return this;
+    }
+
+    /**
+     * 透明度是否渐变
+     *
+     * @param isAlphaGradient true of false
+     */
+    public OptionsPickerBuilder isAlphaGradient(boolean isAlphaGradient) {
+        mPickerOptions.isAlphaGradient = isAlphaGradient;
         return this;
     }
 

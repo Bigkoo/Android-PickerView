@@ -1,18 +1,17 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.novoda.bintray-release'//添加插件
+//apply plugin: 'com.novoda.bintray-release'//添加插件
 
 
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 29
-        versionName "4.0.8"
+        versionCode 31
+        versionName "4.1.0"
     }
     buildTypes {
         release {
@@ -25,25 +24,25 @@ android {
     }
 }
 
-allprojects {
-    tasks.withType(Javadoc) {//兼容中文字符
-        options{
-            encoding "UTF-8"
-            charSet 'UTF-8'
-            links "http://docs.oracle.com/javase/7/docs/api"
-        }
-    }
-}
-publish {
-    userOrg = 'contrarywind'//bintray.com 用户名/组织名 user/org name
-    groupId = 'com.contrarywind'//JCenter上显示的路径 path
-    artifactId = 'wheelview'//项目名称 project name
-    publishVersion = '4.0.8'//版本号 version code
-    desc = 'this is a wheelview for android'//项目描述 description
-    website = 'https://github.com/Bigkoo/Android-PickerView' //项目网址链接 link
-}
+//allprojects {
+//    tasks.withType(Javadoc) {//兼容中文字符
+//        options{
+//            encoding "UTF-8"
+//            charSet 'UTF-8'
+//            links "http://docs.oracle.com/javase/7/docs/api"
+//        }
+//    }
+//}
+//publish {
+//    userOrg = 'contrarywind'//bintray.com 用户名/组织名 user/org name
+//    groupId = 'com.contrarywind'//JCenter上显示的路径 path
+//    artifactId = 'wheelview'//项目名称 project name
+//    publishVersion = '4.1.0'//版本号 version code
+//    desc = 'this is a wheelview for android'//项目描述 description
+//    website = 'https://github.com/Bigkoo/Android-PickerView' //项目网址链接 link
+//}
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-
+//    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:support-annotations:28.0.0'
 }

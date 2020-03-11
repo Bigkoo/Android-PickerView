@@ -1,13 +1,15 @@
 package com.bigkoo.pickerview.builder;
 
 import android.content.Context;
+import android.support.annotation.ColorInt;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.bigkoo.pickerview.configure.PickerOptions;
-import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
-import com.bigkoo.pickerview.view.TimePickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.contrarywind.view.WheelView;
 
 import java.util.Calendar;
@@ -33,6 +35,10 @@ public class TimePickerBuilder {
         return this;
     }
 
+    public TimePickerBuilder addOnCancelClickListener(View.OnClickListener cancelListener) {
+        mPickerOptions.cancelListener = cancelListener;
+        return this;
+    }
 
     /**
      * new boolean[]{true, true, true, false, false, false}
@@ -119,6 +125,26 @@ public class TimePickerBuilder {
     }
 
     /**
+     * 设置最大可见数目
+     *
+     * @param count suggest value: 3, 5, 7, 9
+     */
+    public TimePickerBuilder setItemVisibleCount(int count) {
+        mPickerOptions.itemsVisibleCount = count;
+        return this;
+    }
+
+    /**
+     * 透明度是否渐变
+     *
+     * @param isAlphaGradient true of false
+     */
+    public TimePickerBuilder isAlphaGradient(boolean isAlphaGradient) {
+        mPickerOptions.isAlphaGradient = isAlphaGradient;
+        return this;
+    }
+
+    /**
      * 因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
      *
      * @param date
@@ -163,7 +189,8 @@ public class TimePickerBuilder {
      *
      * @param dividerColor
      */
-    public TimePickerBuilder setDividerColor(int dividerColor) {
+
+    public TimePickerBuilder setDividerColor(@ColorInt int dividerColor) {
         mPickerOptions.dividerColor = dividerColor;
         return this;
     }
@@ -179,13 +206,23 @@ public class TimePickerBuilder {
     }
 
     /**
-     * //显示时的外部背景色颜色,默认是灰色
+     * {@link #setOutSideColor} instead.
      *
-     * @param backgroundId
+     * @param backgroundId color resId.
      */
-
+    @Deprecated
     public TimePickerBuilder setBackgroundId(int backgroundId) {
-        mPickerOptions.backgroundId = backgroundId;
+        mPickerOptions.outSideColor = backgroundId;
+        return this;
+    }
+
+    /**
+     * 显示时的外部背景色颜色,默认是灰色
+     *
+     * @param outSideColor
+     */
+    public TimePickerBuilder setOutSideColor(@ColorInt int outSideColor) {
+        mPickerOptions.outSideColor = outSideColor;
         return this;
     }
 
@@ -194,7 +231,7 @@ public class TimePickerBuilder {
      *
      * @param textColorCenter
      */
-    public TimePickerBuilder setTextColorCenter(int textColorCenter) {
+    public TimePickerBuilder setTextColorCenter(@ColorInt int textColorCenter) {
         mPickerOptions.textColorCenter = textColorCenter;
         return this;
     }
@@ -204,7 +241,7 @@ public class TimePickerBuilder {
      *
      * @param textColorOut
      */
-    public TimePickerBuilder setTextColorOut(int textColorOut) {
+    public TimePickerBuilder setTextColorOut(@ColorInt int textColorOut) {
         mPickerOptions.textColorOut = textColorOut;
         return this;
     }

@@ -21,13 +21,13 @@ import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
-import com.bigkoo.pickerview.listener.CustomListener;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerviewdemo.bean.CardBean;
 import com.bigkoo.pickerviewdemo.bean.ProvinceBean;
 
@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_CustomTime = (Button) findViewById(R.id.btn_CustomTime);
         Button btn_no_linkage = (Button) findViewById(R.id.btn_no_linkage);
         Button btn_to_Fragment = (Button) findViewById(R.id.btn_fragment);
+        Button btn_circle = (Button) findViewById(R.id.btn_circle);
+
 
         btn_Time.setOnClickListener(this);
         btn_Options.setOnClickListener(this);
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_CustomTime.setOnClickListener(this);
         btn_no_linkage.setOnClickListener(this);
         btn_to_Fragment.setOnClickListener(this);
+        btn_circle.setOnClickListener(this);
 
         findViewById(R.id.btn_GotoJsonData).setOnClickListener(this);
         findViewById(R.id.btn_lunar).setOnClickListener(this);
@@ -92,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v.getId() == R.id.btn_Time && pvTime != null) {
             // pvTime.setDate(Calendar.getInstance());
-           /* pvTime.show(); //show timePicker*/
+            /* pvTime.show(); //show timePicker*/
             pvTime.show(v);//弹出时间选择器，传递参数过去，回调的时候则可以绑定此view
         } else if (v.getId() == R.id.btn_Options && pvOptions != null) {
             pvOptions.show(); //弹出条件选择器
@@ -108,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(MainActivity.this, FragmentTestActivity.class));
         } else if (v.getId() == R.id.btn_lunar) {
             pvCustomLunar.show();
+        } else if (v.getId() == R.id.btn_circle) {
+            startActivity(new Intent(MainActivity.this, TestCircleWheelViewActivity.class));
         }
     }
 
@@ -189,7 +194,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void initTimePicker() {//Dialog 模式下，在底部弹出
-
         pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
@@ -206,6 +210,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 })
                 .setType(new boolean[]{true, true, true, true, true, true})
                 .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
+                .addOnCancelClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.i("pvTime", "onCancelClickListener");
+                    }
+                })
+                .setItemVisibleCount(5) //若设置偶数，实际值会加1（比如设置6，则最大可见条目为7）
+                .setLineSpacingMultiplier(2.0f)
+                .isAlphaGradient(true)
                 .build();
 
         Dialog mDialog = pvTime.getDialog();
@@ -224,13 +237,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (dialogWindow != null) {
                 dialogWindow.setWindowAnimations(com.bigkoo.pickerview.R.style.picker_view_slide_anim);//修改动画样式
                 dialogWindow.setGravity(Gravity.BOTTOM);//改成Bottom,底部显示
+                dialogWindow.setDimAmount(0.3f);
             }
         }
     }
 
-
     private void initCustomTimePicker() {
-
         /**
          * @description
          *
@@ -266,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setBgColor(Color.BLACK)//滚轮背景颜色 Night mode
                 .setSubmitColor(Color.WHITE)
                 .setCancelColor(Color.WHITE)*/
-               /*.animGravity(Gravity.RIGHT)// default is center*/
+                /*.animGravity(Gravity.RIGHT)// default is center*/
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
@@ -298,9 +310,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(0xFF24AD9D)
                 .build();
-
     }
-
 
     private void initOptionPicker() {//条件选择器初始化
 
@@ -314,7 +324,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //返回的分别是三个级别的选中位置
                 String tx = options1Items.get(options1).getPickerViewText()
                         + options2Items.get(options1).get(options2)
-                       /* + options3Items.get(options1).get(options2).get(options3).getPickerViewText()*/;
+                        /* + options3Items.get(options1).get(options2).get(options3).getPickerViewText()*/;
                 btn_Options.setText(tx);
             }
         })
@@ -331,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .isRestoreItem(true)//切换时是否还原，设置默认选中第一项。
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setLabels("省", "市", "区")
-                .setBackgroundId(0x00000000) //设置外部遮罩颜色
+                .setOutSideColor(0x00000000) //设置外部遮罩颜色
                 .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
                     @Override
                     public void onOptionsSelectChanged(int options1, int options2, int options3) {
@@ -395,6 +405,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 .isDialog(true)
+                .setOutSideCancelable(false)
                 .build();
 
         pvCustomOptions.setPicker(cardItem);//添加数据
@@ -422,6 +433,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
                     }
                 })
+                .setItemVisibleCount(5)
                 // .setSelectOptions(0, 1, 1)
                 .build();
         pvNoLinkOptions.setNPicker(food, clothes, computer);
@@ -437,12 +449,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getOptionData() {
-
-        /**
+        /*
          * 注意：如果是添加JavaBean实体数据，则实体类需要实现 IPickerViewData 接口，
          * PickerView会通过getPickerViewText方法获取字符串显示出来。
          */
-
         getCardData();
         getNoLinkData();
 
@@ -468,7 +478,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         options2Items.add(options2Items_01);
         options2Items.add(options2Items_02);
         options2Items.add(options2Items_03);
-
         /*--------数据源添加完毕---------*/
     }
 
@@ -499,6 +508,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         computer.add("Apple");
         computer.add("HP");
     }
-
 
 }

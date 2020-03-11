@@ -17,6 +17,7 @@
     <string name="picker_custom_time">时间选择器自定义布局</string>
     <string name="picker_custom_province">条件选择器自定义布局</string>
     <string name="picker_custom_parent">自定义父容器</string>
+    <string name="picker_use_circle_divider">使用圆形分割线</string>
 
     <string name="picker_non_linkage">条件选择器(不联动)</string>
 

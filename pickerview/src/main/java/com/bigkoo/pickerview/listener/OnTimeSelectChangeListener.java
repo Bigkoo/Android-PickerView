@@ -1,7 +1,5 @@
 package com.bigkoo.pickerview.listener;
 
-import android.view.View;
-
 import java.util.Date;
 
 /**

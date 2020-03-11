@@ -14,7 +14,7 @@
 
 #### 对于使用上有任何疑问或优化建议等，欢迎加入QQ群讨论交流技术问题。
 
-交流群1： 387051294（已满）
+交流群1： 387051294（推荐）
 
 交流群2： 219962328（已满）
 
@@ -60,11 +60,24 @@
 * 正确使用案例：
   startDate.set(2013,0,1);
   endDate.set(2020,11,1);
+
+ #### V4.1.9 版本更新说明（2019-10-20）
+   - 修复: 农历 day 偶现越界的问题。
+   - 优化: 显示布局中英文默认大写问题。
+   - 新增: 最大可见项的数目提供API给开发者设置。(setItemVisibleCount())
+   - 新增: 滚轮从中间到两边透明度渐变，提供开关API设置。（isAlphaGradient(true)）
+   - 新增: 选中项圆形分割线样式。（DividerType.CIRCLE）
+
+ #### V4.1.8 版本更新说明（2019-4-24）
+ -  更新gradle版本， wheelview基础库由 compile 改为 api 依赖，避免gradle 5.0+版本无法引入。
+ -  修复 setTextXOffset 赋值问题。
   
- 
- #### V4.1.6 版本更新说明（2018-7-24）
- -  优化wheelview 分割线设置 0x00000000 透明色不生效的问题。
- -  优化部分文字基线位置偏低，导致选中项文字显示不全问题，如 "g" 字母。
+ #### V4.1.7 版本更新说明（2019-1-10）
+ -  修复 WheelView在初始化时，数据为空导致height=0，造成一直显示不出来的问题。
+ -  新增取消按钮的点击事件监听入口。
+ -  参数注解添加，规范数据类型。
+ -  废弃setBackgroundId方法， 更新方法命名为 setOutSideColor。
+
 
 #### 更多历史版本详情，请查阅：[更新日志（4.x版本）](https://github.com/Bigkoo/Android-PickerView/wiki/更新日志（4.x版本）) 
 
@@ -78,7 +91,7 @@
 
 #### 1.添加Jcenter仓库 Gradle依赖：
 ```java
-compile 'com.contrarywind:Android-PickerView:4.1.6'
+compile 'com.contrarywind:Android-PickerView:4.1.9'
 ```
 或者
 
@@ -87,7 +100,7 @@ compile 'com.contrarywind:Android-PickerView:4.1.6'
 <dependency>
 <groupId>com.contrarywind</groupId>
 <artifactId>Android-PickerView</artifactId>
-<version>4.1.2</version>
+<version>4.1.9</version>
 <type>pom</type>
 </dependency>
 ```
@@ -255,7 +268,7 @@ pvOptions = new  OptionsPickerBuilder(this, new OptionsPickerView.OnOptionsSelec
 #### 6.若只需要WheelView基础控件自行扩展实现逻辑，可直接添加基础控件库，Gradle 依赖：
  
 ```java
-compile 'com.contrarywind:wheelview:4.0.8'
+compile 'com.contrarywind:wheelview:4.1.0'
 ```
 
 #### WheelView 使用代码示例：
@@ -295,7 +308,7 @@ WheelView wheelView = findViewById(R.id.wheelview);
 
 ### Thanks
 
-- [WheelView](https://github.com/venshine/WheelView)
+- WheelView
 - [androidWheelView](https://github.com/weidongjian/androidWheelView/)
 
 ## License
