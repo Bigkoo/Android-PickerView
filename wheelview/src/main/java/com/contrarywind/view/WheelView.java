@@ -675,6 +675,7 @@ public class WheelView extends View {
         float top = -initPosition * itemHeight;
         float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
         float ratio = 0.25f;
+        float threshold = (itemHeight - maxTextHeight) / 2 + CENTER_CONTENT_OFFSET;
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -690,8 +691,8 @@ public class WheelView extends View {
 
                 // normal mode。
                 if (!isLoop) {
-                    if ((totalScrollY - itemHeight * ratio < top && dy < 0)
-                            || (totalScrollY + itemHeight * ratio > bottom && dy > 0)) {
+                    if ((totalScrollY - itemHeight * ratio < top - threshold && dy < 0)
+                            || (totalScrollY + itemHeight * ratio > bottom + threshold && dy > 0)) {
                         //快滑动到边界了，设置已滑动到边界的标志
                         totalScrollY -= dy;
                         isIgnore = true;
