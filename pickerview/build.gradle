@@ -5,13 +5,13 @@ apply plugin: 'com.github.dcendents.android-maven'
 
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 26
-        versionCode 34
-        versionName "4.1.9"
+        targetSdkVersion 29
+        versionCode 35
+        versionName "4.2.0"
     }
     buildTypes {
         release {
@@ -46,5 +46,5 @@ dependencies {
 //    compile fileTree(include: ['*.jar'], dir: 'libs')
     api project(path: ':wheelview')
 //    api 'com.contrarywind:wheelview:4.1.0'
-    implementation 'com.android.support:support-annotations:28.0.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
 }
