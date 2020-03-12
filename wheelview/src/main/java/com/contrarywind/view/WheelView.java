@@ -869,4 +869,48 @@ public class WheelView extends View {
     public Handler getHandler() {
         return handler;
     }
+
+    public boolean isOptions() {
+        return isOptions;
+    }
+
+    public void setOptions(boolean options) {
+        isOptions = options;
+    }
+
+    public boolean isCenterLabel() {
+        return isCenterLabel;
+    }
+
+    public void setCenterLabel(boolean centerLabel) {
+        isCenterLabel = centerLabel;
+    }
+
+    public boolean isDrawLabelOnTextBehind() {
+        return isDrawLabelOnTextBehind;
+    }
+
+    public void setDrawLabelOnTextBehind(boolean drawLabelOnTextBehind) {
+        isDrawLabelOnTextBehind = drawLabelOnTextBehind;
+    }
+
+    public float getLabelTextXOffset() {
+        return labelTextXOffset;
+    }
+
+    public void setLabelTextXOffset(float labelTextXOffset) {
+        this.labelTextXOffset = labelTextXOffset;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public int getTextSize() {
+        return textSize;
+    }
+
+    public void setTextSize(int textSize) {
+        this.textSize = textSize;
+    }
 }
