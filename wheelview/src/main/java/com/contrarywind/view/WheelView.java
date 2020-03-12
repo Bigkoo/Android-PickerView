@@ -54,6 +54,9 @@ public class WheelView extends View {
 
     private boolean isOptions = false;
     private boolean isCenterLabel = true;
+    //在item后面 绘制 label
+    private boolean isDrawLabelOnTextBehind = false;
+    private float labelTextXOffset;
 
     // Timer mTimer;
     private ScheduledExecutorService mExecutor = Executors.newSingleThreadScheduledExecutor();
@@ -136,6 +139,7 @@ public class WheelView extends View {
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         float density = dm.density; // 屏幕密度比（0.75/1.0/1.5/2.0/3.0）
+        labelTextXOffset = density * 4;
 
         if (density < 1) {//根据密度不同进行适配
             CENTER_CONTENT_OFFSET = 2.4F;
@@ -156,6 +160,17 @@ public class WheelView extends View {
             dividerWidth = a.getDimensionPixelSize(R.styleable.pickerview_wheelview_dividerWidth, 2);
             textSize = a.getDimensionPixelOffset(R.styleable.pickerview_wheelview_textSize, textSize);
             lineSpacingMultiplier = a.getFloat(R.styleable.pickerview_wheelview_lineSpacingMultiplier, lineSpacingMultiplier);
+            isLoop = a.getBoolean(R.styleable.pickerview_wheelview_loop, true);
+            isOptions = a.getBoolean(R.styleable.pickerview_wheelview_isOptions, isOptions);
+            isCenterLabel = a.getBoolean(R.styleable.pickerview_wheelview_isCenterLabel, isCenterLabel);
+            initPosition = a.getInt(R.styleable.pickerview_wheelview_initPosition, -1);
+            if (a.hasValue(R.styleable.pickerview_wheelview_label)) {
+                label = a.getString(R.styleable.pickerview_wheelview_label);
+            }
+            isDrawLabelOnTextBehind = a.getBoolean(R.styleable.pickerview_wheelview_isDrawLabelOnTextBehind, isDrawLabelOnTextBehind);
+            if (a.hasValue(R.styleable.pickerview_wheelview_labelTextXOffset)) {
+                labelTextXOffset = a.getDimensionPixelOffset(R.styleable.pickerview_wheelview_labelTextXOffset, (int) labelTextXOffset);
+            }
             a.recycle();//回收内存
         }
 
@@ -183,10 +198,8 @@ public class WheelView extends View {
         handler = new MessageHandler(this);
         gestureDetector = new GestureDetector(context, new LoopViewGestureListener(this));
         gestureDetector.setIsLongpressEnabled(false);
-        isLoop = true;
 
         totalScrollY = 0;
-        initPosition = -1;
         initPaints();
     }
 
@@ -445,10 +458,16 @@ public class WheelView extends View {
         }
 
         //只显示选中项Label文字的模式，并且Label文字不为空，则进行绘制
-        if (!TextUtils.isEmpty(label) && isCenterLabel) {
-            //绘制文字，靠右并留出空隙
-            int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
-            canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
+        if (!TextUtils.isEmpty(label)) {
+            if (isDrawLabelOnTextBehind) {
+                //取第0个计算坐标
+                int textWidth = measuredCenterContentStart(getContentText(adapter.getItem(0)));
+                canvas.drawText(label, drawCenterContentStart + labelTextXOffset + textWidth + CENTER_CONTENT_OFFSET, centerY, paintCenterText);
+            } else if (isCenterLabel) {
+                //绘制文字，靠右并留出空隙
+                int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
+                canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
+            }
         }
 
         // 设置数组中每个元素的值
@@ -486,7 +505,11 @@ public class WheelView extends View {
 
                 //如果是label每项都显示的模式，并且item内容不为空、label 也不为空
                 if (!isCenterLabel && !TextUtils.isEmpty(label) && !TextUtils.isEmpty(getContentText(showText))) {
-                    contentText = getContentText(showText) + label;
+                    if (isDrawLabelOnTextBehind) {
+                        contentText = getContentText(showText);
+                    } else {
+                        contentText = getContentText(showText) + label;
+                    }
                 } else {
                     contentText = getContentText(showText);
                 }
@@ -627,7 +650,7 @@ public class WheelView extends View {
         return timeNum >= 0 && timeNum < 10 ? TIME_NUM[timeNum] : String.valueOf(timeNum);
     }
 
-    private void measuredCenterContentStart(String content) {
+    private int measuredCenterContentStart(String content) {
         Rect rect = new Rect();
         paintCenterText.getTextBounds(content, 0, content.length(), rect);
         switch (mGravity) {
@@ -645,6 +668,7 @@ public class WheelView extends View {
                 drawCenterContentStart = measuredWidth - rect.width() - (int) CENTER_CONTENT_OFFSET;
                 break;
         }
+        return rect.width();
     }
 
     private void measuredOutContentStart(String content) {
