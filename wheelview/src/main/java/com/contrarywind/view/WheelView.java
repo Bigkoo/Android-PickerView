@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.contrarywind.adapter.PreviewAdapter;
 import com.contrarywind.adapter.WheelAdapter;
 import com.contrarywind.interfaces.IPickerViewData;
 import com.contrarywind.listener.LoopViewGestureListener;
@@ -160,6 +161,10 @@ public class WheelView extends View {
 
         judgeLineSpace();
         initLoopView(context);
+
+        if (isInEditMode()) {
+            setAdapter(new PreviewAdapter());
+        }
     }
 
     /**
@@ -533,7 +538,9 @@ public class WheelView extends View {
                     // 其他条目
                     canvas.save();
                     canvas.clipRect(0, 0, measuredWidth, (int) (itemHeight));
-                    canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
+                    if (!isInEditMode()) {
+                        canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
+                    }
                     setOutPaintStyle(offsetCoefficient, angle);
                     // 控制文字水平偏移距离
                     canvas.drawText(contentText, drawOutContentStart + textXOffset * offsetCoefficient, maxTextHeight, paintOuterText);
