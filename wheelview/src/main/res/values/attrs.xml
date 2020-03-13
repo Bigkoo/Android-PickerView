@@ -1,16 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="wheelview_gravity">
+        <enum name="center" value="17" />
+        <enum name="left" value="3" />
+        <enum name="right" value="5" />
+    </attr>
+    <attr name="wheelview_textSize" format="dimension" />
+    <attr name="wheelview_textColorOut" format="color" />
+    <attr name="wheelview_textColorCenter" format="color" />
+    <attr name="wheelview_dividerColor" format="color" />
+    <attr name="wheelview_dividerWidth" format="dimension" />
+    <attr name="wheelview_lineSpacingMultiplier" format="float" />
+    <attr name="wheelview_loop" format="boolean" />
+    <attr name="wheelview_isOptions" format="boolean" />
+    <attr name="wheelview_initPosition" format="integer" />
+    <attr name="wheelview_label" format="string" />
+    <attr name="wheelview_isCenterLabel" format="boolean" />
+    <attr name="wheelview_isDrawLabelOnTextBehind" format="boolean" />
+    <attr name="wheelview_labelTextXOffset" format="dimension" />
+
     <declare-styleable name="pickerview">
-        <attr name="wheelview_gravity">
-            <enum name="center" value="17"/>
-            <enum name="left" value="3"/>
-            <enum name="right" value="5"/>
-        </attr>
-        <attr name="wheelview_textSize" format="dimension"/>
-        <attr name="wheelview_textColorOut" format="color"/>
-        <attr name="wheelview_textColorCenter" format="color"/>
-        <attr name="wheelview_dividerColor" format="color"/>
-        <attr name="wheelview_dividerWidth" format="dimension"/>
-        <attr name="wheelview_lineSpacingMultiplier" format="float"/>
+        <attr name="wheelview_gravity" />
+        <attr name="wheelview_textSize" />
+        <attr name="wheelview_textColorOut" />
+        <attr name="wheelview_textColorCenter" />
+        <attr name="wheelview_dividerColor" />
+        <attr name="wheelview_dividerWidth" />
+        <attr name="wheelview_lineSpacingMultiplier" />
+        <attr name="wheelview_loop" />
+        <attr name="wheelview_isOptions" />
+        <attr name="wheelview_initPosition" />
+        <attr name="wheelview_label" />
+        <attr name="wheelview_isCenterLabel" />
+        <attr name="wheelview_isDrawLabelOnTextBehind" />
+        <attr name="wheelview_labelTextXOffset" />
+    </declare-styleable>
+
+    <declare-styleable name="WheelView">
+        <attr name="wheelview_gravity" />
+        <attr name="wheelview_textSize" />
+        <attr name="wheelview_textColorOut" />
+        <attr name="wheelview_textColorCenter" />
+        <attr name="wheelview_dividerColor" />
+        <attr name="wheelview_dividerWidth" />
+        <attr name="wheelview_lineSpacingMultiplier" />
+        <attr name="wheelview_loop" />
+        <attr name="wheelview_isOptions" />
+        <attr name="wheelview_initPosition" />
+        <attr name="wheelview_label" />
+        <attr name="wheelview_isCenterLabel" />
+        <attr name="wheelview_isDrawLabelOnTextBehind" />
+        <attr name="wheelview_labelTextXOffset" />
     </declare-styleable>
 </resources>
