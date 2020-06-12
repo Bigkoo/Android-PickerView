@@ -125,7 +125,7 @@ public class WheelView extends View {
     private boolean isAlphaGradient = false; //透明度渐变
 
     //是否开启3D
-    private boolean isOpen3D = false;
+    private boolean isOpen3D = true;
 
     public WheelView(Context context) {
         this(context, null);
