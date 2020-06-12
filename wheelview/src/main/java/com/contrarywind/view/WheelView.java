@@ -124,6 +124,9 @@ public class WheelView extends View {
 
     private boolean isAlphaGradient = false; //透明度渐变
 
+    //是否开启3D
+    private boolean isOpen3D = true;
+
     public WheelView(Context context) {
         this(context, null);
     }
@@ -215,8 +218,19 @@ public class WheelView extends View {
 
         //半圆的周长 = item高度乘以item数目-1
         int halfCircumference = (int) (itemHeight * (itemsVisible - 1));
-        //整个圆的周长除以PI得到直径，这个直径用作控件的总高度
-        measuredHeight = (int) ((halfCircumference * 2) / Math.PI);
+        if (isOpen3D) {
+            //整个圆的周长除以PI得到直径，这个直径用作控件的总高度
+            measuredHeight = (int) ((halfCircumference * 2) / Math.PI);
+            if (paintCenterText.getTextScaleX() == paintOuterText.getTextScaleX()) {
+                paintCenterText.setTextScaleX(1.1F);
+            }
+        } else {
+//            itemsVisible = 5;//写死了不过可拓展
+            if (paintCenterText.getTextScaleX() != paintOuterText.getTextScaleX()) {
+                paintCenterText.setTextScaleX(paintOuterText.getTextScaleX());
+            }
+            measuredHeight = (int) (itemHeight * (itemsVisible - 2));
+        }
         //求出半径
         radius = (int) (halfCircumference / Math.PI);
         //控件宽度，这里支持weight
@@ -443,39 +457,135 @@ public class WheelView extends View {
         if (!TextUtils.isEmpty(label) && isCenterLabel) {
             //绘制文字，靠右并留出空隙
             int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
-            canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
-        }
-
-        // 设置数组中每个元素的值
-        int counter = 0;
-        while (counter < itemsVisible) {
-            Object showText;
-            int index = preCurrentIndex - (itemsVisible / 2 - counter);//索引值，即当前在控件中间的item看作数据源的中间，计算出相对源数据源的index值
-
-            //判断是否循环，如果是循环数据源也使用相对循环的position获取对应的item值，如果不是循环则超出数据源范围使用""空白字符串填充，在界面上形成空白无数据的item项
-            if (isLoop) {
-                index = getLoopMappingIndex(index);
-                showText = adapter.getItem(index);
-            } else if (index < 0) {
-                showText = "";
-            } else if (index > adapter.getItemsCount() - 1) {
-                showText = "";
+            if (isOpen3D) {
+                canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
             } else {
-                showText = adapter.getItem(index);
+                canvas.drawText(label, drawRightContentStart, centerY, paintCenterText);
             }
+        }
+        if (isOpen3D) {
+            // 设置数组中每个元素的值
+            int counter = 0;
+            while (counter < itemsVisible) {
+                Object showText;
+                int index = preCurrentIndex - (itemsVisible / 2 - counter);//索引值，即当前在控件中间的item看作数据源的中间，计算出相对源数据源的index值
 
-            canvas.save();
-            // 弧长 L = itemHeight * counter - itemHeightOffset
-            // 求弧度 α = L / r  (弧长/半径) [0,π]
-            double radian = ((itemHeight * counter - itemHeightOffset)) / radius;
-            // 弧度转换成角度(把半圆以Y轴为轴心向右转90度，使其处于第一象限及第四象限
-            // angle [-90°,90°]
-            float angle = (float) (90D - (radian / Math.PI) * 180D);//item第一项,从90度开始，逐渐递减到 -90度
+                //判断是否循环，如果是循环数据源也使用相对循环的position获取对应的item值，如果不是循环则超出数据源范围使用""空白字符串填充，在界面上形成空白无数据的item项
+                if (isLoop) {
+                    index = getLoopMappingIndex(index);
+                    showText = adapter.getItem(index);
+                } else if (index < 0) {
+                    showText = "";
+                } else if (index > adapter.getItemsCount() - 1) {
+                    showText = "";
+                } else {
+                    showText = adapter.getItem(index);
+                }
 
-            // 计算取值可能有细微偏差，保证负90°到90°以外的不绘制
-            if (angle > 90F || angle < -90F) {
-                canvas.restore();
-            } else {
+                canvas.save();
+                // 弧长 L = itemHeight * counter - itemHeightOffset
+                // 求弧度 α = L / r  (弧长/半径) [0,π]
+                double radian = ((itemHeight * counter - itemHeightOffset)) / radius;
+                // 弧度转换成角度(把半圆以Y轴为轴心向右转90度，使其处于第一象限及第四象限
+                // angle [-90°,90°]
+                float angle = (float) (90D - (radian / Math.PI) * 180D);//item第一项,从90度开始，逐渐递减到 -90度
+
+                // 计算取值可能有细微偏差，保证负90°到90°以外的不绘制
+                if (angle > 90F || angle < -90F) {
+                    canvas.restore();
+                } else {
+                    //获取内容文字
+                    String contentText;
+
+                    //如果是label每项都显示的模式，并且item内容不为空、label 也不为空
+                    if (!isCenterLabel && !TextUtils.isEmpty(label) && !TextUtils.isEmpty(getContentText(showText))) {
+                        contentText = getContentText(showText) + label;
+                    } else {
+                        contentText = getContentText(showText);
+                    }
+                    // 根据当前角度计算出偏差系数，用以在绘制时控制文字的 水平移动 透明度 倾斜程度.
+                    float offsetCoefficient = (float) Math.pow(Math.abs(angle) / 90f, 2.2);
+
+                    reMeasureTextSize(contentText);
+                    //计算开始绘制的位置
+                    measuredCenterContentStart(contentText);
+                    measuredOutContentStart(contentText);
+                    float translateY = (float) (radius - Math.cos(radian) * radius - (Math.sin(radian) * maxTextHeight) / 2D);
+                    //根据Math.sin(radian)来更改canvas坐标系原点，然后缩放画布，使得文字高度进行缩放，形成弧形3d视觉差
+                    canvas.translate(0.0F, translateY);
+                    if (translateY <= firstLineY && maxTextHeight + translateY >= firstLineY) {
+                        // 条目经过第一条线
+                        canvas.save();
+                        canvas.clipRect(0, 0, measuredWidth, firstLineY - translateY);
+                        canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
+                        setOutPaintStyle(offsetCoefficient, angle);
+                        canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
+                        canvas.restore();
+                        canvas.save();
+                        canvas.clipRect(0, firstLineY - translateY, measuredWidth, (int) (itemHeight));
+                        canvas.scale(1.0F, (float) Math.sin(radian) * 1.0F);
+                        canvas.drawText(contentText, drawCenterContentStart, maxTextHeight - CENTER_CONTENT_OFFSET, paintCenterText);
+                        canvas.restore();
+                    } else if (translateY <= secondLineY && maxTextHeight + translateY >= secondLineY) {
+                        // 条目经过第二条线
+                        canvas.save();
+                        canvas.clipRect(0, 0, measuredWidth, secondLineY - translateY);
+                        canvas.scale(1.0F, (float) Math.sin(radian) * 1.0F);
+                        canvas.drawText(contentText, drawCenterContentStart, maxTextHeight - CENTER_CONTENT_OFFSET, paintCenterText);
+                        canvas.restore();
+                        canvas.save();
+                        canvas.clipRect(0, secondLineY - translateY, measuredWidth, (int) (itemHeight));
+                        canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
+                        setOutPaintStyle(offsetCoefficient, angle);
+                        canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
+                        canvas.restore();
+                    } else if (translateY >= firstLineY && maxTextHeight + translateY <= secondLineY) {
+                        // 中间条目
+                        // canvas.clipRect(0, 0, measuredWidth, maxTextHeight);
+                        //让文字居中
+                        float Y = maxTextHeight - CENTER_CONTENT_OFFSET;//因为圆弧角换算的向下取值，导致角度稍微有点偏差，加上画笔的基线会偏上，因此需要偏移量修正一下
+                        canvas.drawText(contentText, drawCenterContentStart, Y, paintCenterText);
+                        //设置选中项
+                        selectedItem = preCurrentIndex - (itemsVisible / 2 - counter);
+                    } else {
+                        // 其他条目
+                        canvas.save();
+                        canvas.clipRect(0, 0, measuredWidth, (int) (itemHeight));
+                        canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
+                        setOutPaintStyle(offsetCoefficient, angle);
+                        // 控制文字水平偏移距离
+                        canvas.drawText(contentText, drawOutContentStart + textXOffset * offsetCoefficient, maxTextHeight, paintOuterText);
+                        canvas.restore();
+                    }
+                    canvas.restore();
+                    paintCenterText.setTextSize(textSize);
+                }
+                counter++;
+            }
+        } else {
+            // TODO 2020/6/12 此处未做超出范围后不再绘制的优化...
+            int counter = 0;
+            while (counter < itemsVisible) {
+                Object showText;
+                int index = preCurrentIndex - (itemsVisible / 2 - counter);//索引值，即当前在控件中间的item看作数据源的中间，计算出相对源数据源的index值
+
+                //判断是否循环，如果是循环数据源也使用相对循环的position获取对应的item值，如果不是循环则超出数据源范围使用""空白字符串填充，在界面上形成空白无数据的item项
+                if (isLoop) {
+                    index = getLoopMappingIndex(index);
+                    showText = adapter.getItem(index);
+                } else if (index < 0) {
+                    showText = "";
+                } else if (index > adapter.getItemsCount() - 1) {
+                    showText = "";
+                } else {
+                    showText = adapter.getItem(index);
+                }
+
+                canvas.save();
+                //itemHeightOffset  默认为偏移原来位置的点的距离
+                float translateY = itemHeight * (counter - 1) - itemHeightOffset;
+                translateY = (float) (translateY + ((itemHeight - maxTextHeight) / 2D));
+                canvas.translate(0.0F, translateY);//右下正坐标系  translateY>0 向下移动坐标系
                 //获取内容文字
                 String contentText;
 
@@ -485,64 +595,47 @@ public class WheelView extends View {
                 } else {
                     contentText = getContentText(showText);
                 }
-                // 根据当前角度计算出偏差系数，用以在绘制时控制文字的 水平移动 透明度 倾斜程度.
-                float offsetCoefficient = (float) Math.pow(Math.abs(angle) / 90f, 2.2);
 
                 reMeasureTextSize(contentText);
                 //计算开始绘制的位置
                 measuredCenterContentStart(contentText);
                 measuredOutContentStart(contentText);
-                float translateY = (float) (radius - Math.cos(radian) * radius - (Math.sin(radian) * maxTextHeight) / 2D);
-                //根据Math.sin(radian)来更改canvas坐标系原点，然后缩放画布，使得文字高度进行缩放，形成弧形3d视觉差
-                canvas.translate(0.0F, translateY);
                 if (translateY <= firstLineY && maxTextHeight + translateY >= firstLineY) {
                     // 条目经过第一条线
                     canvas.save();
                     canvas.clipRect(0, 0, measuredWidth, firstLineY - translateY);
-                    canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
-                    setOutPaintStyle(offsetCoefficient, angle);
                     canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
                     canvas.restore();
                     canvas.save();
                     canvas.clipRect(0, firstLineY - translateY, measuredWidth, (int) (itemHeight));
-                    canvas.scale(1.0F, (float) Math.sin(radian) * 1.0F);
-                    canvas.drawText(contentText, drawCenterContentStart, maxTextHeight - CENTER_CONTENT_OFFSET, paintCenterText);
+                    canvas.drawText(contentText, drawCenterContentStart, maxTextHeight, paintCenterText);
                     canvas.restore();
                 } else if (translateY <= secondLineY && maxTextHeight + translateY >= secondLineY) {
                     // 条目经过第二条线
                     canvas.save();
                     canvas.clipRect(0, 0, measuredWidth, secondLineY - translateY);
-                    canvas.scale(1.0F, (float) Math.sin(radian) * 1.0F);
-                    canvas.drawText(contentText, drawCenterContentStart, maxTextHeight - CENTER_CONTENT_OFFSET, paintCenterText);
+                    canvas.drawText(contentText, drawCenterContentStart, maxTextHeight, paintCenterText);
                     canvas.restore();
                     canvas.save();
                     canvas.clipRect(0, secondLineY - translateY, measuredWidth, (int) (itemHeight));
-                    canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
-                    setOutPaintStyle(offsetCoefficient, angle);
                     canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
                     canvas.restore();
                 } else if (translateY >= firstLineY && maxTextHeight + translateY <= secondLineY) {
                     // 中间条目
                     // canvas.clipRect(0, 0, measuredWidth, maxTextHeight);
                     //让文字居中
-                    float Y = maxTextHeight - CENTER_CONTENT_OFFSET;//因为圆弧角换算的向下取值，导致角度稍微有点偏差，加上画笔的基线会偏上，因此需要偏移量修正一下
+                    float Y = maxTextHeight;
                     canvas.drawText(contentText, drawCenterContentStart, Y, paintCenterText);
+
                     //设置选中项
                     selectedItem = preCurrentIndex - (itemsVisible / 2 - counter);
                 } else {
-                    // 其他条目
-                    canvas.save();
-                    canvas.clipRect(0, 0, measuredWidth, (int) (itemHeight));
-                    canvas.scale(1.0F, (float) Math.sin(radian) * SCALE_CONTENT);
-                    setOutPaintStyle(offsetCoefficient, angle);
-                    // 控制文字水平偏移距离
-                    canvas.drawText(contentText, drawOutContentStart + textXOffset * offsetCoefficient, maxTextHeight, paintOuterText);
-                    canvas.restore();
+                    canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
                 }
                 canvas.restore();
                 paintCenterText.setTextSize(textSize);
+                counter++;
             }
-            counter++;
         }
     }
 
@@ -810,6 +903,20 @@ public class WheelView extends View {
         if (lineSpacingMultiplier != 0) {
             this.lineSpacingMultiplier = lineSpacingMultiplier;
             judgeLineSpace();
+        }
+    }
+
+    public void setOpen3D(boolean isOpen3D) {
+        this.isOpen3D = isOpen3D;
+        if (!isOpen3D) {
+//            itemsVisible = 5;//此处未做拓展
+            if (paintCenterText.getTextScaleX() != paintOuterText.getTextScaleX()) {
+                paintCenterText.setTextScaleX(paintOuterText.getTextScaleX());
+            }
+        } else {
+            if (paintCenterText.getTextScaleX() == paintOuterText.getTextScaleX()) {
+                paintCenterText.setTextScaleX(1.1F);
+            }
         }
     }
 
