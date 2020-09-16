@@ -36,6 +36,10 @@ public class WheelTime {
     private static final int DEFAULT_END_MONTH = 12;
     private static final int DEFAULT_START_DAY = 1;
     private static final int DEFAULT_END_DAY = 31;
+    private static final int DEFAULT_START_HOUR = 0;
+    private static final int DEFAULT_END_HOUR = 23;
+    private static final int DEFAULT_START_MIN = 0;
+    private static final int DEFAULT_END_MIN = 59;
 
     private int startYear = DEFAULT_START_YEAR;
     private int endYear = DEFAULT_END_YEAR;
@@ -43,6 +47,10 @@ public class WheelTime {
     private int endMonth = DEFAULT_END_MONTH;
     private int startDay = DEFAULT_START_DAY;
     private int endDay = DEFAULT_END_DAY; //表示31天的
+    private int startHour = DEFAULT_START_HOUR;
+    private int endHour = DEFAULT_END_HOUR;
+    private int startMin = DEFAULT_START_MIN;
+    private int EndMin = DEFAULT_END_MIN;
     private int currentYear;
 
     private int textSize;
@@ -108,14 +116,14 @@ public class WheelTime {
         wv_month = (WheelView) view.findViewById(R.id.month);
         wv_month.setAdapter(new ArrayWheelAdapter(ChinaDate.getMonths(year)));
         wv_month.setLabel("");
-        
+
         int leapMonth = ChinaDate.leapMonth(year);
         if (leapMonth != 0 && (month > leapMonth - 1 || isLeap)) { //选中月是闰月或大于闰月
             wv_month.setCurrentItem(month + 1);
         } else {
             wv_month.setCurrentItem(month);
         }
-        
+
         wv_month.setGravity(gravity);
 
         // 日
@@ -377,15 +385,15 @@ public class WheelTime {
         wv_day.setGravity(gravity);
         //时
         wv_hours = (WheelView) view.findViewById(R.id.hour);
-        wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
+        wv_hours.setAdapter(new NumericWheelAdapter(startHour, 23));
 
-        wv_hours.setCurrentItem(h);
+        wv_hours.setCurrentItem(h - startHour);
         wv_hours.setGravity(gravity);
         //分
         wv_minutes = (WheelView) view.findViewById(R.id.min);
-        wv_minutes.setAdapter(new NumericWheelAdapter(0, 59));
+        wv_minutes.setAdapter(new NumericWheelAdapter(startMin, 59));
 
-        wv_minutes.setCurrentItem(m);
+        wv_minutes.setCurrentItem(m - startMin);
         wv_minutes.setGravity(gravity);
         //秒
         wv_seconds = (WheelView) view.findViewById(R.id.second);
@@ -856,8 +864,9 @@ public class WheelTime {
             this.endMonth = endDate.get(Calendar.MONTH) + 1;
             this.startDay = startDate.get(Calendar.DAY_OF_MONTH);
             this.endDay = endDate.get(Calendar.DAY_OF_MONTH);
+            this.startHour = startDate.get(Calendar.HOUR_OF_DAY);
+            this.startMin = startDate.get(Calendar.MINUTE);
         }
-
     }
 
     /**
