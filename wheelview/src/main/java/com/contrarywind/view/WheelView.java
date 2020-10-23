@@ -669,6 +669,10 @@ public class WheelView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        //防止还没设置 adapter，先触发了触摸事件导致的 NPE
+        if (adapter == null) {
+           return super.onTouchEvent(event);
+        }
         boolean eventConsumed = gestureDetector.onTouchEvent(event);
         boolean isIgnore = false;//超过边界滑动时，不再绘制UI。
 
