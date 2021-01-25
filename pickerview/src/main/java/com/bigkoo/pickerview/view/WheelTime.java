@@ -349,7 +349,7 @@ public class WheelTime {
                 wv_day.setAdapter(new NumericWheelAdapter(1, 30));
             } else {
                 // 闰年 29，平年 28
-                wv_day.setAdapter(new NumericWheelAdapter(startDay, leapYear ? 29 : 28));
+                wv_day.setAdapter(new NumericWheelAdapter(1, leapYear ? 29 : 28));
             }
             wv_day.setCurrentItem(day - 1);
         }
