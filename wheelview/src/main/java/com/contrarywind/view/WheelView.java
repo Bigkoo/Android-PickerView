@@ -670,11 +670,8 @@ public class WheelView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         boolean eventConsumed = gestureDetector.onTouchEvent(event);
-        boolean isIgnore = false;//超过边界滑动时，不再绘制UI。
-
         float top = -initPosition * itemHeight;
         float bottom = (adapter.getItemsCount() - 1 - initPosition) * itemHeight;
-        float ratio = 0.25f;
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -690,13 +687,10 @@ public class WheelView extends View {
 
                 // normal mode。
                 if (!isLoop) {
-                    if ((totalScrollY - itemHeight * ratio < top && dy < 0)
-                            || (totalScrollY + itemHeight * ratio > bottom && dy > 0)) {
-                        //快滑动到边界了，设置已滑动到边界的标志
-                        totalScrollY -= dy;
-                        isIgnore = true;
-                    } else {
-                        isIgnore = false;
+                    if (totalScrollY < top) {
+                        totalScrollY = (int) top;
+                    } else if (totalScrollY > bottom) {
+                        totalScrollY = (int) bottom;
                     }
                 }
                 break;
@@ -735,7 +729,7 @@ public class WheelView extends View {
                 }
                 break;
         }
-        if (!isIgnore && event.getAction() != MotionEvent.ACTION_DOWN) {
+        if (event.getAction() != MotionEvent.ACTION_DOWN) {
             invalidate();
         }
         return true;
