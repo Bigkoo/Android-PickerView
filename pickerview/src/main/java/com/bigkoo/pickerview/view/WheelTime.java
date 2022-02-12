@@ -406,21 +406,15 @@ public class WheelTime {
                     }
                 } else if (year_num == startYear) {//等于开始的年
                     //重新设置月份
-
-                    int _startMonth = startMonth;
-                    if (_startDate != null) {
-                        _startMonth = _startDate.get(Calendar.MONTH) + 1;
-                    }
-
-                    wv_month.setAdapter(new NumericWheelAdapter(_startMonth, 12));
+                    wv_month.setAdapter(new NumericWheelAdapter(startMonth, 12));
 
                     if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
                         currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
                         wv_month.setCurrentItem(currentMonthItem);
                     }
 
-                    int month = currentMonthItem + _startMonth;
-                    if (month == _startMonth) {
+                    int month = currentMonthItem + startMonth;
+                    if (month == startMonth) {
                         //重新设置日
                         setReDay(year_num, month, startDay, 31, list_big, list_little);
                     } else {
@@ -430,20 +424,14 @@ public class WheelTime {
 
                 } else if (year_num == endYear) {
                     //重新设置月份
-
-                    int _endMonth = endMonth;
-                    if (_endDate != null) {
-                        _endMonth = _endDate.get(Calendar.MONTH) + 1;
-                    }
-
-                    wv_month.setAdapter(new NumericWheelAdapter(1, _endMonth));
+                    wv_month.setAdapter(new NumericWheelAdapter(1, endMonth));
                     if (currentMonthItem > wv_month.getAdapter().getItemsCount() - 1) {
                         currentMonthItem = wv_month.getAdapter().getItemsCount() - 1;
                         wv_month.setCurrentItem(currentMonthItem);
                     }
                     int monthNum = currentMonthItem + 1;
 
-                    if (monthNum == _endMonth) {
+                    if (monthNum == endMonth) {
                         //重新设置日
                         setReDay(year_num, monthNum, 1, endDay, list_big, list_little);
                     } else {
@@ -489,15 +477,7 @@ public class WheelTime {
                     month_num = month_num + startMonth - 1;
                     if (month_num == startMonth) {
                         //重新设置日
-
-                        int _startDay = startDay;
-                        if (_startDate != null) {
-                            if (_startDate.get(Calendar.MONTH) + 1 == month_num) {
-                                _startDay = _startDate.get(Calendar.DAY_OF_MONTH);
-                            }
-                        }
-
-                        setReDay(currentYear, month_num, _startDay, 31, list_big, list_little);
+                        setReDay(currentYear, month_num, startDay, 31, list_big, list_little);
                     } else {
                         //重新设置日
                         setReDay(currentYear, month_num, 1, 31, list_big, list_little);
@@ -506,14 +486,7 @@ public class WheelTime {
                 } else if (currentYear == endYear) {
                     if (month_num == endMonth) {
                         //重新设置日
-                        int _endDay = endDay;
-                        if (_endDate != null) {
-                            if (_endDate.get(Calendar.MONTH) + 1 == month_num) {
-                                _endDay = _endDate.get(Calendar.DAY_OF_MONTH);
-                            }
-                        }
-                        
-                        setReDay(currentYear, wv_month.getCurrentItem() + 1, 1, _endDay, list_big, list_little);
+                        setReDay(currentYear, wv_month.getCurrentItem() + 1, 1, endDay, list_big, list_little);
                     } else {
                         setReDay(currentYear, wv_month.getCurrentItem() + 1, 1, 31, list_big, list_little);
                     }
@@ -763,12 +736,8 @@ public class WheelTime {
         this.endYear = endYear;
     }
 
-    protected Calendar _startDate, _endDate;
 
     public void setRangDate(Calendar startDate, Calendar endDate) {
-
-        _startDate = startDate;
-        _endDate = endDate;
 
         if (startDate == null && endDate != null) {
             int year = endDate.get(Calendar.YEAR);
