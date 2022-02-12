@@ -786,10 +786,13 @@ public class WheelTime {
         } else if (startDate != null && endDate != null) {
             this.startYear = startDate.get(Calendar.YEAR);
             this.endYear = endDate.get(Calendar.YEAR);
-            this.startMonth = startDate.get(Calendar.MONTH) + 1;
-            this.endMonth = endDate.get(Calendar.MONTH) + 1;
-            this.startDay = startDate.get(Calendar.DAY_OF_MONTH);
-            this.endDay = endDate.get(Calendar.DAY_OF_MONTH);
+            if (this.startYear == this.endYear) {
+                //只有在开始年份和结束年份一样的时候, 在设置月/日限制, 才有意义. 2022-2-12
+                this.startMonth = startDate.get(Calendar.MONTH) + 1;
+                this.endMonth = endDate.get(Calendar.MONTH) + 1;
+                this.startDay = startDate.get(Calendar.DAY_OF_MONTH);
+                this.endDay = endDate.get(Calendar.DAY_OF_MONTH);
+            }
         }
 
     }
