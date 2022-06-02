@@ -286,11 +286,18 @@ public class WheelView extends View {
         }
         //停止的时候，位置有偏移，不是全部都能正确停止到中间位置的，这里把文字位置挪回中间去
         mFuture = mExecutor.scheduleWithFixedDelay(new SmoothScrollTimerTask(this, mOffset), 0, 10, TimeUnit.MILLISECONDS);
+        isScrollSetting = true;
     }
+
+    /**
+     * 是否正在滚动中
+     */
+    public boolean isScrollSetting = false;
 
     public final void scrollBy(float velocityY) {//滚动惯性的实现
         cancelFuture();
         mFuture = mExecutor.scheduleWithFixedDelay(new InertiaTimerTask(this, velocityY), 0, VELOCITY_FLING, TimeUnit.MILLISECONDS);
+        isScrollSetting = true;
     }
 
     public void cancelFuture() {
@@ -368,6 +375,7 @@ public class WheelView extends View {
     }
 
     public final void onItemSelected() {
+        isScrollSetting = false;
         if (onItemSelectedListener != null) {
             postDelayed(new Runnable() {
                 @Override
