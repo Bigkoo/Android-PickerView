@@ -918,7 +918,11 @@ public class WheelView extends View {
         return textSize;
     }
 
-    public void setTextSize(int textSize) {
-        this.textSize = textSize;
+    /**
+     * @param textSize 文本大小, 像素单位
+     */
+    public void setTextSizePixel(int textSize) {
+        paintOuterText.setTextSize(textSize);
+        paintCenterText.setTextSize(textSize);
     }
 }
