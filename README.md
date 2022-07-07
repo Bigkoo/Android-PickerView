@@ -1,6 +1,6 @@
+## 注意⚠️：已停止更新，建议直接下载源码引入 module 到自己项目。
 
-## Android-PickerView(已停止更新，建议直接下载源码引入module)
-
+## Android-PickerView
 [![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg)](https://android-arsenal.com/api?level=9) 
 [![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Download](https://api.bintray.com/packages/contrarywind/maven/Android-PickerView/images/download.svg) ](https://bintray.com/contrarywind/maven/Android-PickerView/_latestVersion)
