@@ -1,5 +1,5 @@
 
-## Android-PickerView
+## Android-PickerView(已停止更新，建议直接下载源码引入module)
 
 [![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg)](https://android-arsenal.com/api?level=9) 
 [![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
@@ -14,7 +14,7 @@
 
 #### 对于使用上有任何疑问或优化建议等，欢迎加入QQ群讨论交流技术问题。
 
-交流群1： 387051294（推荐）
+交流群1： 387051294（已满）
 
 交流群2： 219962328（已满）
 
