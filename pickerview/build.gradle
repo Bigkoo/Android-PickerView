@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
 //apply plugin: 'com.novoda.bintray-release'//添加JCenter插件
 
 
@@ -46,5 +45,6 @@ dependencies {
 //    compile fileTree(include: ['*.jar'], dir: 'libs')
     api project(path: ':wheelview')
 //    api 'com.contrarywind:wheelview:4.1.0'
-    implementation 'com.android.support:support-annotations:28.0.0'
+    implementation 'androidx.annotation:annotation:1.3.0'
+    implementation 'com.github.candRabbit:Android-PickerView:1.0.0'
 }
