@@ -47,6 +47,15 @@ public class WheelTime {
 
     private int textSize;
 
+    //文字的颜色和分割线的颜色、宽度、选中条目背景色
+    private int textColorOut;
+    private int textColorCenter;
+    private int dividerColor;
+    private int dividerWidth;
+    private int selectItemBgColor;
+
+    private float lineSpacingMultiplier;
+    private WheelView.DividerType dividerType;
     private boolean isLunarCalendar = false;
     private ISelectTimeCallback mSelectChangeCallback;
 
@@ -56,6 +65,8 @@ public class WheelTime {
         this.type = type;
         this.gravity = gravity;
         this.textSize = textSize;
+        setView(view);
+    }
     }
 
     public void setLunarMode(boolean isLunarCalendar) {
@@ -101,14 +112,12 @@ public class WheelTime {
         wv_month = (WheelView) view.findViewById(R.id.month);
         wv_month.setAdapter(new ArrayWheelAdapter(ChinaDate.getMonths(year)));
         wv_month.setLabel("");
-
         int leapMonth = ChinaDate.leapMonth(year);
         if (leapMonth != 0 && (month > leapMonth - 1 || isLeap)) { //选中月是闰月或大于闰月
             wv_month.setCurrentItem(month + 1);
         } else {
             wv_month.setCurrentItem(month);
         }
-
         wv_month.setGravity(gravity);
 
         // 日
@@ -153,7 +162,6 @@ public class WheelTime {
                 } else {
                     wv_month.setCurrentItem(wv_month.getCurrentItem());
                 }
-
                 int currentIndex = wv_day.getCurrentItem();
                 int maxItem = 29;
                 if (ChinaDate.leapMonth(year_num) != 0 && wv_month.getCurrentItem() > ChinaDate.leapMonth(year_num) - 1) {
@@ -169,6 +177,7 @@ public class WheelTime {
                     maxItem = ChinaDate.monthDays(year_num, wv_month.getCurrentItem() + 1);
                 }
 
+                if (wv_day.getCurrentItem() > maxItem - 1) {
                 if (currentIndex > maxItem - 1) {
                     wv_day.setCurrentItem(maxItem - 1);
                 }
@@ -200,6 +209,7 @@ public class WheelTime {
                     maxItem = ChinaDate.monthDays(year_num, month_num + 1);
                 }
 
+                if (wv_day.getCurrentItem() > maxItem - 1) {
                 if (currentIndex > maxItem - 1) {
                     wv_day.setCurrentItem(maxItem - 1);
                 }
@@ -288,6 +298,7 @@ public class WheelTime {
                 wv_day.setAdapter(new NumericWheelAdapter(startDay, endDay));
             } else {
                 // 闰年
+                if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
                 if (leapYear) {
                     if (endDay > 29) {
                         endDay = 29;
@@ -310,6 +321,14 @@ public class WheelTime {
 
                 wv_day.setAdapter(new NumericWheelAdapter(startDay, 30));
             } else {
+                // 闰年
+                if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
+
+                    wv_day.setAdapter(new NumericWheelAdapter(startDay, 29));
+                } else {
+
+                    wv_day.setAdapter(new NumericWheelAdapter(startDay, 28));
+                }
                 // 闰年 29，平年 28
                 wv_day.setAdapter(new NumericWheelAdapter(startDay, leapYear ? 29 : 28));
             }
@@ -328,6 +347,7 @@ public class WheelTime {
                 wv_day.setAdapter(new NumericWheelAdapter(1, endDay));
             } else {
                 // 闰年
+                if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
                 if (leapYear) {
                     if (endDay > 29) {
                         endDay = 29;
@@ -344,6 +364,20 @@ public class WheelTime {
         } else {
             // 判断大小月及是否闰年,用来确定"日"的数据
             if (list_big.contains(String.valueOf(month + 1))) {
+
+                wv_day.setAdapter(new NumericWheelAdapter(1, 31));
+            } else if (list_little.contains(String.valueOf(month + 1))) {
+
+                wv_day.setAdapter(new NumericWheelAdapter(1, 30));
+            } else {
+                // 闰年
+                if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
+
+                    wv_day.setAdapter(new NumericWheelAdapter(1, 29));
+                } else {
+
+                    wv_day.setAdapter(new NumericWheelAdapter(1, 28));
+                }
                 wv_day.setAdapter(new NumericWheelAdapter(1, 31));
             } else if (list_little.contains(String.valueOf(month + 1))) {
                 wv_day.setAdapter(new NumericWheelAdapter(1, 30));
@@ -582,6 +616,71 @@ public class WheelTime {
     }
 
 
+    private void setTextColorOut() {
+        wv_day.setTextColorOut(textColorOut);
+        wv_month.setTextColorOut(textColorOut);
+        wv_year.setTextColorOut(textColorOut);
+        wv_hours.setTextColorOut(textColorOut);
+        wv_minutes.setTextColorOut(textColorOut);
+        wv_seconds.setTextColorOut(textColorOut);
+    }
+
+    private void setTextColorCenter() {
+        wv_day.setTextColorCenter(textColorCenter);
+        wv_month.setTextColorCenter(textColorCenter);
+        wv_year.setTextColorCenter(textColorCenter);
+        wv_hours.setTextColorCenter(textColorCenter);
+        wv_minutes.setTextColorCenter(textColorCenter);
+        wv_seconds.setTextColorCenter(textColorCenter);
+    }
+
+    private void setDividerColor() {
+        wv_day.setDividerColor(dividerColor);
+        wv_month.setDividerColor(dividerColor);
+        wv_year.setDividerColor(dividerColor);
+        wv_hours.setDividerColor(dividerColor);
+        wv_minutes.setDividerColor(dividerColor);
+        wv_seconds.setDividerColor(dividerColor);
+    }
+
+    private void setDividerWidth() {
+        wv_day.setDividerWidth(dividerWidth);
+        wv_month.setDividerWidth(dividerWidth);
+        wv_year.setDividerWidth(dividerWidth);
+        wv_hours.setDividerWidth(dividerWidth);
+        wv_minutes.setDividerWidth(dividerWidth);
+        wv_seconds.setDividerWidth(dividerWidth);
+    }
+
+    private void setSelectItemBgColor() {
+        wv_day.setSelectItemBgColor(selectItemBgColor);
+        wv_month.setSelectItemBgColor(selectItemBgColor);
+        wv_year.setSelectItemBgColor(selectItemBgColor);
+        wv_hours.setSelectItemBgColor(selectItemBgColor);
+        wv_minutes.setSelectItemBgColor(selectItemBgColor);
+        wv_seconds.setSelectItemBgColor(selectItemBgColor);
+    }
+
+    private void setDividerType() {
+
+        wv_day.setDividerType(dividerType);
+        wv_month.setDividerType(dividerType);
+        wv_year.setDividerType(dividerType);
+        wv_hours.setDividerType(dividerType);
+        wv_minutes.setDividerType(dividerType);
+        wv_seconds.setDividerType(dividerType);
+
+    }
+
+    private void setLineSpacingMultiplier() {
+        wv_day.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wv_month.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wv_year.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wv_hours.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wv_minutes.setLineSpacingMultiplier(lineSpacingMultiplier);
+        wv_seconds.setLineSpacingMultiplier(lineSpacingMultiplier);
+    }
+
     public void setLabels(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
         if (isLunarCalendar) {
             return;
@@ -622,6 +721,9 @@ public class WheelTime {
 
     public void setTextXOffset(int x_offset_year, int x_offset_month, int x_offset_day,
                                int x_offset_hours, int x_offset_minutes, int x_offset_seconds) {
+        wv_day.setTextXOffset(x_offset_year);
+        wv_month.setTextXOffset(x_offset_month);
+        wv_year.setTextXOffset(x_offset_day);
         wv_year.setTextXOffset(x_offset_year);
         wv_month.setTextXOffset(x_offset_month);
         wv_day.setTextXOffset(x_offset_day);
@@ -720,6 +822,10 @@ public class WheelTime {
         return view;
     }
 
+    public void setView(View view) {
+        this.view = view;
+    }
+
     public int getStartYear() {
         return startYear;
     }
@@ -800,6 +906,8 @@ public class WheelTime {
      * @param lineSpacingMultiplier
      */
     public void setLineSpacingMultiplier(float lineSpacingMultiplier) {
+        this.lineSpacingMultiplier = lineSpacingMultiplier;
+        setLineSpacingMultiplier();
         wv_day.setLineSpacingMultiplier(lineSpacingMultiplier);
         wv_month.setLineSpacingMultiplier(lineSpacingMultiplier);
         wv_year.setLineSpacingMultiplier(lineSpacingMultiplier);
@@ -814,6 +922,28 @@ public class WheelTime {
      * @param dividerColor
      */
     public void setDividerColor(int dividerColor) {
+        this.dividerColor = dividerColor;
+        setDividerColor();
+    }
+
+    /**
+     * 设置分割线的宽度
+     *
+     * @param dividerWidth
+     */
+    public void setDividerWidth(int dividerWidth) {
+        this.dividerWidth = dividerWidth;
+        setDividerWidth();
+    }
+
+    /**
+     * 设置选中条目的背景色
+     *
+     * @param selectItemBgColor
+     */
+    public void setSelectItemBgColor(int selectItemBgColor) {
+        this.selectItemBgColor = selectItemBgColor;
+        setSelectItemBgColor();
         wv_day.setDividerColor(dividerColor);
         wv_month.setDividerColor(dividerColor);
         wv_year.setDividerColor(dividerColor);
@@ -828,6 +958,8 @@ public class WheelTime {
      * @param dividerType
      */
     public void setDividerType(WheelView.DividerType dividerType) {
+        this.dividerType = dividerType;
+        setDividerType();
         wv_day.setDividerType(dividerType);
         wv_month.setDividerType(dividerType);
         wv_year.setDividerType(dividerType);
@@ -842,6 +974,8 @@ public class WheelTime {
      * @param textColorCenter
      */
     public void setTextColorCenter(int textColorCenter) {
+        this.textColorCenter = textColorCenter;
+        setTextColorCenter();
         wv_day.setTextColorCenter(textColorCenter);
         wv_month.setTextColorCenter(textColorCenter);
         wv_year.setTextColorCenter(textColorCenter);
@@ -856,6 +990,8 @@ public class WheelTime {
      * @param textColorOut
      */
     public void setTextColorOut(int textColorOut) {
+        this.textColorOut = textColorOut;
+        setTextColorOut();
         wv_day.setTextColorOut(textColorOut);
         wv_month.setTextColorOut(textColorOut);
         wv_year.setTextColorOut(textColorOut);
@@ -879,6 +1015,7 @@ public class WheelTime {
     public void setSelectChangeCallback(ISelectTimeCallback mSelectChangeCallback) {
         this.mSelectChangeCallback = mSelectChangeCallback;
     }
+}
 
     public void setItemsVisible(int itemsVisibleCount) {
         wv_day.setItemsVisibleCount(itemsVisibleCount);
