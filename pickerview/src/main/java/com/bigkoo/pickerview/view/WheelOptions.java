@@ -359,6 +359,16 @@ public class WheelOptions<T> {
     }
 
     /**
+     * 设置选择区域背景颜色
+     * @param selectAreaColor
+     */
+    public void setSelectAreaColor(int selectAreaColor){
+        wv_option1.setSelectAreaColor(selectAreaColor);
+        wv_option2.setSelectAreaColor(selectAreaColor);
+        wv_option3.setSelectAreaColor(selectAreaColor);
+    }
+
+    /**
      * 设置分割线的类型
      *
      * @param dividerType
