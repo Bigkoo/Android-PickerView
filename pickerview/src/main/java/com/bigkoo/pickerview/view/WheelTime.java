@@ -1,5 +1,6 @@
 package com.bigkoo.pickerview.view;
 
+import android.support.annotation.Px;
 import android.view.View;
 
 import com.bigkoo.pickerview.R;
@@ -45,12 +46,13 @@ public class WheelTime {
     private int endDay = DEFAULT_END_DAY; //表示31天的
     private int currentYear;
 
-    private int textSize;
+    @Px
+    private float textSize;
 
     private boolean isLunarCalendar = false;
     private ISelectTimeCallback mSelectChangeCallback;
 
-    public WheelTime(View view, boolean[] type, int gravity, int textSize) {
+    public WheelTime(View view, boolean[] type, int gravity, @Px float textSize) {
         super();
         this.view = view;
         this.type = type;
@@ -571,7 +573,6 @@ public class WheelTime {
         }
     }
 
-
     private void setContentTextSize() {
         wv_day.setTextSize(textSize);
         wv_month.setTextSize(textSize);
@@ -580,7 +581,6 @@ public class WheelTime {
         wv_minutes.setTextSize(textSize);
         wv_seconds.setTextSize(textSize);
     }
-
 
     public void setLabels(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
         if (isLunarCalendar) {

@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Handler;
+import android.support.annotation.Px;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -69,12 +70,11 @@ public class WheelView extends View {
     private WheelAdapter adapter;
 
     private String label;//附加单位
-    private int textSize;//选项的文字大小
+    private float textSize;//选项的文字大小
     private int maxTextWidth;
     private int maxTextHeight;
     private int textXOffset;
     private float itemHeight;//每行高度
-
 
     private Typeface typeface = Typeface.MONOSPACE;//字体样式，默认是等宽字体
     private int textColorOut;
@@ -135,7 +135,7 @@ public class WheelView extends View {
     public WheelView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        textSize = getResources().getDimensionPixelSize(R.dimen.pickerview_textsize);//默认大小
+        textSize = getResources().getDimensionPixelOffset(R.dimen.pickerview_textsize);//默认大小
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         float density = dm.density; // 屏幕密度比（0.75/1.0/1.5/2.0/3.0）
@@ -158,7 +158,7 @@ public class WheelView extends View {
             textColorCenter = a.getColor(R.styleable.pickerview_wheelview_textColorCenter, 0xFF2a2a2a);
             dividerColor = a.getColor(R.styleable.pickerview_wheelview_dividerColor, 0xFFd5d5d5);
             dividerWidth = a.getDimensionPixelSize(R.styleable.pickerview_wheelview_dividerWidth, 2);
-            textSize = a.getDimensionPixelOffset(R.styleable.pickerview_wheelview_textSize, textSize);
+            textSize = a.getDimension(R.styleable.pickerview_wheelview_textSize, textSize);
             lineSpacingMultiplier = a.getFloat(R.styleable.pickerview_wheelview_lineSpacingMultiplier, lineSpacingMultiplier);
             isLoop = a.getBoolean(R.styleable.pickerview_wheelview_loop, true);
             isOptions = a.getBoolean(R.styleable.pickerview_wheelview_isOptions, isOptions);
@@ -322,11 +322,18 @@ public class WheelView extends View {
         paintCenterText.setTypeface(typeface);
     }
 
-    public final void setTextSize(float size) {
+    public final void setTextSize(@Px float size) {
         if (size > 0.0F) {
-            textSize = (int) (context.getResources().getDisplayMetrics().density * size);
+            textSize = size;
             paintOuterText.setTextSize(textSize);
             paintCenterText.setTextSize(textSize);
+        }
+    }
+
+    public final void setTextSizeDp(float size) {
+        if (size > 0.0F) {
+            textSize = context.getResources().getDisplayMetrics().density * size;
+            setTextSize(textSize);
         }
     }
 
@@ -611,7 +618,7 @@ public class WheelView extends View {
         Rect rect = new Rect();
         paintCenterText.getTextBounds(contentText, 0, contentText.length(), rect);
         int width = rect.width();
-        int size = textSize;
+        float size = textSize;
         while (width > measuredWidth) {
             size--;
             //设置2条横线中间的文字大小
@@ -914,15 +921,7 @@ public class WheelView extends View {
         return label;
     }
 
-    public int getTextSize() {
+    public float getTextSize() {
         return textSize;
-    }
-
-    /**
-     * @param textSize 文本大小, 像素单位
-     */
-    public void setTextSizePixel(int textSize) {
-        paintOuterText.setTextSize(textSize);
-        paintCenterText.setTextSize(textSize);
     }
 }
