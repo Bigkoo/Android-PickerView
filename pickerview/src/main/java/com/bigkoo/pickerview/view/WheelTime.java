@@ -1,6 +1,6 @@
 package com.bigkoo.pickerview.view;
 
-import android.support.annotation.Px;
+import androidx.annotation.Px;
 import android.view.View;
 
 import com.bigkoo.pickerview.R;
