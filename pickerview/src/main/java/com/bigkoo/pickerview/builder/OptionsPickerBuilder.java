@@ -3,6 +3,7 @@ package com.bigkoo.pickerview.builder;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.ColorInt;
+import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -102,7 +103,19 @@ public class OptionsPickerBuilder {
         return this;
     }
 
-    public OptionsPickerBuilder setLayoutRes(int res, CustomListener listener) {
+    /**
+     * 设置选择器自定义布局
+     * 注意：CustomListener不能为null, 否则该方法调用无效，即无法加载传入的自定义布局，详情查看
+     * {@link OptionsPickerView#initView(Context)}
+     *
+     * @param res 自定义布局
+     * @param listener 布局加载监听
+     * @return OptionsPickerBuilder
+     */
+    public OptionsPickerBuilder setLayoutRes(@LayoutRes int res, CustomListener listener) {
+        if (listener == null){
+            throw new IllegalArgumentException("CustomListener is null");
+        }
         mPickerOptions.layoutRes = res;
         mPickerOptions.customListener = listener;
         return this;

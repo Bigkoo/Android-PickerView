@@ -33,7 +33,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     }
 
     private void initView(Context context) {
-        setDialogOutSideCancelable();
         initViews();
         initAnim();
         initEvents();
