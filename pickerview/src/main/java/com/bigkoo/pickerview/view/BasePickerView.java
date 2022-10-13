@@ -70,13 +70,6 @@ public class BasePickerView {
             contentContainer.setLayoutParams(params);
             //创建对话框
             createDialog();
-            //给背景设置点击事件,这样当点击内容以外的地方会关闭界面
-            dialogView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dismiss();
-                }
-            });
         } else {
             //如果只是要显示在屏幕的下方
             //decorView是activity的根View,包含 contentView 和 titleView
@@ -277,6 +270,17 @@ public class BasePickerView {
             } else {
                 view.setOnTouchListener(null);
             }
+
+            View pickViewContainer = rootView.findViewById(R.id.content_container);
+            pickViewContainer.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    //do nothing, just consume touch events to avoid that PickView
+                    //disappears while clicking this PickView own area under the
+                    //condition that setOutSideCancelable() is true
+                    return true;
+                }
+            });
         }
 
         return this;

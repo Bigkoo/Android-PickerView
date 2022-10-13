@@ -35,7 +35,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     }
 
     private void initView(Context context) {
-        setDialogOutSideCancelable();
         initViews();
         initAnim();
 
