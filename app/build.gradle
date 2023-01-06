@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 32
 
     defaultConfig {
         applicationId "com.bigkoo.pickerviewdemo"
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
     }
@@ -27,6 +27,6 @@ dependencies {
     implementation project(':pickerview')
 //   implementation 'com.contrarywind:Android-PickerView:4.1.9'
 //    implementation 'com.contrarywind:wheelview:4.1.0'
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.google.code.gson:gson:2.7'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.code.gson:gson:2.9.1'
 }

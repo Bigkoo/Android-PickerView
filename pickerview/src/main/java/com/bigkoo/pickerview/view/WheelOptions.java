@@ -216,10 +216,10 @@ public class WheelOptions<T> {
         }
     }
 
-    public void setTextContentSize(int textSize) {
-        wv_option1.setTextSize(textSize);
-        wv_option2.setTextSize(textSize);
-        wv_option3.setTextSize(textSize);
+    public void setTextContentSize(float textSize) {
+        wv_option1.setTextSizeDp(textSize);
+        wv_option2.setTextSizeDp(textSize);
+        wv_option3.setTextSizeDp(textSize);
     }
 
     private void setLineSpacingMultiplier() {

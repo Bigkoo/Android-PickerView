@@ -1,8 +1,8 @@
 package com.bigkoo.pickerviewdemo;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
@@ -25,7 +25,7 @@ public class TestCircleWheelViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test_circle_wheelview);
 
         WheelView wheelView = findViewById(R.id.wheelview);
-        wheelView.setTextSize(20);
+        wheelView.setTextSizeDp(20);
         wheelView.setLineSpacingMultiplier(2f);
         // wheelView.setDividerWidth(6);
         wheelView.setDividerType(WheelView.DividerType.CIRCLE);

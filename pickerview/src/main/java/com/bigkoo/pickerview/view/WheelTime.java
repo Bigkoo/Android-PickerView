@@ -1,5 +1,6 @@
 package com.bigkoo.pickerview.view;
 
+import androidx.annotation.Px;
 import android.view.View;
 
 import com.bigkoo.pickerview.R;
@@ -45,12 +46,13 @@ public class WheelTime {
     private int endDay = DEFAULT_END_DAY; //表示31天的
     private int currentYear;
 
-    private int textSize;
+    @Px
+    private float textSize;
 
     private boolean isLunarCalendar = false;
     private ISelectTimeCallback mSelectChangeCallback;
 
-    public WheelTime(View view, boolean[] type, int gravity, int textSize) {
+    public WheelTime(View view, boolean[] type, int gravity, @Px float textSize) {
         super();
         this.view = view;
         this.type = type;
@@ -571,7 +573,6 @@ public class WheelTime {
         }
     }
 
-
     private void setContentTextSize() {
         wv_day.setTextSize(textSize);
         wv_month.setTextSize(textSize);
@@ -580,7 +581,6 @@ public class WheelTime {
         wv_minutes.setTextSize(textSize);
         wv_seconds.setTextSize(textSize);
     }
-
 
     public void setLabels(String label_year, String label_month, String label_day, String label_hours, String label_mins, String label_seconds) {
         if (isLunarCalendar) {
@@ -786,10 +786,13 @@ public class WheelTime {
         } else if (startDate != null && endDate != null) {
             this.startYear = startDate.get(Calendar.YEAR);
             this.endYear = endDate.get(Calendar.YEAR);
-            this.startMonth = startDate.get(Calendar.MONTH) + 1;
-            this.endMonth = endDate.get(Calendar.MONTH) + 1;
-            this.startDay = startDate.get(Calendar.DAY_OF_MONTH);
-            this.endDay = endDate.get(Calendar.DAY_OF_MONTH);
+            if (this.startYear == this.endYear) {
+                //只有在开始年份和结束年份一样的时候, 在设置月/日限制, 才有意义. 2022-2-12
+                this.startMonth = startDate.get(Calendar.MONTH) + 1;
+                this.endMonth = endDate.get(Calendar.MONTH) + 1;
+                this.startDay = startDate.get(Calendar.DAY_OF_MONTH);
+                this.endDay = endDate.get(Calendar.DAY_OF_MONTH);
+            }
         }
 
     }
